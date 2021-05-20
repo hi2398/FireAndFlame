@@ -4,9 +4,9 @@
 
 #include "config.h"
 #include "helper.h"
-#include "game.h"
 
-Game::Screen* currentScreen;
+
+
 
 int main() {
     // Enable config flags for resizable window and vertical synchro
@@ -25,8 +25,6 @@ int main() {
     ToggleFullscreen();
 #endif
 
-    // Set start screen
-    currentScreen = Game::MenuScreen::getInstance();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -44,15 +42,12 @@ int main() {
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
 
-        currentScreen->ProcessInput();
-        currentScreen->Update();
 
         BeginDrawing();
         ClearBackground(BLACK); // Letterbox color
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-        currentScreen->Draw();
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled
