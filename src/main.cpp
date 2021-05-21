@@ -6,8 +6,6 @@
 #include "helper.h"
 
 
-
-
 int main() {
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
