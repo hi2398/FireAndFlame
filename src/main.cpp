@@ -17,7 +17,7 @@ int main() {
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(Game::ScreenWidth, Game::ScreenHeight);
     // Texture scale filter to use
-    SetTextureFilter(target.texture, FILTER_BILINEAR);
+    SetTextureFilter(target.texture, FILTER_POINT);
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
