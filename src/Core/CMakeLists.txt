@@ -1,2 +1,2 @@
 cmake_minimum_required(VERSION 3.11)
-add_executable(Core Object.h Object.cpp ObjectTypes.h)
+add_executable(Core Object.h Object.cpp ObjectTypes.h Actor.cpp Actor.h Component.cpp Component.h)
