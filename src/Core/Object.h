@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "ObjectTypes.h"
+
 class Object : public std::enable_shared_from_this<Object> {
 public:
     explicit Object(ObjectTypes type);

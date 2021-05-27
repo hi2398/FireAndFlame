@@ -12,6 +12,7 @@ public:
     template<class T>
     std::unique_ptr<Component> AddComponent();
     ~Actor() override=default;
+
 protected:
 
 private:

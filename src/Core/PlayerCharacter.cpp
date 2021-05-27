@@ -4,6 +4,6 @@
 
 #include "PlayerCharacter.h"
 
-PlayerCharacter::PlayerCharacter() : Actor(Player) {
+PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 }
