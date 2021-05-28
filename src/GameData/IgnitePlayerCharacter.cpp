@@ -8,3 +8,7 @@ void IgnitePlayerCharacter::Draw() {
 void IgnitePlayerCharacter::Update() {
     PlayerCharacter::Update();
 }
+
+IgnitePlayerCharacter::IgnitePlayerCharacter() : PlayerCharacter() {
+
+}
