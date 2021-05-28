@@ -3,6 +3,7 @@
 
 class IgniteHUD : public HUD{
 public:
+    IgniteHUD();
     void DrawHUD() override;
     ~IgniteHUD() override = default;
 
