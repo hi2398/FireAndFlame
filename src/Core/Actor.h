@@ -10,7 +10,7 @@ public:
     void Draw() override = 0;
 
     template<class T>
-    std::unique_ptr<Component> AddComponent();
+    std::unique_ptr<Component> AddComponent(T);
     ~Actor() override=default;
 
 protected:

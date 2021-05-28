@@ -9,6 +9,6 @@ Actor::Actor(ObjectTypes type) : Object(type) {
 }
 
 template<class T>
-std::unique_ptr<Component> Actor::AddComponent() {
+std::unique_ptr<Component> Actor::AddComponent(T) {
     components.emplace_back(std::make_unique<T>(weak_from_this()));
 }

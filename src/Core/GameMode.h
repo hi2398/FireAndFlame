@@ -8,9 +8,9 @@ class GameMode {
 public:
     GameMode(std::shared_ptr<PlayerCharacter> playerCharacter, std::shared_ptr<PlayerController> playerController, std::shared_ptr<HUD> hud);
     GameMode() = delete;
-    [[nodiscard]] const std::shared_ptr<PlayerCharacter> &getPlayerCharacter() const;
-    [[nodiscard]] const std::shared_ptr<PlayerController> &getPlayerController() const;
-    [[nodiscard]] const std::shared_ptr<HUD> &getHud() const;
+    [[nodiscard]] const std::shared_ptr<PlayerCharacter> &GetPlayerCharacter() const;
+    [[nodiscard]] const std::shared_ptr<PlayerController> &GetPlayerController() const;
+    [[nodiscard]] const std::shared_ptr<HUD> &GetHud() const;
     virtual ~GameMode() = default;
 
 protected:

@@ -11,15 +11,15 @@ GameMode::GameMode(std::shared_ptr<PlayerCharacter> playerCharacter, std::shared
 
 }
 
-const std::shared_ptr<PlayerCharacter> &GameMode::getPlayerCharacter() const {
+const std::shared_ptr<PlayerCharacter> &GameMode::GetPlayerCharacter() const {
     return playerCharacter;
 }
 
-const std::shared_ptr<PlayerController> &GameMode::getPlayerController() const {
+const std::shared_ptr<PlayerController> &GameMode::GetPlayerController() const {
     return playerController;
 }
 
-const std::shared_ptr<HUD> &GameMode::getHud() const {
+const std::shared_ptr<HUD> &GameMode::GetHud() const {
     return hud;
 }
 
