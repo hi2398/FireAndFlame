@@ -10,7 +10,7 @@
 
 int main() {
 
-    //std::unique_ptr<SceneManager> sceneManager= std::make_unique<SceneManager>(std::move(initialScene), std::move(initialGameMode));
+    std::unique_ptr<SceneManager> sceneManager= std::make_unique<SceneManager>(std::move(initialScene), std::move(initialGameMode));
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
