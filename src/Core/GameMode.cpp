@@ -22,3 +22,4 @@ const std::shared_ptr<PlayerController> &GameMode::getPlayerController() const {
 const std::shared_ptr<HUD> &GameMode::getHud() const {
     return hud;
 }
+

@@ -4,9 +4,8 @@
 
 #include "SceneManager.h"
 
-SceneManager::SceneManager(std::unique_ptr<Scene> initialScene) : activeScene(std::move(initialScene)), nextScene(activeScene){
-
-}
+SceneManager::SceneManager(std::unique_ptr<Scene> initialScene, std::unique_ptr<GameMode> gameMode)
+    : activeScene(std::move(initialScene)), nextScene(activeScene), gameMode(std::move(gameMode)){}
 
 void SceneManager::Tick() {
     activeScene=nextScene;

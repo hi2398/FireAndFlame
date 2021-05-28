@@ -4,9 +4,13 @@
 
 #include "config.h"
 #include "helper.h"
+#include "game.h"
+#include "Core/SceneManager.h"
 
 
 int main() {
+
+    //std::unique_ptr<SceneManager> sceneManager= std::make_unique<SceneManager>(std::move(initialScene), std::move(initialGameMode));
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
@@ -46,6 +50,9 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
+
+
+
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled

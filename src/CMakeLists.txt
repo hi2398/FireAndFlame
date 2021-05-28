@@ -9,7 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(Core)
-add_executable(${PROJECT_NAME} main.cpp config.h helper.h)
+add_subdirectory(GameData)
+add_subdirectory(Scenes)
+add_executable(${PROJECT_NAME} main.cpp config.h helper.h game.h)
 
 # Add config.h.in file
 configure_file(config.h.in config.h)
