@@ -6,8 +6,8 @@
 
 #include <utility>
 
-GameMode::GameMode(std::shared_ptr<PlayerCharacter> playerCharacter, std::shared_ptr<PlayerController> playerController,
-                   std::shared_ptr<HUD> hud) : playerCharacter(std::move(playerCharacter)), playerController(std::move(playerController)), hud(std::move(hud)) {
+GameMode::GameMode(std::unique_ptr<PlayerCharacter> playerCharacter, std::unique_ptr<PlayerController> playerController,
+                   std::unique_ptr<HUD> hud) : playerCharacter(std::move(playerCharacter)), playerController(std::move(playerController)), hud(std::move(hud)) {
 
 }
 

@@ -6,8 +6,7 @@
 
 class GameMode {
 public:
-    GameMode(std::shared_ptr<PlayerCharacter> playerCharacter, std::shared_ptr<PlayerController> playerController, std::shared_ptr<HUD> hud);
-    GameMode() = delete;
+    GameMode(std::unique_ptr<PlayerCharacter> playerCharacter, std::unique_ptr<PlayerController> playerController, std::unique_ptr<HUD> hud);
     [[nodiscard]] const std::shared_ptr<PlayerCharacter> &GetPlayerCharacter() const;
     [[nodiscard]] const std::shared_ptr<PlayerController> &GetPlayerController() const;
     [[nodiscard]] const std::shared_ptr<HUD> &GetHud() const;

@@ -5,13 +5,15 @@
 #include "SceneManager.h"
 
 SceneManager::SceneManager(std::unique_ptr<Scene> initialScene, std::unique_ptr<GameMode> gameMode)
-    : activeScene(std::move(initialScene)), nextScene(activeScene), gameMode(std::move(gameMode)){}
+    : activeScene(std::move(initialScene)), gameMode(std::move(gameMode)){
+    nextScene=activeScene;
+}
 
 void SceneManager::Tick() {
     activeScene=nextScene;
-    gameMode->getPlayerController()->HandleInput();
-    gameMode->getPlayerCharacter()->Update();
-    gameMode->getPlayerCharacter()->Draw();
+    gameMode->GetPlayerController()->HandleInput();
+    gameMode->GetPlayerCharacter()->Update();
+    gameMode->GetPlayerCharacter()->Draw();
     activeScene->Update();
     activeScene->Draw();
 }

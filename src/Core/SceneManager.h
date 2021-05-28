@@ -5,8 +5,7 @@
 
 class SceneManager {
 public:
-    explicit SceneManager(std::unique_ptr<Scene> initialScene, std::unique_ptr<GameMode> gameMode);
-    SceneManager() = delete;
+    SceneManager(std::unique_ptr<Scene> initialScene, std::unique_ptr<GameMode> gameMode);
     void Tick();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
 protected:

@@ -4,13 +4,14 @@
 
 #include "config.h"
 #include "helper.h"
-#include "game.h"
 #include "Core/SceneManager.h"
+#include "Scenes/MainMenu.h"
+#include "GameData/IgniteGameMode.h"
 
 
 int main() {
 
-    std::unique_ptr<SceneManager> sceneManager= std::make_unique<SceneManager>(std::move(initialScene), std::move(initialGameMode));
+    SceneManager sceneManager(std::make_unique<MainMenu>, std::make_unique<IgniteGameMode>);
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
