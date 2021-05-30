@@ -1,12 +1,31 @@
 ﻿#include <cstdlib>
+#include <memory>
 
 #include "raylib.h"
 
 #include "config.h"
 #include "helper.h"
+#include "Core/SceneManager.h"
+#include "Scenes/MainMenu.h"
+#include "GameData/IgniteGameMode.h"
 
+//This is absolutely not what should be here but otherwise it doesn't work and no one knows why
+#include "Core/Object.cpp"
+#include "Core/Actor.cpp"
+#include "Core/HUD.cpp"
+#include "Core/PlayerCharacter.cpp"
+#include "Scenes/MainMenu.cpp"
+#include "Core/Scene.cpp"
+#include "GameData/IgniteGameMode.cpp"
+#include "Core/GameMode.cpp"
+#include "GameData/IgnitePlayerController.cpp"
+#include "GameData/IgniteHUD.cpp"
+#include "GameData/IgnitePlayerCharacter.cpp"
+#include "Core/SceneManager.cpp"
 
 int main() {
+
+    std::unique_ptr<SceneManager> sceneManager=std::make_unique<SceneManager>(std::make_unique<MainMenu>(), std::make_unique<IgniteGameMode>());
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
@@ -46,6 +65,9 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
+
+        sceneManager->Tick();
+
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled
