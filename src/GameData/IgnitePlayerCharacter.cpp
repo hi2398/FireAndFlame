@@ -1,14 +1,13 @@
 
 #include "IgnitePlayerCharacter.h"
 
-void IgnitePlayerCharacter::Draw() {
-
-}
-
 void IgnitePlayerCharacter::Update() {
-
+    //write player update logic here
 }
 
-IgnitePlayerCharacter::IgnitePlayerCharacter() {
-
+void IgnitePlayerCharacter::Draw() {
+    //write player draw logic here
 }
+
+
+IgnitePlayerCharacter::IgnitePlayerCharacter() = default;
