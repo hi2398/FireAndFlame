@@ -8,15 +8,12 @@ public:
     explicit Actor(ObjectTypes type);
     void Update() override = 0;
     void Draw() override = 0;
-
-    template<class T>
-    std::unique_ptr<Component> AddComponent(T);
     ~Actor() override=default;
 
 protected:
 
 private:
-    std::vector<Component> components;
+
 };
 
 
