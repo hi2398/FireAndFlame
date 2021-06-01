@@ -16,6 +16,8 @@ void SceneManager::Tick() {
     gameMode->GetPlayerCharacter()->Draw();
     activeScene->Update();
     activeScene->Draw();
+    gameMode->GetHud()->UpdateHUD();
+    gameMode->GetHud()->DrawHUD();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
