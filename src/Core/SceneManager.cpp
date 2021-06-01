@@ -1,23 +1,22 @@
-//
-// Created by Adrian on 28/05/2021.
-//
+#include <iostream>
 
 #include "SceneManager.h"
 
-SceneManager::SceneManager(std::unique_ptr<Scene> initialScene, std::unique_ptr<GameMode> gameMode)
-    : activeScene(std::move(initialScene)), gameMode(std::move(gameMode)){
+
+SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
+                           activeScene(std::move(initialScene)) {
     nextScene=activeScene;
 }
 
 void SceneManager::Tick() {
     activeScene=nextScene;
-    gameMode->GetPlayerController()->HandleInput();
-    gameMode->GetPlayerCharacter()->Update();
-    gameMode->GetPlayerCharacter()->Draw();
+    playerController->HandleInput();
+    playerCharacter->Update();
+    playerCharacter->Draw();
     activeScene->Update();
     activeScene->Draw();
-    gameMode->GetHud()->UpdateHUD();
-    gameMode->GetHud()->DrawHUD();
+    hud->UpdateHUD();
+    hud->DrawHUD();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {

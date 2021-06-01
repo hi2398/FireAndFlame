@@ -2,8 +2,8 @@
 
 class PlayerController {
 public:
-    virtual void HandleInput() = 0;
-    virtual ~PlayerController() = default;
+    void HandleInput();
+    ~PlayerController() = default;
 
 protected:
 

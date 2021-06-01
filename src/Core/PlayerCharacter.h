@@ -4,8 +4,8 @@
 class PlayerCharacter : public Actor {
 public:
     PlayerCharacter();
-    void Draw() override = 0;
-    void Update() override = 0;
+    void Draw() override;
+    void Update() override;
     ~PlayerCharacter() override = default;
 
 protected:
