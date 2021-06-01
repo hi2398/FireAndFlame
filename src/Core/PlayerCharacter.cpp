@@ -7,3 +7,12 @@
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 }
+
+
+void PlayerCharacter::Update() {
+    //update here
+}
+
+void PlayerCharacter::Draw() {
+    //draw here
+}
