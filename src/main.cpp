@@ -1,12 +1,32 @@
 ﻿#include <cstdlib>
+#include <memory>
 
 #include "raylib.h"
 
 #include "config.h"
 #include "helper.h"
+#include "Core/SceneManager.h"
+#include "Scenes/MainMenu.h"
+//This is absolutely not what should be here but otherwise it doesn't work and no one knows why
+#include "Core/Object.cpp"
+#include "Core/Actor.cpp"
+#include "Core/SceneManager.cpp"
+#include "Scenes/MainMenu.cpp"
+#include "Core/PlayerCharacter.cpp"
+#include "Core/HUD.cpp"
+#include "Core/PlayerController.cpp"
 
+
+std::shared_ptr<PlayerCharacter> playerCharacter;
+std::shared_ptr<PlayerController> playerController;
+std::shared_ptr<HUD> hud;
 
 int main() {
+
+    playerCharacter=std::make_shared<PlayerCharacter>();
+    playerController=std::make_shared<PlayerController>();
+    hud=std::make_shared<HUD>();
+    std::unique_ptr<SceneManager> sceneManager=std::make_unique<SceneManager>(std::make_unique<MainMenu>());
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
@@ -17,12 +37,12 @@ int main() {
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(Game::ScreenWidth, Game::ScreenHeight);
     // Texture scale filter to use
-    SetTextureFilter(target.texture, FILTER_BILINEAR);
+    SetTextureFilter(target.texture, FILTER_POINT);
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
-
+    //test branch
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -46,6 +66,9 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
+
+        sceneManager->Tick();
+
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled
