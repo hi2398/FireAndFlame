@@ -3,9 +3,9 @@
 class HUD {
 public:
     HUD();
-    virtual void UpdateHUD();
-    virtual void DrawHUD();
-    virtual ~HUD() = default;
+    void UpdateHUD();
+    void DrawHUD();
+    ~HUD() = default;
 protected:
 
 private:
