@@ -23,10 +23,7 @@ std::shared_ptr<HUD> hud;
 
 int main() {
 
-    playerCharacter=std::make_shared<PlayerCharacter>();
-    playerController=std::make_shared<PlayerController>();
-    hud=std::make_shared<HUD>();
-    std::unique_ptr<SceneManager> sceneManager=std::make_unique<SceneManager>(std::make_unique<MainMenu>());
+    
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
@@ -38,6 +35,11 @@ int main() {
     RenderTexture2D target = LoadRenderTexture(Game::ScreenWidth, Game::ScreenHeight);
     // Texture scale filter to use
     SetTextureFilter(target.texture, FILTER_POINT);
+
+	playerCharacter = std::make_shared<PlayerCharacter>();
+	playerController = std::make_shared<PlayerController>();
+	hud = std::make_shared<HUD>();
+	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>(std::make_unique<MainMenu>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
@@ -66,9 +68,10 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
+        
 
         sceneManager->Tick();
-
+		
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled

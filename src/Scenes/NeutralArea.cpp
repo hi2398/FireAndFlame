@@ -9,11 +9,14 @@ void NeutralArea::Update() {
 }
 
 void NeutralArea::Draw() {
+    ClearBackground(WHITE);
+    DrawRectangle(-1000, GetScreenHeight(), 2000, 300);
+
     for (const auto& x: enemies) {
         x->Draw();
     }
 }
 
 NeutralArea::NeutralArea() {
-
+    
 }
