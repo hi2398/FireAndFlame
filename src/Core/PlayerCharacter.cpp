@@ -58,7 +58,7 @@ void PlayerCharacter::Move(int direction) {
 }
 
 void PlayerCharacter::Jump() {
-	if (isGrounded) vectorPlayer.y = -10.00f;
+	if (isGrounded) vectorPlayer.y = 8.00f;
 	isJumping = true;
 	jumpState++;
 	switch (canDoubleJump)
