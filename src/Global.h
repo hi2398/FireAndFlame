@@ -1,5 +1,4 @@
 #pragma once
-class SceneManager;
 
 extern std::shared_ptr<PlayerCharacter> playerCharacter;
 extern std::shared_ptr<PlayerController> playerController;
