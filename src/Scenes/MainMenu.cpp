@@ -1,4 +1,6 @@
 #include "MainMenu.h"
+#include "raylib.h"
+#include "../Global.h"
 
 void MainMenu::Update() {
 	if (CheckCollisionRecs(ground, playerCharacter->playerHitbox)) {
