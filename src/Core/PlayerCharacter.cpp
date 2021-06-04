@@ -33,8 +33,6 @@ void PlayerCharacter::Update() {
 	this->RunChargedAttack();
 	this->RunFireball();
 	this->RunJump();
-
-	
 }
 
 void PlayerCharacter::Draw() {
