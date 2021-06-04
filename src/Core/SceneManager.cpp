@@ -9,14 +9,18 @@ SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
 }
 
 void SceneManager::Tick() {
+    BeginMode2D(playerCharacter->camera);
     activeScene=nextScene;
     playerController->HandleInput();
-    playerCharacter->Update();
-    playerCharacter->Draw();
+    if (playerCharacter->visible) {
+		playerCharacter->Update();
+		playerCharacter->Draw();
+    }
     activeScene->Update();
     activeScene->Draw();
     hud->UpdateHUD();
     hud->DrawHUD();
+    EndMode2D();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
