@@ -3,6 +3,7 @@
 //
 
 #include "PlayerCharacter.h"
+#include "raylib.h"
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
