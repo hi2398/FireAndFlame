@@ -11,7 +11,7 @@ public:
 protected:
 
 private:
-    Rectangle ground = { -1000, 40, 2100, 300};
+
 };
 
 

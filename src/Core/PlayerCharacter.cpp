@@ -3,6 +3,7 @@
 //
 
 #include "PlayerCharacter.h"
+#include "raylib.h"
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
@@ -58,7 +59,7 @@ void PlayerCharacter::Move(int direction) {
 }
 
 void PlayerCharacter::Jump() {
-	if (isGrounded) vectorPlayer.y = -10.00f;
+	if (isGrounded) vectorPlayer.y = 8.00f;
 	isJumping = true;
 	jumpState++;
 	switch (canDoubleJump)
