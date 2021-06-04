@@ -6,9 +6,12 @@ public:
     void Update() override;
     void Draw() override;
     ~MainMenu() override = default;
+
+
 protected:
 
 private:
+
 };
 
 
