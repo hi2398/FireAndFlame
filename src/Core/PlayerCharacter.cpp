@@ -215,3 +215,11 @@ void PlayerCharacter::RunChargedAttack() {
 
 
 }
+
+int PlayerCharacter::GetHealth() const {
+    return health;
+}
+
+void PlayerCharacter::SetHealth(int health) {
+    this->health=health;
+}

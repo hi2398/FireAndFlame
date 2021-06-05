@@ -24,6 +24,9 @@ public:
 
     void Move(int direction);
 
+    int GetHealth() const;
+    void SetHealth(int health);
+
 	//2Dcam
 	Camera2D camera = { 0 };
 
@@ -38,6 +41,7 @@ public:
 protected:
 
 private:
+    int health{100};
     //player
     Texture2D texturePlayer;
     Vector2 vectorPlayer = { 0 };
