@@ -1,6 +1,7 @@
 //
 // Created by Adrian on 27/05/2021.
 //
+// test push 05062021
 
 #include "PlayerCharacter.h"
 #include "raylib.h"
@@ -33,8 +34,6 @@ void PlayerCharacter::Update() {
 	this->RunChargedAttack();
 	this->RunFireball();
 	this->RunJump();
-
-	
 }
 
 void PlayerCharacter::Draw() {
