@@ -1,6 +1,7 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Global.h"
+#include "../Core/Coal.h"
 
 void NeutralArea::Update() {
 
