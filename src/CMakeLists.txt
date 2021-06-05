@@ -10,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(Core)
 add_subdirectory(Scenes)
-add_executable(${PROJECT_NAME} main.cpp config.h helper.h Global.h)
+add_executable(${PROJECT_NAME} main.cpp config.h helper.h Global.h json.hpp)
 
 # Add config.h.in file
 configure_file(config.h.in config.h)
