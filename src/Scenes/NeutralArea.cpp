@@ -1,6 +1,8 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Global.h"
+#include "../Core/Interactable.cpp"
+#include "../Core/Coal.cpp"
 
 void NeutralArea::Update() {
 
@@ -10,7 +12,37 @@ void NeutralArea::Update() {
     else {
         playerCharacter->isGrounded = false;
     }
-
+    if (coals->GetEnabled() == true)
+    {
+        if (CheckCollisionRecs(ground, coals->GetHitbox()))
+        {
+            coals->SetGrounded(true);
+        }
+        else
+        {
+            coals->SetGrounded(false);
+        }
+        if (CheckCollisionRecs(playerCharacter->playerHitbox, coals->GetHitbox()))
+        {
+            coals->Interact();
+        }
+        coals->Update();
+    }
+    else
+    {
+        if (Coaltimer == 0) {
+            Vector2 pStartVectorCoal;
+            pStartVectorCoal.x = 100;
+            pStartVectorCoal.y = -50;
+            coals->SetPosition(pStartVectorCoal);
+            coals->SetEnabled(true);
+            Coaltimer = 60;
+        }
+        else
+        {
+            Coaltimer--;
+        }
+    }
     for (const auto& x: enemies) {
     x->Update();
     }
@@ -26,6 +58,10 @@ void NeutralArea::Draw() {
     for (const auto& x: enemies) {
         x->Draw();
     }
+    coals->Draw();
+    /*for (const auto& i : coals) {
+        i->Draw();
+    }*/
 }
 
 NeutralArea::NeutralArea() {
