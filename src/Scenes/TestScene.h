@@ -6,9 +6,18 @@
 #define RAYLIBSTARTER_TESTSCENE_H
 
 
-class TestScene {
+class TestScene : public Scene {
+public:
+    TestScene();
+    void Update() override;
+    void Draw() override;
+    ~TestScene() override = default;
 
+protected:
+
+private:
+    std::unique_ptr<Tilemap> tilemap;
 };
 
 
-#endif //RAYLIBSTARTER_TESTSCENE_H
+

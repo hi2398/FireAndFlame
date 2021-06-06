@@ -15,6 +15,7 @@
 #include "Core/PlayerCharacter.cpp"
 #include "Core/HUD.cpp"
 #include "Core/PlayerController.cpp"
+#include "Scenes/TestScene.cpp"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -39,7 +40,7 @@ int main() {
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<TestScene>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
