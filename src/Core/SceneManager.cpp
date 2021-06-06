@@ -17,10 +17,10 @@ void SceneManager::Tick() {
 		playerCharacter->Draw();
     }
     activeScene->Update();
-    activeScene->Draw();
-    hud->UpdateHUD();
-    hud->DrawHUD();
+	activeScene->Draw();
     EndMode2D();
+    hud->UpdateHUD();
+	hud->DrawHUD();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {

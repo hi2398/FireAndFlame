@@ -17,15 +17,16 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
-	//camera update
-	camera.target = { vectorPlayer.x + 20.0f, vectorPlayer.y + 20.0f };
+	//health cap
+	if (health >= 100) health = 100;
+	
 	//attack reset
 	if (attackState > 0) {
 		resetAttack++;
 		if (resetAttack >= 90) attackState = 0, spearRotation = 300;
 	}
 	//player hitbox update
-	playerHitbox = { (float)vectorPlayer.x, (float)vectorPlayer.y, 32, 32 };
+	playerHitbox = { (float)vectorPlayer.x + 6, (float)vectorPlayer.y, 20, 32 };
 
 	//spear follows player
 	spearHitbox.x = vectorPlayer.x + 25.0f;
@@ -34,6 +35,8 @@ void PlayerCharacter::Update() {
 	this->RunChargedAttack();
 	this->RunFireball();
 	this->RunJump();
+	//camera update
+	camera.target = { vectorPlayer.x + 20.0f, vectorPlayer.y + 20.0f };
 }
 
 void PlayerCharacter::Draw() {
@@ -221,4 +224,15 @@ int PlayerCharacter::GetHealth() const {
 
 void PlayerCharacter::SetHealth(int health) {
     this->health=health;
+}
+
+Vector2 PlayerCharacter::GetPosition() const
+{
+	return vectorPlayer;
+}
+
+Vector2 PlayerCharacter::SetPosition(Vector2 newPosition)
+{
+	this->vectorPlayer = newPosition;
+	return vectorPlayer;
 }

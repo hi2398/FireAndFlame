@@ -5,15 +5,24 @@
 #include "../Core/Coal.cpp"
 
 void NeutralArea::Update() {
+    //decrease player health every second
+    generalTimer++;
+    if (generalTimer >= 30) {
+        generalTimer = 0;
+        playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+    }
 
+    //player X ground collision
     if (CheckCollisionRecs(ground, playerCharacter->playerHitbox)) {
         playerCharacter->isGrounded = true;
     }
     else {
         playerCharacter->isGrounded = false;
     }
+    //coal X player && coal X ground collision
     if (coals->GetEnabled() == true)
     {
+		coals->Update();
         if (CheckCollisionRecs(ground, coals->GetHitbox()))
         {
             coals->SetGrounded(true);
@@ -26,21 +35,21 @@ void NeutralArea::Update() {
         {
             coals->Interact();
         }
-        coals->Update();
+        
     }
     else
     {
-        if (Coaltimer == 0) {
+        if (coalTimer == 0) {
             Vector2 pStartVectorCoal;
             pStartVectorCoal.x = 100;
             pStartVectorCoal.y = -50;
             coals->SetPosition(pStartVectorCoal);
             coals->SetEnabled(true);
-            Coaltimer = 60;
+            coalTimer = 60;
         }
         else
         {
-            Coaltimer--;
+            coalTimer--;
         }
     }
     for (const auto& x: enemies) {
