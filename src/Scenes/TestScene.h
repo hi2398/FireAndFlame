@@ -1,10 +1,7 @@
-//
-// Created by Ashty on 06.06.2021.
-//
-
-#ifndef RAYLIBSTARTER_TESTSCENE_H
-#define RAYLIBSTARTER_TESTSCENE_H
-
+#pragma once
+#include "../Core/Scene.h"
+#include <vector>
+#include "../Core/Tilemap.h"
 
 class TestScene : public Scene {
 public:

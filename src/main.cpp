@@ -69,7 +69,7 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-        
+        ClearBackground(BLACK);
 
         sceneManager->Tick();
 		
