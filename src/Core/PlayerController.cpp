@@ -1,5 +1,6 @@
-
 #include "PlayerController.h"
+#include "../Global.h"
+#include "raylib.h"
 
 void PlayerController::HandleInput() {
 	if (IsKeyDown(KEY_D)) playerCharacter->Move(right);
