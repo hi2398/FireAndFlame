@@ -1,13 +1,17 @@
 #include "HUD.h"
 #include "../Global.h"
 
-HUD::HUD() = default;
+HUD::HUD() {
+    healthBar = {10,10, 100, 10};
+}
 
 void HUD::UpdateHUD() {
-    //hud update here
-    //playerCharacter->GetHealth();
+    healthBar.width = playerCharacter->GetHealth() * 2;
 }
 
 void HUD::DrawHUD() {
-    //hud draw here
+    if (healthBar.width > 0) {
+		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
+    }
+    
 }

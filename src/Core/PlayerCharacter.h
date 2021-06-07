@@ -28,11 +28,14 @@ public:
     int GetHealth() const;
     void SetHealth(int health);
 
+    Vector2 GetPosition() const;
+    Vector2 SetPosition(Vector2 newPosition);
+
 	//2Dcam
 	Camera2D camera = { 0 };
 
     //public player variable
-    Rectangle playerHitbox = { 0, 0, 32, 32 };
+    Rectangle playerHitbox = { 0 };
 
     //draw player only in game scene
     bool visible = true;
