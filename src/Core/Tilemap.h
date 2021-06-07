@@ -7,7 +7,7 @@
 class Tilemap {
 public:
     explicit Tilemap(const std::string& tileDescription, const std::string& levelDescription);
-
+    const std::vector<Vector2> &GetWorldPos() const;
     void Draw();
 protected:
 
@@ -19,4 +19,3 @@ private:
     std::vector<Vector2> tileWorldPos;
     void InitTileRecs(); // Creates once a Rectangle for every Tile for performance issues
 };
-

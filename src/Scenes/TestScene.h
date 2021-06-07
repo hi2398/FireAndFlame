@@ -2,6 +2,7 @@
 #include "../Core/Scene.h"
 #include <vector>
 #include "../Core/Tilemap.h"
+#include "../Global.h"
 
 class TestScene : public Scene {
 public:
@@ -15,6 +16,3 @@ protected:
 private:
     std::unique_ptr<Tilemap> tilemap;
 };
-
-
-

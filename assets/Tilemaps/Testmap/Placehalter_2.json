@@ -1,5 +1,5 @@
 { "columns":32,
- "image":"./terrain_atlas.png",
+ "image":"assets/Tilemaps/Testmap/terrain_atlas.png",
  "imageheight":1024,
  "imagewidth":1024,
  "margin":0,

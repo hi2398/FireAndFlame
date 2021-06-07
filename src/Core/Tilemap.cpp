@@ -20,9 +20,9 @@ Tilemap::Tilemap(const std::string& tileDescription, const std::string& levelDes
 
 void Tilemap::Draw() {
     int worldIndex{0};
-for(const auto& x : tileRecs){
-    DrawTextureRec(tileAtlasTexture, x, *(tileWorldPos.begin()+worldIndex), WHITE);
-    ++worldIndex;
+    for(const auto& x : tileRecs){
+        DrawTextureRec(tileAtlasTexture, x, *(tileWorldPos.begin()+worldIndex), WHITE);
+        ++worldIndex;
     }
 }
 
@@ -40,17 +40,21 @@ void Tilemap::InitTileRecs() {
                     tileRecs.push_back(Rectangle{tilemapPos.x,tilemapPos.y,levelDescription["tilewidth"], levelDescription["tileheight"]});
                 }
 
+                if(tileId!=0) {
+                    tileWorldPos.push_back(worldPos);
+                    std::cout << "WorldPOS " << worldPos.x << " " << worldPos.y << "\n";
+                }
                 worldPos.x += (float) levelDescription["tilewidth"];
                 if (worldPos.x >= (float) layer["width"] * (float) levelDescription["tilewidth"]) {
                     worldPos.x = 0;
                     worldPos.y += (float) levelDescription["tileheight"];
                 }
-
-                if(tileId!=0) {
-                    tileWorldPos.push_back(worldPos);
-                    std::cout << "WorldPOS " << worldPos.x << " " << worldPos.y << "\n";
-                }
             }
         }
     }
+
+}
+
+const std::vector<Vector2> &Tilemap::GetWorldPos() const {
+    return tileWorldPos;
 }
