@@ -1,8 +1,6 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Global.h"
-#include "../Core/Interactable.cpp"
-#include "../Core/Coal.cpp"
 
 void NeutralArea::Update() {
 
@@ -12,7 +10,7 @@ void NeutralArea::Update() {
     else {
         playerCharacter->isGrounded = false;
     }
-    if (coals->GetEnabled() == true)
+    if (coals->GetEnabled())
     {
         if (CheckCollisionRecs(ground, coals->GetHitbox()))
         {

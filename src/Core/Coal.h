@@ -19,13 +19,13 @@ public:
 	void SetPosition(Vector2 pPos);
 	void SetTexture(Texture2D pTexture);
 	void SetGrounded(bool pIsGroudned);
-	bool GetGrounded();
-	bool GetEnabled();
+	bool GetGrounded() const;
+	bool GetEnabled() const;
 	void SetEnabled(bool pEnabled);
 	Rectangle GetHitbox();
-	void Update();
-	void Draw();
-	~Coal();
+	void Update() override;
+	void Draw() override;
+	~Coal() override;
 
 private:
 	int aFuel = 10;
@@ -34,7 +34,7 @@ private:
 	Rectangle aHitbox{};
 	bool aisGounded = false;
 	bool aEnabled = false;
-	int aFallSpeed = 1.5;
-	int aGravityMultiplyer = 1.5;
+	float aFallSpeed = 1.5f;
+	float aGravityMultiplyer = 1.5f;
 };
 
