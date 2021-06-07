@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "raylib.h"
 
 class PlayerCharacter : public Actor {
 public:

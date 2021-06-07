@@ -1,5 +1,6 @@
 #pragma once
 #include "../Core/Scene.h"
+#include "raylib.h"
 #include "../Core/Enemy.h"
 #include <vector>
 
