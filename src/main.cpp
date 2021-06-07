@@ -30,7 +30,7 @@ int main() {
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
@@ -59,7 +59,7 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-        
+        ClearBackground(BLACK);
 
         sceneManager->Tick();
 		
