@@ -10,6 +10,7 @@ public:
 protected:
 
 private:
+    Texture2D textureFire;
     Rectangle healthBar = {0};
 };
 
