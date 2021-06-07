@@ -1,8 +1,6 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Global.h"
-#include "../Core/Interactable.cpp"
-#include "../Core/Coal.cpp"
 
 void NeutralArea::Update() {
     //decrease player health every second
@@ -19,8 +17,9 @@ void NeutralArea::Update() {
     else {
         playerCharacter->isGrounded = false;
     }
+
     //coal X player && coal X ground collision
-    if (coals->GetEnabled() == true)
+    if (coals->GetEnabled())
     {
 		coals->Update();
         if (CheckCollisionRecs(ground, coals->GetHitbox()))
