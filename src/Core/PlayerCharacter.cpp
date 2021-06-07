@@ -75,6 +75,7 @@ void PlayerCharacter::Jump() {
 }
 
 void PlayerCharacter::RunJump() {
+    std::cout << "Player " << isGrounded << "\n";
 	if (isGrounded) {
 		if (isAirborne)isJumping = false, isAirborne = false;
 		jumpState = 0;

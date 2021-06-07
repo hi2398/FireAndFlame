@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include <iostream>
 
 class PlayerCharacter : public Actor {
 public:
