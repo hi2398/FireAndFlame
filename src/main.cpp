@@ -6,7 +6,7 @@
 #include "config.h"
 #include "helper.h"
 #include "Core/SceneManager.h"
-#include "Scenes/MainMenu.h"
+#include "Scenes/NeutralArea.h"
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
 std::shared_ptr<PlayerController> playerController;
