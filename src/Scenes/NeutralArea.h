@@ -7,7 +7,8 @@
 
 class NeutralArea : public Scene {
 public:
-    NeutralArea();
+    NeutralArea() = default;
+ 
     void Update() override;
     void Draw() override;
     ~NeutralArea() override = default;
@@ -22,5 +23,6 @@ private:
     Rectangle ground = { -1000, 40, 2100, 300};
     int coalTimer=30;
     int generalTimer = 0;
+
 };
 

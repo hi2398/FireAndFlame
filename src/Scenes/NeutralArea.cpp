@@ -56,8 +56,11 @@ void NeutralArea::Update() {
     }
 }
 
+
+
 void NeutralArea::Draw() {
-    ClearBackground(LIGHTGRAY);
+	ClearBackground(LIGHTGRAY);
+
     for (int i = 0; i < 7;  i++) {
         DrawRectangle(-1000 + i * 300, 40, 100, 300, GRAY);
         DrawRectangle(-900 + i * 300, 40, 100, 300, BROWN);
@@ -67,11 +70,5 @@ void NeutralArea::Draw() {
         x->Draw();
     }
     coals->Draw();
-    /*for (const auto& i : coals) {
-        i->Draw();
-    }*/
-}
-
-NeutralArea::NeutralArea() {
     
 }
