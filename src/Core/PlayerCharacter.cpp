@@ -19,6 +19,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 void PlayerCharacter::Update() {
 	//health cap
 	if (health >= 100) health = 100;
+	if (health <= 0) health = 0;
 	
 	//attack reset
 	if (attackState > 0) {
@@ -58,6 +59,7 @@ void PlayerCharacter::Draw() {
 
 void PlayerCharacter::Move(int direction) {
 	vectorPlayer.x += 3.0f * direction;
+	
 }
 
 void PlayerCharacter::Jump() {
