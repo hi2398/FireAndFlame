@@ -1,8 +1,6 @@
 #include "SceneManager.h"
 #include <iostream>
 
-#include "SceneManager.h"
-
 
 SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
                            activeScene(std::move(initialScene)) {
