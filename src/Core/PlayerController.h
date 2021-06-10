@@ -1,5 +1,6 @@
 #pragma once
 
+
 class PlayerController {
 public:
     void HandleInput();
@@ -10,6 +11,7 @@ protected:
 private:
     const int right = 1;
     const int left = -1;
+
 };
 
 

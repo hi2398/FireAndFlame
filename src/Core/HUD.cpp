@@ -3,7 +3,7 @@
 
 HUD::HUD() {
     textureFire = LoadTexture("assets/graphics/Fire.png");
-    healthBar = {10,10, 100, 10};
+    healthBar = {10,10, 100, 20};
 }
 
 void HUD::UpdateHUD() {
@@ -16,5 +16,5 @@ void HUD::DrawHUD() {
 		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
     }
     DrawRectangleLines(healthBar.x, healthBar.y, 200, healthBar.height, BLACK);
-    if (healthBar.width > 0) DrawTexture(textureFire, healthBar.width, healthBar.y - 5, WHITE);
+    if (healthBar.width > 0) DrawTextureEx(textureFire, { healthBar.width - textureFire.width/2, healthBar.y - 10 }, 0.0f, 2.0f, WHITE);
 }
