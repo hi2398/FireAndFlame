@@ -6,16 +6,7 @@
 #include "config.h"
 #include "helper.h"
 #include "Core/SceneManager.h"
-#include "Scenes/MainMenu.h"
-//This is absolutely not what should be here but otherwise it doesn't work and no one knows why
-#include "Core/Object.cpp"
-#include "Core/Actor.cpp"
-#include "Core/SceneManager.cpp"
-#include "Scenes/MainMenu.cpp"
-#include "Core/PlayerCharacter.cpp"
-#include "Core/HUD.cpp"
-#include "Core/PlayerController.cpp"
-
+#include "Scenes/NeutralArea.h"
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
 std::shared_ptr<PlayerController> playerController;
@@ -39,7 +30,7 @@ int main() {
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
@@ -68,7 +59,7 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-        
+        ClearBackground(BLACK);
 
         sceneManager->Tick();
 		

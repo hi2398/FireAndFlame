@@ -7,11 +7,14 @@ Coal::Coal()
 
 void Coal::Interact()
 {
-	if (aEnabled == true)
+	if (aEnabled)
 	{
-		playerCharacter->SetHealth(playerCharacter->GetHealth() + aFuel);
+		if (playerCharacter->GetHealth() <= 90) playerCharacter->SetHealth(playerCharacter->GetHealth() + aFuel);
+		else {
+			playerCharacter->SetHealth(100);
+		}
 		aEnabled = false;
-		aFallSpeed = 1.5*aGravityMultiplyer;
+		aFallSpeed = 1.5f*aGravityMultiplyer;
 	}
 }
 
@@ -30,12 +33,12 @@ void Coal::SetGrounded(bool pIsGroudned)
 	aisGounded = pIsGroudned;
 }
 
-bool Coal::GetGrounded()
+bool Coal::GetGrounded() const
 {
 	return aisGounded;
 }
 
-bool Coal::GetEnabled()
+bool Coal::GetEnabled() const
 {
 	return aEnabled;
 }
@@ -56,20 +59,20 @@ Rectangle Coal::GetHitbox()
 void Coal::Update()
 {
 	if (!aisGounded)
-	{	//Wenn es nicht Am Boden ist, fällt es runter
+	{	//Wenn es nicht Am Boden ist, fï¿½llt es runter
 		aPos.y += aFallSpeed;
 		aFallSpeed += 0.1f;
 	}
-	aHitbox.width = aTexture.width;
+	aHitbox.width = aTexture.width - 6;
 	aHitbox.height = aTexture.height;
-	aHitbox.x = aPos.x;
+	aHitbox.x = aPos.x + 3;
 	aHitbox.y = aPos.y;
 
 }
 
 void Coal::Draw()
 {
-	if (aEnabled == true)
+	if (aEnabled)
 	{
 		DrawTexture(aTexture, aPos.x, aPos.y, WHITE);
 	}

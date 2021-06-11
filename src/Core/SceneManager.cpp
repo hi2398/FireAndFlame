@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include "SceneManager.h"
+#include <iostream>
 
 
 SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
@@ -9,20 +8,28 @@ SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
 }
 
 void SceneManager::Tick() {
+    
     BeginMode2D(playerCharacter->camera);
-    activeScene=nextScene;
+	activeScene = nextScene;
+    background->Draw();
     playerController->HandleInput();
+	activeScene->Update();
+	activeScene->Draw();
     if (playerCharacter->visible) {
 		playerCharacter->Update();
 		playerCharacter->Draw();
-    }
-    activeScene->Update();
-    activeScene->Draw();
-    hud->UpdateHUD();
-    hud->DrawHUD();
+    }    
     EndMode2D();
+
+    hud->UpdateHUD();
+	hud->DrawHUD();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
     this->nextScene=std::move(nextScene);
+}
+
+void SceneManager::SceneParallax(int direction)
+{
+    background->Parallax(direction);
 }

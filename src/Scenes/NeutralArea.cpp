@@ -1,19 +1,36 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Global.h"
-#include "../Core/Interactable.cpp"
-#include "../Core/Coal.cpp"
+
+
+NeutralArea::NeutralArea() {
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Map_2.json");
+}
 
 void NeutralArea::Update() {
+    //decrease player health every second
+    generalTimer++;
+    if (generalTimer >= 30) {
+        generalTimer = 0;
+        playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+    }
 
-    if (CheckCollisionRecs(ground, playerCharacter->playerHitbox)) {
-        playerCharacter->isGrounded = true;
+    Rectangle tempVec = {0,0,32,32};
+    for(const auto& x: tilemap->GetWorldPos()){
+        tempVec.x = x.x;
+        tempVec.y = x.y;
+        if(CheckCollisionRecs(tempVec, playerCharacter->playerHitbox)) {
+            playerCharacter->isGrounded = true;
+            break;
+        }else {
+            playerCharacter->isGrounded = false;
+        }
     }
-    else {
-        playerCharacter->isGrounded = false;
-    }
-    if (coals->GetEnabled() == true)
+
+    //coal X player && coal X ground collision
+    if (coals->GetEnabled())
     {
+		coals->Update();
         if (CheckCollisionRecs(ground, coals->GetHitbox()))
         {
             coals->SetGrounded(true);
@@ -26,21 +43,21 @@ void NeutralArea::Update() {
         {
             coals->Interact();
         }
-        coals->Update();
+        
     }
     else
     {
-        if (Coaltimer == 0) {
+        if (coalTimer == 0) {
             Vector2 pStartVectorCoal;
             pStartVectorCoal.x = 100;
             pStartVectorCoal.y = -50;
             coals->SetPosition(pStartVectorCoal);
             coals->SetEnabled(true);
-            Coaltimer = 60;
+            coalTimer = 60;
         }
         else
         {
-            Coaltimer--;
+            coalTimer--;
         }
     }
     for (const auto& x: enemies) {
@@ -48,22 +65,18 @@ void NeutralArea::Update() {
     }
 }
 
+
+
 void NeutralArea::Draw() {
-    ClearBackground(LIGHTGRAY);
-    for (int i = 0; i < 7;  i++) {
-        DrawRectangle(-1000 + i * 300, 40, 100, 300, GRAY);
-        DrawRectangle(-900 + i * 300, 40, 100, 300, BROWN);
-        DrawRectangle(-800 + i * 300, 40, 100, 300, MAROON);
-    }
+
+ 
     for (const auto& x: enemies) {
         x->Draw();
     }
     coals->Draw();
+
     /*for (const auto& i : coals) {
         i->Draw();
     }*/
-}
-
-NeutralArea::NeutralArea() {
-    
+    tilemap->Draw();
 }
