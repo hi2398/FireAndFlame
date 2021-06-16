@@ -48,8 +48,9 @@ void Tilemap::InitTileRecs() {
                 }
             }
         }
+        worldPos.x = 0;
+        worldPos.y = 0;
     }
-
 }
 
 const std::vector<Vector2> &Tilemap::GetWorldPos() const {

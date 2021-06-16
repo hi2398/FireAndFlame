@@ -8,7 +8,7 @@
 
 class NeutralArea : public Scene {
 public:
-    NeutralArea() = default;
+    NeutralArea();
  
     void Update() override;
     void Draw() override;
