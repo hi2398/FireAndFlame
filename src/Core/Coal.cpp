@@ -74,7 +74,7 @@ void Coal::Draw()
 {
 	if (aEnabled)
 	{
-		DrawTexture(aTexture, aPos.x, aPos.y, WHITE);
+		DrawTexture(aTexture, aPos.x, aPos.y+500, WHITE);
 	}
 }
 
