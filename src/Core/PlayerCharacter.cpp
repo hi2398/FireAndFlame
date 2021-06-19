@@ -1,10 +1,6 @@
-//
-// Created by Adrian on 27/05/2021.
-//
-// test push 05062021
-
 #include "PlayerCharacter.h"
 #include "raylib.h"
+#include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
@@ -41,14 +37,14 @@ void PlayerCharacter::Update() {
 
 void PlayerCharacter::Draw() {
 		//draw player
-		DrawTexture(texturePlayer, vectorPlayer.x, vectorPlayer.y, WHITE);
+		DrawTexture(texturePlayer, static_cast<int>(vectorPlayer.x), static_cast<int>(vectorPlayer.y), WHITE);
 		//Draw Attacks (Hitboxes)
 		if (isSwiping) {
 			DrawRectanglePro(spearHitbox, { 10, 0 }, spearRotation, RED);
 		}
 
 		if (isShootingFireball) {
-			DrawCircle(vectorFireball.x, vectorFireball.y, 8.0f, RED);
+			DrawCircle(static_cast<int>(vectorFireball.x), static_cast<int>(vectorFireball.y), 8.0f, RED);
 		}
 
 		if (isCharged) {
@@ -57,6 +53,7 @@ void PlayerCharacter::Draw() {
 }
 
 void PlayerCharacter::Move(int direction) {
+    //TODO: Change direction from int to something else
 	vectorPlayer.x += 3.0f * direction;
 }
 
@@ -73,6 +70,7 @@ void PlayerCharacter::Jump() {
 		if (jumpState < 2) verticalSpeed = -5.0f;
 		break;
 	default:
+        throw std::runtime_error("unexpected jump type in PlayerCharacter");
 		break;
 	}
 	
@@ -82,11 +80,11 @@ void PlayerCharacter::RunJump() {
 	if (isGrounded) {
 		if (isAirborne)isJumping = false, isAirborne = false;
 		jumpState = 0;
-		vectorPlayer.y = 40.0f - texturePlayer.height + 1.0f;
+		vectorPlayer.y = 40.0f - static_cast<float>(texturePlayer.height) + 1.0f;
 	}
 
 	if (isJumping && isGrounded) {
-		vectorPlayer.y = 40.0f - texturePlayer.height;
+		vectorPlayer.y = 40.0f - static_cast<float>(texturePlayer.height);
 		isAirborne = true;
 	}
 

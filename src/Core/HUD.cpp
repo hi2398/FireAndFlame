@@ -7,7 +7,7 @@ HUD::HUD() {
 }
 
 void HUD::UpdateHUD() {
-    healthBar.width = playerCharacter->GetHealth() * 2;
+    healthBar.width = static_cast<float>(playerCharacter->GetHealth() * 2);
 }
 
 void HUD::DrawHUD() {
