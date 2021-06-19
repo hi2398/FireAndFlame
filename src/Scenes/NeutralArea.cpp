@@ -65,12 +65,16 @@ void NeutralArea::Update() {
     }
 }
 
+
+
 void NeutralArea::Draw() {
-    ClearBackground(LIGHTGRAY);
+
+ 
     for (const auto& x: enemies) {
         x->Draw();
     }
     coals->Draw();
+
     /*for (const auto& i : coals) {
         i->Draw();
     }*/

@@ -1,3 +1,4 @@
+#include "MainMenu.h"
 #include <memory>
 #include "MainMenu.h"
 #include "raylib.h"
