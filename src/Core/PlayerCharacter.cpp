@@ -82,7 +82,7 @@ void PlayerCharacter::RunJump() {
 	if (isGrounded) {
 		if (isAirborne)isJumping = false, isAirborne = false;
 		jumpState = 0;
-		vectorPlayer.y = 40.0f - static_cast<float>(texturePlayer.height) + 1.0f;
+		vectorPlayer.y = 991.5f - static_cast<float>(texturePlayer.height) + 1.0f;
 	}
 
 	if (isJumping && isGrounded) {

@@ -74,7 +74,7 @@ void Coal::Draw()
 {
 	if (aEnabled)
 	{
-		DrawTexture(aTexture, static_cast<int>(aPos.x), static_cast<int>(aPos.y), WHITE);
+		DrawTexture(aTexture, static_cast<int>(aPos.x), static_cast<int>(aPos.y)+500, WHITE);
 	}
 }
 
