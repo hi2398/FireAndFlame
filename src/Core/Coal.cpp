@@ -28,14 +28,14 @@ void Coal::SetTexture(Texture2D pTexture)
 	aTexture = pTexture;
 }
 
-void Coal::SetGrounded(bool pIsGroudned)
+void Coal::SetGrounded(bool pIsGrounded)
 {
-	aisGounded = pIsGroudned;
+    aisGrounded = pIsGrounded;
 }
 
 bool Coal::GetGrounded() const
 {
-	return aisGounded;
+	return aisGrounded;
 }
 
 bool Coal::GetEnabled() const
@@ -58,13 +58,13 @@ Rectangle Coal::GetHitbox()
 
 void Coal::Update()
 {
-	if (!aisGounded)
-	{	//Wenn es nicht Am Boden ist, f�llt es runter
+	if (!aisGrounded)
+	{	//Wenn es nicht Am Boden ist, faellt es runter
 		aPos.y += aFallSpeed;
 		aFallSpeed += 0.1f;
 	}
-	aHitbox.width = aTexture.width - 6;
-	aHitbox.height = aTexture.height;
+	aHitbox.width = static_cast<float>(aTexture.width - 6);
+	aHitbox.height = static_cast<float>(aTexture.height);
 	aHitbox.x = aPos.x + 3;
 	aHitbox.y = aPos.y;
 
@@ -74,7 +74,7 @@ void Coal::Draw()
 {
 	if (aEnabled)
 	{
-		DrawTexture(aTexture, aPos.x, aPos.y+500, WHITE);
+		DrawTexture(aTexture, static_cast<int>(aPos.x), static_cast<int>(aPos.y)+500, WHITE);
 	}
 }
 

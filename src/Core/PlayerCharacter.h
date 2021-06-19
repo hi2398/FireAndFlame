@@ -63,7 +63,7 @@ private:
     //attack
     Vector2 vectorFireball = {0};
     Rectangle spearHitbox = {0,0,40,5};
-    int spearRotation = 300;
+    float spearRotation = 300;
     int stabbingDistance = 0;
     bool isSwiping = false;
     bool isCharged = false;

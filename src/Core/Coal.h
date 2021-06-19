@@ -18,7 +18,7 @@ public:
 	void Interact()override;
 	void SetPosition(Vector2 pPos);
 	void SetTexture(Texture2D pTexture);
-	void SetGrounded(bool pIsGroudned);
+	void SetGrounded(bool pIsGrounded);
 	bool GetGrounded() const;
 	bool GetEnabled() const;
 	void SetEnabled(bool pEnabled);
@@ -32,7 +32,7 @@ private:
 	Texture2D aTexture{};
 	Vector2 aPos{};
 	Rectangle aHitbox{};
-	bool aisGounded = false;
+	bool aisGrounded = false;
 	bool aEnabled = false;
 	float aFallSpeed = 1.5f;
 	float aGravityMultiplyer = 1.5f;
