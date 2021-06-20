@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "Scene.h"
-#include "../Data/PlayerCharacter.h"
+#include "../Data/Player/PlayerCharacter.h"
 #include "PlayerController.h"
 #include "../Data/HUD.h"
 #include "BackgroundManager.h"
