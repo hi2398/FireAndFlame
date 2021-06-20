@@ -1,5 +1,6 @@
 #include "PlayerCharacter.h"
 #include "raylib.h"
+#include "PlayerObserver.h"
 #include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
@@ -9,6 +10,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	camera.offset = { 640, 360 };
 	camera.rotation = 0.0f;
 	camera.zoom = 2.0f;
+	observer=std::make_shared<PlayerObserver>(*this);
 }
 
 
@@ -235,4 +237,8 @@ Vector2 PlayerCharacter::SetPosition(Vector2 newPosition)
 {
 	this->vectorPlayer = newPosition;
 	return vectorPlayer;
+}
+
+Observer& PlayerCharacter::GetObserver() const {
+    return *observer;
 }

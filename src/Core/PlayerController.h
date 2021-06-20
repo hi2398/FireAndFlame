@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Observer/Subject.h"
 
-class PlayerController {
+class PlayerController : public Subject {
 public:
+    PlayerController();
     void HandleInput();
-    ~PlayerController() = default;
+    ~PlayerController();
  
 protected:
 

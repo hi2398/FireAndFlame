@@ -1,9 +1,9 @@
 #pragma once
 #include <memory>
 #include "Scene.h"
-#include "PlayerCharacter.h"
+#include "../Data/Player/PlayerCharacter.h"
 #include "PlayerController.h"
-#include "HUD.h"
+#include "../Data/HUD.h"
 #include "BackgroundManager.h"
 
 extern std::shared_ptr<PlayerCharacter> playerCharacter;
