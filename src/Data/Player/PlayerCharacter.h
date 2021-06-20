@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Core/Actor.h"
 #include "raylib.h"
+#include "../../Core/Observer/Observer.h"
 #include <iostream>
 
 class PlayerCharacter : public Actor {
@@ -9,6 +10,8 @@ public:
     void Draw() override;
     void Update() override;
     ~PlayerCharacter() override = default;
+
+    Observer& GetObserver() const;
 
     void Jump();
     void RunJump();
@@ -76,6 +79,8 @@ private:
     bool attackCommand = false;
     bool chargedAttackCommand = false;
     bool fireballCommand = false;
+
+    std::shared_ptr<Observer> observer;
 };
 
 

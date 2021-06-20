@@ -5,12 +5,12 @@
 
 class Observer {
 public:
-    Observer();
+    Observer(Actor& actor);
     virtual ~Observer();
-    virtual void OnNotify(const Actor& actor, Event event) = 0;
+    virtual void OnNotify(Event event) = 0;
 
 protected:
-
+    Actor& owner;
 private:
 
 };
