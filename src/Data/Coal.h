@@ -1,5 +1,5 @@
 #pragma once
-#include "Interactable.h"
+#include "../Core/Interactable.h"
 #include "raylib.h"
 #include "../Global.h"
 #include <iostream>
