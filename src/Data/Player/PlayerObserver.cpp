@@ -18,7 +18,8 @@ void PlayerObserver::OnNotify(Event event) {
             playerCharacter->Move(3.f);
             break;
         case Event::JUMP:
-            playerCharacter->Jump();
+            //TODO: implement jump
+            // playerCharacter->Jump();
             break;
     }
 }

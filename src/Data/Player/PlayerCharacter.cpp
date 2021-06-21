@@ -1,7 +1,6 @@
 #include "PlayerCharacter.h"
 #include "raylib.h"
 #include "PlayerObserver.h"
-#include "Grounded.h"
 #include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
