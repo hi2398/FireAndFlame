@@ -30,7 +30,6 @@ public:
 private:
 	int aFuel = 10;
 	Texture2D aTexture{};
-	Vector2 aPos{};
 	Rectangle aHitbox{};
 	bool aisGrounded = false;
 	bool aEnabled = false;

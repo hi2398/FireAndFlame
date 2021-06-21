@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "ObjectTypes.h"
+#include "raylib.h"
 
 class Object : public std::enable_shared_from_this<Object> {
 public:
@@ -11,8 +12,10 @@ public:
     virtual ~Object() = default;
 
 protected:
+    Vector2 GetPosition() const;
+    void SetPosition(Vector2 position);
     ObjectTypes type;
-
+    Vector2 position{};
 private:
 
 };
