@@ -2,6 +2,7 @@
 #include "../../Core/Actor.h"
 #include "raylib.h"
 #include "../../Core/Observer/Observer.h"
+#include "../../Core/State.h"
 #include <iostream>
 
 class PlayerCharacter : public Actor {
@@ -12,9 +13,6 @@ public:
     ~PlayerCharacter() override = default;
 
     Observer& GetObserver() const;
-
-    void Jump();
-    void RunJump();
 
     void Attack();
     void RunAttack();
@@ -27,7 +25,6 @@ public:
     void ChargedAttack();
     void RunChargedAttack();
 
-    void Move(int direction);
 
     int GetHealth() const;
     void SetHealth(int health);
@@ -49,15 +46,6 @@ private:
     int health{100};
     //player
     Texture2D texturePlayer;
-
-    //jump&fall
-    
-    bool canDoubleJump = true;
-    int jumpState = 0;
-    float verticalSpeed = 3.0f;
-    bool isJumping = false;
-    bool isAirborne = false;
-    float gravityMultiplier = 1.5f;
 
     //attack
     Vector2 vectorFireball = {0};

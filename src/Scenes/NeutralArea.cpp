@@ -61,7 +61,7 @@ void NeutralArea::Update() {
         }
     }
     for (const auto& x: enemies) {
-    x->Update();
+        x->Update(<#initializer#>);
     }
 }
 

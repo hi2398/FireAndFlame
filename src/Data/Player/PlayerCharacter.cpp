@@ -1,6 +1,7 @@
 #include "PlayerCharacter.h"
 #include "raylib.h"
 #include "PlayerObserver.h"
+#include "Grounded.h"
 #include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
@@ -34,7 +35,6 @@ void PlayerCharacter::Update() {
 	this->RunAttack();
 	this->RunChargedAttack();
 	this->RunFireball();
-	this->RunJump();
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 }
@@ -56,49 +56,8 @@ void PlayerCharacter::Draw() {
 		}
 }
 
-void PlayerCharacter::Move(int direction) {
-    //TODO: Change direction from int to something else
-	position.x += 3.0f * direction;
-	
-}
 
-void PlayerCharacter::Jump() {
-	if (isGrounded) position.y = 8.00f;
-	isJumping = true;
-	jumpState++;
-	switch (canDoubleJump)
-	{
-	case 0: //simple Jump
-		if (jumpState < 1) verticalSpeed = -5.0f;
-		break;
-	case 1: //double Jump
-		if (jumpState < 2) verticalSpeed = -5.0f;
-		break;
-	default:
-        throw std::runtime_error("unexpected jump type in PlayerCharacter");
-		break;
-	}
-	
-}
 
-void PlayerCharacter::RunJump() {
-	if (isGrounded) {
-		if (isAirborne)isJumping = false, isAirborne = false;
-		jumpState = 0;
-		position.y = 991.5f - static_cast<float>(texturePlayer.height) + 1.0f;
-	}
-
-	if (isJumping && isGrounded) {
-		position.y = 40.0f - static_cast<float>(texturePlayer.height);
-		isAirborne = true;
-	}
-
-	if (!isGrounded) {
-		position.y += verticalSpeed;
-		verticalSpeed += 0.1f * gravityMultiplier;
-	}
-
-}
 
 void PlayerCharacter::Attack() {
 	attackCommand = true;

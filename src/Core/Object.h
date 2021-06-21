@@ -8,12 +8,12 @@ public:
     explicit Object(ObjectTypes type);
     virtual void Update() = 0;
     virtual void Draw() = 0;
+    Vector2 GetPosition() const;
+    void SetPosition(Vector2 position);
     [[nodiscard]] ObjectTypes GetType() const;
     virtual ~Object() = default;
 
 protected:
-    Vector2 GetPosition() const;
-    void SetPosition(Vector2 position);
     ObjectTypes type;
     Vector2 position{};
 private:

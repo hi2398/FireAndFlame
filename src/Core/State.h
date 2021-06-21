@@ -1,10 +1,13 @@
 #pragma once
 
+#include <memory>
+#include "Actor.h"
+
 class State {
 public:
 
-    virtual void Update() = 0;
-    virtual ~State() = default,
+    virtual std::unique_ptr <State> Update(Actor &actor) = 0;
+    virtual ~State() = default;
 protected:
 
 private:

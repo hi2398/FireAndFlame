@@ -18,10 +18,6 @@ void Coal::Interact()
 	}
 }
 
-void Coal::SetPosition(Vector2 pPos)
-{
-	position = pPos;
-}
 
 void Coal::SetTexture(Texture2D pTexture)
 {
