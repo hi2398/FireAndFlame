@@ -32,9 +32,6 @@ public:
     int GetHealth() const;
     void SetHealth(int health);
 
-    Vector2 GetPosition() const;
-    Vector2 SetPosition(Vector2 newPosition);
-
 	//2Dcam
 	Camera2D camera = { 0 };
 
@@ -52,7 +49,6 @@ private:
     int health{100};
     //player
     Texture2D texturePlayer;
-    Vector2 vectorPlayer = { 0 };
 
     //jump&fall
     

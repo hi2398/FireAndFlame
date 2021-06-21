@@ -11,3 +11,11 @@ ObjectTypes Object::GetType() const {
 Object::Object(ObjectTypes type) : type(type) {
 
 }
+
+Vector2 Object::GetPosition() const {
+    return position;
+}
+
+void Object::SetPosition(Vector2 position) {
+    this->position=position;
+}
