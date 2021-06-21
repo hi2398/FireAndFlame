@@ -16,6 +16,8 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 void PlayerCharacter::Update() {
     lastTickPos=position;
+    movementState.Update(*this);
+    actionState.Update(*this);
 	//health cap
 	if (health >= 100) health = 100;
 	if (health <= 0) health = 0;

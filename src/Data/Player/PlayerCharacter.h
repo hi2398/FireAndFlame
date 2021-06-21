@@ -3,6 +3,8 @@
 #include "raylib.h"
 #include "../../Core/Observer/Observer.h"
 #include "../../Core/State.h"
+#include "MovementState.h"
+#include "ActionState.h"
 #include <iostream>
 
 class PlayerCharacter : public Actor {
@@ -65,6 +67,8 @@ private:
     bool fireballCommand = false;
 
     std::shared_ptr<Observer> observer;
+    MovementState movementState;
+    ActionState actionState;
 };
 
 

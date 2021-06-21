@@ -3,10 +3,10 @@
 #include <memory>
 #include "Actor.h"
 
-class State {
+class State : public std::enable_shared_from_this<State> {
 public:
 
-    virtual std::unique_ptr <State> Update(Actor &actor) = 0;
+    virtual std::shared_ptr<State> Update(Actor &actor) = 0;
     virtual ~State() = default;
 protected:
 
