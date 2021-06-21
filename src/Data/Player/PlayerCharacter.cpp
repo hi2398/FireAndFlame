@@ -11,13 +11,15 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	camera.rotation = 0.0f;
 	camera.zoom = 2.0f;
 	observer=std::make_shared<PlayerObserver>(*this);
+	movementState=std::make_shared<MovementState>();
+	actionState=std::make_shared<ActionState>();
 }
 
 
 void PlayerCharacter::Update() {
     lastTickPos=position;
-    movementState.Update(*this);
-    actionState.Update(*this);
+    movementState=movementState->Update(*this);
+    actionState=actionState->Update(*this);
 	//health cap
 	if (health >= 100) health = 100;
 	if (health <= 0) health = 0;

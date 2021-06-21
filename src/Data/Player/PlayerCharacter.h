@@ -67,8 +67,8 @@ private:
     bool fireballCommand = false;
 
     std::shared_ptr<Observer> observer;
-    MovementState movementState;
-    ActionState actionState;
+    std::shared_ptr<State> movementState;
+    std::shared_ptr<State> actionState;
 };
 
 
