@@ -2,11 +2,11 @@
 
 #include "../../Core/State.h"
 
-class MovingSubState : public State{
+class IdleGroundedSubState : public State {
 public:
     std::shared_ptr <State> Update(Actor &actor) override;
 
-    ~MovingSubState() override = default;
+    ~IdleGroundedSubState() override = default;
 
 protected:
 

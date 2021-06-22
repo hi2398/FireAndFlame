@@ -17,3 +17,7 @@ void Actor::Move(float distance) {
 Direction Actor::GetDirection() const {
     return direction;
 }
+
+bool Actor::IsGrounded() {
+    return grounded;
+}

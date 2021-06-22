@@ -17,7 +17,6 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
-    lastTickPos=position;
     movementState=movementState->Update(*this);
     actionState=actionState->Update(*this);
 	//health cap
@@ -40,6 +39,9 @@ void PlayerCharacter::Update() {
 	this->RunFireball();
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
+
+
+    lastTickPos=position;
 }
 
 void PlayerCharacter::Draw() {

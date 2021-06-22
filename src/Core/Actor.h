@@ -16,11 +16,12 @@ public:
     void Move(float distance);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
+    bool IsGrounded();
 
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
-
+    bool grounded{true};
 
 
 private:
