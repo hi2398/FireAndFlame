@@ -1,7 +1,7 @@
 #pragma once
-#include "../Core/Interactable.h"
 #include "raylib.h"
 #include "../Global.h"
+#include "../Core/Interactable.h"
 #include <iostream>
 
 /*This Class was made by Robin. Therefore following prefixes apply:
@@ -11,12 +11,11 @@ For a Parameter the prefix "p" applies
 
 
 
-class Coal:public Interactable
+class Coal : public Interactable
 {
 public:
 	Coal();
 	void Interact()override;
-	void SetPosition(Vector2 pPos);
 	void SetTexture(Texture2D pTexture);
 	void SetGrounded(bool pIsGrounded);
 	bool GetGrounded() const;
