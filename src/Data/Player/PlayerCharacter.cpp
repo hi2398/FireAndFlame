@@ -1,18 +1,24 @@
 #include "PlayerCharacter.h"
 #include "raylib.h"
+#include "PlayerObserver.h"
 #include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
 
-	camera.target = { vectorPlayer.x + 20.0f, vectorPlayer.y + 20.0f };
+	camera.target = { position.x + 20.0f, position.y + 20.0f };
 	camera.offset = { 640, 360 };
 	camera.rotation = 0.0f;
 	camera.zoom = 2.0f;
+	observer=std::make_shared<PlayerObserver>(*this);
+	movementState=std::make_shared<MovementState>();
+	actionState=std::make_shared<ActionState>();
 }
 
 
 void PlayerCharacter::Update() {
+    movementState=movementState->Update(*this);
+    actionState=actionState->Update(*this);
 	//health cap
 	if (health >= 100) health = 100;
 	if (health <= 0) health = 0;
@@ -23,22 +29,24 @@ void PlayerCharacter::Update() {
 		if (resetAttack >= 90) attackState = 0, spearRotation = 300;
 	}
 	//player hitbox update
-	playerHitbox = { (float)vectorPlayer.x + 6, (float)vectorPlayer.y, 20, 32 };
+	playerHitbox = { (float)position.x + 6, (float)position.y, 20, 32 };
 
 	//spear follows player
-	spearHitbox.x = vectorPlayer.x + 25.0f;
-	spearHitbox.y = vectorPlayer.y + 11.0f;
+	spearHitbox.x = position.x + 25.0f;
+	spearHitbox.y = position.y + 11.0f;
 	this->RunAttack();
 	this->RunChargedAttack();
 	this->RunFireball();
-	this->RunJump();
 	//camera update
-	camera.target = { vectorPlayer.x + 20.0f, vectorPlayer.y + 20.0f };
+	camera.target = { position.x + 20.0f, position.y + 20.0f };
+
+
+    lastTickPos=position;
 }
 
 void PlayerCharacter::Draw() {
 		//draw player
-		DrawTexture(texturePlayer, static_cast<int>(vectorPlayer.x), static_cast<int>(vectorPlayer.y), WHITE);
+		DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
 		//Draw Attacks (Hitboxes)
 		if (isSwiping) {
 			DrawRectanglePro(spearHitbox, { 10, 0 }, spearRotation, RED);
@@ -53,49 +61,8 @@ void PlayerCharacter::Draw() {
 		}
 }
 
-void PlayerCharacter::Move(int direction) {
-    //TODO: Change direction from int to something else
-	vectorPlayer.x += 3.0f * direction;
-	
-}
 
-void PlayerCharacter::Jump() {
-	if (isGrounded) vectorPlayer.y = 8.00f;
-	isJumping = true;
-	jumpState++;
-	switch (canDoubleJump)
-	{
-	case 0: //simple Jump
-		if (jumpState < 1) verticalSpeed = -5.0f;
-		break;
-	case 1: //double Jump
-		if (jumpState < 2) verticalSpeed = -5.0f;
-		break;
-	default:
-        throw std::runtime_error("unexpected jump type in PlayerCharacter");
-		break;
-	}
-	
-}
 
-void PlayerCharacter::RunJump() {
-	if (isGrounded) {
-		if (isAirborne)isJumping = false, isAirborne = false;
-		jumpState = 0;
-		vectorPlayer.y = 991.5f - static_cast<float>(texturePlayer.height) + 1.0f;
-	}
-
-	if (isJumping && isGrounded) {
-		vectorPlayer.y = 40.0f - static_cast<float>(texturePlayer.height);
-		isAirborne = true;
-	}
-
-	if (!isGrounded) {
-		vectorPlayer.y += verticalSpeed;
-		verticalSpeed += 0.1f * gravityMultiplier;
-	}
-
-}
 
 void PlayerCharacter::Attack() {
 	attackCommand = true;
@@ -165,8 +132,8 @@ void PlayerCharacter::RunAttack() {
 void PlayerCharacter::Fireball() {
 	fireballCommand = true;
 	if (!isShootingFireball) {
-		vectorFireball.x = vectorPlayer.x + 25;
-		vectorFireball.y = vectorPlayer.y + 11;
+		vectorFireball.x = position.x + 25;
+		vectorFireball.y = position.y + 11;
 	}
 	
 }
@@ -176,7 +143,7 @@ void PlayerCharacter::RunFireball() {
 		isShootingFireball = true;
 		if (isShootingFireball) {
 			vectorFireball.x += 10.0f;
-			if (vectorFireball.x > ((float)GetScreenWidth() / 2) + vectorPlayer.x) isShootingFireball = false, fireballCommand = false;
+			if (vectorFireball.x > ((float)GetScreenWidth() / 2) + position.x) isShootingFireball = false, fireballCommand = false;
 		}
 	}
 
@@ -226,13 +193,7 @@ void PlayerCharacter::SetHealth(int health) {
     this->health=health;
 }
 
-Vector2 PlayerCharacter::GetPosition() const
-{
-	return vectorPlayer;
-}
 
-Vector2 PlayerCharacter::SetPosition(Vector2 newPosition)
-{
-	this->vectorPlayer = newPosition;
-	return vectorPlayer;
+Observer& PlayerCharacter::GetObserver() const {
+    return *observer;
 }

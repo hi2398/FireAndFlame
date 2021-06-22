@@ -15,11 +15,11 @@ void NeutralArea::Update() {
         playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
     }
 
-    Rectangle tempVec = {0,0,32,32};
-    for(const auto& x: tilemap->GetWorldPos()){
-        tempVec.x = x.x;
-        tempVec.y = x.y;
-        if(CheckCollisionRecs(tempVec, playerCharacter->playerHitbox)) {
+    Rectangle tempvec = {0,0,32,32};
+    for(const auto& x: tilemap->GetTileColliders()){
+        tempvec.x = x.x;
+        tempvec.y = x.y;
+        if(CheckCollisionRecs(tempvec, playerCharacter->playerHitbox)) {
             playerCharacter->isGrounded = true;
             break;
         }else {
@@ -61,7 +61,7 @@ void NeutralArea::Update() {
         }
     }
     for (const auto& x: enemies) {
-    x->Update();
+        x->Update();
     }
 }
 

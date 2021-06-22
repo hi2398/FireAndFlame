@@ -1,6 +1,10 @@
 #pragma once
-#include "Actor.h"
+#include "../../Core/Actor.h"
 #include "raylib.h"
+#include "../../Core/Observer/Observer.h"
+#include "../../Core/State.h"
+#include "MovementState.h"
+#include "ActionState.h"
 #include <iostream>
 
 class PlayerCharacter : public Actor {
@@ -10,8 +14,7 @@ public:
     void Update() override;
     ~PlayerCharacter() override = default;
 
-    void Jump();
-    void RunJump();
+    Observer& GetObserver() const;
 
     void Attack();
     void RunAttack();
@@ -24,13 +27,9 @@ public:
     void ChargedAttack();
     void RunChargedAttack();
 
-    void Move(int direction);
 
     int GetHealth() const;
     void SetHealth(int health);
-
-    Vector2 GetPosition() const;
-    Vector2 SetPosition(Vector2 newPosition);
 
 	//2Dcam
 	Camera2D camera = { 0 };
@@ -49,16 +48,6 @@ private:
     int health{100};
     //player
     Texture2D texturePlayer;
-    Vector2 vectorPlayer = { 0 };
-
-    //jump&fall
-    
-    bool canDoubleJump = true;
-    int jumpState = 0;
-    float verticalSpeed = 3.0f;
-    bool isJumping = false;
-    bool isAirborne = false;
-    float gravityMultiplier = 1.5f;
 
     //attack
     Vector2 vectorFireball = {0};
@@ -76,6 +65,10 @@ private:
     bool attackCommand = false;
     bool chargedAttackCommand = false;
     bool fireballCommand = false;
+
+    std::shared_ptr<Observer> observer;
+    std::shared_ptr<State> movementState;
+    std::shared_ptr<State> actionState;
 };
 
 
