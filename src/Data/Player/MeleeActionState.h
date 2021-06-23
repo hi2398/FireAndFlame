@@ -12,7 +12,7 @@ protected:
 
 
 private:
-
+    bool actionDone{false};
 
 };
 

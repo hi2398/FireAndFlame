@@ -9,16 +9,17 @@ std::shared_ptr<State> IdleActionState::Update(Actor &actor) {
     switch (playerCharacter->GetNextAction()) {
 
         case ACTION::MELEE_ATTACK:
-            if constexpr(DEBUG_BUILD) {
-                std::cout << "new state: melee" << std::endl;
-            }
-            return std::make_shared<MeleeActionState>();
+                if constexpr(DEBUG_BUILD) {
+                    std::cout << "new state: melee" << std::endl;
+                }
+                return std::make_shared<MeleeActionState>();
         case ACTION::RANGED_ATTACK:
-            if constexpr(DEBUG_BUILD) {
-                std::cout << "new state: ranged" << std::endl;
-            }
-            return std::make_shared<RangedActionState>();
+                if constexpr(DEBUG_BUILD) {
+                    std::cout << "new state: ranged" << std::endl;
+                }
+                return std::make_shared<RangedActionState>();
         case ACTION::NONE:
+        default:
             //TODO: handle idle state
             return shared_from_this();
     }
