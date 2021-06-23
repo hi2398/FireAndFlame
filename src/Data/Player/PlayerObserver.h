@@ -7,7 +7,7 @@ public:
     explicit PlayerObserver(Actor &actor);
     ~PlayerObserver() override;
 
-    void OnNotify(Event event) override;
+    void OnNotify(EVENT event) override;
 
 protected:
 
