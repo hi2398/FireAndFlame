@@ -11,7 +11,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor &actor) {
         return shared_from_this();
     } else {
         if constexpr(DEBUG_BUILD) {
-            std::cout << "New State: Falling" << std::endl;
+            std::cout << "New State: Falling    " << std::endl;
         }
         return std::make_shared<FallingSubState>();
     }

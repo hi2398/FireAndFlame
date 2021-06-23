@@ -4,8 +4,10 @@
 #include "../../Core/Observer/Observer.h"
 #include "../../Core/State.h"
 #include "MovementState.h"
-#include "ActionState.h"
 #include <iostream>
+
+
+enum class ACTION {MELEE_ATTACK, RANGED_ATTACK, NONE};
 
 class PlayerCharacter : public Actor {
 public:
@@ -31,6 +33,9 @@ public:
     int GetHealth() const;
     void SetHealth(int health);
 
+    ACTION GetNextAction();
+    void SetNextAction(ACTION action);
+
 	//2Dcam
 	Camera2D camera = { 0 };
 
@@ -45,11 +50,16 @@ public:
 protected:
 
 private:
+
+
     int health{100};
     //player
     Texture2D texturePlayer;
 
     //attack
+    ACTION nextAction{ACTION::NONE};
+
+
     Vector2 vectorFireball = {0};
     Rectangle spearHitbox = {0,0,40,5};
     float spearRotation = 300;
