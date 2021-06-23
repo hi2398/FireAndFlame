@@ -4,15 +4,16 @@
 
 void PlayerController::HandleInput() {
     //player movement
-	if (IsKeyDown(KEY_D)) Notify(Event::MOVE_RIGHT), sceneManager->SceneParallax(right);
-	if (IsKeyDown(KEY_A)) Notify(Event::MOVE_LEFT), sceneManager->SceneParallax(left);
-    if (IsKeyPressed(KEY_SPACE)) Notify(Event::JUMP);
+	if (IsKeyDown(KEY_D)) Notify(EVENT::MOVE_RIGHT), sceneManager->SceneParallax(right);
+	if (IsKeyDown(KEY_A)) Notify(EVENT::MOVE_LEFT), sceneManager->SceneParallax(left);
+    if (IsKeyPressed(KEY_SPACE)) Notify(EVENT::JUMP);
 
     //player actions
-	if (IsKeyPressed(KEY_ENTER)) playerCharacter->Attack();
+	if (IsKeyPressed(KEY_ENTER)) Notify(EVENT::MELEE_ATTACK);
+	//TODO: Charged attacks not working
 	if (IsKeyDown(KEY_ENTER)) playerCharacter->ChargingAttack();
 	if (IsKeyReleased(KEY_ENTER)) playerCharacter->ChargedAttack();
-	if (IsKeyPressed(KEY_F)) playerCharacter->Fireball();
+	if (IsKeyPressed(KEY_F)) Notify(EVENT::RANGED_ATTACK);
 
 
     if(DEBUG_BUILD) {
