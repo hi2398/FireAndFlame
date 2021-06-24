@@ -1,6 +1,7 @@
 #include "PlayerCharacter.h"
 #include "raylib.h"
 #include "PlayerObserver.h"
+#include "IdleActionState.h"
 #include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
@@ -12,7 +13,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	camera.zoom = 2.0f;
 	observer=std::make_shared<PlayerObserver>(*this);
 	movementState=std::make_shared<MovementState>();
-	actionState=std::make_shared<ActionState>();
+	actionState=std::make_shared<IdleActionState>();
 }
 
 
@@ -196,4 +197,14 @@ void PlayerCharacter::SetHealth(int health) {
 
 Observer& PlayerCharacter::GetObserver() const {
     return *observer;
+}
+
+ACTION PlayerCharacter::GetNextAction() {
+    ACTION tmp=nextAction;
+    nextAction=ACTION::NONE; //clear out the action so it doesnt trigger again
+    return tmp;
+}
+
+void PlayerCharacter::SetNextAction(ACTION action) {
+    nextAction=action;
 }

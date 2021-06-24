@@ -9,7 +9,7 @@ void Subject::RemoveObserver(Observer& observer) {
     observers.erase(std::find(observers.begin(), observers.end(), &observer));
 }
 
-void Subject::Notify(Event event) {
+void Subject::Notify(EVENT event) {
     for(const auto &x : observers){
         x->OnNotify(event);
     }

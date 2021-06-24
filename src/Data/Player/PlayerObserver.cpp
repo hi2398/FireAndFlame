@@ -8,18 +8,23 @@ PlayerObserver::PlayerObserver(Actor &actor) : Observer(actor) {
 
 PlayerObserver::~PlayerObserver() = default;
 
-void PlayerObserver::OnNotify(Event event) {
+void PlayerObserver::OnNotify(EVENT event) {
     switch (event) {
 
-        case Event::MOVE_LEFT:
+        case EVENT::MOVE_LEFT:
             playerCharacter->Move(-3.f);
             break;
-        case Event::MOVE_RIGHT:
+        case EVENT::MOVE_RIGHT:
             playerCharacter->Move(3.f);
             break;
-        case Event::JUMP:
+        case EVENT::JUMP:
             //TODO: implement jump
             // playerCharacter->Jump();
             break;
+        case EVENT::MELEE_ATTACK:
+            playerCharacter->SetNextAction(ACTION::MELEE_ATTACK);
+            break;
+        case EVENT::RANGED_ATTACK:
+            playerCharacter->SetNextAction(ACTION::RANGED_ATTACK);
     }
 }

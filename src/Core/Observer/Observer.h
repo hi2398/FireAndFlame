@@ -7,7 +7,7 @@ class Observer {
 public:
     Observer(Actor& actor);
     virtual ~Observer();
-    virtual void OnNotify(Event event) = 0;
+    virtual void OnNotify(EVENT event) = 0;
 
 protected:
     Actor& owner;
