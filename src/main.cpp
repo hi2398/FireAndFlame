@@ -3,9 +3,9 @@
 
 #include "raylib.h"
 
+#include "Global.h"
 #include "config.h"
 #include "helper.h"
-#include "Core/SceneManager.h"
 #include "Scenes/NeutralArea.h"
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -13,8 +13,12 @@ std::shared_ptr<PlayerController> playerController;
 std::shared_ptr<HUD> hud;
 std::shared_ptr<SceneManager> sceneManager;
 int main() {
+if  constexpr(DEBUG_BUILD){
+    std::cout << "\n=============================\n";
+    std::cout << "\n=====DEBUG BUILD ENABLED=====\n";
+    std::cout << "\n=============================\n";
+}
 
-    
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);

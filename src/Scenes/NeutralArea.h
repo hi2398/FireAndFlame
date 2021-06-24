@@ -2,7 +2,7 @@
 #include "../Core/Scene.h"
 #include "raylib.h"
 #include "../Core/Enemy.h"
-#include "../Core/Coal.h"
+#include "../Data/Coal.h"
 #include <vector>
 #include "../Core/Tilemap.h"
 

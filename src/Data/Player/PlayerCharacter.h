@@ -1,7 +1,13 @@
 #pragma once
-#include "Actor.h"
+#include "../../Core/Actor.h"
 #include "raylib.h"
+#include "../../Core/Observer/Observer.h"
+#include "../../Core/State.h"
+#include "MovementState.h"
 #include <iostream>
+
+
+enum class ACTION {MELEE_ATTACK, RANGED_ATTACK, NONE};
 
 class PlayerCharacter : public Actor {
 public:
@@ -10,8 +16,7 @@ public:
     void Update() override;
     ~PlayerCharacter() override = default;
 
-    void Jump();
-    void RunJump();
+    Observer& GetObserver() const;
 
     void Attack();
     void RunAttack();
@@ -24,13 +29,12 @@ public:
     void ChargedAttack();
     void RunChargedAttack();
 
-    void Move(int direction);
 
     int GetHealth() const;
     void SetHealth(int health);
 
-    Vector2 GetPosition() const;
-    Vector2 SetPosition(Vector2 newPosition);
+    ACTION GetNextAction();
+    void SetNextAction(ACTION action);
 
 	//2Dcam
 	Camera2D camera = { 0 };
@@ -46,24 +50,19 @@ public:
 protected:
 
 private:
+
+
     int health{100};
     //player
     Texture2D texturePlayer;
-    Vector2 vectorPlayer = { 0 };
-
-    //jump&fall
-    
-    bool canDoubleJump = true;
-    int jumpState = 0;
-    float verticalSpeed = 3.0f;
-    bool isJumping = false;
-    bool isAirborne = false;
-    float gravityMultiplier = 1.5f;
 
     //attack
+    ACTION nextAction{ACTION::NONE};
+
+
     Vector2 vectorFireball = {0};
     Rectangle spearHitbox = {0,0,40,5};
-    int spearRotation = 300;
+    float spearRotation = 300;
     int stabbingDistance = 0;
     bool isSwiping = false;
     bool isCharged = false;
@@ -76,6 +75,10 @@ private:
     bool attackCommand = false;
     bool chargedAttackCommand = false;
     bool fireballCommand = false;
+
+    std::shared_ptr<Observer> observer;
+    std::shared_ptr<State> movementState;
+    std::shared_ptr<State> actionState;
 };
 
 

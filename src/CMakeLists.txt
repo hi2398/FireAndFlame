@@ -10,6 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(Core)
 add_subdirectory(Scenes)
+add_subdirectory(Data)
 add_executable(${PROJECT_NAME} main.cpp config.h helper.h Global.h json.hpp)
 
 # Add config.h.in file
@@ -19,7 +20,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         )
 
 #  Link to Raylib
-target_link_libraries(${PROJECT_NAME} raylib Scenes Core)
+target_link_libraries(${PROJECT_NAME} raylib Scenes Core Data)
 
 # Copy assets to assets path
 add_custom_target(copy_assets

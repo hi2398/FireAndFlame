@@ -3,13 +3,30 @@
 #include "raylib.h"
 
 void PlayerController::HandleInput() {
-	if (IsKeyDown(KEY_D)) playerCharacter->Move(right), sceneManager->SceneParallax(right);
-	if (IsKeyDown(KEY_A)) playerCharacter->Move(left), sceneManager->SceneParallax(left);
-	if (IsKeyDown(KEY_UP)) playerCharacter->camera.zoom += 0.1f;
-	if (IsKeyDown(KEY_DOWN)) playerCharacter->camera.zoom -= 0.1f;
-	if (IsKeyPressed(KEY_ENTER)) playerCharacter->Attack();
+    //player movement
+	if (IsKeyDown(KEY_D)) Notify(EVENT::MOVE_RIGHT), sceneManager->SceneParallax(right);
+	if (IsKeyDown(KEY_A)) Notify(EVENT::MOVE_LEFT), sceneManager->SceneParallax(left);
+    if (IsKeyPressed(KEY_SPACE)) Notify(EVENT::JUMP);
+
+    //player actions
+	if (IsKeyPressed(KEY_ENTER)) Notify(EVENT::MELEE_ATTACK);
+	//TODO: Charged attacks not working
 	if (IsKeyDown(KEY_ENTER)) playerCharacter->ChargingAttack();
 	if (IsKeyReleased(KEY_ENTER)) playerCharacter->ChargedAttack();
-	if (IsKeyPressed(KEY_F)) playerCharacter->Fireball();
-	if (IsKeyPressed(KEY_SPACE)) playerCharacter->Jump();
+	if (IsKeyPressed(KEY_F)) Notify(EVENT::RANGED_ATTACK);
+
+
+    if(DEBUG_BUILD) {
+        if (IsKeyDown(KEY_UP)) playerCharacter->camera.zoom += 0.1f;
+        if (IsKeyDown(KEY_DOWN)) playerCharacter->camera.zoom -= 0.1f;
+    }
+}
+
+PlayerController::PlayerController() {
+    AddObserver(playerCharacter->GetObserver());
+}
+
+PlayerController::~PlayerController() {
+    RemoveObserver(playerCharacter->GetObserver());
+
 }
