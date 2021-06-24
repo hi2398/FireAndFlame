@@ -11,8 +11,6 @@ void PlayerController::HandleInput() {
     //player actions
 	if (IsKeyPressed(KEY_ENTER)) Notify(EVENT::MELEE_ATTACK);
 	//TODO: Charged attacks not working
-	if (IsKeyDown(KEY_ENTER)) playerCharacter->ChargingAttack();
-	if (IsKeyReleased(KEY_ENTER)) playerCharacter->ChargedAttack();
 	if (IsKeyPressed(KEY_F)) Notify(EVENT::RANGED_ATTACK);
 
 

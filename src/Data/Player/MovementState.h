@@ -8,11 +8,12 @@ public:
     MovementState();
 
     std::shared_ptr<State> Update(Actor &actor) override;
+    void Draw(Actor& actor) override;
 
     ~MovementState() override = default;
 
 protected:
-
+    
 
 private:
     std::shared_ptr<State> groundedSubState;

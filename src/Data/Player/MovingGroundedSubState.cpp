@@ -17,3 +17,7 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor &actor) {
     }
 
 }
+
+void MovingGroundedSubState::Draw(Actor& actor) {
+
+}

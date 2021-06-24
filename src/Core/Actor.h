@@ -14,15 +14,24 @@ public:
     ~Actor() override=default;
 
     void Move(float distance);
+    void Jump();
     Vector2 GetLastPosition();
     Direction GetDirection() const;
+    float GetGravityMultiplier();
+    void SetGrounded(bool grounded);
     bool IsGrounded();
+    void SetJumpCommand(bool jumpUp);
+    bool GetJumpCommand();
 
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
-    bool grounded{true};
+    bool grounded{false};
+    float gravityMultiplier = 1.0f;
+    bool jumpUp = false;
 
+
+    
 
 private:
 

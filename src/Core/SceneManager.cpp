@@ -13,12 +13,13 @@ void SceneManager::Tick() {
 	activeScene = nextScene;
     background->Draw();
     playerController->HandleInput();
-	activeScene->Update();
+	
 	activeScene->Draw();
     if (playerCharacter->visible) {
 		playerCharacter->Update();
 		playerCharacter->Draw();
     }    
+	activeScene->Update();
     EndMode2D();
 
     hud->UpdateHUD();

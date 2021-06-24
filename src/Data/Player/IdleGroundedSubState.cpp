@@ -18,3 +18,7 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
     }
 
 }
+
+void IdleGroundedSubState::Draw(Actor& actor) {
+
+}

@@ -18,8 +18,8 @@ void PlayerObserver::OnNotify(EVENT event) {
             playerCharacter->Move(3.f);
             break;
         case EVENT::JUMP:
-            //TODO: implement jump
-            // playerCharacter->Jump();
+            playerCharacter->SetJumpCommand(true);
+            playerCharacter->Jump();
             break;
         case EVENT::MELEE_ATTACK:
             playerCharacter->SetNextAction(ACTION::MELEE_ATTACK);

@@ -18,6 +18,7 @@ public:
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void SceneParallax(int direction);
 
+
 protected:
 
 private:
