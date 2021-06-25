@@ -14,9 +14,11 @@ void NeutralArea::Update() {
 		generalTimer = 0;
 		playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
 	}
-
-	PlayerGroundCollision(tilemap);
-
+	
+	PlayerCollisionLeft(tilemap);
+	PlayerCollisionRight(tilemap);
+	PlayerCollision(tilemap);
+	if (playerCharacter->GetJumpCommand())PlayerCollisionHead(tilemap);
 	//coal X player && coal X ground collision
 	if (coals->GetEnabled())
 	{
@@ -55,18 +57,22 @@ void NeutralArea::Update() {
 	}
 }
 
-void PlayerGroundCollision(std::unique_ptr<Tilemap>& tilemap)
+void PlayerCollision(std::unique_ptr<Tilemap>& tilemap)
 {
-	Vector2 collisionPoint1;
-	Vector2 collisionPoint2;
+	//tile rectangles
 	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = playerCharacter->GetLastPosition();
+	const auto newPos = playerCharacter->GetPosition();
+
 	for (const auto& collTile : tilemap->GetTileColliders()) {
 		tileRec.x = collTile.x;
 		tileRec.y = collTile.y;
-		const auto lastPos = playerCharacter->GetLastPosition();
-		const auto newPos = playerCharacter->GetPosition();
-		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 1 };
 		
+		//player coll ground
+		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 1 };
+
 		if (CheckCollisionRecs(tileRec, playerFeet)) {
 			playerCharacter->SetGrounded(true);
 			playerCharacter->SetPosition({ newPos.x, tileRec.y - 32.0f });
@@ -76,6 +82,87 @@ void PlayerGroundCollision(std::unique_ptr<Tilemap>& tilemap)
 	}
 }
 
+void PlayerCollisionLeft(std::unique_ptr<Tilemap>& tilemap) {
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = playerCharacter->GetLastPosition();
+	const auto newPos = playerCharacter->GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll left
+		Rectangle playerLeftSide = { newPos.x - 1, newPos.y + 6, 1, 20 };
+
+		if (CheckCollisionRecs(tileRec, playerLeftSide)) {
+			std::cout << "LEFT COLL\n";
+			playerCharacter->SetWallCollisionLeft(true);
+			playerCharacter->SetPosition({ tileRec.x + 32, newPos.y });
+			return;
+		}
+		else {
+			playerCharacter->SetWallCollisionLeft(false);
+		}
+	}
+}
+
+void PlayerCollisionRight(std::unique_ptr<Tilemap>& tilemap) {
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = playerCharacter->GetLastPosition();
+	const auto newPos = playerCharacter->GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll right
+		Rectangle playerRightSide = { newPos.x + 32, newPos.y + 6, 1, 20 };
+
+		if (CheckCollisionRecs(tileRec, playerRightSide)) {
+			std::cout << "RIGHT COLL\n";
+			playerCharacter->SetWallCollisionRight(true);
+			playerCharacter->SetPosition({ tileRec.x - 32, newPos.y });
+			return;
+		}
+		else {
+			playerCharacter->SetWallCollisionRight(false);
+		}
+	}
+}
+
+void PlayerCollisionHead(std::unique_ptr<Tilemap>& tilemap) {
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = playerCharacter->GetLastPosition();
+	const auto newPos = playerCharacter->GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll head
+		Rectangle playerUpperSide = { newPos.x , newPos.y + 1, 32, 1 };
+
+		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
+			std::cout << "HEAD COLL\n";
+			playerCharacter->SetHeadCollision(true);
+			playerCharacter->SetJumpCommand(false);
+			playerCharacter->SetPosition({ newPos.x, tileRec.y + 32 });
+			return;
+		}
+		else {
+			playerCharacter->SetHeadCollision(false);
+		}
+	}
+}
 
 
 void NeutralArea::Draw() {
@@ -93,14 +180,4 @@ void NeutralArea::Draw() {
 			DrawRectangleLines(x.x, x.y, 32, 32, RED);
 		}
 	}
-
-	const auto lastPos = playerCharacter->GetLastPosition();
-	const auto newPos = playerCharacter->GetPosition();
-	DrawLineV({ lastPos.x, lastPos.y + 32.0f },
-		{ newPos.x, newPos.y + 32.0f }, GREEN);
-	DrawLineV({ lastPos.x + 32.0f, lastPos.y + 32.0f },
-		{ newPos.x + 32.0f, newPos.y + 32.0f }, GREEN);
-
-	//DrawText(TextFormat(" % f", playerCharacter->GetLastPosition().x), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-150, 30, WHITE);
-	DrawText(TextFormat(" % f", playerCharacter->GetPosition().y), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 30, WHITE);
 }

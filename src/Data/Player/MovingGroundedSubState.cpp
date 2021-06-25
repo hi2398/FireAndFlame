@@ -10,10 +10,14 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor &actor) {
     switch (actor.GetNextMovement())
     {
     case MOVEMENT::MOVE_LEFT:
-        actor.SetPosition({actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+        if (!playerCharacter->GetWallCollisionLeft()) {
+            actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+        }
         return shared_from_this();
     case MOVEMENT::MOVE_RIGHT:
-        actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+        if (!playerCharacter->GetWallCollisionRight()) {
+            actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+        }
         return shared_from_this();
     case MOVEMENT::IDLE:
         return std::make_shared<IdleGroundedSubState>();

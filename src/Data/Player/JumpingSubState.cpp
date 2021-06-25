@@ -6,14 +6,23 @@ std::shared_ptr<State> JumpingSubState::Update(Actor &actor) {
     const auto actorLastPos = actor.GetLastPosition(); //func alias
     const auto actorPos = actor.GetPosition(); //func alias
 
+    //go to falling state if hit head
+    if (actor.GetHeadCollision()) {
+        return std::make_shared<FallingSubState>();
+    }
+
     //move sideways while airborne
     switch (actor.GetNextMovement())
     {
     case MOVEMENT::MOVE_LEFT:
-        actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+        if (!playerCharacter->GetWallCollisionLeft()) {
+            actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+        }
         break;
     case MOVEMENT::MOVE_RIGHT:
-        actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+        if (!playerCharacter->GetWallCollisionRight()) {
+            actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+        }
         break;
     }
 

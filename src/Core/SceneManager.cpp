@@ -11,19 +11,17 @@ void SceneManager::Tick() {
     activeScene = nextScene;
     
     playerController->HandleInput();
+
     if (playerCharacter->visible) playerCharacter->Update();
     activeScene->Update();
     hud->UpdateHUD();
 
     BeginMode2D(playerCharacter->camera);
-
     background->Draw();
 	activeScene->Draw();
     if (playerCharacter->visible) playerCharacter->Draw();
-		
-    
-	
-    EndMode2D();
+	EndMode2D();
+
 	hud->DrawHUD();
     playerCharacter->SetLastPosition(playerCharacter->GetPosition());
 }

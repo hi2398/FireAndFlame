@@ -14,7 +14,7 @@ protected:
 
 private:
     float gravity = 1.0f;
-    float fallingSpeed = 0.0f;
+    
 
 
 };

@@ -28,19 +28,33 @@ public:
     MOVEMENT GetNextMovement();
     void SetNextMovement(MOVEMENT movement);
 
+    bool GetWallCollisionLeft();
+    void SetWallCollisionLeft(bool hugWallLeft);
+
+    bool GetWallCollisionRight();
+    void SetWallCollisionRight(bool hugWallRight);
+
+    bool GetHeadCollision();
+    void SetHeadCollision(bool headCollision);
+
+    float GetFallingSpeed();
+    void SetFallingSpeed(float fallingSpeed);
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
     bool grounded{false};
     float gravityMultiplier = 1.0f;
     bool jumpUp = false;
-
-
-    
+    bool hugWallLeft{ false };
+    bool hugWallRight{ false };
+    bool headCollision{ false };
+    float fallingSpeed = 0.0f;
 
 private:
     //Movement
     MOVEMENT nextMovement{ MOVEMENT::IDLE };
+    
 };
 
 

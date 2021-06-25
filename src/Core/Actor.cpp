@@ -56,3 +56,35 @@ MOVEMENT Actor::GetNextMovement() {
 void Actor::SetNextMovement(MOVEMENT movement) {
     nextMovement = movement;
 }
+
+bool Actor::GetWallCollisionLeft() {
+    return hugWallLeft;
+}
+
+void Actor::SetWallCollisionLeft(bool hugWallLeft) {
+    this->hugWallLeft = hugWallLeft;
+}
+
+bool Actor::GetWallCollisionRight() {
+    return hugWallRight;
+}
+
+void Actor::SetWallCollisionRight(bool hugWallRight) {
+    this->hugWallRight = hugWallRight;
+}
+
+float Actor::GetFallingSpeed() {
+    return fallingSpeed;
+}
+
+void Actor::SetFallingSpeed(float fallingSpeed) {
+    this->fallingSpeed = fallingSpeed;
+}
+
+bool Actor::GetHeadCollision() {
+    return headCollision;
+}
+
+void Actor::SetHeadCollision(bool headCollision) {
+    this->headCollision = headCollision;
+}

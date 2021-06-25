@@ -7,6 +7,8 @@
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"
 
+
+
 class NeutralArea : public Scene {
 public:
     NeutralArea();
@@ -14,6 +16,7 @@ public:
     void Update() override;
     void Draw() override;
     ~NeutralArea() override = default;
+
 
 protected:
 
@@ -30,4 +33,7 @@ private:
 
 };
 
-void PlayerGroundCollision(std::unique_ptr<Tilemap> &tilemap);
+void PlayerCollision(std::unique_ptr<Tilemap> &tilemap);
+void PlayerCollisionLeft(std::unique_ptr<Tilemap>& tilemap);
+void PlayerCollisionRight(std::unique_ptr<Tilemap>& tilemap);
+void PlayerCollisionHead(std::unique_ptr<Tilemap>& tilemap);
