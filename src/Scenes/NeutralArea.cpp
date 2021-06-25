@@ -18,7 +18,7 @@ void NeutralArea::Update() {
 	PlayerCollisionLeft(tilemap);
 	PlayerCollisionRight(tilemap);
 	PlayerCollision(tilemap);
-	if (playerCharacter->GetJumpCommand())PlayerCollisionHead(tilemap);
+	if (playerCharacter->GetJumpCommand() || playerCharacter->IsGrounded())PlayerCollisionHead(tilemap);
 	//coal X player && coal X ground collision
 	if (coals->GetEnabled())
 	{
@@ -149,7 +149,7 @@ void PlayerCollisionHead(std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.y = collTile.y;
 
 		//player coll head
-		Rectangle playerUpperSide = { newPos.x , newPos.y + 1, 32, 1 };
+		Rectangle playerUpperSide = { newPos.x , newPos.y - 1, 32, 1 };
 
 		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
 			std::cout << "HEAD COLL\n";
@@ -180,4 +180,6 @@ void NeutralArea::Draw() {
 			DrawRectangleLines(x.x, x.y, 32, 32, RED);
 		}
 	}
+
+	DrawText(TextFormat("%i", playerCharacter->GetHeadCollision()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
 }

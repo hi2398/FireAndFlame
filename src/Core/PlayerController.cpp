@@ -6,7 +6,7 @@ void PlayerController::HandleInput() {
     //player movement
 	if (IsKeyDown(KEY_D)) Notify(EVENT::MOVE_RIGHT), sceneManager->SceneParallax(right);
 	if (IsKeyDown(KEY_A)) Notify(EVENT::MOVE_LEFT), sceneManager->SceneParallax(left);
-    if (IsKeyPressed(KEY_SPACE)) Notify(EVENT::JUMP);
+    if (!playerCharacter->GetHeadCollision()) if (IsKeyPressed(KEY_SPACE)) Notify(EVENT::JUMP);
 
     //player actions
 	if (IsKeyPressed(KEY_ENTER)) Notify(EVENT::MELEE_ATTACK);

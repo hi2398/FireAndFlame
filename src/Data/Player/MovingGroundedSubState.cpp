@@ -6,6 +6,7 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor &actor) {
     const auto actorLastPos = actor.GetLastPosition(); //func alias
     const auto actorPos = actor.GetPosition(); //func alias
 
+    
     std::cout << "Moving Grounded\n";
     switch (actor.GetNextMovement())
     {

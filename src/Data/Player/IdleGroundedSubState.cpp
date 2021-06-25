@@ -7,6 +7,7 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
     const auto actorLastPos = actor.GetLastPosition(); //func alias
     const auto actorPos = actor.GetPosition(); //func alias
 
+    
     std::cout << "Idle Grounded\n";
     switch (actor.GetNextMovement())
     {

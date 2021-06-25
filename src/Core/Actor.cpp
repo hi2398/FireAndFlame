@@ -88,3 +88,11 @@ bool Actor::GetHeadCollision() {
 void Actor::SetHeadCollision(bool headCollision) {
     this->headCollision = headCollision;
 }
+
+float Actor::GetJumpSpeed() {
+    return jumpSpeed;
+}
+
+void Actor::SetJumpSpeed(float jumpSpeed) {
+    this->jumpSpeed = jumpSpeed;
+}

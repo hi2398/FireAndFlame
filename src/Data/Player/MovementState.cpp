@@ -14,6 +14,8 @@ MovementState::MovementState() {
 
 std::shared_ptr<State> MovementState::Update(Actor &actor) {
     if (actor.IsGrounded()) {
+        actor.SetJumpCommand(false);
+        actor.SetJumpSpeed(5.0f);
         actor.SetFallingSpeed(0.0f);
         groundedSubState=groundedSubState->Update(actor); //IdleGroundedSubState or MovingGroundedSubState
     } else {

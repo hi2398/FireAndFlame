@@ -13,7 +13,6 @@ protected:
 
 
 private:
-    float jumpSpeed = 5.0f;
     int jumpState = 0;
 
 

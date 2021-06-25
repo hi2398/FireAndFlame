@@ -37,6 +37,9 @@ public:
     bool GetHeadCollision();
     void SetHeadCollision(bool headCollision);
 
+    float GetJumpSpeed();
+    void SetJumpSpeed(float jumpSpeed);
+
     float GetFallingSpeed();
     void SetFallingSpeed(float fallingSpeed);
 
@@ -50,6 +53,7 @@ protected:
     bool hugWallRight{ false };
     bool headCollision{ false };
     float fallingSpeed = 0.0f;
+    float jumpSpeed = 5.0f;
 
 private:
     //Movement
