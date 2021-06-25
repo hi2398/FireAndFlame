@@ -2,6 +2,8 @@
 #include "IdleGroundedSubState.h"
 #include "JumpingSubState.h"
 
+#include <iostream>
+
 
 
 MovementState::MovementState() {
@@ -10,7 +12,6 @@ MovementState::MovementState() {
 }
 
 std::shared_ptr<State> MovementState::Update(Actor &actor) {
-
     if (actor.IsGrounded()) {
         groundedSubState=groundedSubState->Update(actor); //IdleGroundedSubState or MovingGroundedSubState
     } else {

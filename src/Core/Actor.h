@@ -5,6 +5,7 @@
 #include "raylib.h"
 
 enum Direction{LEFT=-1, RIGHT=1};
+enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE };
 
 class Actor : public Object {
 public:
@@ -15,6 +16,7 @@ public:
 
     void Move(float distance);
     void Jump();
+    void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
     float GetGravityMultiplier();
@@ -22,6 +24,9 @@ public:
     bool IsGrounded();
     void SetJumpCommand(bool jumpUp);
     bool GetJumpCommand();
+
+    MOVEMENT GetNextMovement();
+    void SetNextMovement(MOVEMENT movement);
 
 protected:
     Vector2 lastTickPos;
@@ -34,7 +39,8 @@ protected:
     
 
 private:
-
+    //Movement
+    MOVEMENT nextMovement{ MOVEMENT::IDLE };
 };
 
 

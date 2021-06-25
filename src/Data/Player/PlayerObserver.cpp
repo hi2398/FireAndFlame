@@ -12,10 +12,10 @@ void PlayerObserver::OnNotify(EVENT event) {
     switch (event) {
 
         case EVENT::MOVE_LEFT:
-            playerCharacter->Move(-3.f);
+            playerCharacter->SetNextMovement(MOVEMENT::MOVE_LEFT);
             break;
         case EVENT::MOVE_RIGHT:
-            playerCharacter->Move(3.f);
+            playerCharacter->SetNextMovement(MOVEMENT::MOVE_RIGHT);
             break;
         case EVENT::JUMP:
             playerCharacter->SetJumpCommand(true);

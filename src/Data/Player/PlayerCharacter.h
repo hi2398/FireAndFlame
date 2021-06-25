@@ -9,6 +9,7 @@
 
 enum class ACTION {MELEE_ATTACK, RANGED_ATTACK, NONE};
 
+
 class PlayerCharacter : public Actor {
 public:
     PlayerCharacter();
@@ -23,6 +24,7 @@ public:
 
     ACTION GetNextAction();
     void SetNextAction(ACTION action);
+
 
 	//2Dcam
 	Camera2D camera = { 0 };
@@ -52,6 +54,7 @@ private:
 
     //attack
     ACTION nextAction{ACTION::NONE};
+    
 
     std::shared_ptr<Observer> observer;
     std::shared_ptr<State> movementState;

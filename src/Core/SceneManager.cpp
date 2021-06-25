@@ -8,22 +8,24 @@ SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
 }
 
 void SceneManager::Tick() {
+    activeScene = nextScene;
     
-    BeginMode2D(playerCharacter->camera);
-	activeScene = nextScene;
-    background->Draw();
     playerController->HandleInput();
-	
-	activeScene->Draw();
-    if (playerCharacter->visible) {
-		playerCharacter->Update();
-		playerCharacter->Draw();
-    }    
-	activeScene->Update();
-    EndMode2D();
-
+    if (playerCharacter->visible) playerCharacter->Update();
+    activeScene->Update();
     hud->UpdateHUD();
+
+    BeginMode2D(playerCharacter->camera);
+
+    background->Draw();
+	activeScene->Draw();
+    if (playerCharacter->visible) playerCharacter->Draw();
+		
+    
+	
+    EndMode2D();
 	hud->DrawHUD();
+    playerCharacter->SetLastPosition(playerCharacter->GetPosition());
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {

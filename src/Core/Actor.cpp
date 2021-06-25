@@ -6,6 +6,10 @@ Actor::Actor(ObjectTypes type) : Object(type), lastTickPos(position) {
 
 }
 
+void Actor::SetLastPosition(Vector2 position) {
+    lastTickPos = position;
+}
+
 Vector2 Actor::GetLastPosition() {
     return lastTickPos;
 }
@@ -15,7 +19,7 @@ void Actor::Move(float distance) {
 }
 
 void Actor::Jump() {
-    position.y -= 1.0f;
+    position.y -= 10.0f;
 }
 
 Direction Actor::GetDirection() const {
@@ -41,4 +45,14 @@ void Actor::SetJumpCommand(bool jumpUp) {
 
 bool Actor::GetJumpCommand() {
     return jumpUp;
+}
+
+MOVEMENT Actor::GetNextMovement() {
+    MOVEMENT tmp = nextMovement;
+    nextMovement = MOVEMENT::IDLE;
+    return tmp;
+}
+
+void Actor::SetNextMovement(MOVEMENT movement) {
+    nextMovement = movement;
 }

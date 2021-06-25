@@ -6,16 +6,23 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor &actor) {
     const auto actorLastPos = actor.GetLastPosition(); //func alias
     const auto actorPos = actor.GetPosition(); //func alias
 
-    if((actorLastPos.x!=actorPos.x) || (actorLastPos.y!=actorPos.y)) {
-        //TODO: do moving state stuff
+    std::cout << "Moving Grounded\n";
+    switch (actor.GetNextMovement())
+    {
+    case MOVEMENT::MOVE_LEFT:
+        actor.SetPosition({actor.GetPosition().x - 3.0f, actor.GetPosition().y });
         return shared_from_this();
-    } else {
-        if constexpr(DEBUG_BUILD) {
-            std::cout << "New State: Idle Grounded" << std::endl;
-        }
+    case MOVEMENT::MOVE_RIGHT:
+        actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+        return shared_from_this();
+    case MOVEMENT::IDLE:
         return std::make_shared<IdleGroundedSubState>();
     }
 
+    
+    
+    
+    
 }
 
 void MovingGroundedSubState::Draw(Actor& actor) {

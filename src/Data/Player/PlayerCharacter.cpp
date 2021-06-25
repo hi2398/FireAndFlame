@@ -19,7 +19,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
-	lastTickPos = position;
+	
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
 
@@ -40,7 +40,7 @@ void PlayerCharacter::Update() {
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
 	//update LastTickPosition
-	
+	/*lastTickPos = position;*/
 }
 
 void PlayerCharacter::Draw() {
@@ -75,3 +75,5 @@ ACTION PlayerCharacter::GetNextAction() {
 void PlayerCharacter::SetNextAction(ACTION action) {
 	nextAction = action;
 }
+
+

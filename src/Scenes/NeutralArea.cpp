@@ -15,46 +15,7 @@ void NeutralArea::Update() {
 		playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
 	}
 
-	Vector2 collisionPoint1;
-	Vector2 collisionPoint2;
-	Rectangle tileRec = { 0,0,32,32 };
-	for (const auto& collTile : tilemap->GetTileColliders()) {
-		const auto lastPos = playerCharacter->GetLastPosition();
-		const auto newPos = playerCharacter->GetPosition();
-		//left edge
-		if (CheckCollisionLines(
-			{ lastPos.x, lastPos.y + 32.0f },
-			{ newPos.x, newPos.y + 32.0f },
-			{ collTile.x, collTile.y },
-			{ collTile.x + 32.0f, collTile.y },
-			&collisionPoint1)) 
-		{
-			std::cout << "coll\n";
-			playerCharacter->SetGrounded(true);
-			playerCharacter->SetPosition({ newPos.x, collisionPoint1.y - 33.0f });
-			break;
-		}
-		else {
-			playerCharacter->SetGrounded(false);
-		}
-
-		//right edge
-		if (CheckCollisionLines(
-		{ lastPos.x + 32.0f, lastPos.y + 32.0f },
-		{ newPos.x + 32.0f, newPos.y + 32.0f },
-		{ collTile.x, collTile.y },
-		{ collTile.x + 32.0f, collTile.y },
-		&collisionPoint2))
-		{
-			std::cout << "coll\n";
-			playerCharacter->SetPosition({ newPos.x, collisionPoint2.y - 33.0f });
-			playerCharacter->SetGrounded(true);
-			break;
-		}
-		else {
-			playerCharacter->SetGrounded(false);
-		}
-	}
+	PlayerGroundCollision(tilemap);
 
 	//coal X player && coal X ground collision
 	if (coals->GetEnabled())
@@ -94,6 +55,27 @@ void NeutralArea::Update() {
 	}
 }
 
+void PlayerGroundCollision(std::unique_ptr<Tilemap>& tilemap)
+{
+	Vector2 collisionPoint1;
+	Vector2 collisionPoint2;
+	Rectangle tileRec = { 0,0,32,32 };
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+		const auto lastPos = playerCharacter->GetLastPosition();
+		const auto newPos = playerCharacter->GetPosition();
+		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 1 };
+		
+		if (CheckCollisionRecs(tileRec, playerFeet)) {
+			playerCharacter->SetGrounded(true);
+			playerCharacter->SetPosition({ newPos.x, tileRec.y - 32.0f });
+			return;
+		}
+		else playerCharacter->SetGrounded(false);
+	}
+}
+
 
 
 void NeutralArea::Draw() {
@@ -119,5 +101,6 @@ void NeutralArea::Draw() {
 	DrawLineV({ lastPos.x + 32.0f, lastPos.y + 32.0f },
 		{ newPos.x + 32.0f, newPos.y + 32.0f }, GREEN);
 
-	DrawText(TextFormat(" % i", playerCharacter->IsGrounded()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
+	//DrawText(TextFormat(" % f", playerCharacter->GetLastPosition().x), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-150, 30, WHITE);
+	DrawText(TextFormat(" % f", playerCharacter->GetPosition().y), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 30, WHITE);
 }
