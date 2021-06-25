@@ -1,4 +1,5 @@
 #pragma once
+#include "raylib.h"
 
 class HUD {
 public:
@@ -9,7 +10,8 @@ public:
 protected:
 
 private:
-
+    Texture2D textureFire;
+    Rectangle healthBar = {0};
 };
 
 

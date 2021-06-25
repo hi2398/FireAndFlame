@@ -2,6 +2,9 @@
 #include <vector>
 #include "Object.h"
 #include "Component.h"
+#include "raylib.h"
+
+enum Direction{LEFT=-1, RIGHT=1};
 
 class Actor : public Object {
 public:
@@ -10,7 +13,16 @@ public:
     void Draw() override = 0;
     ~Actor() override=default;
 
+    void Move(float distance);
+    Vector2 GetLastPosition();
+    Direction GetDirection() const;
+    bool IsGrounded();
+
 protected:
+    Vector2 lastTickPos;
+    Direction direction{RIGHT};
+    bool grounded{true};
+
 
 private:
 

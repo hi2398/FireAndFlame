@@ -1,15 +1,19 @@
 #pragma once
 
-class PlayerController {
+#include "Observer/Subject.h"
+
+class PlayerController : public Subject {
 public:
+    PlayerController();
     void HandleInput();
-    ~PlayerController() = default;
+    ~PlayerController();
  
 protected:
 
 private:
     const int right = 1;
     const int left = -1;
+
 };
 
 
