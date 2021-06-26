@@ -18,6 +18,8 @@ void PlayerObserver::OnNotify(EVENT event) {
             playerCharacter->SetNextMovement(MOVEMENT::MOVE_RIGHT);
             break;
         case EVENT::JUMP:
+            playerCharacter->SetJumpSpeed(5.0f);
+            playerCharacter->SetTimesJumped(playerCharacter->GetTimesJumped()+1);
             playerCharacter->SetGrounded(false);
             playerCharacter->SetJumpCommand(true);
             playerCharacter->Jump();

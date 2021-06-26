@@ -14,6 +14,7 @@ MovementState::MovementState() {
 
 std::shared_ptr<State> MovementState::Update(Actor &actor) {
     if (actor.IsGrounded()) {
+        actor.SetTimesJumped(0);
         actor.SetJumpCommand(false);
         actor.SetJumpSpeed(5.0f);
         actor.SetFallingSpeed(0.0f);

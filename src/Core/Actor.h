@@ -14,7 +14,6 @@ public:
     void Draw() override = 0;
     ~Actor() override=default;
 
-    void Move(float distance);
     void Jump();
     void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
@@ -43,6 +42,15 @@ public:
     float GetFallingSpeed();
     void SetFallingSpeed(float fallingSpeed);
 
+    int GetTimesJumped();
+    void SetTimesJumped(int timesJumped);
+
+    bool GetCanDoubleJump();
+    void SetCanDoubleJump(bool canDoubleJump);
+
+    bool GetIsRunning();
+    void SetIsRunning(bool isRunning);
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
@@ -54,6 +62,9 @@ protected:
     bool headCollision{ false };
     float fallingSpeed = 0.0f;
     float jumpSpeed = 5.0f;
+    bool canDoubleJump{ false };
+    int timesJumped = 0;
+    bool isRunning{false};
 
 private:
     //Movement

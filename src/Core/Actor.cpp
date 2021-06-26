@@ -14,12 +14,9 @@ Vector2 Actor::GetLastPosition() {
     return lastTickPos;
 }
 
-void Actor::Move(float distance) {
-    position.x+=distance;
-}
 
 void Actor::Jump() {
-    position.y -= 10.0f;
+    position.y -= 1.0f;
 }
 
 Direction Actor::GetDirection() const {
@@ -79,6 +76,36 @@ float Actor::GetFallingSpeed() {
 
 void Actor::SetFallingSpeed(float fallingSpeed) {
     this->fallingSpeed = fallingSpeed;
+}
+
+int Actor::GetTimesJumped()
+{
+    return timesJumped;
+}
+
+void Actor::SetTimesJumped(int timesJumped)
+{
+    this->timesJumped = timesJumped;
+}
+
+bool Actor::GetCanDoubleJump()
+{
+    return canDoubleJump;
+}
+
+void Actor::SetCanDoubleJump(bool canDoubleJump)
+{
+    this->canDoubleJump = canDoubleJump;
+}
+
+bool Actor::GetIsRunning()
+{
+    return isRunning;
+}
+
+void Actor::SetIsRunning(bool isRunning)
+{
+    this->isRunning = isRunning;
 }
 
 bool Actor::GetHeadCollision() {

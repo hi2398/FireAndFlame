@@ -15,6 +15,8 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	movementState = std::make_shared<MovementState>();
 	actionState = std::make_shared<IdleActionState>();
 	position = { 50 * 32, 36 * 32 };
+
+	gravityMultiplier = 2.0;
 }
 
 
@@ -39,14 +41,12 @@ void PlayerCharacter::Update() {
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
-	//update LastTickPosition
-	/*lastTickPos = position;*/
 }
 
 void PlayerCharacter::Draw() {
 	//draw player
 	DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
-
+	
 	
 
 	actionState->Draw(*this);

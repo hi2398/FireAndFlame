@@ -6,17 +6,28 @@ std::shared_ptr<State> FallingSubState::Update(Actor &actor) {
     const auto actorLastPos = actor.GetLastPosition(); //func alias
     const auto actorPos = actor.GetPosition(); //func alias
 
+    if (actor.GetTimesJumped() == 0) actor.SetTimesJumped(1);
     //move sideways while airborne
     switch (actor.GetNextMovement())
     {
     case MOVEMENT::MOVE_LEFT:
-        if (!playerCharacter->GetWallCollisionLeft()) {
-            actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+        if (!actor.GetWallCollisionLeft()) {
+            if (actor.GetIsRunning()) {
+                actor.SetPosition({ actor.GetPosition().x - 5.0f, actor.GetPosition().y });
+            }
+            else {
+                actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+            }
         }
         break;
     case MOVEMENT::MOVE_RIGHT:
-        if (!playerCharacter->GetWallCollisionRight()) {
-            actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+        if (!actor.GetWallCollisionRight()) {
+            if (actor.GetIsRunning()) {
+                actor.SetPosition({ actor.GetPosition().x + 5.0f, actor.GetPosition().y });
+            }
+            else {
+                actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+            }
         }
         break;
     }
@@ -28,8 +39,8 @@ std::shared_ptr<State> FallingSubState::Update(Actor &actor) {
     if(!actor.GetJumpCommand()) {
         //TODO: do jumping stuff
         actor.SetPosition({actor.GetPosition().x, actor.GetPosition().y + actor.GetFallingSpeed()});
-        if (actor.GetFallingSpeed() < 5.0f) actor.SetFallingSpeed(actor.GetFallingSpeed() + 0.1f * actor.GetGravityMultiplier()) ;
-        if (actor.GetFallingSpeed() >= 5.0f)actor.SetFallingSpeed(5.0f);
+        if (actor.GetFallingSpeed() < 8.0f) actor.SetFallingSpeed(actor.GetFallingSpeed() + 0.1f * actor.GetGravityMultiplier()) ;
+        if (actor.GetFallingSpeed() >= 8.0f)actor.SetFallingSpeed(8.0f);
         return shared_from_this();
     } 
     else {

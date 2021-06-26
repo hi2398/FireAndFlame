@@ -19,6 +19,7 @@ void NeutralArea::Update() {
 	PlayerCollisionRight(tilemap);
 	PlayerCollision(tilemap);
 	if (playerCharacter->GetJumpCommand() || playerCharacter->IsGrounded())PlayerCollisionHead(tilemap);
+
 	//coal X player && coal X ground collision
 	if (coals->GetEnabled())
 	{
@@ -181,5 +182,5 @@ void NeutralArea::Draw() {
 		}
 	}
 
-	DrawText(TextFormat("%i", playerCharacter->GetHeadCollision()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
+	DrawText(TextFormat("%i", playerCharacter->GetCanDoubleJump()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
 }
