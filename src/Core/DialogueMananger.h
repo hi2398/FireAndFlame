@@ -16,5 +16,6 @@ private:
     std::queue<std::string> sentences;
     nlohmann::json dialogueFile;
     Rectangle dialogueBox = {300,400,700,300};
-    const char *nextSentenceInQue;
+    std::string nextSent;
+    bool dialogueActive = {true};
 };
