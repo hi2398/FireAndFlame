@@ -3,7 +3,7 @@
 #include "../Global.h"
 
 
-NeutralArea::NeutralArea() {
+NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Map_2.json");
 }
 

@@ -23,6 +23,7 @@ void SceneManager::Tick() {
 
     hud->UpdateHUD();
 	hud->DrawHUD();
+	activeScene->GetDialogueManager().UpdateDialogue();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
