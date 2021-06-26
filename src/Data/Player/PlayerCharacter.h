@@ -9,6 +9,7 @@
 
 enum class ACTION {MELEE_ATTACK, RANGED_ATTACK, NONE};
 
+
 class PlayerCharacter : public Actor {
 public:
     PlayerCharacter();
@@ -18,39 +19,34 @@ public:
 
     Observer& GetObserver() const;
 
-    void Attack();
-    void RunAttack();
-
-    void Fireball();
-    void RunFireball();
-
-    void ChargingAttack();
-
-    void ChargedAttack();
-    void RunChargedAttack();
-
-
     int GetHealth() const;
     void SetHealth(int health);
 
     ACTION GetNextAction();
     void SetNextAction(ACTION action);
 
+
 	//2Dcam
 	Camera2D camera = { 0 };
 
-    //public player variable
+    //player hitbox
     Rectangle playerHitbox = { 0 };
+
 
     //draw player only in game scene
     bool visible = true;
 
     //collision detection with scene objects
 	bool isGrounded = false;
+
+    //attack state and counter to reset attack pattern
+	int resetAttack = 0;
+	int attackState = 0;
 protected:
 
 private:
-
+    const float playerWidth = 20.0f;
+    const float playerHeight = 32.0f;
 
     int health{100};
     //player
@@ -58,23 +54,7 @@ private:
 
     //attack
     ACTION nextAction{ACTION::NONE};
-
-
-    Vector2 vectorFireball = {0};
-    Rectangle spearHitbox = {0,0,40,5};
-    float spearRotation = 300;
-    int stabbingDistance = 0;
-    bool isSwiping = false;
-    bool isCharged = false;
-    int chargingCounter = 0;
-    bool isShootingFireball = false;
-    int resetAttack  = 0;
-    int attackState = 0;
-
-    //bool for input functions
-    bool attackCommand = false;
-    bool chargedAttackCommand = false;
-    bool fireballCommand = false;
+    
 
     std::shared_ptr<Observer> observer;
     std::shared_ptr<State> movementState;

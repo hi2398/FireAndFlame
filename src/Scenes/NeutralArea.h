@@ -5,6 +5,9 @@
 #include "../Data/Coal.h"
 #include <vector>
 #include "../Core/Tilemap.h"
+#include "../Core/Actor.h"
+
+
 
 class NeutralArea : public Scene {
 public:
@@ -14,9 +17,11 @@ public:
     void Draw() override;
     ~NeutralArea() override = default;
 
+
 protected:
 
 private:
+    Rectangle exp = { 0 };
 
     std::vector<std::shared_ptr<Enemy>> enemies;
     //std::vector<std::shared_ptr<Coal>> coals;
@@ -28,3 +33,7 @@ private:
 
 };
 
+void PlayerCollision(std::unique_ptr<Tilemap> &tilemap);
+void PlayerCollisionLeft(std::unique_ptr<Tilemap>& tilemap);
+void PlayerCollisionRight(std::unique_ptr<Tilemap>& tilemap);
+void PlayerCollisionHead(std::unique_ptr<Tilemap>& tilemap);
