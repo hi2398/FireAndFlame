@@ -25,3 +25,7 @@ std::shared_ptr<State> IdleActionState::Update(Actor &actor) {
     }
     throw std::invalid_argument("bad state");
 }
+
+void IdleActionState::Draw(Actor& actor) {
+
+}
