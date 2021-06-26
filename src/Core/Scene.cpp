@@ -10,3 +10,8 @@ DialogueMananger &Scene::GetDialogueManager() {
 }
 
 
+
+const std::unique_ptr<Tilemap>& Scene::GetTilemap()
+{
+    return tilemap;
+}

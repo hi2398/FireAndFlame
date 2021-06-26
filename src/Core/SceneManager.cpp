@@ -36,3 +36,8 @@ void SceneManager::SceneParallax(int direction)
 {
     background->Parallax(direction);
 }
+
+const std::unique_ptr<Tilemap>& SceneManager::GetTilemap()
+{
+    return activeScene->GetTilemap();
+}

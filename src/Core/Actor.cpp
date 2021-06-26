@@ -123,3 +123,107 @@ float Actor::GetJumpSpeed() {
 void Actor::SetJumpSpeed(float jumpSpeed) {
     this->jumpSpeed = jumpSpeed;
 }
+
+void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
+{
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = GetLastPosition();
+	const auto newPos = GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll ground
+		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 1 };
+
+		if (CheckCollisionRecs(tileRec, playerFeet)) {
+			SetGrounded(true);
+			SetPosition({ newPos.x, tileRec.y - 32.0f });
+			return;
+		}
+		else SetGrounded(false);
+	}
+}
+
+void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = GetLastPosition();
+	const auto newPos = GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll left
+		Rectangle playerLeftSide = { newPos.x - 1, newPos.y + 6, 1, 20 };
+
+		if (CheckCollisionRecs(tileRec, playerLeftSide)) {
+			SetWallCollisionLeft(true);
+			SetPosition({ tileRec.x + 32, newPos.y });
+			return;
+		}
+		else {
+			SetWallCollisionLeft(false);
+		}
+	}
+}
+
+void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = GetLastPosition();
+	const auto newPos = GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll right
+		Rectangle playerRightSide = { newPos.x + 32, newPos.y + 6, 1, 20 };
+
+		if (CheckCollisionRecs(tileRec, playerRightSide)) {
+			SetWallCollisionRight(true);
+			SetPosition({ tileRec.x - 32, newPos.y });
+			return;
+		}
+		else {
+			SetWallCollisionRight(false);
+		}
+	}
+}
+
+void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
+	//tile rectangles
+	Rectangle tileRec = { 0,0,32,32 };
+
+	//player vector alias
+	const auto lastPos = GetLastPosition();
+	const auto newPos = GetPosition();
+
+	for (const auto& collTile : tilemap->GetTileColliders()) {
+		tileRec.x = collTile.x;
+		tileRec.y = collTile.y;
+
+		//player coll head
+		Rectangle playerUpperSide = { newPos.x , newPos.y - 1, 32, 1 };
+
+		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
+			SetHeadCollision(true);
+			SetJumpCommand(false);
+			SetPosition({ newPos.x, tileRec.y + 32 });
+			return;
+		}
+		else {
+			SetHeadCollision(false);
+		}
+	}
+}

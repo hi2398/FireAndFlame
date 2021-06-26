@@ -5,6 +5,7 @@
 #include "PlayerController.h"
 #include "../Data/HUD.h"
 #include "BackgroundManager.h"
+#include "Tilemap.h"
 
 extern std::shared_ptr<PlayerCharacter> playerCharacter;
 extern std::shared_ptr<PlayerController> playerController;
@@ -18,6 +19,7 @@ public:
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void SceneParallax(int direction);
 
+    const std::unique_ptr<Tilemap>& GetTilemap();
 
 protected:
 

@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "PlayerObserver.h"
 #include "IdleActionState.h"
+#include "../../Global.h"
 #include <stdexcept>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
@@ -24,6 +25,12 @@ void PlayerCharacter::Update() {
 	
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
+
+	
+	CollisionLeft(sceneManager->GetTilemap());
+	CollisionRight(sceneManager->GetTilemap());
+	CollisionGround(sceneManager->GetTilemap());
+	if (GetJumpCommand() || IsGrounded())CollisionHead(sceneManager->GetTilemap());
 
 	//health cap
 	if (health >= 100) health = 100;

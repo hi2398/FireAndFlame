@@ -5,7 +5,7 @@
 
 
 NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Map_2.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
 }
 
 void NeutralArea::Update() {
@@ -15,11 +15,6 @@ void NeutralArea::Update() {
 		generalTimer = 0;
 		playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
 	}
-	
-	PlayerCollisionLeft(tilemap);
-	PlayerCollisionRight(tilemap);
-	PlayerCollision(tilemap);
-	if (playerCharacter->GetJumpCommand() || playerCharacter->IsGrounded())PlayerCollisionHead(tilemap);
 
 	//coal X player && coal X ground collision
 	if (coals->GetEnabled())
@@ -58,114 +53,6 @@ void NeutralArea::Update() {
 		x->Update();
 	}
 }
-
-void PlayerCollision(std::unique_ptr<Tilemap>& tilemap)
-{
-	//tile rectangles
-	Rectangle tileRec = { 0,0,32,32 };
-
-	//player vector alias
-	const auto lastPos = playerCharacter->GetLastPosition();
-	const auto newPos = playerCharacter->GetPosition();
-
-	for (const auto& collTile : tilemap->GetTileColliders()) {
-		tileRec.x = collTile.x;
-		tileRec.y = collTile.y;
-		
-		//player coll ground
-		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 1 };
-
-		if (CheckCollisionRecs(tileRec, playerFeet)) {
-			playerCharacter->SetGrounded(true);
-			playerCharacter->SetPosition({ newPos.x, tileRec.y - 32.0f });
-			return;
-		}
-		else playerCharacter->SetGrounded(false);
-	}
-}
-
-void PlayerCollisionLeft(std::unique_ptr<Tilemap>& tilemap) {
-	//tile rectangles
-	Rectangle tileRec = { 0,0,32,32 };
-
-	//player vector alias
-	const auto lastPos = playerCharacter->GetLastPosition();
-	const auto newPos = playerCharacter->GetPosition();
-
-	for (const auto& collTile : tilemap->GetTileColliders()) {
-		tileRec.x = collTile.x;
-		tileRec.y = collTile.y;
-
-		//player coll left
-		Rectangle playerLeftSide = { newPos.x - 1, newPos.y + 6, 1, 20 };
-
-		if (CheckCollisionRecs(tileRec, playerLeftSide)) {
-			std::cout << "LEFT COLL\n";
-			playerCharacter->SetWallCollisionLeft(true);
-			playerCharacter->SetPosition({ tileRec.x + 32, newPos.y });
-			return;
-		}
-		else {
-			playerCharacter->SetWallCollisionLeft(false);
-		}
-	}
-}
-
-void PlayerCollisionRight(std::unique_ptr<Tilemap>& tilemap) {
-	//tile rectangles
-	Rectangle tileRec = { 0,0,32,32 };
-
-	//player vector alias
-	const auto lastPos = playerCharacter->GetLastPosition();
-	const auto newPos = playerCharacter->GetPosition();
-
-	for (const auto& collTile : tilemap->GetTileColliders()) {
-		tileRec.x = collTile.x;
-		tileRec.y = collTile.y;
-
-		//player coll right
-		Rectangle playerRightSide = { newPos.x + 32, newPos.y + 6, 1, 20 };
-
-		if (CheckCollisionRecs(tileRec, playerRightSide)) {
-			std::cout << "RIGHT COLL\n";
-			playerCharacter->SetWallCollisionRight(true);
-			playerCharacter->SetPosition({ tileRec.x - 32, newPos.y });
-			return;
-		}
-		else {
-			playerCharacter->SetWallCollisionRight(false);
-		}
-	}
-}
-
-void PlayerCollisionHead(std::unique_ptr<Tilemap>& tilemap) {
-	//tile rectangles
-	Rectangle tileRec = { 0,0,32,32 };
-
-	//player vector alias
-	const auto lastPos = playerCharacter->GetLastPosition();
-	const auto newPos = playerCharacter->GetPosition();
-
-	for (const auto& collTile : tilemap->GetTileColliders()) {
-		tileRec.x = collTile.x;
-		tileRec.y = collTile.y;
-
-		//player coll head
-		Rectangle playerUpperSide = { newPos.x , newPos.y - 1, 32, 1 };
-
-		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
-			std::cout << "HEAD COLL\n";
-			playerCharacter->SetHeadCollision(true);
-			playerCharacter->SetJumpCommand(false);
-			playerCharacter->SetPosition({ newPos.x, tileRec.y + 32 });
-			return;
-		}
-		else {
-			playerCharacter->SetHeadCollision(false);
-		}
-	}
-}
-
 
 void NeutralArea::Draw() {
 
