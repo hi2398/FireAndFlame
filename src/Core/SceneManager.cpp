@@ -23,7 +23,9 @@ void SceneManager::Tick() {
 	EndMode2D();
 
 	hud->DrawHUD();
-    playerCharacter->SetLastPosition(playerCharacter->GetPosition());
+
+  playerCharacter->SetLastPosition(playerCharacter->GetPosition());
+	activeScene->GetDialogueManager().UpdateDialogue();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
