@@ -5,7 +5,7 @@
 
 
 NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Map_2.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
 }
 
 void NeutralArea::Update() {
