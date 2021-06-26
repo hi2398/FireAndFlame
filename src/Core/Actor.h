@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Component.h"
 #include "raylib.h"
+#include "Tilemap.h"
 
 enum Direction{LEFT=-1, RIGHT=1};
 enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE };
@@ -66,6 +67,10 @@ protected:
     int timesJumped = 0;
     bool isRunning{false};
 
+    void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
+    void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);
+    void CollisionRight(const std::unique_ptr<Tilemap>& tilemap);
+    void CollisionHead(const std::unique_ptr<Tilemap>& tilemap);
 private:
     //Movement
     MOVEMENT nextMovement{ MOVEMENT::IDLE };

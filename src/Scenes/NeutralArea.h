@@ -26,14 +26,9 @@ private:
     std::vector<std::shared_ptr<Enemy>> enemies;
     //std::vector<std::shared_ptr<Coal>> coals;
     std::shared_ptr<Coal>coals = std::make_shared<Coal>();
-    std::unique_ptr<Tilemap> tilemap;
+    
     Rectangle ground = { -1000, 40, 2100, 300};
     int coalTimer=30;
     int generalTimer = 0;
 
 };
-
-void PlayerCollision(std::unique_ptr<Tilemap> &tilemap);
-void PlayerCollisionLeft(std::unique_ptr<Tilemap>& tilemap);
-void PlayerCollisionRight(std::unique_ptr<Tilemap>& tilemap);
-void PlayerCollisionHead(std::unique_ptr<Tilemap>& tilemap);
