@@ -1,10 +1,11 @@
 #pragma once
 #include <memory>
 #include "Scene.h"
-#include "PlayerCharacter.h"
+#include "../Data/Player/PlayerCharacter.h"
 #include "PlayerController.h"
-#include "HUD.h"
+#include "../Data/HUD.h"
 #include "BackgroundManager.h"
+#include "Tilemap.h"
 
 extern std::shared_ptr<PlayerCharacter> playerCharacter;
 extern std::shared_ptr<PlayerController> playerController;
@@ -17,6 +18,8 @@ public:
     void Tick();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void SceneParallax(int direction);
+
+    const std::unique_ptr<Tilemap>& GetTilemap();
 
 protected:
 

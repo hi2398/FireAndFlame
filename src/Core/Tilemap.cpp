@@ -3,6 +3,7 @@
 //
 
 #include "Tilemap.h"
+#include <iostream>
 
 Tilemap::Tilemap(const std::string& tileDescription, const std::string& levelDescription) {
     std::ifstream tilesetDescriptionFile(tileDescription);
@@ -37,7 +38,9 @@ void Tilemap::InitTileRecs() {
                     tilemapPos.y =  (float) floor((float) tileId / (float) tilesetDescription["columns"]) * (float) levelDescription["tilewidth"];
                     tileRecs.push_back(Rectangle{tilemapPos.x,tilemapPos.y,levelDescription["tilewidth"], levelDescription["tileheight"]});
                 }
-
+                if(tileId!=0 && layer["name"]=="collision"){
+                    tileWorldPosCollision.push_back(worldPos);
+                }
                 if(tileId!=0) {
                     tileWorldPos.push_back(worldPos);
                 }
@@ -48,10 +51,11 @@ void Tilemap::InitTileRecs() {
                 }
             }
         }
+        worldPos.x = 0;
+        worldPos.y = 0;
     }
-
 }
 
-const std::vector<Vector2> &Tilemap::GetWorldPos() const {
-    return tileWorldPos;
+const std::vector<Vector2> &Tilemap::GetTileColliders() const {
+    return tileWorldPosCollision;
 }
