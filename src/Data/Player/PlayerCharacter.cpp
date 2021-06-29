@@ -54,8 +54,7 @@ void PlayerCharacter::Update() {
 
 void PlayerCharacter::Draw() {
 	//draw player
-	DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
-	
+	/*DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);*/
 	
 
 	actionState->Draw(*this);

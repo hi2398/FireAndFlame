@@ -28,5 +28,10 @@ std::shared_ptr<State> MovementState::Update(Actor &actor) {
 }
 
 void MovementState::Draw(Actor& actor) {
-
+    if (actor.IsGrounded()) {
+        groundedSubState->Draw(actor); //IdleGroundedSubState or MovingGroundedSubState
+    }
+    else {
+        aerialSubState->Draw(actor); //FallingSubState or JumpingSubState
+    }
 }

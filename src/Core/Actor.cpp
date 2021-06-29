@@ -51,6 +51,8 @@ MOVEMENT Actor::GetNextMovement() {
 }
 
 void Actor::SetNextMovement(MOVEMENT movement) {
+	if (movement == MOVEMENT::MOVE_LEFT) direction = LEFT;
+	if (movement == MOVEMENT::MOVE_RIGHT) direction = RIGHT;
     nextMovement = movement;
 }
 
