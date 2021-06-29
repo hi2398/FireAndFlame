@@ -18,11 +18,13 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	position = { 50 * 32, 36 * 32 };
 
 	gravityMultiplier = 2.0;
+
+	
 }
 
 
 void PlayerCharacter::Update() {
-	
+	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
 
