@@ -28,6 +28,8 @@ public:
 
 	//2Dcam
 	Camera2D camera = { 0 };
+    //cam hitbox
+    Rectangle visibleScreen = {};
 
     //player hitbox
     Rectangle playerHitbox = { 0 };
