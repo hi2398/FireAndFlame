@@ -44,6 +44,8 @@ public:
     //attack state and counter to reset attack pattern
 	int resetAttack = 0;
 	int attackState = 0;
+
+    Texture2D texturePlayer;
 protected:
 
 private:
@@ -52,7 +54,7 @@ private:
 
     int health{100};
     //player
-    Texture2D texturePlayer;
+    
 
     //attack
     ACTION nextAction{ACTION::NONE};
