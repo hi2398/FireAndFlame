@@ -6,7 +6,7 @@
 #include "Tilemap.h"
 
 enum Direction{LEFT=-1, RIGHT=1};
-enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE };
+enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE, DASH_LEFT, DASH_RIGHT };
 
 class Actor : public Object {
 public:
@@ -15,7 +15,6 @@ public:
     void Draw() override = 0;
     ~Actor() override=default;
 
-    void Jump();
     void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
@@ -52,6 +51,19 @@ public:
     bool GetIsRunning();
     void SetIsRunning(bool isRunning);
 
+    bool GetWallJumpCommand();
+    void SetWallJumpCommand(bool jumpOffWall);
+
+    bool GetJumpBlocked();
+    void SetJumpBlocked(bool jumpBlocked);
+
+    int GetWallCounter();
+    void SetWallCounter(int wallCounter);
+
+    bool GetIsDashing();
+    void SetIsDashing(bool isDashing);
+    Vector2 Dash(int direction);
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
@@ -66,6 +78,12 @@ protected:
     bool canDoubleJump{ false };
     int timesJumped = 0;
     bool isRunning{false};
+    bool jumpOffWall{ false };
+    bool jumpBlocked{false};
+    int wallCounter{0};
+    float dashDistance = 96.0f;
+    int dashCounter = 0;
+    bool isDashing{ false };
 
     void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);
