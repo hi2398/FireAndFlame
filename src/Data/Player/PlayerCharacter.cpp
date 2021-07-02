@@ -7,6 +7,7 @@
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
+	textureWallSlide = LoadTexture("assets/graphics/PLAYER_WALL.png");
 
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 	camera.offset = { 640, 360 };
@@ -32,7 +33,7 @@ void PlayerCharacter::Update() {
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
-	if (GetJumpCommand() || IsGrounded())CollisionHead(sceneManager->GetTilemap());
+	/*if (GetJumpCommand() || IsGrounded()) */CollisionHead(sceneManager->GetTilemap());
 
 	//health cap
 	if (health >= 100) health = 100;

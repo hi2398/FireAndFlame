@@ -46,6 +46,7 @@ public:
 	int attackState = 0;
 
     Texture2D texturePlayer;
+    Texture2D textureWallSlide;
 protected:
 
 private:

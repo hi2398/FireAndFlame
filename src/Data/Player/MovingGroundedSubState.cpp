@@ -7,33 +7,44 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 	const auto actorPos = actor.GetPosition(); //func alias
 
 
-	std::cout << "Moving Grounded\n";
+	if constexpr (DEBUG_BUILD) {
+		std::cout << "New State: Moving Grounded\n";
+	}
+
+
 	switch (actor.GetNextMovement())
 	{
 	case MOVEMENT::MOVE_LEFT:
-		if (!actor.GetWallCollisionLeft()) {
+		
 			if (actor.GetIsRunning()) {
 				actor.SetPosition({ actor.GetPosition().x - 5.0f, actor.GetPosition().y });
 			}
 			else {
 				actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
 			}
-		}
-		return shared_from_this();
+		
+			break;
 	case MOVEMENT::MOVE_RIGHT:
-		if (!actor.GetWallCollisionRight()) {
+		
 			if (actor.GetIsRunning()) {
 				actor.SetPosition({ actor.GetPosition().x + 5.0f, actor.GetPosition().y });
 			}
 			else {
 				actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
 			}
-		}
-		return shared_from_this();
+		
+			break;
 	case MOVEMENT::IDLE:
 		return std::make_shared<IdleGroundedSubState>();
+	case MOVEMENT::DASH_LEFT:
+		
+		actor.Dash(LEFT);
+		break;
+	case MOVEMENT::DASH_RIGHT:
+		actor.Dash(RIGHT);
+		break;
 	}
-
+	return shared_from_this();
 }
 
 void MovingGroundedSubState::Draw(Actor& actor) {

@@ -21,13 +21,15 @@ std::shared_ptr<State> RangedActionState::Update(Actor &actor) {
             }
         case ACTION::RANGED_ATTACK:
             if (!isShootingFireball) {
-                vectorFireball.x = playerCharacter->GetPosition().x + 25;
+                fireballDirection = playerCharacter->GetDirection();
+                if (playerCharacter->GetDirection() == 1)vectorFireball.x = playerCharacter->GetPosition().x + 25;
+                if (playerCharacter->GetDirection() == -1)vectorFireball.x = playerCharacter->GetPosition().x + 9;
                 vectorFireball.y = playerCharacter->GetPosition().y + 11;
             }
             isShootingFireball = true;
             if (isShootingFireball) {
-                vectorFireball.x += 10.0f;
-                if (vectorFireball.x > ((float)GetScreenWidth() / 2) + playerCharacter->GetPosition().x) {
+                vectorFireball.x += 10.0f *fireballDirection;
+                if (vectorFireball.x > ((float)GetScreenWidth() / 2) + playerCharacter->GetPosition().x || vectorFireball.x < playerCharacter->GetPosition().x - ((float)GetScreenWidth() / 2)) {
                     isShootingFireball = false;
                     return std::make_shared<IdleActionState>();
                 }
