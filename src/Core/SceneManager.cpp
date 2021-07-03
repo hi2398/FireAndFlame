@@ -8,21 +8,23 @@ SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
 }
 
 void SceneManager::Tick() {
+    activeScene = nextScene;
     
-    BeginMode2D(playerCharacter->camera);
-	activeScene = nextScene;
-    background->Draw();
     playerController->HandleInput();
-	activeScene->Update();
-	activeScene->Draw();
-    if (playerCharacter->visible) {
-		playerCharacter->Update();
-		playerCharacter->Draw();
-    }    
-    EndMode2D();
 
+    if (playerCharacter->visible) playerCharacter->Update();
+    activeScene->Update();
     hud->UpdateHUD();
+
+    BeginMode2D(playerCharacter->camera);
+    background->Draw();
+	activeScene->Draw();
+    if (playerCharacter->visible) playerCharacter->Draw();
+	EndMode2D();
+
 	hud->DrawHUD();
+
+  playerCharacter->SetLastPosition(playerCharacter->GetPosition());
 	activeScene->GetDialogueManager().UpdateDialogue();
 }
 
@@ -32,5 +34,11 @@ void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
 
 void SceneManager::SceneParallax(int direction)
 {
+    //TODO: rework when actually implementing this stuff
     background->Parallax(direction);
+}
+
+const std::unique_ptr<Tilemap>& SceneManager::GetTilemap()
+{
+    return activeScene->GetTilemap();
 }
