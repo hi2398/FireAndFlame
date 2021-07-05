@@ -6,4 +6,7 @@ enum class EVENT{
     JUMP,
     MELEE_ATTACK,
     RANGED_ATTACK,
+    WALL_JUMP,
+    DASH_LEFT,
+    DASH_RIGHT,
 };

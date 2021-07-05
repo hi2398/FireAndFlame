@@ -9,7 +9,7 @@ DialogueMananger::DialogueMananger(std::string filePath) { // gets json file and
 }
 
 void DialogueMananger::StartDialogue() {
-    dialogueActive=true;
+    dialogueActive=false;
     for (auto sentence : dialogueFile["text"]){ // Adds all sentences from json file to queue
         sentences.push((std::string)sentence);
     }

@@ -16,6 +16,7 @@ private:
     bool actionDone{false};
 
     //fireball
+    int fireballDirection;
     Vector2 vectorFireball = { 0 };
     bool isShootingFireball = false;
 };

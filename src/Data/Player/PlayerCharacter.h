@@ -28,6 +28,8 @@ public:
 
 	//2Dcam
 	Camera2D camera = { 0 };
+    //cam hitbox
+    Rectangle visibleScreen = {};
 
     //player hitbox
     Rectangle playerHitbox = { 0 };
@@ -42,6 +44,9 @@ public:
     //attack state and counter to reset attack pattern
 	int resetAttack = 0;
 	int attackState = 0;
+
+    Texture2D texturePlayer;
+    Texture2D textureWallSlide;
 protected:
 
 private:
@@ -50,7 +55,7 @@ private:
 
     int health{100};
     //player
-    Texture2D texturePlayer;
+    
 
     //attack
     ACTION nextAction{ACTION::NONE};

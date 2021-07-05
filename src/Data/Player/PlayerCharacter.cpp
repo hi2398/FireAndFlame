@@ -7,6 +7,7 @@
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
+	textureWallSlide = LoadTexture("assets/graphics/PLAYER_WALL.png");
 
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 	camera.offset = { 640, 360 };
@@ -18,11 +19,13 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	position = { 50 * 32, 36 * 32 };
 
 	gravityMultiplier = 2.0;
+
+	
 }
 
 
 void PlayerCharacter::Update() {
-	
+	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
 
@@ -30,7 +33,7 @@ void PlayerCharacter::Update() {
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
-	if (GetJumpCommand() || IsGrounded())CollisionHead(sceneManager->GetTilemap());
+	/*if (GetJumpCommand() || IsGrounded()) */CollisionHead(sceneManager->GetTilemap());
 
 	//health cap
 	if (health >= 100) health = 100;
@@ -52,8 +55,7 @@ void PlayerCharacter::Update() {
 
 void PlayerCharacter::Draw() {
 	//draw player
-	DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
-	
+	/*DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);*/
 	
 
 	actionState->Draw(*this);

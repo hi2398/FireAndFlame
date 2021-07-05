@@ -18,16 +18,25 @@ void PlayerObserver::OnNotify(EVENT event) {
             playerCharacter->SetNextMovement(MOVEMENT::MOVE_RIGHT);
             break;
         case EVENT::JUMP:
-            playerCharacter->SetJumpSpeed(5.0f);
+            if (!playerCharacter->GetJumpBlocked()) playerCharacter->SetJumpSpeed(5.0f);
             playerCharacter->SetTimesJumped(playerCharacter->GetTimesJumped()+1);
             playerCharacter->SetGrounded(false);
             playerCharacter->SetJumpCommand(true);
-            playerCharacter->Jump();
             break;
         case EVENT::MELEE_ATTACK:
             playerCharacter->SetNextAction(ACTION::MELEE_ATTACK);
             break;
         case EVENT::RANGED_ATTACK:
             playerCharacter->SetNextAction(ACTION::RANGED_ATTACK);
+            break;
+        case EVENT::WALL_JUMP:
+            playerCharacter->SetWallJumpCommand(true);
+            break;
+        case EVENT::DASH_LEFT:
+            playerCharacter->SetNextMovement(MOVEMENT::DASH_LEFT);
+            break;
+        case EVENT::DASH_RIGHT:
+            playerCharacter->SetNextMovement(MOVEMENT::DASH_RIGHT);
+            break;
     }
 }

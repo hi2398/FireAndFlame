@@ -15,10 +15,6 @@ Vector2 Actor::GetLastPosition() {
 }
 
 
-void Actor::Jump() {
-    position.y -= 1.0f;
-}
-
 Direction Actor::GetDirection() const {
     return direction;
 }
@@ -51,6 +47,8 @@ MOVEMENT Actor::GetNextMovement() {
 }
 
 void Actor::SetNextMovement(MOVEMENT movement) {
+	if (movement == MOVEMENT::MOVE_LEFT) direction = LEFT;
+	if (movement == MOVEMENT::MOVE_RIGHT) direction = RIGHT;
     nextMovement = movement;
 }
 
@@ -122,6 +120,49 @@ float Actor::GetJumpSpeed() {
 
 void Actor::SetJumpSpeed(float jumpSpeed) {
     this->jumpSpeed = jumpSpeed;
+}
+
+bool Actor::GetWallJumpCommand() {
+	return jumpOffWall;
+}
+
+void Actor::SetWallJumpCommand(bool jumpOffWall) {
+	this->jumpOffWall = jumpOffWall;
+}
+
+bool Actor::GetJumpBlocked() {
+	return jumpBlocked;
+}
+
+void Actor::SetJumpBlocked(bool jumpBlocked) {
+	this->jumpBlocked = jumpBlocked;
+}
+
+int Actor::GetWallCounter() {
+	return wallCounter;
+}
+
+void Actor::SetWallCounter(int wallCounter) {
+	this->wallCounter = wallCounter;
+}
+
+bool Actor::GetIsDashing() {
+	return isDashing;
+}
+
+void Actor::SetIsDashing(bool isDashing) {
+	this->isDashing = isDashing;
+}
+
+Vector2 Actor::Dash(int direction) {
+	dashCounter++;
+	isDashing = true;
+	position.x += dashDistance * direction / 6;
+	if (dashCounter >= 6) {
+		isDashing = false;
+		dashCounter = 0;
+	}
+	return position;
 }
 
 void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)

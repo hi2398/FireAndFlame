@@ -34,6 +34,7 @@ void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
 
 void SceneManager::SceneParallax(int direction)
 {
+    //TODO: rework when actually implementing this stuff
     background->Parallax(direction);
 }
 
