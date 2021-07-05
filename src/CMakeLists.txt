@@ -20,7 +20,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         )
 
 #  Link to Raylib
-target_link_libraries(${PROJECT_NAME} raylib Scenes Core Data)
+target_link_libraries(${PROJECT_NAME} raylib Scenes Core Data Player Observer)
 
 # Copy assets to assets path
 add_custom_target(copy_assets
