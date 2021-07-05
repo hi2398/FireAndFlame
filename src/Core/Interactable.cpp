@@ -4,6 +4,10 @@
 
 #include "Interactable.h"
 
-Interactable::Interactable() : Object(ObjectTypes::Interactable) {
+Interactable::Interactable(InteractableType interactableType) : Object(ObjectTypes::Interactable) {
+    this->interactableType=interactableType;
+}
 
+InteractableType Interactable::GetInteractableType() const {
+    return interactableType;
 }

@@ -23,9 +23,7 @@ protected:
 private:
     Rectangle exp = { 0 };
 
-    std::vector<std::shared_ptr<Enemy>> enemies;
-    //std::vector<std::shared_ptr<Coal>> coals;
-    std::shared_ptr<Coal>coals = std::make_shared<Coal>();
+
     
     Rectangle ground = { -1000, 40, 2100, 300};
     int coalTimer=30;

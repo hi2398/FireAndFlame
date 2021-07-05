@@ -1,6 +1,6 @@
 #include "Coal.h"
 
-Coal::Coal()
+Coal::Coal() : Interactable(InteractableType::Coal)
 {
 	aTexture = LoadTexture("assets/graphics/Coal.png");
 }

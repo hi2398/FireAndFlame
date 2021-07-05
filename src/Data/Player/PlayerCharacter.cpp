@@ -29,6 +29,14 @@ void PlayerCharacter::Update() {
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
 
+
+	//regularly decrease health
+    ++healthTimer;
+    if (healthTimer >= HEALTH_INTERVAL) {
+        healthTimer = 0;
+        playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+    }
+
 	
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
