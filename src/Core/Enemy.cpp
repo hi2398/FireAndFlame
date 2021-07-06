@@ -16,6 +16,10 @@ EnemyTypes Enemy::GetEnemyType() const {
 void Enemy::RecieveDamage(int pDamage)
 {
 	aHealth -= pDamage;
+	if (aHealth == 0)
+	{
+		this->~Enemy();
+	}
 }
 
 bool Enemy::CheckLineOfSight(Vector2 pOrtsVector, Vector2 pRichtungsVector, const std::unique_ptr<Tilemap>& tilemap)

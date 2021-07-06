@@ -23,6 +23,7 @@ void Miner::Update()
 	{
 		if (grounded == true)//ist auf dem Boden
 		{
+			fallingSpeed = 0f;
 			if (aState == 4)//Ist gestunned
 			{
 				--aStunCounter;
@@ -130,6 +131,11 @@ void Miner::Update()
 					}
 				}
 			}
+		}
+		else
+		{
+			this->position.y += fallingSpeed;
+			fallingSpeed += 0.1f;
 		}
 	}
 }
