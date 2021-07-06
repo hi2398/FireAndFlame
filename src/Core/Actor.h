@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "Object.h"
-#include "Component.h"
 #include "raylib.h"
 #include "Tilemap.h"
 
@@ -18,49 +17,49 @@ public:
     void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
-    float GetGravityMultiplier();
+    float GetGravityMultiplier() const;
     void SetGrounded(bool grounded);
-    bool IsGrounded();
+    bool IsGrounded() const;
     void SetJumpCommand(bool jumpUp);
-    bool GetJumpCommand();
+    bool GetJumpCommand() const;
 
     MOVEMENT GetNextMovement();
     void SetNextMovement(MOVEMENT movement);
 
-    bool GetWallCollisionLeft();
+    bool GetWallCollisionLeft() const;
     void SetWallCollisionLeft(bool hugWallLeft);
 
-    bool GetWallCollisionRight();
+    bool GetWallCollisionRight() const;
     void SetWallCollisionRight(bool hugWallRight);
 
-    bool GetHeadCollision();
+    bool GetHeadCollision() const;
     void SetHeadCollision(bool headCollision);
 
-    float GetJumpSpeed();
+    float GetJumpSpeed() const;
     void SetJumpSpeed(float jumpSpeed);
 
-    float GetFallingSpeed();
+    float GetFallingSpeed() const;
     void SetFallingSpeed(float fallingSpeed);
 
-    int GetTimesJumped();
+    int GetTimesJumped() const;
     void SetTimesJumped(int timesJumped);
 
-    bool GetCanDoubleJump();
+    bool GetCanDoubleJump() const;
     void SetCanDoubleJump(bool canDoubleJump);
 
-    bool GetIsRunning();
+    bool GetIsRunning() const;
     void SetIsRunning(bool isRunning);
 
-    bool GetWallJumpCommand();
+    bool GetWallJumpCommand() const;
     void SetWallJumpCommand(bool jumpOffWall);
 
-    bool GetJumpBlocked();
+    bool GetJumpBlocked() const;
     void SetJumpBlocked(bool jumpBlocked);
 
-    int GetWallCounter();
+    int GetWallCounter() const;
     void SetWallCounter(int wallCounter);
 
-    bool GetIsDashing();
+    bool GetIsDashing() const;
     void SetIsDashing(bool isDashing);
     Vector2 Dash(int direction);
 

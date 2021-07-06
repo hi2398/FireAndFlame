@@ -54,6 +54,8 @@ private:
     const float playerHeight = 32.0f;
 
     int health{100};
+    int healthTimer{}; //decrease
+    static constexpr int HEALTH_INTERVAL{30};
     //player
     
 

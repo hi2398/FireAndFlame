@@ -6,7 +6,7 @@
 
 std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 
-	if constexpr (DEBUG_BUILD) {
+	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Wall Jump\n";
 	}
 
