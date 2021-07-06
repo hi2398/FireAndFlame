@@ -6,6 +6,7 @@
 #include <vector>
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"
+#include "../Data/SceneChangerObject.h"
 
 class AreaOne : public Scene {
 public:

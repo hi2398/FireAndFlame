@@ -7,7 +7,11 @@
 AreaOne::AreaOne() : Scene("assets/Dialogues/testText.json"){
     playerCharacter->SetPosition({0, 101 * 32});
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Area_1.json");
-    interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
+    // Delete this section, only for testing
+    Vector2 tempVec= playerCharacter->GetPosition();
+    tempVec.x-=256;
+    // A
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec));
 }
 
 void AreaOne::Update() {
