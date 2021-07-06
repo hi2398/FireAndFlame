@@ -62,8 +62,6 @@ void Coal::Update()
         interactionZone.y=hitbox.y;
 	}
 
-    std::cout << "Coal Pos " << position.x << " " << position.y << std::endl;
-    std::cout << "Player Pos" << playerCharacter->GetPosition().x << " " << playerCharacter->GetPosition().y << std::endl;
 }
 
 void Coal::Draw()
