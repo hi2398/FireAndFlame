@@ -7,14 +7,14 @@ std::shared_ptr<State> RangedActionState::Update(Actor &actor) {
     switch (playerCharacter->GetNextAction()) {
         case ACTION::MELEE_ATTACK:
             if (actionDone) {
-                if constexpr(DEBUG_BUILD) {
+                if constexpr(DEBUG_PLAYER_STATES) {
                     std::cout << "new state: melee" << std::endl;
                 }
                 return std::make_shared<MeleeActionState>();
             }
         case ACTION::NONE:
             if (actionDone) {
-                if constexpr(DEBUG_BUILD) {
+                if constexpr(DEBUG_PLAYER_STATES) {
                     std::cout << "new state: idle action" << std::endl;
                 }
                 return std::make_shared<IdleActionState>();
@@ -38,7 +38,6 @@ std::shared_ptr<State> RangedActionState::Update(Actor &actor) {
             //TODO: handle ranged state
             return shared_from_this();
     }
-    throw std::invalid_argument("bad state");
 }
 
 void RangedActionState::Draw(Actor& actor) {

@@ -7,7 +7,7 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 	const auto actorPos = actor.GetPosition(); //func alias
 
 
-	if constexpr (DEBUG_BUILD) {
+	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Moving Grounded\n";
 	}
 

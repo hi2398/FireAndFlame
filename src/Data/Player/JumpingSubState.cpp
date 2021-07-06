@@ -6,7 +6,7 @@
 std::shared_ptr<State> JumpingSubState::Update(Actor& actor) {
 	const auto actorPos = actor.GetPosition(); //func alias
 
-	if constexpr (DEBUG_BUILD) {
+	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Jumping\n";
 	}
 
@@ -97,7 +97,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& actor) {
 		return shared_from_this();
 	}
 	else {
-		if constexpr (DEBUG_BUILD) {
+		if constexpr (DEBUG_PLAYER_STATES) {
 			std::cout << "New State: Falling    " << std::endl;
 		}
 		actor.SetJumpSpeed(5.0f);

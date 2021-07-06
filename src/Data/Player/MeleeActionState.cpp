@@ -8,14 +8,14 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 
 	case ACTION::RANGED_ATTACK:
 		if (actionDone) {
-			if constexpr (DEBUG_BUILD) {
+			if constexpr (DEBUG_PLAYER_STATES) {
 				std::cout << "new state: ranged" << std::endl;
 			}
 			return std::make_shared<RangedActionState>();
 		}
 	case ACTION::NONE:
 		if (actionDone) {
-			if constexpr (DEBUG_BUILD) {
+			if constexpr (DEBUG_PLAYER_STATES) {
 				std::cout << "new state: idle action" << std::endl;
 			}
 			return std::make_shared<IdleActionState>();
@@ -36,7 +36,7 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 					spearRotation = 330;
 					isSwiping = false;
 					playerCharacter->attackState++;
-					if constexpr (DEBUG_BUILD) {
+					if constexpr (DEBUG_PLAYER_STATES) {
 						std::cout << "new state: idle action" << std::endl;
 					}
 					return std::make_shared<IdleActionState>();
@@ -87,7 +87,6 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 
 		return shared_from_this();
 	}
-	throw std::invalid_argument("bad state");
 }
 
 void MeleeActionState::Draw(Actor& actor) {
