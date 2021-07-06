@@ -1,6 +1,7 @@
 #pragma once
 #include "DialogueManager.h"
 #include <memory>
+#include <list>
 #include "Tilemap.h"
 #include "Enemy.h"
 #include "Interactable.h"
