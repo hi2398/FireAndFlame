@@ -29,6 +29,14 @@ void PlayerCharacter::Update() {
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
 
+
+	//regularly decrease health
+    ++healthTimer;
+    if (healthTimer >= HEALTH_INTERVAL) {
+        healthTimer = 0;
+        playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+    }
+
 	
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
@@ -51,6 +59,11 @@ void PlayerCharacter::Update() {
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
+    for (const auto& interactable : sceneManager->GetInteractables()) {
+        if(CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())){
+            interactable->Interact(*this);
+        }
+    }
 }
 
 void PlayerCharacter::Draw() {

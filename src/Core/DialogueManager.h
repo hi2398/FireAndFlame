@@ -5,9 +5,9 @@
 #include <fstream>
 #include "raylib.h"
 
-class DialogueMananger {
+class DialogueManager {
 public:
-    DialogueMananger(std::string filePath);
+    DialogueManager(std::string filePath);
     void UpdateDialogue();
     void NextSentence();
 protected:
