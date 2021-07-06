@@ -59,6 +59,11 @@ void PlayerCharacter::Update() {
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
+    for (const auto& interactable : sceneManager->GetInteractables()) {
+        if(CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())){
+            interactable->Interact(*this);
+        }
+    }
 }
 
 void PlayerCharacter::Draw() {

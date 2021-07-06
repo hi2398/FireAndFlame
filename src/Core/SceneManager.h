@@ -19,7 +19,9 @@ public:
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void SceneParallax(int direction);
 
-    const std::unique_ptr<Tilemap>& GetTilemap();
+    [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;
+    [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
+    [[nodiscard]] const std::unique_ptr<Tilemap>& GetTilemap();
 
 protected:
 

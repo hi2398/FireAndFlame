@@ -3,6 +3,7 @@
 //
 
 #include "Interactable.h"
+#include "Object.h"
 
 Interactable::Interactable(InteractableType interactableType) : Object(ObjectTypes::Interactable) {
     this->interactableType=interactableType;
@@ -11,3 +12,8 @@ Interactable::Interactable(InteractableType interactableType) : Object(ObjectTyp
 InteractableType Interactable::GetInteractableType() const {
     return interactableType;
 }
+
+Rectangle Interactable::GetInteractionZone() const {
+    return interactionZone;
+}
+

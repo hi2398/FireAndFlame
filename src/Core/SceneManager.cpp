@@ -9,10 +9,13 @@ SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
 
 void SceneManager::Tick() {
     activeScene = nextScene;
+
+
+    activeScene->RemoveMarkedDelete(); //delete all enemies and interactables that have been marked for deletion
     
     playerController->HandleInput();
 
-    if (playerCharacter->visible) playerCharacter->Update();
+    playerCharacter->Update();
 
     for (const auto& enemy : activeScene->GetEnemies()){
         enemy->Update();
@@ -56,4 +59,12 @@ void SceneManager::SceneParallax(int direction) {
 
 const std::unique_ptr<Tilemap>& SceneManager::GetTilemap() {
     return activeScene->GetTilemap();
+}
+
+const std::list<std::unique_ptr<Interactable>> &SceneManager::GetInteractables() const {
+    return activeScene->GetInteractables();
+}
+
+const std::list<std::unique_ptr<Enemy>> &SceneManager::GetEnemies() const {
+    return activeScene->GetEnemies();
 }
