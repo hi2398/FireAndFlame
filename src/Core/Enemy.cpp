@@ -3,7 +3,7 @@
 //
 
 //
-//the Constructor, GetEnemyType, SetDirection, Getdirection, SetHealth Programmed by Robin on 23/06/2021 
+//Programmed by Robin on 23/06/2021 
 //
 
 #include "Enemy.h"
@@ -12,9 +12,10 @@ EnemyTypes Enemy::GetEnemyType() const {
 	return aType;
 }
 
-void Enemy::SetHealth(int pHealth)
+
+void Enemy::RecieveDamage(int pDamage)
 {
-	aHealth = pHealth;
+	aHealth -= pDamage;
 }
 
 bool Enemy::CheckLineOfSight(Vector2 pOrtsVector, Vector2 pRichtungsVector, const std::unique_ptr<Tilemap>& tilemap)
@@ -73,6 +74,8 @@ bool Enemy::MakeDecision(int pProbability)
 		return false;
 	}
 }
+
+
 
 Enemy::Enemy() : Actor(ObjectTypes::Enemy) {
 	srand(time(NULL));

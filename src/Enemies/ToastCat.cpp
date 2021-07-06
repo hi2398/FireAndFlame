@@ -10,7 +10,7 @@ ToastCat::ToastCat(float pStartX, float pStartY) : Enemy(EnemyTypes::ToastCat)
 
 void ToastCat::Update()
 {
-	aOnScreen = this->CheckOnScreen;
+	aOnScreen = this->CheckOnScreen();
 	if (aOnScreen == true)	//Cat Rendered
 	{
 		if (grounded == true)	//Cat is on the Ground
@@ -79,10 +79,10 @@ void ToastCat::Draw()
 		}
 		else
 		{
-			DrawTexture(aTexture, position.x + 32, position.y, WHITE);
+			DrawTexture(aTexture, position.x, position.y, WHITE);
 		}
 	}
-	if (CheckCollisionRecs(playerCharacter->visibleScreen, this->aHitbox))
+	if (CheckCollisionRecs(playerCharacter->visibleScreen, this->aToastHitbox))
 	{
 		DrawTexture(aToastTexture, aToastPos.x, aToastPos.y, WHITE);
 	}
