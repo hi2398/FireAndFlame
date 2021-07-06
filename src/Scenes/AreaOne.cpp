@@ -4,8 +4,10 @@
 
 #include "AreaOne.h"
 
-AreaOne::AreaOne(){
-
+AreaOne::AreaOne() : Scene("assets/Dialogues/testText.json"){
+    playerCharacter->SetPosition({0, 101 * 32});
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Area_1.json");
+    interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
 }
 
 void AreaOne::Update() {
