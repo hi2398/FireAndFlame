@@ -44,6 +44,9 @@ public:
     //attack state and counter to reset attack pattern
 	int resetAttack = 0;
 	int attackState = 0;
+
+    Texture2D texturePlayer;
+    Texture2D textureWallSlide;
 protected:
 
 private:
@@ -51,8 +54,10 @@ private:
     const float playerHeight = 32.0f;
 
     int health{100};
+    int healthTimer{}; //decrease
+    static constexpr int HEALTH_INTERVAL{30};
     //player
-    Texture2D texturePlayer;
+    
 
     //attack
     ACTION nextAction{ACTION::NONE};

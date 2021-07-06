@@ -7,6 +7,7 @@
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
+	textureWallSlide = LoadTexture("assets/graphics/PLAYER_WALL.png");
 
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 	camera.offset = { 640, 360 };
@@ -28,11 +29,19 @@ void PlayerCharacter::Update() {
 	movementState = movementState->Update(*this);
 	actionState = actionState->Update(*this);
 
+
+	//regularly decrease health
+    ++healthTimer;
+    if (healthTimer >= HEALTH_INTERVAL) {
+        healthTimer = 0;
+        playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+    }
+
 	
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
-	if (GetJumpCommand() || IsGrounded())CollisionHead(sceneManager->GetTilemap());
+	/*if (GetJumpCommand() || IsGrounded()) */CollisionHead(sceneManager->GetTilemap());
 
 	//health cap
 	if (health >= 100) health = 100;
@@ -50,12 +59,16 @@ void PlayerCharacter::Update() {
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
+    for (const auto& interactable : sceneManager->GetInteractables()) {
+        if(CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())){
+            interactable->Interact(*this);
+        }
+    }
 }
 
 void PlayerCharacter::Draw() {
 	//draw player
-	DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
-	
+	/*DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);*/
 	
 
 	actionState->Draw(*this);

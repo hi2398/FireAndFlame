@@ -7,8 +7,9 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
     const auto actorLastPos = actor.GetLastPosition(); //func alias
     const auto actorPos = actor.GetPosition(); //func alias
 
-    
-    std::cout << "Idle Grounded\n";
+    if constexpr (DEBUG_PLAYER_STATES) {
+        std::cout << "Idle Grounded\n";
+    }
     switch (actor.GetNextMovement())
     {
     case MOVEMENT::MOVE_LEFT:
@@ -19,20 +20,15 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
         return shared_from_this();
     }
 
-    //if(actorLastPos.x==actorPos.x && actorLastPos.y==actorPos.y) {
-    //    //TODO: do idle stuff here
-    //    std::cout << "check idle\n";
-    //    return shared_from_this();
-    //} else {
-    //    if constexpr(DEBUG_BUILD) {
-    //        std::cout << "leaving idle\n";
-    //        std::cout << "New State: Moving Grounded" << std::endl;
-    //    }
-    //    return std::make_shared<MovingGroundedSubState>();
-    //}
-
 }
 
 void IdleGroundedSubState::Draw(Actor& actor) {
-
+    switch (actor.GetDirection()) {
+    case LEFT:
+        DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+        break;
+    case RIGHT:
+        DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+        break;
+    }
 }

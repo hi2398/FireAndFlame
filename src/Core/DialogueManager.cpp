@@ -1,22 +1,22 @@
-#include "DialogueMananger.h"
+#include "DialogueManager.h"
 #include <iostream>
 
-DialogueMananger::DialogueMananger(std::string filePath) { // gets json file and saves it as dialogueFile
+DialogueManager::DialogueManager(std::string filePath) { // gets json file and saves it as dialogueFile
     std::ifstream dialogueFileTemp(filePath);
     dialogueFile = nlohmann::json::parse(dialogueFileTemp);
     dialogueFileTemp.close();
     StartDialogue();
 }
 
-void DialogueMananger::StartDialogue() {
-    dialogueActive=true;
+void DialogueManager::StartDialogue() {
+    dialogueActive=false;
     for (auto sentence : dialogueFile["text"]){ // Adds all sentences from json file to queue
         sentences.push((std::string)sentence);
     }
     nextSent = sentences.front();
 }
 
-void DialogueMananger::UpdateDialogue() {
+void DialogueManager::UpdateDialogue() {
     const char *nextSentenceInQueue = nextSent.c_str();
     if(dialogueActive) {
         DrawRectangleRec(dialogueBox, RED);
@@ -27,7 +27,7 @@ void DialogueMananger::UpdateDialogue() {
     }
 }
 
-void DialogueMananger::NextSentence() { // After Player pressed F this will happen
+void DialogueManager::NextSentence() { // After Player pressed F this will happen
     if(!sentences.empty()) {
         nextSent = sentences.front();
         sentences.pop();

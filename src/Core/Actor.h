@@ -1,12 +1,11 @@
 #pragma once
 #include <vector>
 #include "Object.h"
-#include "Component.h"
 #include "raylib.h"
 #include "Tilemap.h"
 
 enum Direction{LEFT=-1, RIGHT=1};
-enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE };
+enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE, DASH_LEFT, DASH_RIGHT };
 
 class Actor : public Object {
 public:
@@ -15,42 +14,54 @@ public:
     void Draw() override = 0;
     ~Actor() override=default;
 
-    void Jump();
     void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
-    float GetGravityMultiplier();
+    float GetGravityMultiplier() const;
     void SetGrounded(bool grounded);
-    bool IsGrounded();
+    bool IsGrounded() const;
     void SetJumpCommand(bool jumpUp);
-    bool GetJumpCommand();
+    bool GetJumpCommand() const;
 
     MOVEMENT GetNextMovement();
     void SetNextMovement(MOVEMENT movement);
 
-    bool GetWallCollisionLeft();
+    bool GetWallCollisionLeft() const;
     void SetWallCollisionLeft(bool hugWallLeft);
 
-    bool GetWallCollisionRight();
+    bool GetWallCollisionRight() const;
     void SetWallCollisionRight(bool hugWallRight);
 
-    bool GetHeadCollision();
+    bool GetHeadCollision() const;
     void SetHeadCollision(bool headCollision);
 
-    float GetJumpSpeed();
+    float GetJumpSpeed() const;
     void SetJumpSpeed(float jumpSpeed);
 
-    float GetFallingSpeed();
+    float GetFallingSpeed() const;
     void SetFallingSpeed(float fallingSpeed);
 
-    int GetTimesJumped();
+    int GetTimesJumped() const;
     void SetTimesJumped(int timesJumped);
 
-    bool GetCanDoubleJump();
+    bool GetCanDoubleJump() const;
     void SetCanDoubleJump(bool canDoubleJump);
 
-    bool GetIsRunning();
+    bool GetIsRunning() const;
     void SetIsRunning(bool isRunning);
+
+    bool GetWallJumpCommand() const;
+    void SetWallJumpCommand(bool jumpOffWall);
+
+    bool GetJumpBlocked() const;
+    void SetJumpBlocked(bool jumpBlocked);
+
+    int GetWallCounter() const;
+    void SetWallCounter(int wallCounter);
+
+    bool GetIsDashing() const;
+    void SetIsDashing(bool isDashing);
+    Vector2 Dash(int direction);
 
 protected:
     Vector2 lastTickPos;
@@ -66,6 +77,12 @@ protected:
     bool canDoubleJump{ false };
     int timesJumped = 0;
     bool isRunning{false};
+    bool jumpOffWall{ false };
+    bool jumpBlocked{false};
+    int wallCounter{0};
+    float dashDistance = 96.0f;
+    int dashCounter = 0;
+    bool isDashing{ false };
 
     void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);

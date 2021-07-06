@@ -1,80 +1,75 @@
 #include "Coal.h"
+#include "../Global.h"
 
-Coal::Coal()
+
+Coal::Coal(Vector2 location) : Interactable(InteractableType::Coal)
 {
-	aTexture = LoadTexture("assets/graphics/Coal.png");
+    position=location;
+    texture = LoadTexture("assets/graphics/Coal.png");
+    hitbox.width = static_cast<float>(texture.width - 6);
+    hitbox.height = static_cast<float>(texture.height);
+    hitbox.x = position.x + 3;
+    hitbox.y = position.y;
+    interactionZone.x=hitbox.x;
+    interactionZone.y=hitbox.y;
 }
 
-void Coal::Interact()
+void Coal::Interact(Actor& actor)
 {
-	if (aEnabled)
-	{
-		if (playerCharacter->GetHealth() <= 90) playerCharacter->SetHealth(playerCharacter->GetHealth() + aFuel);
+		if (playerCharacter->GetHealth() <= 90) playerCharacter->SetHealth(playerCharacter->GetHealth() + fuel);
 		else {
 			playerCharacter->SetHealth(100);
 		}
-		aEnabled = false;
-		aFallSpeed = 1.5f*aGravityMultiplyer;
-	}
+
+		markedDestroy=true;
 }
 
 
-void Coal::SetTexture(Texture2D pTexture)
-{
-	aTexture = pTexture;
-}
 
-void Coal::SetGrounded(bool pIsGrounded)
-{
-    aisGrounded = pIsGrounded;
-}
 
-bool Coal::GetGrounded() const
-{
-	return aisGrounded;
-}
-
-bool Coal::GetEnabled() const
-{
-	return aEnabled;
-}
-
-void Coal::SetEnabled(bool pEnabled)
-{
-	aEnabled = pEnabled;
-}
 
 
 
 
 Rectangle Coal::GetHitbox()
 {
-	return aHitbox;
+	return hitbox;
 }
 
 void Coal::Update()
 {
-	if (!aisGrounded)
-	{	//Wenn es nicht Am Boden ist, faellt es runter
-		position.y += aFallSpeed;
-		aFallSpeed += 0.1f;
+
+    if (!isGrounded) {
+        for (const auto &collTile : sceneManager->GetTilemap()->GetTileColliders()) {
+
+            Rectangle collidingRectangle{collTile.x, collTile.y, 32, 32};
+
+            if (CheckCollisionRecs(collidingRectangle, hitbox)) {
+                isGrounded = true;
+                SetPosition({position.x, collTile.y - 32.0f});
+                return;
+            }
+        }
+    }
+
+    if (!isGrounded)
+	{
+		position.y += fallSpeed;
+        fallSpeed += 0.1f;
+        hitbox.x = position.x + 3;
+        hitbox.y = position.y;
+        interactionZone.y=hitbox.x;
+        interactionZone.y=hitbox.y;
 	}
-	aHitbox.width = static_cast<float>(aTexture.width - 6);
-	aHitbox.height = static_cast<float>(aTexture.height);
-	aHitbox.x = position.x + 3;
-	aHitbox.y = position.y;
 
 }
 
 void Coal::Draw()
 {
-	if (aEnabled)
-	{
-		DrawTexture(aTexture, static_cast<int>(position.x), static_cast<int>(position.y)+500, WHITE);
-	}
+		DrawTexture(texture, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
 }
 
 Coal::~Coal()
 {
-	UnloadTexture(aTexture);
+
 }

@@ -15,15 +15,11 @@ Vector2 Actor::GetLastPosition() {
 }
 
 
-void Actor::Jump() {
-    position.y -= 1.0f;
-}
-
 Direction Actor::GetDirection() const {
     return direction;
 }
 
-float Actor::GetGravityMultiplier() {
+float Actor::GetGravityMultiplier() const {
     return gravityMultiplier;
 }
 
@@ -32,7 +28,7 @@ void Actor::SetGrounded(bool grounded)
     this->grounded = grounded;
 }
 
-bool Actor::IsGrounded() {
+bool Actor::IsGrounded() const {
     return grounded;
 }
 
@@ -40,7 +36,7 @@ void Actor::SetJumpCommand(bool jumpUp) {
     this->jumpUp = jumpUp;
 }
 
-bool Actor::GetJumpCommand() {
+bool Actor::GetJumpCommand() const {
     return jumpUp;
 }
 
@@ -51,10 +47,12 @@ MOVEMENT Actor::GetNextMovement() {
 }
 
 void Actor::SetNextMovement(MOVEMENT movement) {
+	if (movement == MOVEMENT::MOVE_LEFT) direction = LEFT;
+	if (movement == MOVEMENT::MOVE_RIGHT) direction = RIGHT;
     nextMovement = movement;
 }
 
-bool Actor::GetWallCollisionLeft() {
+bool Actor::GetWallCollisionLeft() const {
     return hugWallLeft;
 }
 
@@ -62,7 +60,7 @@ void Actor::SetWallCollisionLeft(bool hugWallLeft) {
     this->hugWallLeft = hugWallLeft;
 }
 
-bool Actor::GetWallCollisionRight() {
+bool Actor::GetWallCollisionRight() const {
     return hugWallRight;
 }
 
@@ -70,7 +68,7 @@ void Actor::SetWallCollisionRight(bool hugWallRight) {
     this->hugWallRight = hugWallRight;
 }
 
-float Actor::GetFallingSpeed() {
+float Actor::GetFallingSpeed() const {
     return fallingSpeed;
 }
 
@@ -78,7 +76,7 @@ void Actor::SetFallingSpeed(float fallingSpeed) {
     this->fallingSpeed = fallingSpeed;
 }
 
-int Actor::GetTimesJumped()
+int Actor::GetTimesJumped() const
 {
     return timesJumped;
 }
@@ -88,7 +86,7 @@ void Actor::SetTimesJumped(int timesJumped)
     this->timesJumped = timesJumped;
 }
 
-bool Actor::GetCanDoubleJump()
+bool Actor::GetCanDoubleJump() const
 {
     return canDoubleJump;
 }
@@ -98,7 +96,7 @@ void Actor::SetCanDoubleJump(bool canDoubleJump)
     this->canDoubleJump = canDoubleJump;
 }
 
-bool Actor::GetIsRunning()
+bool Actor::GetIsRunning() const
 {
     return isRunning;
 }
@@ -108,7 +106,7 @@ void Actor::SetIsRunning(bool isRunning)
     this->isRunning = isRunning;
 }
 
-bool Actor::GetHeadCollision() {
+bool Actor::GetHeadCollision() const {
     return headCollision;
 }
 
@@ -116,12 +114,55 @@ void Actor::SetHeadCollision(bool headCollision) {
     this->headCollision = headCollision;
 }
 
-float Actor::GetJumpSpeed() {
+float Actor::GetJumpSpeed() const {
     return jumpSpeed;
 }
 
 void Actor::SetJumpSpeed(float jumpSpeed) {
     this->jumpSpeed = jumpSpeed;
+}
+
+bool Actor::GetWallJumpCommand() const {
+	return jumpOffWall;
+}
+
+void Actor::SetWallJumpCommand(bool jumpOffWall) {
+	this->jumpOffWall = jumpOffWall;
+}
+
+bool Actor::GetJumpBlocked() const {
+	return jumpBlocked;
+}
+
+void Actor::SetJumpBlocked(bool jumpBlocked) {
+	this->jumpBlocked = jumpBlocked;
+}
+
+int Actor::GetWallCounter() const {
+	return wallCounter;
+}
+
+void Actor::SetWallCounter(int wallCounter) {
+	this->wallCounter = wallCounter;
+}
+
+bool Actor::GetIsDashing() const {
+	return isDashing;
+}
+
+void Actor::SetIsDashing(bool isDashing) {
+	this->isDashing = isDashing;
+}
+
+Vector2 Actor::Dash(int direction) {
+	dashCounter++;
+	isDashing = true;
+	position.x += dashDistance * direction / 6;
+	if (dashCounter >= 6) {
+		isDashing = false;
+		dashCounter = 0;
+	}
+	return position;
 }
 
 void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)

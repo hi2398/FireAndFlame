@@ -7,7 +7,7 @@
 class Tilemap {
 public:
     explicit Tilemap(const std::string& tileDescription, const std::string& levelDescription);
-    const std::vector<Vector2> &GetTileColliders() const;
+    [[nodiscard]] const std::vector<Vector2> &GetTileColliders() const;
     void Draw();
 protected:
 
