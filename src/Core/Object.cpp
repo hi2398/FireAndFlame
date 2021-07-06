@@ -2,6 +2,7 @@
 // Created by Adrian on 27/05/2021.
 //
 
+#include "Interactable.h"
 #include "Object.h"
 
 ObjectTypes Object::GetType() const {
@@ -18,4 +19,8 @@ Vector2 Object::GetPosition() const {
 
 void Object::SetPosition(Vector2 position) {
     this->position=position;
+}
+
+bool Object::IsMarkedDestroy() const {
+    return markedDestroy;
 }

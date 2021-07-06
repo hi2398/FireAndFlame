@@ -5,6 +5,7 @@
 
 NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
+    interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
 }
 
 void NeutralArea::Update() {

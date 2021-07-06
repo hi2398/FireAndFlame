@@ -8,7 +8,7 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
 	const auto actorLastPos = actor.GetLastPosition(); //func alias
 	const auto actorPos = actor.GetPosition(); //func alias
 
-	if constexpr (DEBUG_BUILD) {
+	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Wall Slide\n";
 	}
 

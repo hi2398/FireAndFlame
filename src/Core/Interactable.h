@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "Actor.h"
 
 enum class InteractableType{Coal};
 
@@ -9,9 +10,14 @@ public:
     void Update() override = 0;
     void Draw() override = 0;
     virtual InteractableType GetInteractableType() const;
-    virtual void Interact() = 0;
+    [[nodiscard]] Rectangle GetInteractionZone() const;
+    virtual void Interact(Actor& actor) = 0;
+
     ~Interactable() override = default;
+
+
 protected:
+    Rectangle interactionZone{};
 
 private:
     InteractableType interactableType;

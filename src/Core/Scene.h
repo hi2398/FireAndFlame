@@ -14,14 +14,17 @@ public:
 
     [[nodiscard]] DialogueManager &GetDialogueManager();
     [[nodiscard]] const std::unique_ptr<Tilemap>& GetTilemap();
-    [[nodiscard]] const std::vector<std::unique_ptr<Interactable>>& GetInteractables() const;
-    [[nodiscard]] const std::vector<std::unique_ptr<Enemy>>& GetEnemies() const;
+
+    [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;
+    [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
+
+    void RemoveMarkedDelete();
 
 protected:
     DialogueManager dialogueMananger;
     std::unique_ptr<Tilemap> tilemap;
-    std::vector<std::unique_ptr<Interactable>> interactables;
-    std::vector<std::unique_ptr<Enemy>> enemies;
+    std::list<std::unique_ptr<Interactable>> interactables;
+    std::list<std::unique_ptr<Enemy>> enemies;
 private:
 
 };
