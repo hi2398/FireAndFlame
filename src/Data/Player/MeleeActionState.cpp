@@ -21,9 +21,26 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 			return std::make_shared<IdleActionState>();
 		}
 	case ACTION::MELEE_ATTACK:
+		switch (playerCharacter->GetNextMovement())
+		{
+		case MOVEMENT::MOVE_LEFT:
+			spearHitbox.x = playerCharacter->GetPosition().x + 16.0f - 9.0f;
+
+			if (!isSwiping) isSwiping = true, playerCharacter->resetAttack = 0;
+			break;
+		case MOVEMENT::MOVE_RIGHT:
+			spearHitbox.x = playerCharacter->GetPosition().x + 16.0f + 9.0f;
+
+			if (!isSwiping) isSwiping = true, playerCharacter->resetAttack = 0;
+			break;
+		case MOVEMENT::IDLE:
+			break;
+		}
+
+
 		//spear follows player
-		spearHitbox.x = playerCharacter->GetPosition().x + 25.0f;
-		spearHitbox.y = playerCharacter->GetPosition().y + 11.0f; 
+		spearHitbox.x = playerCharacter->GetPosition().x + 16.0f + (9.0f);
+		spearHitbox.y = playerCharacter->GetPosition().y + 11.0f;
 		//update attack function
 		if (!isSwiping) isSwiping = true, playerCharacter->resetAttack = 0;
 		//attack states
@@ -31,8 +48,8 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 		{
 		case 0:
 			if (isSwiping) {
-				spearRotation += 10.0f;
-				if (spearRotation >= 410) {
+				spearRotation += 10.0f ;
+				if (spearRotation >= 270 + (140)) {
 					spearRotation = 330;
 					isSwiping = false;
 					playerCharacter->attackState++;
@@ -45,7 +62,7 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 			break;
 		case 1:
 			if (isSwiping) {
-				spearRotation += 3.0f;
+				spearRotation += 3.0f ;
 				if (spearRotation >= 390) {
 					spearRotation = 300;
 					isSwiping = false;
@@ -80,11 +97,8 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 		default:
 			break;
 		}
-		
-	default: 
-		//TODO: Handle melee attack
-				
 
+	default:
 		return shared_from_this();
 	}
 	throw std::invalid_argument("bad state");
@@ -92,6 +106,6 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 
 void MeleeActionState::Draw(Actor& actor) {
 	if (isSwiping) {
-			DrawRectanglePro(spearHitbox, { 10, 0 }, spearRotation, RED);
+		DrawRectanglePro(spearHitbox, { 10, 0 }, spearRotation, RED);
 	}
 }
