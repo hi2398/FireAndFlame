@@ -1,41 +1,33 @@
-//
-// Created by Adrian on 27/05/2021.
-//
-
-//
-//Programmed by Robin on 23/06/2021 
-//
-
 #include "Enemy.h"
+#include "../Global.h"
 
 EnemyTypes Enemy::GetEnemyType() const {
-	return aType;
+	return enemyType;
 }
 
 
-void Enemy::RecieveDamage(int pDamage)
+void Enemy::ReceiveDamage(int damage)
 {
-	aHealth -= pDamage;
-	if (aHealth == 0)
+    health -= damage;
+	if (health == 0)
 	{
-		this->~Enemy();
+		markedDestroy= true;
 	}
 }
 
-bool Enemy::CheckLineOfSight(Vector2 pOrtsVector, Vector2 pRichtungsVector, const std::unique_ptr<Tilemap>& tilemap)
+bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap)
 {
 	Vector2 pLineOfSightVector;
-	pLineOfSightVector.x = pRichtungsVector.x - pOrtsVector.x;
-	pLineOfSightVector.y = pRichtungsVector.y - pOrtsVector.y;
-	float distance = this->GetDistance(pOrtsVector, pRichtungsVector);
+	pLineOfSightVector.x = endLocation.x - startLocation.x;
+	pLineOfSightVector.y = endLocation.y - startLocation.y;
+	float distance = this->GetDistance(startLocation, endLocation);
 	Vector2 pEinheitsvector;
 	pEinheitsvector.x = pLineOfSightVector.x / distance;
 	pEinheitsvector.y = pLineOfSightVector.y / distance;
-	for (Vector2 i = pOrtsVector; i.x != pRichtungsVector.x; i.x = i.x + pEinheitsvector.x) 
+	for (Vector2 i = startLocation; i.x != endLocation.x; i.x = i.x + pEinheitsvector.x)
 	{
 		i.y = i.y + pEinheitsvector.y;
 
-		sceneManager->GetTilemap();
 		Rectangle tileRec = { 0,0,32,32 };
 		for (const auto& collTile : tilemap->GetTileColliders()) {
 			tileRec.x = collTile.x;
@@ -45,17 +37,19 @@ bool Enemy::CheckLineOfSight(Vector2 pOrtsVector, Vector2 pRichtungsVector, cons
 			{
 				return true;
 			}
-			else SetGrounded(false);
-			return false;
+			else {
+                SetGrounded(false);
+                return false;
+            }
 		}
 	}
 }
 
-float Enemy::GetDistance(Vector2 pVector1, Vector2 pVector2)
+float Enemy::GetDistance(Vector2 startLocation, Vector2 endLocation)
 {
-	float x = pVector2.x - pVector1.x;	//Differenz auf der X Achse ermitteln
+	float x = endLocation.x - startLocation.x;	//Differenz auf der X Achse ermitteln
 	if (x < 0) x = x * -1;				//Sichergehen, dass die Differenz positiv ist
-	float y = pVector2.y - pVector1.y;	//Differenz auf der Y Achse ermitteln
+	float y = endLocation.y - startLocation.y;	//Differenz auf der Y Achse ermitteln
 	if (y <= 0) y = y * -1;				//Sichergehen dass die Differenz positiv ist
 	float pDistance = sqrt(pow(x, 2) + pow(y, 2));
 	return pDistance;
@@ -63,13 +57,13 @@ float Enemy::GetDistance(Vector2 pVector1, Vector2 pVector2)
 
 bool Enemy::CheckOnScreen()
 {
-	return CheckCollisionRecs(aHitbox, playerCharacter->visibleScreen);
+	return CheckCollisionRecs(hitbox, playerCharacter->visibleScreen);
 }
 
-bool Enemy::MakeDecision(int pProbability)
+bool Enemy::MakeDecision(int probability)
 {
 	int pChoice = rand() % 100 + 1;
-	if (pProbability <= pChoice)
+	if (probability <= pChoice)
 	{
 		return true;
 	}
@@ -79,8 +73,10 @@ bool Enemy::MakeDecision(int pProbability)
 	}
 }
 
+#include "Enemy.h"
 
 
-Enemy::Enemy() : Actor(ObjectTypes::Enemy) {
+Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
+    this->enemyType=enemyType;
 	srand(time(NULL));
 }
