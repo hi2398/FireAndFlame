@@ -1,5 +1,6 @@
 #include "NeutralArea.h"
 #include "raylib.h"
+#include "../Data/Miner.h"
 
 
 NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
@@ -11,10 +12,12 @@ NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
     tempVec.x+=256;
     // A
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
+    Vector2 vec2{50*32-100, 36*32};
+    enemies.emplace_back(std::make_unique<Miner>(vec2));
 }
 
-void NeutralArea::Update() {
 
+void NeutralArea::Update() {
 }
 
 void NeutralArea::Draw() {
