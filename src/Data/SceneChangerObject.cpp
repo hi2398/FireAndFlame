@@ -1,0 +1,31 @@
+//
+// Created by Ashty on 06.07.2021.
+//
+
+#include "SceneChangerObject.h"
+#include "../Global.h"
+
+SceneChangerObject::SceneChangerObject(Vector2 location, SceneEnums sceneEnum) : Interactable(InteractableType::SceneChangeCollider){
+    position = location;
+    choosenScene = sceneEnum;
+    interactionZone = {position.x,position.y,128,128};
+}
+
+void SceneChangerObject::Interact(Actor &actor) {
+    switch(choosenScene){
+        case SceneEnums::NeutralArea :
+            sceneManager->SetNextScene(std::make_unique<NeutralArea>());
+            break;
+        case SceneEnums::AreaOne :
+            sceneManager->SetNextScene(std::make_unique<AreaOne>());
+            break;
+    }
+}
+
+void SceneChangerObject::Update() {
+
+}
+
+void SceneChangerObject::Draw() {
+    DrawRectangleRec(interactionZone,RED);
+}

@@ -16,7 +16,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	observer = std::make_shared<PlayerObserver>(*this);
 	movementState = std::make_shared<MovementState>();
 	actionState = std::make_shared<IdleActionState>();
-	position = { 50 * 32, 36 * 32 };
+	position = { 0, 0 };
 
 	gravityMultiplier = 2.0;
 
