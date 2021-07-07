@@ -24,23 +24,27 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 	Vector2 pEinheitsvector;
 	pEinheitsvector.x = pLineOfSightVector.x / distance;
 	pEinheitsvector.y = pLineOfSightVector.y / distance;
+	//std::cout << "Line of sight initialised\n";
 	for (Vector2 i = startLocation; i.x != endLocation.x; i.x = i.x + pEinheitsvector.x)
 	{
 		i.y = i.y + pEinheitsvector.y;
-
+		//std::cout << "following unitvector";
 		Rectangle tileRec = { 0,0,32,32 };
 		for (const auto& collTile : tilemap->GetTileColliders()) {
 			tileRec.x = collTile.x;
 			tileRec.y = collTile.y;
+			//std::cout << i.x<< "x und y="<<i.y;
 
 			if (CheckCollisionPointRec(i, tileRec)) 
 			{
 				return true;
+				std::cout << "ich sehe dich";
 			}
-			else {
-                SetGrounded(false);
+			else
+			{   
                 return false;
-            }
+				std::cout << "Ja wo isser denn?";
+			}
 		}
 	}
 }

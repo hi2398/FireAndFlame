@@ -24,7 +24,7 @@ public:
 protected:
     bool MakeDecision(int probability);
     EnemyTypes enemyType;
-    int health{};
+    int health{3};
     bool hasLineOfSight{false};
     bool IsAttacking;
     EnemyState state{EnemyState::Idle}; // 0=Idle, 1=Roaming, 2=Approaching, 3=fleeing, 4=Stunned, 5=attacking, 6=Seeking
@@ -35,7 +35,7 @@ protected:
     int seekingCounter;
     const int seekingDuration = 1000;
     int idleWorkCounter;
-    const int idleWorkDuration=500;
+    const int idleWorkDuration=100;
     Rectangle hitbox{};
     Rectangle attackArea{};
     Texture2D texture{};
