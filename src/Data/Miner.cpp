@@ -20,28 +20,28 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 void Miner::Update()
 {
 	aOnScreen = this->CheckOnScreen();
-	if (aOnScreen == true)//Wird Gerendert
+	if (aOnScreen)//Wird Gerendert
 	{
-		if (grounded == true)//ist auf dem Boden
+		if (grounded)//ist auf dem Boden
 		{
 			fallingSpeed = 0.f;
-			if (state == 4)//Ist gestunned
+			if (state == EnemyState::Stunned)//Ist gestunned
 			{
 				--stunCounter;
 				if (stunCounter == 0)
 				{
                     stunCounter = stunDuration;
-                    state = 0;
+                    state = EnemyState::Idle;
 				}
 			}
 			else//Ist nicht gestunned
 			{
 
                 hasLineOfSight = this->CheckLineOfSight(position, playerCharacter->GetPosition(), sceneManager->GetTilemap());
-				if (hasLineOfSight == true)//Hat Blickkontakt
+				if (hasLineOfSight)//Hat Blickkontakt
 				{
                     lastSeen = playerCharacter->GetPosition();
-					if (state == 5)//Greift an
+					if (state == EnemyState::Attacking)//Greift an
 					{
 						--attackCounter;
 						if (attackCounter == 0)
@@ -51,16 +51,16 @@ void Miner::Update()
 							{
 								playerCharacter->SetHealth(playerCharacter->GetHealth() - aDamageOutput);
 							}
-                            state = 0;
+                            state = EnemyState::Idle;
 						}
 					}
 					else if (CheckCollisionRecs(attackArea, playerCharacter->playerHitbox))//ist in Nahkampfreichweite
 					{
-                        state = 5;
+                        state = EnemyState::Attacking;
 					}
 					else
 					{
-                        state = 2;
+                        state = EnemyState::Approaching;
 						if (playerCharacter->GetPosition().x < position.x)
 						{
 							direction = LEFT;
@@ -70,20 +70,20 @@ void Miner::Update()
 							direction = RIGHT;
 						}
 					}
-					if (state == 2)	//Nähert sich dem Spieler
+					if (state == EnemyState::Approaching)	//Nähert sich dem Spieler
 					{
 						this->Move(direction);
 					}
 				}
 				else
 				{
-					if (state == 5 || state == 2)
+					if (state == EnemyState::Attacking || state == EnemyState::Approaching)
 					{
-                        state = 6;
+                        state = EnemyState::Seeking;
                         seekingCounter = seekingDuration;
                         attackCounter = attackDuration;
 					}
-					else if (state == 6)
+					else if (state == EnemyState::Seeking)
 					{
 						--seekingCounter;
 						if (lastSeen.x < position.x)
@@ -96,17 +96,17 @@ void Miner::Update()
 						}
 						if (seekingCounter == 0)
 						{
-                            state = 0;
+                            state = EnemyState::Idle;
                             seekingCounter = seekingDuration;
 						}
 					}
-					else if (state == 0)
+					else if (state == EnemyState::Idle)
 					{
 						--idleWorkCounter;
 						if (idleWorkCounter == 0)
 						{
                             idleWorkCounter = idleWorkDuration;
-                            state = 1;
+                            state = EnemyState::Roaming;
 							if (MakeDecision(42))
 							{
 								if (direction == RIGHT)
@@ -120,14 +120,14 @@ void Miner::Update()
 							}
 						}
 					}
-					else if (state == 1)
+					else if (state == EnemyState::Roaming)
 					{
 						--idleWorkCounter;
 						this->Move(direction);
 						if (idleWorkCounter == 0)
 						{
                             idleWorkCounter = idleWorkDuration;
-                            state = 0;
+                            state = EnemyState::Idle;
 						}
 					}
 				}
@@ -146,7 +146,7 @@ void Miner::Draw()
 	if (CheckCollisionRecs(playerCharacter->visibleScreen, this->hitbox))
 	{
 		DrawRectangleRec(hitbox, YELLOW);
-		if (state == 5)
+		if (state == EnemyState::Attacking)
 		{
 			DrawRectangleRec(attackArea, RED);
 		}
