@@ -16,7 +16,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	observer = std::make_shared<PlayerObserver>(*this);
 	movementState = std::make_shared<MovementState>();
 	actionState = std::make_shared<IdleActionState>();
-	position = { 50 * 32, 36 * 32 };
+	position = { 0 * 32, 101 * 32 };
 
 	gravityMultiplier = 2.0;
 
@@ -41,7 +41,7 @@ void PlayerCharacter::Update() {
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
-	/*if (GetJumpCommand() || IsGrounded()) */CollisionHead(sceneManager->GetTilemap());
+	CollisionHead(sceneManager->GetTilemap());
 
 	//health cap
 	if (health >= 100) health = 100;

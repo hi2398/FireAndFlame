@@ -37,7 +37,6 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 	case MOVEMENT::IDLE:
 		return std::make_shared<IdleGroundedSubState>();
 	case MOVEMENT::DASH_LEFT:
-		
 		actor.Dash(LEFT);
 		break;
 	case MOVEMENT::DASH_RIGHT:
@@ -51,10 +50,12 @@ void MovingGroundedSubState::Draw(Actor& actor) {
 	switch (actor.GetDirection()) {
 	case LEFT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+		
 		break;
 	case RIGHT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+		
 		break;
 	}
-	/*DrawRectangle(playerCharacter->GetPosition().x, playerCharacter->GetPosition().y, 10, 10, RED);*/
+	
 }

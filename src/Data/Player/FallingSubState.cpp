@@ -65,9 +65,11 @@ void FallingSubState::Draw(Actor& actor) {
 	switch (actor.GetDirection()) {
 	case LEFT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+		
 		break;
 	case RIGHT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+		
 		break;
 	}
 }
