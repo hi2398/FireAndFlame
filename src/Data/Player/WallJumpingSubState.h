@@ -2,6 +2,7 @@
 
 #include "../../Core/State.h"
 
+
 class WallJumpingSubState : public State {
 public:
     std::shared_ptr <State> Update(Actor& actor) override;
@@ -13,6 +14,6 @@ protected:
 
 
 private:
-    float wallJumpDirection;
+    int wallJumpDirection;
 
 };

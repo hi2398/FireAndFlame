@@ -3,10 +3,13 @@
 //created by Robin on 05.07.2021
 #include "../Core/Enemy.h"
 
+
+
+
 class Miner : public Enemy
 {
 public:
-	Miner(Vector2 initialPos);
+	explicit Miner(Vector2 initialPos);
 	void Update() override;
 	void Draw() override;
 	~Miner();
