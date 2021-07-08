@@ -31,9 +31,9 @@ protected:
     int stunCounter;
     const int stunDuration = 100;
     int attackCounter;
-    const int attackDuration = 300;
+    const int attackDuration = 20;
     int seekingCounter;
-    const int seekingDuration = 1000;
+    const int seekingDuration = 100;
     int idleWorkCounter;
     const int idleWorkDuration=100;
     Rectangle hitbox{};

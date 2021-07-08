@@ -61,8 +61,7 @@ void Miner::Update()
 					}
 					else
 					{
-                        state = EnemyState::Approaching;
-						if (playerCharacter->GetPosition().x < position.x)
+						if (lastSeen.x < position.x)
 						{
 							direction = LEFT;
 						}
@@ -70,6 +69,7 @@ void Miner::Update()
 						{
 							direction = RIGHT;
 						}
+						state = EnemyState::Approaching;
 					}
 					if (state == EnemyState::Approaching)	//Nähert sich dem Spieler
 					{
@@ -188,12 +188,24 @@ void Miner::Move(Direction pDirection)
 			position.x -= aMovementSpeed;		//flees to the Left if not on an Edge
 			attackArea.x = position.x - attackArea.width;
             attackArea.y = position.y + 12;
+			aWallSeekerLeft.x = position.x - 1;
+			aWallSeekerLeft.y = position.y + 16;
 		}
 		else if (direction == RIGHT && CheckCollisionPointRec(aEdgeSeekerRight, tileRec))
 		{
 			position.x += aMovementSpeed;		//approaches to the Right if not on an Edge
 			attackArea.x = position.x + 32;
             attackArea.y = position.y + 12;
+			aWallSeekerRight.x = position.x + 33;
+			aWallSeekerRight.y = position.y + 16;
+		}
+		if (direction == RIGHT && CheckCollisionPointRec(aWallSeekerRight, tileRec))
+		{
+			direction = LEFT;
+		}
+		else if (direction == LEFT && CheckCollisionPointRec(aWallSeekerLeft, tileRec))
+		{
+			direction = RIGHT;
 		}
 	}
 	hitbox.x = position.x;

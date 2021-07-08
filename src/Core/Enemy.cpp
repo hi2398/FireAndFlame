@@ -21,29 +21,39 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 	pLineOfSightVector.x = endLocation.x - startLocation.x;
 	pLineOfSightVector.y = endLocation.y - startLocation.y;
 	float distance = this->GetDistance(startLocation, endLocation);
-	Vector2 pEinheitsvector;
-	pEinheitsvector.x = pLineOfSightVector.x / distance;
-	pEinheitsvector.y = pLineOfSightVector.y / distance;
+	Vector2 pUnitvector;
+	pUnitvector.x = pLineOfSightVector.x / distance;
+	pUnitvector.y = pLineOfSightVector.y / distance;
+	Vector2 i = startLocation;
+	std::cout << "Unitvector.x: " << pUnitvector.x << "\n";
+	std::cout << "Unitvector.y: " << pUnitvector.y << "\n";
+	//std::cout << "Distance: " << distance << "\n";
 	//std::cout << "Line of sight initialised\n";
-	for (Vector2 i = startLocation; i.x != endLocation.x; i.x = i.x + pEinheitsvector.x)
+	while (CheckCollisionPointRec(i, playerCharacter->visibleScreen))
 	{
-		i.y = i.y + pEinheitsvector.y;
-		//std::cout << "following unitvector";
+		i.x =i.x+ pUnitvector.x*20;
+		i.y =i.y+ pUnitvector.y*20;
+		//.x += 10;
+		//std::cout << "following unitvector\n";
 		Rectangle tileRec = { 0,0,32,32 };
 		for (const auto& collTile : tilemap->GetTileColliders()) {
 			tileRec.x = collTile.x;
 			tileRec.y = collTile.y;
-			//std::cout << i.x<< "x und y="<<i.y;
-
-			if (CheckCollisionPointRec(i, tileRec)) 
+			//std::cout << i.x<< "x und y="<<i.y<<"\n";
+			//std::cout << "Endlocation x: " << endLocation.x << ", y: " << endLocation.y << "\n";
+			if (CheckCollisionPointRec(i, playerCharacter->playerHitbox)) 
 			{
+				//std::cout << "ich sehe dich\n";
 				return true;
-				std::cout << "ich sehe dich";
+			}
+			else if (CheckCollisionPointRec(i, tileRec))
+			{   
+				//std::cout << "Ja wo isser denn?\n";
+                return false;
 			}
 			else
-			{   
-                return false;
-				std::cout << "Ja wo isser denn?";
+			{
+				break;
 			}
 		}
 	}
