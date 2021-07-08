@@ -18,6 +18,7 @@ public:
     void Tick();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void SceneParallax(int direction);
+    void UpdateDialogInScene(std::string filepath);
 
     [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;
     [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;

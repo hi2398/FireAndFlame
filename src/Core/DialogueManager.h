@@ -7,15 +7,12 @@
 
 class DialogueManager {
 public:
-    DialogueManager(std::string filePath);
-    void UpdateDialogue();
-    void NextSentence();
+    void UpdateDialogue(std::string filePath);
+    void DrawDialogue();
 protected:
 private:
-    void StartDialogue();
     std::queue<std::string> sentences;
-    nlohmann::json dialogueFile;
     Rectangle dialogueBox = {300,400,700,300};
-    std::string nextSent;
-    bool dialogueActive = {true};
+    std::string nextSent = "-";
+    bool dialogueActive = {false};
 };

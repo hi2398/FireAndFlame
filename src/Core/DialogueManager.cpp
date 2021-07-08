@@ -1,38 +1,32 @@
 #include "DialogueManager.h"
 #include <iostream>
 
-DialogueManager::DialogueManager(std::string filePath) { // gets json file and saves it as dialogueFile
-    std::ifstream dialogueFileTemp(filePath);
-    dialogueFile = nlohmann::json::parse(dialogueFileTemp);
-    dialogueFileTemp.close();
-    StartDialogue();
-}
-
-void DialogueManager::StartDialogue() {
-    dialogueActive=false;
-    for (auto sentence : dialogueFile["text"]){ // Adds all sentences from json file to queue
-        sentences.push((std::string)sentence);
+void DialogueManager::UpdateDialogue(std::string filePath) {
+    if(sentences.empty()&&nextSent!="-") {
+        nextSent="-";
+        dialogueActive=false;
+    }else{
+        if (sentences.empty()) {
+            std::ifstream dialogueFileTemp(filePath);
+            nlohmann::json dialogueFile = nlohmann::json::parse(dialogueFileTemp);
+            dialogueFileTemp.close();
+            dialogueActive = true;
+            for (auto sentence : dialogueFile["text"]) { // Adds all sentences from json file to queue
+                sentences.push((std::string) sentence);
+            }
+            nextSent = sentences.front();
+            sentences.pop();
+        } else {
+            nextSent = sentences.front();
+            sentences.pop();
+        }
     }
-    nextSent = sentences.front();
 }
 
-void DialogueManager::UpdateDialogue() {
+void DialogueManager::DrawDialogue() {
     const char *nextSentenceInQueue = nextSent.c_str();
     if(dialogueActive) {
         DrawRectangleRec(dialogueBox, RED);
         DrawText(nextSentenceInQueue, 320, 420, 30, BLUE);
-    }
-    if(IsKeyReleased(KEY_F)){
-        NextSentence();
-    }
-}
-
-void DialogueManager::NextSentence() { // After Player pressed F this will happen
-    if(!sentences.empty()) {
-        nextSent = sentences.front();
-        sentences.pop();
-        //nextSentenceInQueue = nextSent.c_str();
-    }else{
-        dialogueActive=false;
     }
 }

@@ -3,7 +3,7 @@
 #include "../Data/Miner.h"
 
 
-NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
+NeutralArea::NeutralArea(){
     playerCharacter->SetPosition({ 50 * 32, 36 * 32 });
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
@@ -12,6 +12,12 @@ NeutralArea::NeutralArea() : Scene("assets/Dialogues/testText.json") {
     tempVec.x+=256;
     // A
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
+    //Delete this section, only for testing
+    tempVec.x-=512;
+    tempVec.y+=64;
+    Texture2D tempTex = LoadTexture("assets/graphics/PLAYER.png");
+    // A
+    interactables.emplace_back(std::make_unique<DialogObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{50*32-100, 36*32};
     enemies.emplace_back(std::make_unique<Miner>(vec2));
 }
