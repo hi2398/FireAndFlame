@@ -1,6 +1,7 @@
 #include "IdleGroundedSubState.h"
 #include "MovingGroundedSubState.h"
 #include <raymath.h>
+#include <iostream>
 #include "../../Global.h"
 
 std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {

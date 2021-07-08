@@ -1,9 +1,8 @@
 #pragma once
 #include "Actor.h"
 #include "EnemyTypes.h"
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
+
+enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
 
 class Enemy : public Actor {
 public:
@@ -23,7 +22,7 @@ protected:
     int health{};
     bool hasLineOfSight{false};
     bool IsAttacking;
-    int state=0; // 0=Idle, 1=Roaming, 2=Approaching, 3=fleeing, 4=Stunned, 5=attacking, 6=Seeking
+    EnemyState state{EnemyState::Idle}; // 0=Idle, 1=Roaming, 2=Approaching, 3=fleeing, 4=Stunned, 5=attacking, 6=Seeking
     int stunCounter;
     const int stunDuration = 100;
     int attackCounter;

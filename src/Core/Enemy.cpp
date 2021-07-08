@@ -1,5 +1,9 @@
 #include "Enemy.h"
 #include "../Global.h"
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+
 
 EnemyTypes Enemy::GetEnemyType() const {
 	return enemyType;

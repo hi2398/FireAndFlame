@@ -1,3 +1,4 @@
+#include <iostream>
 #include "WallSlideSubState.h"
 #include "JumpingSubState.h"
 #include "FallingSubState.h"
@@ -45,10 +46,10 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 
 void WallJumpingSubState::Draw(Actor& actor) {
 	switch (actor.GetDirection()) {
-	case LEFT:
+	case RIGHT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 		break;
-	case RIGHT:
+	case LEFT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 		break;
 	}

@@ -1,9 +1,7 @@
-//
-// Created by Ashty on 06.07.2021.
-//
-
 #include "SceneChangerObject.h"
 #include "../Global.h"
+#include "../Scenes/NeutralArea.h"
+#include "../Scenes/AreaOne.h"
 
 SceneChangerObject::SceneChangerObject(Vector2 location, SceneEnums sceneEnum) : Interactable(InteractableType::SceneChangeCollider){
     position = location;
