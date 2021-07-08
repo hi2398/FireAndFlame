@@ -1,9 +1,6 @@
 #pragma once
 #include "Actor.h"
 #include "EnemyTypes.h"
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
 
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
 

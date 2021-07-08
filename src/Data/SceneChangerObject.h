@@ -1,8 +1,6 @@
 #pragma once
 #include "raylib.h"
 #include "../Core/Interactable.h"
-#include "../Scenes/NeutralArea.h"
-#include "../Scenes/AreaOne.h"
 #include "../Scenes/SceneEnums.h"
 
 class SceneChangerObject : public Interactable {

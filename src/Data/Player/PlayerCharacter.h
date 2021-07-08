@@ -3,8 +3,7 @@
 #include "raylib.h"
 #include "../../Core/Observer/Observer.h"
 #include "../../Core/State.h"
-#include "MovementState.h"
-#include <iostream>
+
 
 
 enum class ACTION {MELEE_ATTACK, RANGED_ATTACK, NONE};
