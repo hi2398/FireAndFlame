@@ -19,6 +19,7 @@ Direction Actor::GetDirection() const {
     return direction;
 }
 
+
 float Actor::GetGravityMultiplier() const {
     return gravityMultiplier;
 }
@@ -163,6 +164,47 @@ Vector2 Actor::Dash(int direction) {
 		dashCounter = 0;
 	}
 	return position;
+}
+
+bool Actor::GetCanDash() const
+{
+	return canDash;
+}
+
+void Actor::SetCanDash(bool canDash)
+{
+	this->canDash = canDash;
+}
+
+AttackDirection Actor::GetAttackDirection() const
+{
+	return attackDirection;
+}
+
+void Actor::SetAttackDirection(Direction direction)
+{
+	if (direction == LEFT) attackDirection = ATT_LEFT;
+	if (direction == RIGHT) attackDirection = ATT_RIGHT;
+}
+
+bool Actor::GetIsSwiping()
+{
+	return isSwiping;
+}
+
+void Actor::SetIsSwiping(bool isSwiping)
+{
+	this->isSwiping = isSwiping;
+}
+
+bool Actor::GetActionBlocked()
+{
+	return actionBlocked;
+}
+
+void Actor::SetActionBlocked(bool actionBlocked)
+{
+	this->actionBlocked = actionBlocked;
 }
 
 void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)

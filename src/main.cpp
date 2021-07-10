@@ -8,6 +8,8 @@
 #include "helper.h"
 #include "Scenes/NeutralArea.h"
 
+
+
 std::shared_ptr<PlayerCharacter> playerCharacter;
 std::shared_ptr<PlayerController> playerController;
 std::shared_ptr<HUD> hud;
@@ -57,7 +59,7 @@ if  constexpr(DEBUG_BUILD){
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
 
-
+        
         BeginDrawing();
         ClearBackground(BLACK); // Letterbox color
 

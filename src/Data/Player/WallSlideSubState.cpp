@@ -15,6 +15,8 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
 
 	//short delay when entering wall slide
 	actor.SetWallCounter(actor.GetWallCounter() + 1);
+	actor.SetCanDash(true);
+	actor.SetActionBlocked(true);
 
 	//Sliding Down Wall
 	if (actor.GetWallCollisionLeft()) {
