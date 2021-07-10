@@ -1,6 +1,7 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Data/Miner.h"
+#include "../Core/SaveGameState.h"
 
 
 NeutralArea::NeutralArea(){
@@ -24,6 +25,12 @@ NeutralArea::NeutralArea(){
 
 
 void NeutralArea::Update() {
+    if constexpr (DEBUG_BUILD) {
+        if (IsKeyPressed(KEY_PERIOD)) {
+            SaveGameState saveGameState;
+            saveGameState.SaveGame("./savefileDEBUG.json");
+        }
+    }
 }
 
 void NeutralArea::Draw() {
@@ -35,7 +42,17 @@ void NeutralArea::Draw() {
 		for (const auto x : tilemap->GetTileColliders()) {
 			DrawRectangleLines(x.x, x.y, 32, 32, RED);
 		}
+
 	}
 
-	DrawText(TextFormat("%i", playerCharacter->GetCanDoubleJump()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
+    if constexpr (DEBUG_BUILD) {
+        if (playerCharacter->GetCanDoubleJump()) {
+			DrawText(TextFormat("DoubleJump ENABLED", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);
+        }
+        else {
+            DrawText(TextFormat("DoubleJump DISABLED", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);
+        }
+        
+    }
+	
 }
