@@ -5,9 +5,11 @@
 
 void PlayerController::HandleInput() {
 
-    //player movement
+    //player walking
 	if (IsKeyDown(KEY_D) || (int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0) Notify(EVENT::MOVE_RIGHT);
 	if (IsKeyDown(KEY_A) || (int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0) Notify(EVENT::MOVE_LEFT);
+
+    //player dashing
     if ((IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash()|| 
         ((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
         playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == RIGHT)) Notify(EVENT::DASH_RIGHT);
@@ -16,13 +18,15 @@ void PlayerController::HandleInput() {
         ((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
         playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == LEFT)) Notify(EVENT::DASH_LEFT);
 
-    if (IsKeyDown(KEY_LEFT_SHIFT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1)) {
+    //running
+    if (IsKeyDown(KEY_LEFT_SHIFT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2)) {
         playerCharacter->SetIsRunning(true);
     }
     else {
         playerCharacter->SetIsRunning(false);
     }
-    //jump commands
+
+    //player jumping
     if ((!playerCharacter->GetHeadCollision() && playerCharacter->IsGrounded()) ||
         (!playerCharacter->GetHeadCollision() && playerCharacter->GetCanDoubleJump() == true && playerCharacter->GetTimesJumped() < 2)
         ) {
@@ -38,7 +42,7 @@ void PlayerController::HandleInput() {
 	//TODO: Charged attacks not working
 	if (IsKeyPressed(KEY_F) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) Notify(EVENT::RANGED_ATTACK);
 
-
+    //debug controls
     if(DEBUG_BUILD) {
         if (IsKeyDown(KEY_UP)) playerCharacter->camera.zoom += 0.1f;
         if (IsKeyDown(KEY_DOWN)) playerCharacter->camera.zoom -= 0.1f;

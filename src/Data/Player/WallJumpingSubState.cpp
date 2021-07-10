@@ -17,6 +17,7 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 
 	if (actor.GetHeadCollision()) {
 		actor.SetJumpSpeed(5.0f);
+		actor.SetJumpBlocked(false);
 		return std::make_shared<FallingSubState>();
 	}
 
@@ -29,7 +30,7 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 		actor.SetJumpSpeed(5.0f);
 		actor.SetWallJumpCommand(false);
 		actor.SetJumpCommand(false);
-		actor.SetJumpBlocked(true);
+		actor.SetJumpBlocked(false);
 		return std::make_shared<FallingSubState>();
 	}
 
@@ -37,7 +38,7 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 	if ((actor.GetWallCollisionLeft() && actor.GetDirection() == 1) || (actor.GetWallCollisionRight() && actor.GetDirection() == -1)) {
 		actor.SetWallJumpCommand(false);
 		actor.SetJumpCommand(false);
-
+		actor.SetJumpBlocked(false);
 		return std::make_shared<WallSlideSubState>();
 	}
 
