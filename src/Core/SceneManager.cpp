@@ -45,7 +45,7 @@ void SceneManager::Tick() {
 	hud->DrawHUD();
 
   playerCharacter->SetLastPosition(playerCharacter->GetPosition());
-	activeScene->GetDialogueManager().UpdateDialogue();
+  activeScene->GetDialogueManager().DrawDialogue();
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {
@@ -67,4 +67,8 @@ const std::list<std::unique_ptr<Interactable>> &SceneManager::GetInteractables()
 
 const std::list<std::unique_ptr<Enemy>> &SceneManager::GetEnemies() const {
     return activeScene->GetEnemies();
+}
+
+void SceneManager::UpdateDialogInScene(std::string filepath) {
+    activeScene->GetDialogueManager().UpdateDialogue(filepath);
 }

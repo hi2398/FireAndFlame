@@ -4,6 +4,7 @@
 #include "../Core/Enemy.h"
 #include "../Data/Coal.h"
 #include "../Data/SceneChangerObject.h"
+#include "../Data/DialogObject.h"
 #include <vector>
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"

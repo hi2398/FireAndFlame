@@ -3,7 +3,8 @@
 #include "PlayerObserver.h"
 #include "IdleActionState.h"
 #include "../../Global.h"
-#include <stdexcept>
+#include "MovementState.h"
+#include <iostream>
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");

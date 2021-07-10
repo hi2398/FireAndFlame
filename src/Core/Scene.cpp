@@ -3,10 +3,6 @@
 
 #include <utility>
 
-Scene::Scene(std::string filepath) : dialogueMananger(std::move(filepath)) {
-
-}
-
 DialogueManager &Scene::GetDialogueManager() {
     return dialogueMananger;
 }
