@@ -42,17 +42,13 @@ void PlayerCharacter::Update() {
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
-	/*if (GetJumpCommand() || IsGrounded()) */CollisionHead(sceneManager->GetTilemap());
+	CollisionHead(sceneManager->GetTilemap());
 
 	//health cap
 	if (health >= 100) health = 100;
 	if (health <= 0) health = 0;
 
-	//attack reset
-	if (attackState > 0) {
-		resetAttack++;
-		if (resetAttack >= 90) attackState = 0;
-	}
+	
 
 	//player hitbox update
 	playerHitbox = { (float)position.x + 6, (float)position.y, playerWidth, playerHeight };
@@ -68,10 +64,6 @@ void PlayerCharacter::Update() {
 }
 
 void PlayerCharacter::Draw() {
-	//draw player
-	/*DrawTexture(texturePlayer, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);*/
-	
-
 	actionState->Draw(*this);
 	movementState->Draw(*this);
 }

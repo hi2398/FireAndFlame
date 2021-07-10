@@ -23,6 +23,7 @@ void SceneManager::Tick() {
 
     activeScene->RemoveMarkedDelete(); //delete all enemies and interactables that have been marked for deletion
     
+
     playerController->HandleInput();
 
     playerCharacter->Update();
@@ -54,8 +55,11 @@ void SceneManager::Tick() {
 
 	hud->DrawHUD();
 
-  playerCharacter->SetLastPosition(playerCharacter->GetPosition());
+  
   activeScene->GetDialogueManager().DrawDialogue();
+
+  //setting "last" values stay at the very end to prevent sequenz errors
+  playerCharacter->SetLastPosition(playerCharacter->GetPosition());
 }
 
 void SceneManager::SetNextScene(std::unique_ptr<Scene> nextScene) {

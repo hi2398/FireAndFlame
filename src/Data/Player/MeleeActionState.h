@@ -16,10 +16,8 @@ private:
     bool actionDone{false};
 
     //attack variables
-    Rectangle spearHitbox = {0,0,40,5};
-    bool isSwiping = false;
-    int attackState = 0;
-    float spearRotation = 300;
+    Rectangle spearHitbox = {0,0,40,6};
+    float spearRotation;
     int stabbingDistance = 0;
     int chargingCounter = 0;
     int resetAttack = 0;

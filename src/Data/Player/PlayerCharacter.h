@@ -46,6 +46,7 @@ public:
 
     Texture2D texturePlayer;
     Texture2D textureWallSlide;
+
 protected:
 
 private:
@@ -55,12 +56,9 @@ private:
     int health{100};
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
-    //player
-    
 
     //attack
     ACTION nextAction{ACTION::NONE};
-    
 
     std::shared_ptr<Observer> observer;
     std::shared_ptr<State> movementState;

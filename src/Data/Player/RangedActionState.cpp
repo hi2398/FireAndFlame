@@ -29,7 +29,7 @@ std::shared_ptr<State> RangedActionState::Update(Actor &actor) {
             }
             isShootingFireball = true;
             if (isShootingFireball) {
-                vectorFireball.x += 10.0f *fireballDirection;
+                vectorFireball.x += 30.0f *fireballDirection;
                 if (vectorFireball.x > ((float)GetScreenWidth() / 2) + playerCharacter->GetPosition().x || vectorFireball.x < playerCharacter->GetPosition().x - ((float)GetScreenWidth() / 2)) {
                     isShootingFireball = false;
                     return std::make_shared<IdleActionState>();
