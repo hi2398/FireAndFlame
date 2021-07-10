@@ -1,6 +1,7 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Data/Miner.h"
+#include "../Core/SaveGameState.h"
 
 
 NeutralArea::NeutralArea(){
@@ -24,6 +25,12 @@ NeutralArea::NeutralArea(){
 
 
 void NeutralArea::Update() {
+    if constexpr (DEBUG_BUILD) {
+        if (IsKeyPressed(KEY_PERIOD)) {
+            SaveGameState saveGameState;
+            saveGameState.SaveGame("./savefileDEBUG.json");
+        }
+    }
 }
 
 void NeutralArea::Draw() {
