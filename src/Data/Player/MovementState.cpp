@@ -15,6 +15,7 @@ MovementState::MovementState() {
 std::shared_ptr<State> MovementState::Update(Actor &actor) {
     if (actor.IsGrounded()) {
         aerialSubState = std::make_shared<JumpingSubState>();
+        actor.SetCanDash(false);
         actor.SetWallCounter(0);
         actor.SetTimesJumped(0);
         actor.SetJumpCommand(false);

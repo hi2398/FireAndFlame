@@ -6,11 +6,11 @@ void PlayerController::HandleInput() {
     //player movement
 	if (IsKeyDown(KEY_D)) Notify(EVENT::MOVE_RIGHT), sceneManager->SceneParallax(right);
 	if (IsKeyDown(KEY_A)) Notify(EVENT::MOVE_LEFT), sceneManager->SceneParallax(left);
-    if (IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) ||
-        playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == RIGHT) Notify(EVENT::DASH_RIGHT);
+    if ((IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) ||
+        playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == RIGHT) && playerCharacter->GetCanDash()) Notify(EVENT::DASH_RIGHT);
 
-    if (IsKeyDown(KEY_A) && IsKeyPressed(KEY_LEFT_CONTROL) ||
-        playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == LEFT) Notify(EVENT::DASH_LEFT);
+    if ((IsKeyDown(KEY_A) && IsKeyPressed(KEY_LEFT_CONTROL) ||
+        playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == LEFT) && playerCharacter->GetCanDash()) Notify(EVENT::DASH_LEFT);
 
     if (IsKeyDown(KEY_LEFT_SHIFT)) {
         playerCharacter->SetIsRunning(true);

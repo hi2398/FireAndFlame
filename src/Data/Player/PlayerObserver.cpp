@@ -33,10 +33,10 @@ void PlayerObserver::OnNotify(EVENT event) {
             playerCharacter->SetWallJumpCommand(true);
             break;
         case EVENT::DASH_LEFT:
-            playerCharacter->SetNextMovement(MOVEMENT::DASH_LEFT);
+            playerCharacter->SetNextMovement(MOVEMENT::DASH_LEFT), playerCharacter->SetCanDash(false);
             break;
         case EVENT::DASH_RIGHT:
-            playerCharacter->SetNextMovement(MOVEMENT::DASH_RIGHT);
+            playerCharacter->SetNextMovement(MOVEMENT::DASH_RIGHT), playerCharacter->SetCanDash(false);
             break;
     }
 }

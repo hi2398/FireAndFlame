@@ -63,6 +63,9 @@ public:
     void SetIsDashing(bool isDashing);
     Vector2 Dash(int direction);
 
+    bool GetCanDash() const;
+    void SetCanDash(bool canDash);
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
@@ -83,6 +86,7 @@ protected:
     float dashDistance = 96.0f;
     int dashCounter = 0;
     bool isDashing{ false };
+    bool canDash{ true };
 
     void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);

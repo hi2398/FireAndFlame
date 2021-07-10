@@ -165,6 +165,16 @@ Vector2 Actor::Dash(int direction) {
 	return position;
 }
 
+bool Actor::GetCanDash() const
+{
+	return canDash;
+}
+
+void Actor::SetCanDash(bool canDash)
+{
+	this->canDash = canDash;
+}
+
 void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 {
 	//tile rectangles
