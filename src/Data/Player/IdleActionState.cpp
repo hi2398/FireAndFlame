@@ -3,6 +3,7 @@
 #include "MeleeActionState.h"
 #include "RangedActionState.h"
 #include <stdexcept>
+#include <iostream>
 
 std::shared_ptr<State> IdleActionState::Update(Actor &actor) {
 
