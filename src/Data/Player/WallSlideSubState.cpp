@@ -6,8 +6,6 @@
 #include "../../Global.h"
 
 std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
-	const auto actorLastPos = actor.GetLastPosition(); //func alias
-	const auto actorPos = actor.GetPosition(); //func alias
 
 	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Wall Slide\n";
@@ -23,44 +21,34 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
 		//left side Wall
 		switch (actor.GetNextMovement())
 		{
-		case MOVEMENT::MOVE_LEFT:
-			if (actor.GetWallCounter() >= 15) {
-				actor.SetPosition({ actor.GetPosition().x, actor.GetPosition().y + 2.0f });
-			}
-			break;
-		case MOVEMENT::MOVE_RIGHT:
-			if (actor.GetWallCounter() >= 15) {
-				actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
-			}
-			break;
-		case MOVEMENT::IDLE:
-			return std::make_shared<FallingSubState>();
-			break;
-		}
+		    case MOVEMENT::MOVE_LEFT:
+		        if (actor.GetWallCounter() >= 15) {
+				    actor.SetPosition({ actor.GetPosition().x, actor.GetPosition().y + 2.0f });
+			    }
+			    break;
+			case MOVEMENT::MOVE_RIGHT:
+			    if (actor.GetWallCounter() >= 15) {
+				    actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+			        }
+			    break;
+        }
 	}
 	else if (actor.GetWallCollisionRight()) {
 
 		//right Side Wall
-		switch (actor.GetNextMovement())
-		{
-		case MOVEMENT::MOVE_LEFT:
-			if (actor.GetWallCounter() >= 15) {
-				actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
-			}
+		switch (actor.GetNextMovement()) {
+		    case MOVEMENT::MOVE_LEFT:
+		        if (actor.GetWallCounter() >= 15) actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
 			break;
-		case MOVEMENT::MOVE_RIGHT:
-			if (actor.GetWallCounter() >= 15) {
-				actor.SetPosition({ actor.GetPosition().x , actor.GetPosition().y + 2.0f });
-			}
+			case MOVEMENT::MOVE_RIGHT:
+			    if (actor.GetWallCounter() >= 15) actor.SetPosition({ actor.GetPosition().x , actor.GetPosition().y + 2.0f });
 			break;
-		case MOVEMENT::IDLE:
-			return std::make_shared<FallingSubState>();
-			break;
+			case MOVEMENT::IDLE:
+			    return std::make_shared<FallingSubState>();
 		}
 	}
-	else if (!actor.GetWallJumpCommand()) {
-		return std::make_shared<FallingSubState>();
-	}
+
+	else if (!actor.GetWallJumpCommand()) return std::make_shared<FallingSubState>();
 
 	//Jumping Off Wall
 	if (actor.GetWallJumpCommand()) {

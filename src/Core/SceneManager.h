@@ -25,6 +25,9 @@ public:
     [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
     [[nodiscard]] const std::unique_ptr<Tilemap>& GetTilemap();
 
+    void SaveGame(std::string saveFolder, int slot);
+    void LoadGame(std::string saveFolder, int slot);
+
 protected:
 
 private:
