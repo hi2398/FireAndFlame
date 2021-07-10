@@ -3,6 +3,7 @@
 
 class MainMenu : public Scene{
 public:
+    MainMenu();
     void Update() override;
     void Draw() override;
     ~MainMenu() override = default;

@@ -6,16 +6,16 @@
 #include <iostream>
 
 Tilemap::Tilemap(const std::string& tileDescription, const std::string& levelDescription) {
-    std::ifstream tilesetDescriptionFile(tileDescription);
-    tilesetDescription = nlohmann::json::parse(tilesetDescriptionFile);
-    tilesetDescriptionFile.close();
+        std::ifstream tilesetDescriptionFile(tileDescription);
+        tilesetDescription = nlohmann::json::parse(tilesetDescriptionFile);
+        tilesetDescriptionFile.close();
 
-    std::ifstream levelMapFile(levelDescription);
-    this->levelDescription = nlohmann::json::parse(levelMapFile);
-    levelMapFile.close();
+        std::ifstream levelMapFile(levelDescription);
+        this->levelDescription = nlohmann::json::parse(levelMapFile);
+        levelMapFile.close();
 
-    tileAtlasTexture = LoadTexture((tilesetDescription["image"].get<std::string>()).c_str());
-    InitTileRecs();
+        tileAtlasTexture = LoadTexture((tilesetDescription["image"].get<std::string>()).c_str());
+        InitTileRecs();
 }
 
 void Tilemap::Draw() {
