@@ -13,7 +13,7 @@ DialogObject::DialogObject(std::string dialogFilepath, Vector2 position, Texture
 }
 
 void DialogObject::Interact(Actor &actor) {
-    if(IsKeyPressed(KEY_F)){
+    if(IsKeyPressed(KEY_F) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)){
         sceneManager->UpdateDialogInScene(objFilepath);
     }
 }
