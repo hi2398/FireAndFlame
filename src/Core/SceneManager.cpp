@@ -100,6 +100,7 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
 
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
 
+    //TODO: Copy old save over to prevent corruption
     std::ofstream saveFile{saveSlot};
     saveFile << std::setw(4) << saveDataStruct;
     saveFile.close();
