@@ -6,6 +6,7 @@
 
 enum Direction{LEFT=-1, RIGHT=1};
 enum class MOVEMENT { MOVE_LEFT, MOVE_RIGHT, IDLE, DASH_LEFT, DASH_RIGHT };
+enum AttackDirection{ATT_LEFT = -1, ATT_RIGHT = 1};
 
 class Actor : public Object {
 public:
@@ -66,6 +67,15 @@ public:
     bool GetCanDash() const;
     void SetCanDash(bool canDash);
 
+    AttackDirection GetAttackDirection() const;
+    void SetAttackDirection(Direction direction);
+
+    bool GetIsSwiping();
+    void SetIsSwiping(bool isSwiping);
+
+    bool GetActionBlocked();
+    void SetActionBlocked(bool actionBlocked);
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};
@@ -87,6 +97,9 @@ protected:
     int dashCounter = 0;
     bool isDashing{ false };
     bool canDash{ true };
+    AttackDirection attackDirection{ ATT_RIGHT };
+    bool isSwiping{ false };
+    bool actionBlocked{ false };
 
     void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);

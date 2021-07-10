@@ -24,7 +24,7 @@ void PlayerObserver::OnNotify(EVENT event) {
             playerCharacter->SetJumpCommand(true);
             break;
         case EVENT::MELEE_ATTACK:
-            playerCharacter->SetNextAction(ACTION::MELEE_ATTACK);
+            playerCharacter->SetAttackDirection(playerCharacter->GetDirection()),playerCharacter->SetNextAction(ACTION::MELEE_ATTACK);
             break;
         case EVENT::RANGED_ATTACK:
             playerCharacter->SetNextAction(ACTION::RANGED_ATTACK);

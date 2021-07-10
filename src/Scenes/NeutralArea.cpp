@@ -37,5 +37,5 @@ void NeutralArea::Draw() {
 		}
 	}
 
-	DrawText(TextFormat("%i", playerCharacter->GetCanDoubleJump()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
+	DrawText(TextFormat("%i", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y-100, 30, WHITE);
 }
