@@ -1,5 +1,11 @@
 #include "SceneManager.h"
 #include <iostream>
+#include <utility>
+#include <iomanip>
+#include "../json.hpp"
+#include "../Global.h"
+
+using nlohmann::json;
 
 
 SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
@@ -10,6 +16,10 @@ SceneManager::SceneManager(std::shared_ptr<Scene> initialScene):
 void SceneManager::Tick() {
     activeScene = nextScene;
 
+    if constexpr (DEBUG_BUILD) {
+        if (IsKeyPressed(KEY_F8)) SaveGame("./", 69);
+        if (IsKeyPressed(KEY_F9)) LoadGame("./", 69);
+    }
 
     activeScene->RemoveMarkedDelete(); //delete all enemies and interactables that have been marked for deletion
     
@@ -70,5 +80,55 @@ const std::list<std::unique_ptr<Enemy>> &SceneManager::GetEnemies() const {
 }
 
 void SceneManager::UpdateDialogInScene(std::string filepath) {
-    activeScene->GetDialogueManager().UpdateDialogue(filepath);
+    activeScene->GetDialogueManager().UpdateDialogue(std::move(filepath));
+}
+
+void SceneManager::SaveGame(std::string saveFolder, int slot) {
+    int playerHealth =playerCharacter->GetHealth();
+    Vector2 playerLocation = playerCharacter->GetPosition();
+
+
+    json saveDataStruct = {
+            {"player", //START PLAYER
+                    {
+                            {"health", playerHealth},
+                            {"locationX", playerLocation.x},
+                            {"locationY", playerLocation.y}
+                    }
+            } //END PLAYER
+    };
+
+    std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
+
+    std::ofstream saveFile{saveSlot};
+    saveFile << std::setw(4) << saveDataStruct;
+    saveFile.close();
+}
+
+void SceneManager::LoadGame(std::string saveFolder, int slot) {
+    std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
+    std::ifstream saveFile{saveSlot};
+    if (!saveFile) {
+        std::cout
+        << std::endl
+        << "LOADING FAILED\n"
+        << "LOADING FAILED\n"
+        << "LOADING FAILED\n"
+        << std::endl;
+        return;
+    }
+
+    json saveDataStruct = json::parse(saveFile);
+
+
+    for (const auto& category : saveDataStruct) {
+        playerCharacter->SetHealth(category["health"]);
+        Vector2 location{0, 0};
+        location.x = category["locationX"];
+        location.y = category["locationY"];
+        playerCharacter->SetPosition(location);
+    }
+
+
+    saveFile.close();
 }
