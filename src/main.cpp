@@ -8,7 +8,6 @@
 #include "helper.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/MainMenu.h"
-#include "raygui.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
