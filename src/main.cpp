@@ -7,6 +7,7 @@
 #include "config.h"
 #include "helper.h"
 #include "Scenes/NeutralArea.h"
+#include "Scenes/MainMenu.h"
 
 
 
@@ -36,7 +37,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();

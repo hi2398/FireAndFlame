@@ -1,12 +1,10 @@
 #include "MainMenu.h"
-#include <memory>
-#include "MainMenu.h"
-#include "raylib.h"
-#include "NeutralArea.h"
-#include "../Global.h"
+
+MainMenu::MainMenu() {
+
+}
 
 void MainMenu::Update() {
-    sceneManager->SetNextScene(std::make_unique<NeutralArea>());
 
 }
 
