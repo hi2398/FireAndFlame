@@ -17,8 +17,10 @@ private:
 	bool aOnScreen;
 	Vector2 aEdgeSeekerRight;
 	Vector2 aEdgeSeekerLeft;
+	Vector2 aWallSeekerRight;
+	Vector2 aWallSeekerLeft;
 	int aDamageOutput = 3;
-	int aMovementSpeed = 3;
+	int aMovementSpeed = 1;
 	void Move(Direction pDirection);
 
 };

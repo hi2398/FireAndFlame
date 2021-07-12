@@ -1,6 +1,7 @@
 
 #include "Scene.h"
-
+#include "raymath.h"
+#include "../Global.h"
 #include <utility>
 
 DialogueManager &Scene::GetDialogueManager() {
@@ -20,6 +21,8 @@ const std::list<std::unique_ptr<Interactable>> &Scene::GetInteractables() const 
 const std::list<std::unique_ptr<Enemy>> &Scene::GetEnemies() const {
     return enemies;
 }
+
+
 
 void Scene::RemoveMarkedDelete() {
 
@@ -41,4 +44,23 @@ void Scene::RemoveMarkedDelete() {
 
 }
 
+void Scene::Update() {
+    if (skipFrame > 0) {
+        tmp1 = playerCharacter->GetLastPosition();
+        tmp2 = playerCharacter->GetPosition();
+        Vector2 scrollDirection = { tmp2.x - tmp1.x, tmp2.y - tmp1.y };
 
+        foregroundPosition = Vector2Add(foregroundPosition, Vector2Multiply(scrollDirection, { 0.3, 0.1 }));
+        middlegroundPosition = Vector2Add(middlegroundPosition, Vector2Multiply(scrollDirection, { 0.2, 0.05 }));
+        backgroundPosition = Vector2Add(backgroundPosition, Vector2Multiply(scrollDirection, { 0.1, 0.0 }));
+    }
+
+
+    skipFrame++;
+}
+
+void Scene::Draw() {
+    DrawTextureEx(textureBackground, backgroundPosition, 0, 1.0f, WHITE);
+    DrawTextureEx(textureMiddleground, middlegroundPosition, 0, 1.0f, WHITE);
+    DrawTextureEx(textureForeground, foregroundPosition, 0, 1.0f, WHITE);
+}

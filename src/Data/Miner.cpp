@@ -13,6 +13,7 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
     stunCounter = stunDuration;
     attackCounter = attackDuration;
     seekingCounter = seekingDuration;
+	idleWorkCounter = idleWorkDuration;
     attackArea.height = 15;
     attackArea.width = 26;
 }
@@ -36,7 +37,7 @@ void Miner::Update()
 			}
 			else//Ist nicht gestunned
 			{
-
+				//std::cout << "not stunned";
                 hasLineOfSight = this->CheckLineOfSight(position, playerCharacter->GetPosition(), sceneManager->GetTilemap());
 				if (hasLineOfSight)//Hat Blickkontakt
 				{
@@ -60,8 +61,7 @@ void Miner::Update()
 					}
 					else
 					{
-                        state = EnemyState::Approaching;
-						if (playerCharacter->GetPosition().x < position.x)
+						if (lastSeen.x < position.x)
 						{
 							direction = LEFT;
 						}
@@ -69,6 +69,7 @@ void Miner::Update()
 						{
 							direction = RIGHT;
 						}
+						state = EnemyState::Approaching;
 					}
 					if (state == EnemyState::Approaching)	//Nähert sich dem Spieler
 					{
@@ -102,12 +103,13 @@ void Miner::Update()
 					}
 					else if (state == EnemyState::Idle)
 					{
+						std::cout << "Miner Idle\n";
 						--idleWorkCounter;
 						if (idleWorkCounter == 0)
 						{
                             idleWorkCounter = idleWorkDuration;
                             state = EnemyState::Roaming;
-							if (MakeDecision(42))
+							if (MakeDecision(30))
 							{
 								if (direction == RIGHT)
 								{
@@ -122,6 +124,7 @@ void Miner::Update()
 					}
 					else if (state == EnemyState::Roaming)
 					{
+						std::cout << "Miner Roaming\n";
 						--idleWorkCounter;
 						this->Move(direction);
 						if (idleWorkCounter == 0)
@@ -137,6 +140,18 @@ void Miner::Update()
 		{
 			this->position.y += fallingSpeed;
 			fallingSpeed += 0.1f;
+			hitbox.x = position.x;
+			hitbox.y = position.y;
+			Rectangle tileRec = { 0,0,32,32 };
+			for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
+			{
+				tileRec.x = collTile.x;
+				tileRec.y = collTile.y;
+				if (CheckCollisionRecs(hitbox, tileRec))
+				{
+					grounded = true;
+				}
+			}
 		}
 	}
 }
@@ -173,14 +188,26 @@ void Miner::Move(Direction pDirection)
 			position.x -= aMovementSpeed;		//flees to the Left if not on an Edge
 			attackArea.x = position.x - attackArea.width;
             attackArea.y = position.y + 12;
+			aWallSeekerLeft.x = position.x - 1;
+			aWallSeekerLeft.y = position.y + 16;
 		}
 		else if (direction == RIGHT && CheckCollisionPointRec(aEdgeSeekerRight, tileRec))
 		{
 			position.x += aMovementSpeed;		//approaches to the Right if not on an Edge
 			attackArea.x = position.x + 32;
             attackArea.y = position.y + 12;
+			aWallSeekerRight.x = position.x + 33;
+			aWallSeekerRight.y = position.y + 16;
+		}
+		if (direction == RIGHT && CheckCollisionPointRec(aWallSeekerRight, tileRec))
+		{
+			direction = LEFT;
+		}
+		else if (direction == LEFT && CheckCollisionPointRec(aWallSeekerLeft, tileRec))
+		{
+			direction = RIGHT;
 		}
 	}
-    hitbox.x = position.x;
-    hitbox.y = position.y;
+	hitbox.x = position.x;
+	hitbox.y = position.y;
 }
