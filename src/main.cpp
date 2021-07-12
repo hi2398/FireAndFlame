@@ -61,6 +61,7 @@ if  constexpr(DEBUG_BUILD){
 
         sceneManager->Update();
         BeginDrawing();
+
         ClearBackground(BLACK); // Letterbox color
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet

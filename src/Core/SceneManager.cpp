@@ -113,7 +113,7 @@ void SceneManager::Update() {
 }
 
 void SceneManager::Draw() {
-    BeginMode2D(playerCharacter->camera);
+    if (playerCharacter->visible) BeginMode2D(playerCharacter->camera);
     activeScene->Draw();
     activeScene->GetTilemap()->Draw();
     for (const auto& enemy : activeScene->GetEnemies()){
