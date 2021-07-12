@@ -11,7 +11,6 @@ MainMenu::MainMenu() {
 
 void MainMenu::Update() {
 
-    //std::cout << GetScreenWidth() << " " << GetScreenHeight() << "\n";
 }
 
 void MainMenu::Draw() {

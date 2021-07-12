@@ -37,7 +37,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
@@ -59,7 +59,7 @@ if  constexpr(DEBUG_BUILD){
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
 
-        
+        sceneManager->Update();
         BeginDrawing();
         ClearBackground(BLACK); // Letterbox color
 
@@ -67,7 +67,7 @@ if  constexpr(DEBUG_BUILD){
         BeginTextureMode(target);
         ClearBackground(BLACK);
 
-        sceneManager->Tick();
+        sceneManager->Draw();
 		
         EndTextureMode();
 

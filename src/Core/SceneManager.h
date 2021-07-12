@@ -16,7 +16,8 @@ extern std::shared_ptr<HUD> hud;
 class SceneManager {
 public:
     explicit SceneManager(std::shared_ptr<Scene> initialScene);
-    void Tick();
+    void Update();
+    void Draw();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void UpdateDialogInScene(std::string filepath);
 
