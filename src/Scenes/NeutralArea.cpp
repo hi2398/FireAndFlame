@@ -5,6 +5,7 @@
 
 NeutralArea::NeutralArea(){
     playerCharacter->SetPosition({ 50 * 32, 36 * 32 });
+    playerCharacter->visible = true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
     // Delete this section, only for testing

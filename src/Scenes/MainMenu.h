@@ -1,5 +1,6 @@
 #pragma once
 #include "../Core/Scene.h"
+#include "../raygui.h"
 
 class MainMenu : public Scene{
 public:
@@ -14,5 +15,3 @@ protected:
 private:
 
 };
-
-

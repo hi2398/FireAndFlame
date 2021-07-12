@@ -53,7 +53,7 @@ void SceneManager::Tick() {
     if (playerCharacter->visible) playerCharacter->Draw();
 	EndMode2D();
 
-	hud->DrawHUD();
+    if (playerCharacter->visible) hud->DrawHUD();
 
   
   activeScene->GetDialogueManager().DrawDialogue();
