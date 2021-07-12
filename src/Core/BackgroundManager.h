@@ -1,20 +1,27 @@
 #pragma once
 #include "raylib.h"
+#include "Scene.h"
 class BackgroundManager {
 public:
-	BackgroundManager();
-	void Parallax(int direction);
-	void Draw();
-	~BackgroundManager() = default;
+    BackgroundManager() {};
+    void SetBackgrounds(Vector2 vecFore, Vector2 vecMiddle, Vector2 vecBack);
+    void Parallax();
+    void Draw();
+    ~BackgroundManager() = default;
 protected:
 
 private:
     //Test background
-    Texture2D textureForeground;
-    Texture2D textureMiddleground;
-    Texture2D textureBackground;
+    Texture2D textureF;
+    Texture2D textureM;
+    Texture2D textureB;
 
-    float scrollingFore = 0.0f;
-    float scrollingMiddle = 0.0f;
-    float scrollingBack = 0.0f;
+    Vector2 tmp1 = {};
+    Vector2 tmp2 = {};
+
+    Vector2 drawFore{};
+    Vector2 drawMiddle{};
+    Vector2 drawBack{};
+
+    int skipFrame = 0;
 };

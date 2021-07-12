@@ -6,10 +6,11 @@
 #include "Enemy.h"
 #include "Interactable.h"
 
+
 class Scene {
 public:
-    virtual void Update() = 0;
-    virtual void Draw() = 0;
+    virtual void Update();
+    virtual void Draw();
     virtual ~Scene() = default;
 
     [[nodiscard]] DialogueManager &GetDialogueManager();
@@ -18,6 +19,7 @@ public:
     [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;
     [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
 
+    
     void RemoveMarkedDelete();
 
 protected:
@@ -25,6 +27,19 @@ protected:
     std::unique_ptr<Tilemap> tilemap;
     std::list<std::unique_ptr<Interactable>> interactables;
     std::list<std::unique_ptr<Enemy>> enemies;
+
+    Texture2D textureForeground;
+    Texture2D textureMiddleground;
+    Texture2D textureBackground;
+
+    int skipFrame = 0;
+
+    Vector2 tmp1 = {};
+    Vector2 tmp2 = {};
+
+    Vector2 foregroundPosition{};
+    Vector2 middlegroundPosition{};
+    Vector2 backgroundPosition{};
 private:
 
 };
