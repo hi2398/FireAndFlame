@@ -21,7 +21,7 @@ public:
 
 
 protected:
-
+    
 private:
     Rectangle exp = { 0 };
 
