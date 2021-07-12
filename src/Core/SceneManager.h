@@ -18,7 +18,6 @@ public:
     explicit SceneManager(std::shared_ptr<Scene> initialScene);
     void Tick();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
-    void SceneParallax(int direction);
     void UpdateDialogInScene(std::string filepath);
 
     [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;

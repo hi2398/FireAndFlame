@@ -1,33 +1,34 @@
 #include "BackgroundManager.h"
+#include "../Global.h"
+#include "raymath.h"
 
-BackgroundManager::BackgroundManager()
+void BackgroundManager::Parallax()
 {
-    textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");
-    textureMiddleground = LoadTexture("assets/graphics/backgrounds/background2.png");
-    textureBackground = LoadTexture("assets/graphics/backgrounds/background3.png");
+    if (skipFrame > 0) {
+		tmp1 = playerCharacter->GetLastPosition();
+		tmp2 = playerCharacter->GetPosition();
+		Vector2 scrollDirection = { tmp2.x - tmp1.x, tmp2.y - tmp1.y };
+
+        drawFore = Vector2Add(drawFore, Vector2Multiply(scrollDirection, {0.3, 0.1}));
+        drawMiddle = Vector2Add(drawMiddle, Vector2Multiply(scrollDirection, { 0.2, 0.05 }));
+        drawBack = Vector2Add(drawBack, Vector2Multiply(scrollDirection, { 0.1, 0.0 }));
+    }
+    
+    
+    skipFrame++;
 }
 
-void BackgroundManager::Parallax(int direction)
-{
-    scrollingFore -= 0.0f * direction;
-    scrollingMiddle += 0.5f * direction;
-    scrollingBack += 0.1f * direction;
+void BackgroundManager::SetBackgrounds(Vector2 vecFore, Vector2 vecMiddle, Vector2 vecBack) {
+    
 
-    if (scrollingBack <= -textureBackground.width) scrollingBack = 0;
-    if (scrollingMiddle <= -textureMiddleground.width) scrollingMiddle = 0;
-    if (scrollingFore <= -textureForeground.width) scrollingFore = 0;
+    drawFore = vecFore;
+    drawMiddle = vecMiddle;
+    drawBack = vecBack;
 }
 
 void BackgroundManager::Draw()
 {
-   /* DrawTextureEx(textureBackground, { scrollingBack, -300 }, 0.0f, 1.0f, WHITE);
-    DrawTextureEx(textureBackground, { textureBackground.width + scrollingBack , -300 }, 0.0f, 1.0f, WHITE);
-
-    DrawTextureEx(textureMiddleground, { scrollingMiddle, -300 }, 0.0f, 1.0f, WHITE);
-    DrawTextureEx(textureMiddleground, { textureMiddleground.width + scrollingMiddle , -300 }, 0.0f, 1.0f, WHITE);
-
-    DrawTextureEx(textureForeground, { scrollingFore, -300 }, 0.0f, 1.0f, WHITE);
-    DrawTextureEx(textureForeground, { textureForeground.width + scrollingFore , -300 }, 0.0f, 1.0f, WHITE);*/
+    DrawTextureEx(textureB, drawBack, 0, 1.0f, WHITE);
+    DrawTextureEx(textureM, drawMiddle, 0, 1.0f, WHITE);
+    DrawTextureEx(textureF, drawFore, 0, 1.0f, WHITE);
 }
-
-
