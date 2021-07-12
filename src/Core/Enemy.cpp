@@ -55,7 +55,7 @@ float Enemy::GetDistance(Vector2 startLocation, Vector2 endLocation)
 	if (x < 0) x = x * -1;				//Sichergehen, dass die Differenz positiv ist
 	float y = endLocation.y - startLocation.y;	//Differenz auf der Y Achse ermitteln
 	if (y <= 0) y = y * -1;				//Sichergehen dass die Differenz positiv ist
-	float pDistance = sqrt(pow(x, 2) + pow(y, 2));
+	float pDistance = std::sqrt(pow(x, 2) + pow(y, 2));
 	return pDistance;
 }
 
@@ -81,5 +81,5 @@ bool Enemy::MakeDecision(int probability)
 
 Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
     this->enemyType=enemyType;
-	srand(time(NULL));
+	srand(time(nullptr));
 }
