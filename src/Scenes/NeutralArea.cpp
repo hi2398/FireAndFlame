@@ -34,6 +34,7 @@ NeutralArea::NeutralArea(){
 
 void NeutralArea::Update() {
     Scene::Update();
+
 }
 
 void NeutralArea::Draw() {

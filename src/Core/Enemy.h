@@ -1,4 +1,6 @@
 #pragma once
+
+//created by Robin on 29.06.2021
 #include "Actor.h"
 #include "EnemyTypes.h"
 
@@ -19,18 +21,18 @@ public:
 protected:
     bool MakeDecision(int probability);
     EnemyTypes enemyType;
-    int health{};
+    int health{3};
     bool hasLineOfSight{false};
     bool IsAttacking;
     EnemyState state{EnemyState::Idle}; // 0=Idle, 1=Roaming, 2=Approaching, 3=fleeing, 4=Stunned, 5=attacking, 6=Seeking
     int stunCounter;
     const int stunDuration = 100;
     int attackCounter;
-    const int attackDuration = 300;
+    const int attackDuration = 20;
     int seekingCounter;
-    const int seekingDuration = 1000;
+    const int seekingDuration = 100;
     int idleWorkCounter;
-    const int idleWorkDuration=500;
+    const int idleWorkDuration=100;
     Rectangle hitbox{};
     Rectangle attackArea{};
     Texture2D texture{};
