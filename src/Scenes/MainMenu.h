@@ -1,6 +1,5 @@
 #pragma once
 #include "../Core/Scene.h"
-#include "../raygui.h"
 
 class MainMenu : public Scene{
 public:
@@ -13,5 +12,5 @@ public:
 protected:
 
 private:
-
+    Rectangle button1 ={100,100,700,300};
 };

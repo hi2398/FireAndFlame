@@ -8,6 +8,7 @@
 #include "helper.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/MainMenu.h"
+#include <iostream>
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -36,7 +37,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
@@ -48,7 +49,6 @@ if  constexpr(DEBUG_BUILD){
     {
         // Compute required framebuffer scaling
         float scale = MIN((float) GetScreenWidth() / Game::ScreenWidth, (float) GetScreenHeight() / Game::ScreenHeight);
-
         // Update virtual mouse (clamped mouse value behind game screen)
         Vector2 mouse = GetMousePosition();
         Vector2 virtualMouse = {0};
