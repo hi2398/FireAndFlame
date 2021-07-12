@@ -130,7 +130,7 @@
 #ifndef RAYGUI_H
 #define RAYGUI_H
 
-#define RAYGUI_STATIC
+
 #define RAYGUI_VERSION  "2.6-dev"
 
 #if !defined(RAYGUI_STANDALONE)

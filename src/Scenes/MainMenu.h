@@ -12,7 +12,5 @@ public:
 protected:
 
 private:
-
+    Rectangle button1 ={100,100,700,300};
 };
-
-
