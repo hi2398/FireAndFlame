@@ -20,27 +20,27 @@ private:
     Texture2D mainMenuBackground;
 
     //Title Screen GUI Elements
-    Rectangle playButton;
-    Rectangle settingsButton;
-    Rectangle creditsButton;
-    Rectangle quitButton;
+    Texture2D playButton[3];
+    Texture2D settingsButton[3];
+    Texture2D creditsButton[3];
+    Texture2D quitButton[3];
 
     Texture2D gameTitlePicture;
 
     //Play Screen
-    Rectangle loadSave1Button;
-    Rectangle loadSave2Button;
-    Rectangle loadSave3Button;
-    Rectangle deleteSave1Button;
-    Rectangle deleteSave2Button;
-    Rectangle deleteSave3Button;
-    Rectangle playReturnButton;
+    Texture2D loadSave1Button[3];
+    Texture2D loadSave2Button[3];
+    Texture2D loadSave3Button[3];
+    Texture2D deleteSave1Button[3];
+    Texture2D deleteSave2Button[3];
+    Texture2D deleteSave3Button[3];
+    Texture2D playReturnButton[3];
 
     //Settings Screen
         //SliderMusic
         //SliderSound
         //Fullscreen
-    Rectangle settingsReturnButton;
+    Texture2D settingsReturnButton[3];
 
     //Credits Screen
         //Adrian
@@ -49,5 +49,5 @@ private:
         //Mizu
         //Pascal
         //Robin
-    Rectangle creditsReturnButton;
+    Texture2D creditsReturnButton[3];
 };

@@ -85,8 +85,9 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
     saveFile.close();
 }
 
-void SceneManager::Update() {
+void SceneManager::Update(Vector2 virtualMousePosition) {
     activeScene = nextScene;
+    this->virtualMousePosition = virtualMousePosition;
 
     if constexpr (DEBUG_BUILD) {
         if (IsKeyPressed(KEY_F8)) SaveGame("./", 69);
@@ -132,4 +133,8 @@ void SceneManager::Draw() {
 
     //setting "last" values stay at the very end to prevent sequenz errors
     playerCharacter->SetLastPosition(playerCharacter->GetPosition());
+}
+
+Vector2 SceneManager::GetVirtualMousePosition() {
+    return virtualMousePosition;
 }
