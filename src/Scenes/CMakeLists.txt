@@ -1,3 +1,3 @@
 cmake_minimum_required(VERSION 3.11)
 add_library(Scenes STATIC MainMenu.h MainMenu.cpp NeutralArea.cpp NeutralArea.h AreaOne.cpp AreaOne.h SceneEnums.h)
-target_link_libraries(Scenes raylib Core Observer Player Data)
+target_link_libraries(Scenes raylib Core Observer Player Data Enemies)

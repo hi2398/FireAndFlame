@@ -4,9 +4,26 @@
 #include <ctime>
 #include <cmath>
 
+Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
+	this->enemyType = enemyType;
+	srand(time(NULL));
+}
+
+void Enemy::EnemyDefaultIdle() {
+	idleFrameCounter++;
+}
+
 
 EnemyTypes Enemy::GetEnemyType() const {
 	return enemyType;
+}
+
+EnemyState Enemy::GetEnemyState() {
+	return state;
+}
+
+void Enemy::SetEnemyState(EnemyState state) {
+	this->state = state;
 }
 
 
@@ -39,12 +56,12 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 			tileRec.y = collTile.y;
 			if (CheckCollisionPointRec(i, playerCharacter->playerHitbox)) 
 			{
-				std::cout << "ich sehe dich\n";
+				
 				return true;
 			}
 			else if (CheckCollisionPointRec(i, tileRec)||!CheckCollisionPointRec(i, playerCharacter->visibleScreen))
 			{   
-				std::cout << "Ja wo isser denn?\n";
+				
                 return false;
 			}
 			else
@@ -81,10 +98,8 @@ bool Enemy::MakeDecision(int probability)
 	}
 }
 
-#include "Enemy.h"
 
 
-Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
-    this->enemyType=enemyType;
-	srand(time(NULL));
+Texture2D Enemy::GetTexture() {
+	return texture;
 }

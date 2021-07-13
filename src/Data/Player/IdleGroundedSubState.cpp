@@ -19,9 +19,9 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
         return std::make_shared<MovingGroundedSubState>();
     case MOVEMENT::IDLE:
         return shared_from_this();
-        case MOVEMENT::DASH_LEFT:
-            case MOVEMENT::DASH_RIGHT:
-                return std::make_shared<MovingGroundedSubState>();
+    case MOVEMENT::DASH_LEFT:
+    case MOVEMENT::DASH_RIGHT:
+        return std::make_shared<MovingGroundedSubState>();
     }
 
 }

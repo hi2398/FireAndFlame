@@ -38,7 +38,7 @@ void PlayerCharacter::Update() {
         playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
     }
 
-	
+	//world collision
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
