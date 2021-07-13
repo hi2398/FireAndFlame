@@ -9,20 +9,29 @@ MainMenu::MainMenu() {
 }
 
 void MainMenu::Update() {
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
 
-    //playButton = {10, 30, 200, 100};
-    //settingsButton = {, , (float)(screenWidth/5), (float)(screenHeight/8)};
-    //creditsButton = {(float)(screenWidth/70), (float)(screenHeight/20 + 300), (float)(screenWidth/5), (float)(screenHeight/8)};
-    //quitButton = {(float)(screenWidth/70), (float)(screenHeight/20 + 450), (float)(screenWidth/5), (float)(screenHeight/8)};
+    switch(menuScreenStates){
+        case MenuScreenStates::TitleScreen: ;
+            break;
+        case MenuScreenStates::LoadGameScreen: ;
+            break;
+        case MenuScreenStates::SettingsScreen: ;
+            break;
+        case MenuScreenStates::CreditsScreen: ;
+            break;
+        default: std::cout << "ERROR in MainMenu.cpp, Update()";
+    }
 }
 
 void MainMenu::Draw() {
 
 
     switch(menuScreenStates){
-        case MenuScreenStates::TitleScreen: ;
+        case MenuScreenStates::TitleScreen:
+            DrawRectangle(30,60,300, 100, WHITE);
+            DrawRectangle(30,200,300, 100, WHITE);
+            DrawRectangle(30,340,300, 100, WHITE);
+            DrawRectangle(30,480,300, 100, WHITE);
             break;
         case MenuScreenStates::LoadGameScreen: ;
             break;
