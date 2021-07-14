@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include "raymath.h"
 
 
 EnemyTypes Enemy::GetEnemyType() const {
@@ -21,45 +22,38 @@ void Enemy::ReceiveDamage(int damage)
 
 bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap)
 {
-	Vector2 pLineOfSightVector;
-	pLineOfSightVector.x = endLocation.x - startLocation.x;
-	pLineOfSightVector.y = endLocation.y - startLocation.y;
-	float distance = this->GetDistance(startLocation, endLocation);
-	Vector2 pUnitvector;
-	pUnitvector.x = pLineOfSightVector.x / distance;
-	pUnitvector.y = pLineOfSightVector.y / distance;
-	Vector2 i = startLocation;
-	if (CheckCollisionPointRec(i, playerCharacter->visibleScreen))
+	Vector2 lineOfSight = Vector2Subtract(endLocation, startLocation);
+
+	Vector2 direction = Vector2Normalize(lineOfSight);
+	Vector2 checkInterval = Vector2Scale(direction, 10);
+
+	Vector2 nextCheckLocation = Vector2Add(startLocation, checkInterval);
+	//see if next position to check is even in area of player
+	while (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
 	{
-		i.x =i.x+ pUnitvector.x*20;
-		i.y =i.y+ pUnitvector.y*20;
+	    nextCheckLocation=Vector2Add(nextCheckLocation, checkInterval);
 		Rectangle tileRec = { 0,0,32,32 };
 		for (const auto& collTile : tilemap->GetTileColliders()) {
 			tileRec.x = collTile.x;
 			tileRec.y = collTile.y;
-			if (CheckCollisionPointRec(i, playerCharacter->playerHitbox))
-			{
-				return true;
+
+            //if line of sight hits opaque object, return
+			if (CheckCollisionPointRec(nextCheckLocation, tileRec)) {
+				return false;
+			} //if raycast hits player, return true
+			else if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->playerHitbox)) {
+			    std::cout << "Player found" << std::endl;
+                return true;
 			}
-			else if (CheckCollisionPointRec(i, tileRec)||!CheckCollisionPointRec(i, playerCharacter->visibleScreen))
-			{
-				std::cout << "Ja wo isser denn?\n";
-                return false;
-			}
-			else
-			{
-				break;
-			}
+			break;
 		}
 	}
+    return false;
 }
 
 float Enemy::GetDistance(Vector2 startLocation, Vector2 endLocation)
 {
-	float x = endLocation.x - startLocation.x;	//Differenz auf der X Achse ermitteln
-	float y = endLocation.y - startLocation.y;	//Differenz auf der Y Achse ermitteln
-	float pDistance = sqrt(pow(x, 2) + pow(y, 2));
-	return pDistance;
+	return Vector2Distance(startLocation, endLocation);
 }
 
 bool Enemy::CheckOnScreen()
