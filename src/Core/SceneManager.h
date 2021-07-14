@@ -16,10 +16,11 @@ extern std::shared_ptr<HUD> hud;
 class SceneManager {
 public:
     explicit SceneManager(std::shared_ptr<Scene> initialScene);
-    void Update();
+    void Update(Vector2 virtualMousePosition);
     void Draw();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
     void UpdateDialogInScene(std::string filepath);
+    Vector2 GetVirtualMousePosition();
 
     [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;
     [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
@@ -31,6 +32,7 @@ public:
 protected:
 
 private:
+    Vector2 virtualMousePosition;
     std::shared_ptr<Scene> activeScene;
     std::shared_ptr<Scene> nextScene;
     std::shared_ptr<BackgroundManager> background = std::make_shared<BackgroundManager>();
