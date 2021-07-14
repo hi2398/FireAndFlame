@@ -14,7 +14,7 @@ protected:
 
 
 private:
-
+static constexpr Vector2 playerStart{20*32, 37*32};
 
 };
 
