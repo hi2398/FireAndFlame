@@ -50,9 +50,9 @@ void Scene::Update() {
         tmp2 = playerCharacter->GetPosition();
         Vector2 scrollDirection = { tmp2.x - tmp1.x, tmp2.y - tmp1.y };
 
-        foregroundPosition = Vector2Add(foregroundPosition, Vector2Multiply(scrollDirection, { 0.3, 0.1 }));
-        middlegroundPosition = Vector2Add(middlegroundPosition, Vector2Multiply(scrollDirection, { 0.2, 0.05 }));
-        backgroundPosition = Vector2Add(backgroundPosition, Vector2Multiply(scrollDirection, { 0.1, 0.0 }));
+        foregroundPosition = Vector2Add(foregroundPosition, Vector2Multiply(scrollDirection, { 0.3f, 0.1f }));
+        middlegroundPosition = Vector2Add(middlegroundPosition, Vector2Multiply(scrollDirection, { 0.2f, 0.05f }));
+        backgroundPosition = Vector2Add(backgroundPosition, Vector2Multiply(scrollDirection, { 0.1f, 0.0f }));
     }
 
 
