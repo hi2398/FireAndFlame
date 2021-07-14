@@ -19,5 +19,5 @@ void AreaOne::Update() {
 }
 
 void AreaOne::Draw() {
-    DrawText(TextFormat("%i", playerCharacter->GetJumpBlocked()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);
+    
 }

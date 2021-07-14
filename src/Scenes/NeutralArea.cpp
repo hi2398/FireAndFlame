@@ -1,10 +1,12 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Data/Miner.h"
+#include "raymath.h"
 
 
 NeutralArea::NeutralArea(){
     playerCharacter->SetPosition({ 50 * 32, 36 * 32 });
+    playerCharacter->visible = true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
     // Delete this section, only for testing
@@ -20,16 +22,23 @@ NeutralArea::NeutralArea(){
     interactables.emplace_back(std::make_unique<DialogObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{50*32-100, 36*32};
     enemies.emplace_back(std::make_unique<Miner>(vec2));
+
+    textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");
+    textureMiddleground = LoadTexture("assets/graphics/backgrounds/background2.png");
+    textureBackground = LoadTexture("assets/graphics/backgrounds/background3.png");
+
+    foregroundPosition = { 50 * 32, 30 * 32 };
+    middlegroundPosition = { 50 * 32, 30 * 32 };
+    backgroundPosition = { 50 * 32, 30 * 32 };
 }
 
 
 void NeutralArea::Update() {
-
+    Scene::Update();
 }
 
 void NeutralArea::Draw() {
-
-
+    Scene::Draw();
 
 
 	if constexpr (DEBUG_BUILD) {

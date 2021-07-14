@@ -3,7 +3,6 @@
 //
 
 #include "Tilemap.h"
-#include <iostream>
 
 Tilemap::Tilemap(const std::string& tileDescription, const std::string& levelDescription) {
         std::ifstream tilesetDescriptionFile(tileDescription);

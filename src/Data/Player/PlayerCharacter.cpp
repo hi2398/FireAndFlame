@@ -21,7 +21,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 	gravityMultiplier = 2.0;
 
-	
+	canDoubleJump = true;
 }
 
 

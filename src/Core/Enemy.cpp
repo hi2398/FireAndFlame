@@ -25,26 +25,31 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 	pLineOfSightVector.x = endLocation.x - startLocation.x;
 	pLineOfSightVector.y = endLocation.y - startLocation.y;
 	float distance = this->GetDistance(startLocation, endLocation);
-	Vector2 pEinheitsvector;
-	pEinheitsvector.x = pLineOfSightVector.x / distance;
-	pEinheitsvector.y = pLineOfSightVector.y / distance;
-	for (Vector2 i = startLocation; i.x != endLocation.x; i.x = i.x + pEinheitsvector.x)
+	Vector2 pUnitvector;
+	pUnitvector.x = pLineOfSightVector.x / distance;
+	pUnitvector.y = pLineOfSightVector.y / distance;
+	Vector2 i = startLocation;
+	if (CheckCollisionPointRec(i, playerCharacter->visibleScreen))
 	{
-		i.y = i.y + pEinheitsvector.y;
-
+		i.x =i.x+ pUnitvector.x*20;
+		i.y =i.y+ pUnitvector.y*20;
 		Rectangle tileRec = { 0,0,32,32 };
 		for (const auto& collTile : tilemap->GetTileColliders()) {
 			tileRec.x = collTile.x;
 			tileRec.y = collTile.y;
-
-			if (CheckCollisionPointRec(i, tileRec)) 
+			if (CheckCollisionPointRec(i, playerCharacter->playerHitbox))
 			{
 				return true;
 			}
-			else {
-                SetGrounded(false);
+			else if (CheckCollisionPointRec(i, tileRec)||!CheckCollisionPointRec(i, playerCharacter->visibleScreen))
+			{
+				std::cout << "Ja wo isser denn?\n";
                 return false;
-            }
+			}
+			else
+			{
+				break;
+			}
 		}
 	}
 }
@@ -52,10 +57,8 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 float Enemy::GetDistance(Vector2 startLocation, Vector2 endLocation)
 {
 	float x = endLocation.x - startLocation.x;	//Differenz auf der X Achse ermitteln
-	if (x < 0) x = x * -1;				//Sichergehen, dass die Differenz positiv ist
 	float y = endLocation.y - startLocation.y;	//Differenz auf der Y Achse ermitteln
-	if (y <= 0) y = y * -1;				//Sichergehen dass die Differenz positiv ist
-	float pDistance = std::sqrt(pow(x, 2) + pow(y, 2));
+	float pDistance = sqrt(pow(x, 2) + pow(y, 2));
 	return pDistance;
 }
 
@@ -77,6 +80,7 @@ bool Enemy::MakeDecision(int probability)
 	}
 }
 
+#include "Enemy.h"
 
 
 Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
