@@ -41,13 +41,34 @@ private:
     Texture2D gameTitlePicture;
 
     //Play Screen
+    Texture2D savegameTex1;
+    Texture2D savegameTex2;
+    Texture2D savegameTex3;
+
+    Texture2D loadSave1Button[3];
     Rectangle loadSave1ButtonRec;
+    int loadSave1ButtonIndex = 0;
+
+    Texture2D loadSave2Button[3];
     Rectangle loadSave2ButtonRec;
+    int loadSave2ButtonIndex = 0;
+
+    Texture2D loadSave3Button[3];
     Rectangle loadSave3ButtonRec;
+    int loadSave3ButtonIndex = 0;
+
+    Texture2D deleteSave1Button[3];
     Rectangle deleteSave1ButtonRec;
+    int deleteSave1ButtonIndex = 0;
+
+    Texture2D deleteSave2Button[3];
     Rectangle deleteSave2ButtonRec;
+    int deleteSave2ButtonIndex = 0;
+
+    Texture2D deleteSave3Button[3];
     Rectangle deleteSave3ButtonRec;
-    Rectangle playReturnButtonRec;
+    int deleteSave3ButtonIndex = 0;
+
 
     //Settings Screen
         Rectangle musicVolumeRecs[10];
