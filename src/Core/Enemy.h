@@ -13,17 +13,18 @@ public:
     void Update() override = 0;
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     void ReceiveDamage(int damage);
-    bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
-    float GetDistance(Vector2 startLocation, Vector2 endLocation);
-    bool CheckOnScreen();
     ~Enemy() override = default;
 
 protected:
+    static bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
+    static float GetDistance(Vector2 startLocation, Vector2 endLocation);
+    bool CheckOnScreen();
     bool MakeDecision(int probability);
+
     EnemyTypes enemyType;
     int health{3};
     bool hasLineOfSight{false};
-    bool IsAttacking;
+    bool isAttacking;
     EnemyState state{EnemyState::Idle}; // 0=Idle, 1=Roaming, 2=Approaching, 3=fleeing, 4=Stunned, 5=attacking, 6=Seeking
     int stunCounter;
     const int stunDuration = 100;

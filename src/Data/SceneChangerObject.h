@@ -12,6 +12,6 @@ public:
     ~SceneChangerObject() override = default;
 private:
     Vector2 position;
-    SceneEnums choosenScene;
+    SceneEnums chosenScene;
 protected:
 };

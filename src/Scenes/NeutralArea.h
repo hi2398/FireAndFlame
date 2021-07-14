@@ -4,7 +4,7 @@
 #include "../Core/Enemy.h"
 #include "../Data/Coal.h"
 #include "../Data/SceneChangerObject.h"
-#include "../Data/DialogObject.h"
+#include "../Data/DialogueObject.h"
 #include <vector>
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"
@@ -24,10 +24,7 @@ protected:
     
 private:
     Rectangle exp = { 0 };
+    static constexpr Vector2 playerStart{ 50 * 32, 36 * 32 };
 
 
-    
-    Rectangle ground = { -1000, 40, 2100, 300};
-    int coalTimer=30;
-    int generalTimer = 0;
 };

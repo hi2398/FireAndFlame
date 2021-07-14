@@ -1,5 +1,6 @@
 ﻿#include <cstdlib>
 #include <memory>
+#include <iostream>
 
 #include "raylib.h"
 
@@ -8,7 +9,7 @@
 #include "helper.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/MainMenu.h"
-#include <iostream>
+#include "Scenes/IceBossScene.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -37,7 +38,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();

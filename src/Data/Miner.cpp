@@ -38,7 +38,7 @@ void Miner::Update()
 			else//Ist nicht gestunned
 			{
 				//std::cout << "not stunned";
-                hasLineOfSight = this->CheckLineOfSight(position, playerCharacter->GetPosition(), sceneManager->GetTilemap());
+                hasLineOfSight = CheckLineOfSight(position, playerCharacter->GetPosition(), sceneManager->GetTilemap());
 				if (hasLineOfSight)//Hat Blickkontakt
 				{
                     lastSeen = playerCharacter->GetPosition();
