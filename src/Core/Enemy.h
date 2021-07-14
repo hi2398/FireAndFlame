@@ -13,6 +13,7 @@ public:
     void Update() override = 0;
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     virtual void ReceiveDamage(int damage);
+    Rectangle GetCollider() const;
     ~Enemy() override = default;
 
 protected:

@@ -77,3 +77,7 @@ bool Enemy::MakeDecision(int probability)
 		return false;
 	}
 }
+
+Rectangle Enemy::GetCollider() const {
+    return hitbox;
+}
