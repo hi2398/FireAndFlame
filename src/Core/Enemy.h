@@ -12,7 +12,7 @@ public:
     void Draw() override = 0;
     void Update() override = 0;
     [[nodiscard]] EnemyTypes GetEnemyType() const;
-    void ReceiveDamage(int damage);
+    virtual void ReceiveDamage(int damage);
     ~Enemy() override = default;
 
 protected:

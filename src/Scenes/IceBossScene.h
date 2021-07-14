@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Core/Scene.h"
+#include "../Data/IceBoss/IceBoss.h"
 
 class IceBossScene : public Scene {
 public:
@@ -14,7 +15,7 @@ protected:
 
 
 private:
-static constexpr Vector2 playerStart{20*32, 37*32};
+    static constexpr Vector2 playerStart{20*32, 37*32};
 
 };
 

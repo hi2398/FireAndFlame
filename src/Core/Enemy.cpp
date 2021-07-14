@@ -5,6 +5,10 @@
 #include <cmath>
 #include "raymath.h"
 
+Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
+    this->enemyType=enemyType;
+    srand(time(nullptr));
+}
 
 EnemyTypes Enemy::GetEnemyType() const {
 	return enemyType;
@@ -72,12 +76,4 @@ bool Enemy::MakeDecision(int probability)
 	{
 		return false;
 	}
-}
-
-#include "Enemy.h"
-
-
-Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
-    this->enemyType=enemyType;
-	srand(time(nullptr));
 }
