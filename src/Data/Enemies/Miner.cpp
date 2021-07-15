@@ -1,5 +1,6 @@
 #include "Miner.h"
 #include "../../Global.h"
+#include "EnemyStateHandler.h"
 
 Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 {
@@ -17,7 +18,7 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
     attackArea.height = 15;
     attackArea.width = 26;
 
-	activeState = std::make_shared<State>();
+	activeState = std::make_shared<EnemyStateHandler>();
 }
 
 //void Miner::Update()
