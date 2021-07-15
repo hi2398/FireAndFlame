@@ -114,7 +114,7 @@ void SceneManager::Update(Vector2 virtualMousePosition) {
 }
 
 void SceneManager::Draw() {
-    BeginMode2D(playerCharacter->camera);
+    if(playerCharacter->active) BeginMode2D(playerCharacter->camera);
     activeScene->Draw();
     activeScene->GetTilemap()->Draw();
     for (const auto& enemy : activeScene->GetEnemies()){
