@@ -9,6 +9,8 @@ public:
     explicit Tilemap(const std::string& tileDescription, const std::string& levelDescription);
     Tilemap() = default;
     [[nodiscard]] const std::vector<Vector2> &GetTileColliders() const;
+    void AddCollisionTile(Vector2 loc);
+    void RemoveCollisionTile();
     void Draw();
 protected:
 
