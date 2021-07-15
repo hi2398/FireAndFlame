@@ -13,6 +13,8 @@ void IceBossScene::Update() {
         if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {
             bossActivated=true;
             enemies.emplace_back(std::make_unique<IceBoss>(bossSpawnPoint));
+            //tilemap->AddCollisionTile({});
+            //tilemap->RemoveCollisionTile();
         }
     }
 

@@ -4,7 +4,7 @@
 
 MainMenu::MainMenu() {
     tilemap=std::make_unique<Tilemap>();
-    playerCharacter->visible = false;
+    playerCharacter->active = false;
 }
 
 void MainMenu::Update() {

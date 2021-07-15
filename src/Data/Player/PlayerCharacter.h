@@ -36,7 +36,7 @@ public:
 
 
     //draw player only in game scene
-    bool visible = true;
+    bool active = true;
 
     //collision detection with scene objects
 	bool isGrounded = false;

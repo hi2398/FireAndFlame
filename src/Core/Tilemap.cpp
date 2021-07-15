@@ -2,6 +2,7 @@
 // Created by Ashty on 06.06.2021.
 //
 
+#include <iostream>
 #include "Tilemap.h"
 
 Tilemap::Tilemap(const std::string& tileDescription, const std::string& levelDescription) {
@@ -30,7 +31,7 @@ void Tilemap::InitTileRecs() {
     Vector2 worldPos = {0, 0};
 
     for (auto const &layer : levelDescription["layers"]) {
-        if (layer["type"] == "tilelayer" && layer["visible"]) {
+        if (layer["type"] == "tilelayer" && layer["active"]) {
             for (auto const &tileId : layer["data"]) {
                 if (tileId != 0) {
                     tilemapPos.x = (float) ((int) tileId - 1 % (int) tilesetDescription["columns"]) * (float) levelDescription["tilewidth"];
@@ -57,4 +58,12 @@ void Tilemap::InitTileRecs() {
 
 const std::vector<Vector2> &Tilemap::GetTileColliders() const {
     return tileWorldPosCollision;
+}
+
+void Tilemap::AddCollisionTile(Vector2 loc) {
+    tileWorldPosCollision.emplace_back(loc);
+}
+
+void Tilemap::RemoveCollisionTile() {
+    tileWorldPosCollision.pop_back();
 }
