@@ -78,30 +78,26 @@ MainMenu::MainMenu() {
 
     for(int i = 0; i<10;i++){ // Activating the Sound and Music Rectangles TODO(temp only rework after save and load is finished)
         musicVolumeRecs[i] = {(float)(600+(60*i)),60,50,50};
-        if(i<5){
-            isMusicVolumeRecActive[i] = true;
-            isSoundVolumeRecActive[i] = true;
-        }else{
-            isMusicVolumeRecActive[i] = false;
-            isSoundVolumeRecActive[i] = false;
-        }
         soundVolumeRecs[i] = {(float)(600+(60*i)),200,50,50};
     }
+    UpdateMusicAndSoundVolume();
     fullscreenRec = {600,340,50,50};
 }
 
 void MainMenu::Update() {
     vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
+
     switch (menuScreenStates) {
 
         case MenuScreenStates::TitleScreen:
 
-            if(CheckCollisionPointRec(vMousePosition,playButtonRec)){ // Handles the Button State of Play
+            if(CheckCollisionPointRec(vMousePosition,playButtonRec) || (controllerStates == ControllerMainMenuStates::PlayGameButton && controllerActive)){ // Handles the Button State of Play
                 playButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0)|| (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerActive)&& controllerStates == ControllerMainMenuStates::PlayGameButton){
                     playButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerActive)&& controllerStates == ControllerMainMenuStates::PlayGameButton){
+                    controllerStates = ControllerMainMenuStates::LoadGame1;
                     menuScreenStates = MenuScreenStates::LoadGameScreen;
                 }
             }else{
@@ -109,12 +105,13 @@ void MainMenu::Update() {
             }
 
 
-            if(CheckCollisionPointRec(vMousePosition,settingsButtonRec)){ // Handles the Button State of Settings
+            if(CheckCollisionPointRec(vMousePosition,settingsButtonRec) || controllerStates == ControllerMainMenuStates::SettingsButton){ // Handles the Button State of Settings
                 settingsButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::SettingsButton)){
                     settingsButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::SettingsButton)){
+                    controllerStates = ControllerMainMenuStates::ChangeMusic;
                     menuScreenStates = MenuScreenStates::SettingsScreen;
                 }
             }else{
@@ -122,12 +119,12 @@ void MainMenu::Update() {
             }
 
 
-            if(CheckCollisionPointRec(vMousePosition,creditsButtonRec)){ // Handles the Button State of Credits
+            if(CheckCollisionPointRec(vMousePosition,creditsButtonRec) || controllerStates == ControllerMainMenuStates::CreditsButton){ // Handles the Button State of Credits
                 creditsButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::CreditsButton)){
                     creditsButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::CreditsButton)){
                     menuScreenStates = MenuScreenStates::CreditsScreen;
                 }
             }else{
@@ -135,12 +132,12 @@ void MainMenu::Update() {
             }
 
 
-            if(CheckCollisionPointRec(vMousePosition,quitButtonRec)){ // Handles the Button State of Quit
+            if(CheckCollisionPointRec(vMousePosition,quitButtonRec) || controllerStates == ControllerMainMenuStates::QuitButton){ // Handles the Button State of Quit
                 quitButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::QuitButton)){
                     quitButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::QuitButton)){
                     CloseWindow();
                 }
             }else{
@@ -152,72 +149,72 @@ void MainMenu::Update() {
 
         case MenuScreenStates::LoadGameScreen:
 
-            if(CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec)){
+            if(CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame1){
                 deleteSave1ButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
                     deleteSave1ButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
                     // delete save 1
                 }
             }else{
                 deleteSave1ButtonIndex = 0;
             }
 
-            if(CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec)){
+            if(CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame2){
                 deleteSave2ButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
                     deleteSave2ButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
                     // delete save 2
                 }
             }else{
                 deleteSave2ButtonIndex = 0;
             }
 
-            if(CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec)){
+            if(CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame3){
                 deleteSave3ButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
                     deleteSave3ButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
                     // delete save 3
                 }
             }else{
                 deleteSave3ButtonIndex = 0;
             }
 
-            if(CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec)){
+            if(CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec)|| (controllerStates == ControllerMainMenuStates::LoadGame1 && controllerActive)){
                 loadSave1ButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
                     loadSave1ButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
                     sceneManager->SetNextScene(std::make_unique<NeutralArea>());
                 }
             }else{
                 loadSave1ButtonIndex = 0;
             }
 
-            if(CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec)){
+            if(CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec) || controllerStates == ControllerMainMenuStates::LoadGame2){
                 loadSave2ButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
                     loadSave2ButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
                     sceneManager->SetNextScene(std::make_unique<NeutralArea>());
                 }
             }else{
                 loadSave2ButtonIndex = 0;
             }
 
-            if(CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec)){
+            if(CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec) || controllerStates == ControllerMainMenuStates::LoadGame3){
                 loadSave3ButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
+                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
                     loadSave3ButtonIndex = 2;
                 }
-                if(IsMouseButtonReleased(0)){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
                     sceneManager->SetNextScene(std::make_unique<NeutralArea>());
                 }
             }else{
@@ -230,10 +227,15 @@ void MainMenu::Update() {
                     backButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0)){
+                    controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
             }else{
                 backButtonIndex = 0;
+            }
+            if(IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
+                controllerStates = ControllerMainMenuStates::PlayGameButton;
+                menuScreenStates = MenuScreenStates::TitleScreen;
             }
             break;
         case MenuScreenStates::SettingsScreen:
@@ -242,30 +244,23 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, musicVolumeRecs[i])) {
                     if(IsMouseButtonReleased(0)) {
                         musicVolume = i;
-                        for(int e = 0; e < 10; e++){
-                            if(e <= musicVolume){
-                                isMusicVolumeRecActive[e] = true;
-                            }else isMusicVolumeRecActive[e] = false;
-                        }
+                        UpdateMusicAndSoundVolume();
                         break;
                     }
                 }
                 if (CheckCollisionPointRec(vMousePosition, soundVolumeRecs[i])) {
                     if(IsMouseButtonReleased(0)) {
                         soundVolume = i;
-                        for(int e = 0; e < 10; e++){
-                            if(e <= soundVolume){
-                                isSoundVolumeRecActive[e] = true;
-                            }else isSoundVolumeRecActive[e] = false;
-                        }
+                        UpdateMusicAndSoundVolume();
                         break;
                     }
                 }
+
             }
 
 
-            if(CheckCollisionPointRec(vMousePosition,fullscreenRec)){
-                if(IsMouseButtonReleased(0)){
+            if(CheckCollisionPointRec(vMousePosition,fullscreenRec) || controllerStates == ControllerMainMenuStates::ChangeFullscreen){
+                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::ChangeFullscreen)){
                     isFullScreenActive = !isFullScreenActive;
                     if(isFullScreenActive && !IsWindowFullscreen()){
                         ToggleFullscreen();
@@ -283,12 +278,17 @@ void MainMenu::Update() {
                     backButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0)){
+                    controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
             }else{
                 backButtonIndex = 0;
             }
 
+            if(IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
+                controllerStates = ControllerMainMenuStates::PlayGameButton;
+                menuScreenStates = MenuScreenStates::TitleScreen;
+            }
 
             break;
         case MenuScreenStates::CreditsScreen:
@@ -299,13 +299,38 @@ void MainMenu::Update() {
                     backButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0)){
+                    controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
             }else{
                 backButtonIndex = 0;
             }
 
+            if(IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
+                controllerStates = ControllerMainMenuStates::PlayGameButton;
+                menuScreenStates = MenuScreenStates::TitleScreen;
+            }
+
             break;
+    }
+
+    if(IsGamepadButtonDown(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT) && !controllerActive){ // Activate Controller by pressing A
+        controllerActive = true;
+    }
+
+    if(controllerActive){ // Navigating with Controller in Main Menu
+        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_UP)){
+            UpdateByController(ControllerCommands::MOVEUP);
+        }
+        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_RIGHT)){
+            UpdateByController(ControllerCommands::MOVERIGHT);
+        }
+        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_DOWN)){
+            UpdateByController(ControllerCommands::MOVEDOWN);
+        }
+        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_LEFT)){
+            UpdateByController(ControllerCommands::MOVELEFT);
+        }
     }
 }
 
@@ -340,8 +365,11 @@ void MainMenu::Draw() {
 
         case MenuScreenStates::SettingsScreen:
 
+            if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeMusic){DrawRectangle(26,56,145,54,BLUE);}
             DrawText("Music",30, 60, 50, WHITE);
+            if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeSound){DrawRectangle(26,196,160,54,BLUE);}
             DrawText("Sound",30, 200, 50, WHITE);
+            if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeFullscreen){DrawRectangle(26,336,280,54,BLUE);}
             DrawText("Fullscreen",30, 340, 50, WHITE);
 
             for(int i = 0; i<10;i++){ // Drawing Sound and Music Recs in Settings
@@ -373,6 +401,9 @@ void MainMenu::Draw() {
 
             break;
     }
+    if(!controllerActive) {
+        DrawText("Press Gamepad B to activate Gamepad in Main Menu.",720,680,20,WHITE);
+    }else DrawText("Press Gamepad A to select and Gamepad B to Return.",700,680,20,WHITE);
 }
 
 int MainMenu::GetMusicVolume() {
@@ -412,5 +443,111 @@ void MainMenu::SetFullscreenActive(bool active) {
     }
     if(!isFullScreenActive && IsWindowFullscreen()){
         ToggleFullscreen();
+    }
+}
+
+void MainMenu::UpdateByController(ControllerCommands controllerCommmand) {
+    switch(controllerCommmand){
+        case ControllerCommands::MOVEUP:
+            switch(controllerStates){
+                case ControllerMainMenuStates::SettingsButton: controllerStates = ControllerMainMenuStates::PlayGameButton;
+                    break;
+                case ControllerMainMenuStates::CreditsButton: controllerStates = ControllerMainMenuStates::SettingsButton;
+                    break;
+                case ControllerMainMenuStates::QuitButton: controllerStates = ControllerMainMenuStates::CreditsButton;
+                    break;
+                case ControllerMainMenuStates::LoadGame1: controllerStates = ControllerMainMenuStates::DeleteGame1;
+                    break;
+                case ControllerMainMenuStates::LoadGame2: controllerStates = ControllerMainMenuStates::DeleteGame2;
+                    break;
+                case ControllerMainMenuStates::LoadGame3: controllerStates = ControllerMainMenuStates::DeleteGame3;
+                    break;
+                case ControllerMainMenuStates::ChangeSound: controllerStates = ControllerMainMenuStates::ChangeMusic;
+                    break;
+                case ControllerMainMenuStates::ChangeFullscreen: controllerStates = ControllerMainMenuStates::ChangeSound;
+                    break;
+            }
+            break;
+        case ControllerCommands::MOVERIGHT:
+            switch(controllerStates) {
+                case ControllerMainMenuStates::LoadGame1: controllerStates = ControllerMainMenuStates::LoadGame2;
+                    break;
+                case ControllerMainMenuStates::LoadGame2: controllerStates = ControllerMainMenuStates::LoadGame3;
+                    break;
+                case ControllerMainMenuStates::DeleteGame1: controllerStates = ControllerMainMenuStates::DeleteGame2;
+                    break;
+                case ControllerMainMenuStates::DeleteGame2: controllerStates = ControllerMainMenuStates::DeleteGame3;
+                    break;
+                case ControllerMainMenuStates::ChangeMusic:
+                    if(musicVolume<9){
+                        ++musicVolume;
+                        UpdateMusicAndSoundVolume();
+                    }
+                    break;
+                case ControllerMainMenuStates::ChangeSound:
+                    if(soundVolume<9){
+                        ++soundVolume;
+                        UpdateMusicAndSoundVolume();
+                    }
+                    break;
+            }
+            break;
+        case ControllerCommands::MOVEDOWN:
+            switch(controllerStates){
+                case ControllerMainMenuStates::PlayGameButton: controllerStates = ControllerMainMenuStates::SettingsButton;
+                    break;
+                case ControllerMainMenuStates::SettingsButton: controllerStates = ControllerMainMenuStates::CreditsButton;
+                    break;
+                case ControllerMainMenuStates::CreditsButton: controllerStates = ControllerMainMenuStates::QuitButton;
+                    break;
+                case ControllerMainMenuStates::DeleteGame1: controllerStates = ControllerMainMenuStates::LoadGame1;
+                    break;
+                case ControllerMainMenuStates::DeleteGame2: controllerStates = ControllerMainMenuStates::LoadGame2;
+                    break;
+                case ControllerMainMenuStates::DeleteGame3: controllerStates = ControllerMainMenuStates::LoadGame3;
+                    break;
+                case ControllerMainMenuStates::ChangeMusic: controllerStates = ControllerMainMenuStates::ChangeSound;
+                    break;
+                case ControllerMainMenuStates::ChangeSound: controllerStates = ControllerMainMenuStates::ChangeFullscreen;
+                    break;
+            }
+            break;
+        case ControllerCommands::MOVELEFT:
+            switch(controllerStates) {
+                case ControllerMainMenuStates::LoadGame2: controllerStates = ControllerMainMenuStates::LoadGame1;
+                    break;
+                case ControllerMainMenuStates::LoadGame3: controllerStates = ControllerMainMenuStates::LoadGame2;
+                    break;
+                case ControllerMainMenuStates::DeleteGame2: controllerStates = ControllerMainMenuStates::DeleteGame1;
+                    break;
+                case ControllerMainMenuStates::DeleteGame3: controllerStates = ControllerMainMenuStates::DeleteGame2;
+                    break;
+                case ControllerMainMenuStates::ChangeMusic:
+                    if(musicVolume>0){
+                        --musicVolume;
+                        UpdateMusicAndSoundVolume();
+                    }
+                    break;
+                case ControllerMainMenuStates::ChangeSound:
+                    if(soundVolume>0){
+                        --soundVolume;
+                        UpdateMusicAndSoundVolume();
+                    }
+                    break;
+            }
+            break;
+    }
+}
+
+void MainMenu::UpdateMusicAndSoundVolume() {
+    for(int i = 0; i<10;i++){ // Activating the Sound and Music Rectangles TODO(temp only rework after save and load is finished)
+        musicVolumeRecs[i] = {(float)(600+(60*i)),60,50,50};
+        if(musicVolume>=i){
+            isMusicVolumeRecActive[i] = true;
+        }else isMusicVolumeRecActive[i] = false;
+        if(soundVolume>=i){
+            isSoundVolumeRecActive[i] = true;
+        }else isSoundVolumeRecActive[i] = false;
+        soundVolumeRecs[i] = {(float)(600+(60*i)),200,50,50};
     }
 }
