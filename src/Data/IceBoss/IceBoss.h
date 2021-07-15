@@ -1,4 +1,5 @@
 #pragma once
+#include <random>
 
 #include "../../Core/Enemy.h"
 #include "../../Core/State.h"
@@ -19,17 +20,28 @@ public:
     void ReceiveDamage(int damage) override;
     ~IceBoss() override = default;
 
+    static bool Decide();
+    static float SpeedMultiplier();
+    static float GetMeleeRange();
+    static float GetRangedMinDistance();
+
 protected:
 
 
 private:
-    float normalMultiplier{1.f};
-    float aggressionMultiplier{1.2f};
-    float& multiplier; //Don't change declaration order->initialization order matters
+    static float constexpr normalMultiplier{1.f};
+    static float constexpr aggressionMultiplier{1.2f};
+    static const float* multiplier; //Don't change declaration order->initialization order matters
     Texture2D texture;
     std::vector<Part> parts;
     std::shared_ptr<State> state;
 
+
+    static constexpr float meleeRange{32.f};
+    static constexpr float rangedMinDistance{128.f};
+
+
 };
+
 
 

@@ -2,6 +2,8 @@
 
 #include "../../Core/State.h"
 
+enum class NextSeekAction{Melee, Ranged, Decide};
+
 class IBSeek : public State {
 public:
     IBSeek();
@@ -13,6 +15,9 @@ protected:
 
 
 private:
+    NextSeekAction nextAction{NextSeekAction::Decide};
+    std::shared_ptr<State> MeleeApproach();
+    std::shared_ptr<State> RangedMove();
 
 };
 

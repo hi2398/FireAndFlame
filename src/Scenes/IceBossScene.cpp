@@ -4,12 +4,41 @@
 IceBossScene::IceBossScene() {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
-    enemies.emplace_back(std::make_unique<IceBoss>(playerStart));
 }
 
 void IceBossScene::Update() {
+
+    if (!bossActivated) {
+        //When player enters boss Arena, close entrance and exit and spawn Boss
+        if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {
+            bossActivated=true;
+            enemies.emplace_back(std::make_unique<IceBoss>(bossSpawnPoint));
+        }
+    }
+
+    if (bossActivated) {
+        std::cout << "Boss activate\n";
+    }
+
+
+
 }
 
 void IceBossScene::Draw() {
+    if (bossActivated && !bossDefeated) {
+        DrawTextureEx(entrance.texture, entrance.location, entrance.rotation, 1, WHITE);
+        DrawTextureEx(exit.texture, exit.location, exit.rotation, 1, WHITE);
+    }
+}
+
+bool IceBossScene::IsBossAlive() {
+
+    //search if boss exists
+    for (const auto &enemy : enemies) { //if boss still exists, return true
+        if (enemy->GetEnemyType() == EnemyTypes::Boss) return true;
+    }
+    //if not found, he is not alive
+    bossDefeated=true;
+    return false;
 }
 

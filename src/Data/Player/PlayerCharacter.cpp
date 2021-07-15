@@ -91,4 +91,8 @@ void PlayerCharacter::SetNextAction(ACTION action) {
 	nextAction = action;
 }
 
+const int PlayerCharacter::GetMaxHealth() {
+    return max_health;
+}
+
 
