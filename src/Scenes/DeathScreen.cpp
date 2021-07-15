@@ -5,7 +5,7 @@
 
 DeathScreen::DeathScreen() {
     tilemap=std::make_unique<Tilemap>();
-    playerCharacter->visible = false; // Disables Player
+    playerCharacter->active = false; // Disables Player
 }
 
 void DeathScreen::Update() {

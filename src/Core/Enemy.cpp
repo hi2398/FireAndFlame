@@ -93,7 +93,7 @@ bool Enemy::MakeDecision(int probability)
 
 Rectangle Enemy::GetCollider() const {
     return hitbox;
-
+}
 
 Texture2D Enemy::GetTexture() {
 	return texture;
