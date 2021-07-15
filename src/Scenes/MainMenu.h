@@ -3,6 +3,10 @@
 
 enum class MenuScreenStates {TitleScreen,LoadGameScreen,SettingsScreen,CreditsScreen};
 
+enum class ControllerMainMenuStates {PlayGameButton,SettingsButton,CreditsButton,QuitButton,LoadGame1,LoadGame2,LoadGame3,DeleteGame1,DeleteGame2,DeleteGame3,ChangeMusic,ChangeSound,ChangeFullscreen};
+
+enum class ControllerCommands {MOVERIGHT,MOVELEFT,MOVEUP,MOVEDOWN};
+
 class MainMenu : public Scene{
 public:
     MainMenu();
@@ -23,8 +27,13 @@ protected:
 private:
 
     MenuScreenStates menuScreenStates = {MenuScreenStates::TitleScreen};
+    ControllerMainMenuStates controllerStates = {ControllerMainMenuStates::PlayGameButton};
 
     Vector2 vMousePosition;
+    bool controllerActive = false;
+
+    void UpdateByController(ControllerCommands controllerCommmand);
+    void UpdateMusicAndSoundVolume();
 
     //General MenuScreen Background
     Texture2D mainMenuBackground;
@@ -81,10 +90,10 @@ private:
     //Settings Screen
     Rectangle musicVolumeRecs[10];
     bool isMusicVolumeRecActive[10];
-    int musicVolume;
+    int musicVolume = 5;
     Rectangle soundVolumeRecs[10];
     bool isSoundVolumeRecActive[10];
-    int soundVolume;
+    int soundVolume = 5;
     Rectangle fullscreenRec;
     bool isFullScreenActive = false;
 
