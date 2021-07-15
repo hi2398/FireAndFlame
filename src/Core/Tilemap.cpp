@@ -31,7 +31,7 @@ void Tilemap::InitTileRecs() {
     Vector2 worldPos = {0, 0};
 
     for (auto const &layer : levelDescription["layers"]) {
-        if (layer["type"] == "tilelayer" && layer["active"]) {
+        if (layer["type"] == "tilelayer" && layer["visible"]) {
             for (auto const &tileId : layer["data"]) {
                 if (tileId != 0) {
                     tilemapPos.x = (float) ((int) tileId - 1 % (int) tilesetDescription["columns"]) * (float) levelDescription["tilewidth"];
