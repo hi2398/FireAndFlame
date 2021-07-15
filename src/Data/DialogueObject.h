@@ -3,13 +3,13 @@
 #include "../Global.h"
 #include "../Core/Interactable.h"
 
-class DialogObject : public Interactable {
+class DialogueObject : public Interactable {
 public:
-    DialogObject(std::string dialogFilepath,Vector2 position, Texture2D texture);
+    DialogueObject(std::string dialogFilepath,Vector2 position, Texture2D texture);
     void Interact(Actor& actor)override;
     void Draw() override;
     void Update() override;
-    ~DialogObject() override = default;;
+    ~DialogueObject() override = default;;
 private:
     std::string objFilepath;
     Vector2 objPosition;
