@@ -59,9 +59,9 @@ if  constexpr(DEBUG_BUILD){
                 (mouse.y - (static_cast<float>(GetScreenHeight()) - (Game::ScreenHeight * scale)) * 0.5f) / scale;
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
-
-        sceneManager->Update();
+        sceneManager->Update(virtualMouse);
         BeginDrawing();
+
         ClearBackground(BLACK); // Letterbox color
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet

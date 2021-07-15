@@ -6,12 +6,25 @@
 #include "raymath.h"
 
 Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
-    this->enemyType=enemyType;
-    srand(time(nullptr));
+	this->enemyType = enemyType;
+	srand(time(nullptr));
 }
+
+void Enemy::EnemyDefaultIdle() {
+	idleFrameCounter++;
+}
+
 
 EnemyTypes Enemy::GetEnemyType() const {
 	return enemyType;
+}
+
+EnemyState Enemy::GetEnemyState() {
+	return state;
+}
+
+void Enemy::SetEnemyState(EnemyState state) {
+	this->state = state;
 }
 
 
@@ -80,4 +93,8 @@ bool Enemy::MakeDecision(int probability)
 
 Rectangle Enemy::GetCollider() const {
     return hitbox;
+
+
+Texture2D Enemy::GetTexture() {
+	return texture;
 }

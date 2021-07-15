@@ -1,5 +1,5 @@
 #include "ToastCat.h"
-#include "../Global.h"
+#include "../../Global.h"
 
 
 ToastCat::ToastCat(Vector2 initialPos) : Enemy(EnemyTypes::ToastCat)
