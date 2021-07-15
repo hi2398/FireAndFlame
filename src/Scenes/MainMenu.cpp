@@ -374,3 +374,43 @@ void MainMenu::Draw() {
             break;
     }
 }
+
+int MainMenu::GetMusicVolume() {
+    return musicVolume;
+}
+
+int MainMenu::GetSoundVolume() {
+    return soundVolume;
+}
+
+void MainMenu::SetMusicVolume(int volume) {
+    musicVolume = volume;
+    for(int e = 0; e < 10; e++){
+        if(e <= musicVolume){
+            isMusicVolumeRecActive[e] = true;
+        }else isMusicVolumeRecActive[e] = false;
+    }
+}
+
+void MainMenu::SetSoundVolume(int volume) {
+    soundVolume = volume;
+    for(int e = 0; e < 10; e++){
+        if(e <= soundVolume){
+            isSoundVolumeRecActive[e] = true;
+        }else isSoundVolumeRecActive[e] = false;
+    }
+}
+
+bool MainMenu::GetFullscreenActive() {
+    return isFullScreenActive;
+}
+
+void MainMenu::SetFullscreenActive(bool active) {
+    isFullScreenActive = active;
+    if(isFullScreenActive && !IsWindowFullscreen()){
+        ToggleFullscreen();
+    }
+    if(!isFullScreenActive && IsWindowFullscreen()){
+        ToggleFullscreen();
+    }
+}

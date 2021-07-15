@@ -10,6 +10,14 @@ public:
     void Draw() override;
     ~MainMenu() override = default;
 
+    int GetMusicVolume();
+    int GetSoundVolume();
+    bool GetFullscreenActive();
+    void SetMusicVolume(int volume);
+    void SetSoundVolume(int volume);
+    void SetFullscreenActive(bool active);
+
+
 protected:
 
 private:
@@ -71,14 +79,14 @@ private:
 
 
     //Settings Screen
-        Rectangle musicVolumeRecs[10];
-        bool isMusicVolumeRecActive[10];
-        int musicVolume;
-        Rectangle soundVolumeRecs[10];
-        bool isSoundVolumeRecActive[10];
-        int soundVolume;
-        Rectangle fullscreenRec;
-        bool isFullScreenActive = false;
+    Rectangle musicVolumeRecs[10];
+    bool isMusicVolumeRecActive[10];
+    int musicVolume;
+    Rectangle soundVolumeRecs[10];
+    bool isSoundVolumeRecActive[10];
+    int soundVolume;
+    Rectangle fullscreenRec;
+    bool isFullScreenActive = false;
 
     //Back Button
     Texture2D backButton[3];

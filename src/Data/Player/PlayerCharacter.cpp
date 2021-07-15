@@ -5,6 +5,7 @@
 #include "../../Global.h"
 #include "MovementState.h"
 #include <iostream>
+#include "../../Scenes/DeathScreen.h"
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
@@ -74,6 +75,9 @@ int PlayerCharacter::GetHealth() const {
 
 void PlayerCharacter::SetHealth(int health) {
 	this->health = health;
+	if(health <= 0){
+	    //sceneManager->SetNextScene(std::make_unique<DeathScreen>()); TODO enable me when save and load is finished
+	}
 }
 
 
