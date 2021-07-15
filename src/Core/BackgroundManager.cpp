@@ -9,9 +9,9 @@ void BackgroundManager::Parallax()
 		tmp2 = playerCharacter->GetPosition();
 		Vector2 scrollDirection = { tmp2.x - tmp1.x, tmp2.y - tmp1.y };
 
-        drawFore = Vector2Add(drawFore, Vector2Multiply(scrollDirection, {0.3, 0.1}));
-        drawMiddle = Vector2Add(drawMiddle, Vector2Multiply(scrollDirection, { 0.2, 0.05 }));
-        drawBack = Vector2Add(drawBack, Vector2Multiply(scrollDirection, { 0.1, 0.0 }));
+        drawFore = Vector2Add(drawFore, Vector2Multiply(scrollDirection, {0.3f, 0.1f}));
+        drawMiddle = Vector2Add(drawMiddle, Vector2Multiply(scrollDirection, { 0.2f, 0.05f }));
+        drawBack = Vector2Add(drawBack, Vector2Multiply(scrollDirection, { 0.1f, 0.0f }));
     }
     
     

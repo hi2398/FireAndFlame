@@ -99,7 +99,7 @@ void SceneManager::Update(Vector2 virtualMousePosition) {
 
     playerController->HandleInput();
 
-    playerCharacter->Update();
+    if (playerCharacter->active) playerCharacter->Update();
 
 
     for (const auto& enemy : activeScene->GetEnemies()){
@@ -114,7 +114,7 @@ void SceneManager::Update(Vector2 virtualMousePosition) {
 }
 
 void SceneManager::Draw() {
-    if (playerCharacter->visible) BeginMode2D(playerCharacter->camera);
+    if(playerCharacter->active) BeginMode2D(playerCharacter->camera);
     activeScene->Draw();
     activeScene->GetTilemap()->Draw();
     for (const auto& enemy : activeScene->GetEnemies()){
@@ -123,15 +123,15 @@ void SceneManager::Draw() {
     for (const auto& interactable : activeScene->GetInteractables()) {
         interactable->Draw();
     }
-    if (playerCharacter->visible) playerCharacter->Draw();
+    if (playerCharacter->active) playerCharacter->Draw();
     EndMode2D();
 
-    if (playerCharacter->visible) hud->DrawHUD();
+    if (playerCharacter->active) hud->DrawHUD();
 
 
     activeScene->GetDialogueManager().DrawDialogue();
 
-    //setting "last" values stay at the very end to prevent sequenz errors
+    //setting "last" values stay at the very end to prevent sequence errors
     playerCharacter->SetLastPosition(playerCharacter->GetPosition());
 }
 

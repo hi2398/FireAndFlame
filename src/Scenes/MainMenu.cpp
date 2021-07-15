@@ -5,7 +5,7 @@
 
 MainMenu::MainMenu() {
     tilemap=std::make_unique<Tilemap>();
-    playerCharacter->visible = false; // Disables Player
+    playerCharacter->active = false; // Disables Player
 
     gameTitlePicture = LoadTexture("assets/graphics/GUI/fireAndFlame.png"); // The Title of our Game as a PNG Image, instead of Font only
 

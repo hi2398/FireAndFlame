@@ -14,7 +14,8 @@ public:
     void Draw() override {};
     void Update() override {};
     [[nodiscard]] EnemyTypes GetEnemyType() const;
-    void ReceiveDamage(int damage);
+    virtual void ReceiveDamage(int damage);
+    Rectangle GetCollider() const;
     ~Enemy() override = default;
 
     EnemyState GetEnemyState();
