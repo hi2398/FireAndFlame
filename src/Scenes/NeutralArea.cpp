@@ -1,6 +1,6 @@
 #include "NeutralArea.h"
 #include "raylib.h"
-#include "../Data/Miner.h"
+#include "../Data/Enemies/Miner.h"
 #include "raymath.h"
 
 

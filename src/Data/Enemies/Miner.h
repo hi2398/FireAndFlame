@@ -1,8 +1,8 @@
 #pragma once
 
 //created by Robin on 05.07.2021
-#include "../Core/Enemy.h"
-
+#include "../../Core/Enemy.h"
+#include "../../Core/State.h"
 
 
 
@@ -23,4 +23,5 @@ private:
 	int aMovementSpeed = 1;
 	void Move(Direction pDirection);
 
+	std::shared_ptr<State> activeState;
 };
