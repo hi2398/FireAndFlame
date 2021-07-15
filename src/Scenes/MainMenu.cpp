@@ -400,3 +400,17 @@ void MainMenu::SetSoundVolume(int volume) {
         }else isSoundVolumeRecActive[e] = false;
     }
 }
+
+bool MainMenu::GetFullscreenActive() {
+    return isFullScreenActive;
+}
+
+void MainMenu::SetFullscreenActive(bool active) {
+    isFullScreenActive = active;
+    if(isFullScreenActive && !IsWindowFullscreen()){
+        ToggleFullscreen();
+    }
+    if(!isFullScreenActive && IsWindowFullscreen()){
+        ToggleFullscreen();
+    }
+}
