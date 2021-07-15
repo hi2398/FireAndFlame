@@ -10,6 +10,11 @@ public:
     void Draw() override;
     ~MainMenu() override = default;
 
+    int GetMusicVolume();
+    int GetSoundVolume();
+    void SetMusicVolume(int volume);
+    void SetSoundVolume(int volume);
+
 protected:
 
 private:
