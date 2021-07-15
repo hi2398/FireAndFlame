@@ -1,13 +1,14 @@
 ﻿#include <cstdlib>
 #include <memory>
+#include <iostream>
 
 #include "raylib.h"
 
 #include "Global.h"
 #include "config.h"
 #include "helper.h"
-#include "Scenes/NeutralArea.h"
 #include "Scenes/MainMenu.h"
+#include "Scenes/IceBossScene.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -48,7 +49,6 @@ if  constexpr(DEBUG_BUILD){
     {
         // Compute required framebuffer scaling
         float scale = MIN((float) GetScreenWidth() / Game::ScreenWidth, (float) GetScreenHeight() / Game::ScreenHeight);
-
         // Update virtual mouse (clamped mouse value behind game screen)
         Vector2 mouse = GetMousePosition();
         Vector2 virtualMouse = {0};
@@ -58,16 +58,16 @@ if  constexpr(DEBUG_BUILD){
                 (mouse.y - (static_cast<float>(GetScreenHeight()) - (Game::ScreenHeight * scale)) * 0.5f) / scale;
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
-
-        
+        sceneManager->Update(virtualMouse);
         BeginDrawing();
+
         ClearBackground(BLACK); // Letterbox color
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
         ClearBackground(BLACK);
 
-        sceneManager->Tick();
+        sceneManager->Draw();
 		
         EndTextureMode();
 

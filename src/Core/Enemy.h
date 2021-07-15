@@ -9,15 +9,12 @@ enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Sau
 
 class Enemy : public Actor {
 public:
-    
+
     void EnemyDefaultIdle();
     void Draw() {};
     void Update() {};
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     void ReceiveDamage(int damage);
-    bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
-    float GetDistance(Vector2 startLocation, Vector2 endLocation);
-    bool CheckOnScreen();
     ~Enemy() override = default;
 
     EnemyState GetEnemyState();
@@ -31,7 +28,7 @@ protected:
     EnemyTypes enemyType;
     int health{3};
     bool hasLineOfSight{false};
-    bool IsAttacking;
+    bool isAttacking;
     EnemyState state{EnemyState::Idle};
     int stunCounter;
     const int stunDuration = 100;

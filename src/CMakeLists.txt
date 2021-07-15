@@ -2,7 +2,7 @@
 
 include(../cmake/raylib.cmake)
 
-project(game VERSION 0.1 LANGUAGES CXX)
+project(FireAndFlame VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,7 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(Core)
 add_subdirectory(Scenes)
 add_subdirectory(Data)
-add_executable(${PROJECT_NAME} main.cpp config.h helper.h Global.h json.hpp raygui.h ricons.h)
+add_executable(${PROJECT_NAME} main.cpp config.h helper.h Global.h json.hpp)
 
 # Add config.h.in file
 configure_file(config.h.in config.h)

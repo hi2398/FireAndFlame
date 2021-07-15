@@ -5,7 +5,8 @@
 
 
 NeutralArea::NeutralArea(){
-    playerCharacter->SetPosition({ 50 * 32, 36 * 32 });
+    playerCharacter->SetPosition(playerStart);
+    playerCharacter->visible = true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
     // Delete this section, only for testing
@@ -18,7 +19,7 @@ NeutralArea::NeutralArea(){
     tempVec.y+=64;
     Texture2D tempTex = LoadTexture("assets/graphics/PLAYER.png");
     // A
-    interactables.emplace_back(std::make_unique<DialogObject>("assets/Dialogues/testText.json",tempVec,tempTex));
+    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{50*32-100, 36*32};
     enemies.emplace_back(std::make_unique<Miner>(vec2));
 
@@ -26,15 +27,14 @@ NeutralArea::NeutralArea(){
     textureMiddleground = LoadTexture("assets/graphics/backgrounds/background2.png");
     textureBackground = LoadTexture("assets/graphics/backgrounds/background3.png");
 
-    foregroundPosition = { 50 * 32, 30 * 32 };
-    middlegroundPosition = { 50 * 32, 30 * 32 };
-    backgroundPosition = { 50 * 32, 30 * 32 };
+    foregroundPosition = {playerStart};
+    middlegroundPosition = {playerStart};
+    backgroundPosition = { playerStart};
 }
 
 
 void NeutralArea::Update() {
     Scene::Update();
-
 }
 
 void NeutralArea::Draw() {
