@@ -5,14 +5,14 @@
 
 
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
-enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Saugi};
+enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Saugi, Boss};
 
 class Enemy : public Actor {
 public:
 
     void EnemyDefaultIdle();
-    void Draw() {};
-    void Update() {};
+    void Draw() override {};
+    void Update() override {};
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     void ReceiveDamage(int damage);
     ~Enemy() override = default;
@@ -23,7 +23,10 @@ public:
     Texture2D GetTexture();
 
 protected:
+    static bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
+    static float GetDistance(Vector2 startLocation, Vector2 endLocation);
     explicit Enemy(EnemyTypes enemyType);
+    bool CheckOnScreen();
     bool MakeDecision(int probability);
     EnemyTypes enemyType;
     int health{3};

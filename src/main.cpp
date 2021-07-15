@@ -7,6 +7,7 @@
 #include "Global.h"
 #include "config.h"
 #include "helper.h"
+#include "Scenes/NeutralArea.h"
 #include "Scenes/MainMenu.h"
 #include "Scenes/IceBossScene.h"
 
