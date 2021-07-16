@@ -20,7 +20,7 @@ NeutralArea::NeutralArea(){
     Texture2D tempTex = LoadTexture("assets/graphics/PLAYER.png");
     // A
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
-    Vector2 vec2{50*32-100, 36*32};
+    Vector2 vec2{20*32-100, 36*32};
     enemies.emplace_back(std::make_unique<Miner>(vec2));
 
     textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");

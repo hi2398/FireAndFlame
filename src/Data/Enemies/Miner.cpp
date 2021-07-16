@@ -4,21 +4,25 @@
 
 Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 {
-    texture = LoadTexture("assets/graphics/Enemies/Miner.png");
+	texture = LoadTexture("assets/graphics/Enemies/Miner.png");
 	position.x = initialPos.x;
 	position.y = initialPos.y;
-    hitbox.x = initialPos.x;
-    hitbox.y = initialPos.y;
-    hitbox.width = 32;
-    hitbox.height = 32;
-    stunCounter = stunDuration;
+	hitbox.x = initialPos.x;
+	hitbox.y = initialPos.y;
+	hitbox.width = 32;
+	hitbox.height = 32;
+	movementSpeed = 1.0f;
+	activeState = std::make_shared<EnemyStateHandler>();
+
+    /*stunCounter = stunDuration;
     attackCounter = attackDuration;
     seekingCounter = seekingDuration;
 	idleWorkCounter = idleWorkDuration;
     attackArea.height = 15;
     attackArea.width = 26;
+	
 
-	activeState = std::make_shared<EnemyStateHandler>();
+	*/
 }
 
 //void Miner::Update()
@@ -162,6 +166,17 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 void Miner::Update() {
 	activeState = activeState->Update(*this);
 
+	UpdateAttackHitbox();
+	UpdateCollider();
+
+	if (invulnerable) {
+		invulnerableCounter++;
+		if (invulnerableCounter >= 60) {
+			invulnerableCounter = 0;
+			invulnerable = false;
+		}
+	}
+
 	if (!IsGrounded()) position.y += 2.0f;
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
@@ -172,6 +187,7 @@ void Miner::Update() {
 void Miner::Draw()
 {
 	activeState->Draw(*this);
+	DrawText(TextFormat("%i", health), position.x, position.y-50, 30, WHITE);
 	/*if (CheckCollisionRecs(playerCharacter->visibleScreen, this->hitbox))
 	{
 		if (state == EnemyState::Attacking)
@@ -182,43 +198,43 @@ void Miner::Draw()
 	}*/
 }
 
-
-void Miner::Move(Direction pDirection)
-{
-	aEdgeSeekerLeft.x = position.x;
-	aEdgeSeekerLeft.y = position.y + 33;
-	aEdgeSeekerRight.x = position.x + 32;
-	aEdgeSeekerRight.y = position.y + 33;
-	Rectangle tileRec = { 0,0,32,32 };
-	for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
-	{
-		tileRec.x = collTile.x;
-		tileRec.y = collTile.y;
-		if (direction == LEFT && CheckCollisionPointRec(aEdgeSeekerLeft, tileRec))
-		{
-			position.x -= aMovementSpeed;		//flees to the Left if not on an Edge
-			attackArea.x = position.x - attackArea.width;
-            attackArea.y = position.y + 12;
-			aWallSeekerLeft.x = position.x - 1;
-			aWallSeekerLeft.y = position.y + 16;
-		}
-		else if (direction == RIGHT && CheckCollisionPointRec(aEdgeSeekerRight, tileRec))
-		{
-			position.x += aMovementSpeed;		//approaches to the Right if not on an Edge
-			attackArea.x = position.x + 32;
-            attackArea.y = position.y + 12;
-			aWallSeekerRight.x = position.x + 33;
-			aWallSeekerRight.y = position.y + 16;
-		}
-		if (direction == RIGHT && CheckCollisionPointRec(aWallSeekerRight, tileRec))
-		{
-			direction = LEFT;
-		}
-		else if (direction == LEFT && CheckCollisionPointRec(aWallSeekerLeft, tileRec))
-		{
-			direction = RIGHT;
-		}
-	}
-	hitbox.x = position.x;
-	hitbox.y = position.y;
-}
+//
+//void Miner::Move(Direction pDirection)
+//{
+//	aEdgeSeekerLeft.x = position.x;
+//	aEdgeSeekerLeft.y = position.y + 33;
+//	aEdgeSeekerRight.x = position.x + 32;
+//	aEdgeSeekerRight.y = position.y + 33;
+//	Rectangle tileRec = { 0,0,32,32 };
+//	for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
+//	{
+//		tileRec.x = collTile.x;
+//		tileRec.y = collTile.y;
+//		if (direction == LEFT && CheckCollisionPointRec(aEdgeSeekerLeft, tileRec))
+//		{
+//			position.x -= aMovementSpeed;		//flees to the Left if not on an Edge
+//			attackArea.x = position.x - attackArea.width;
+//            attackArea.y = position.y + 12;
+//			aWallSeekerLeft.x = position.x - 1;
+//			aWallSeekerLeft.y = position.y + 16;
+//		}
+//		else if (direction == RIGHT && CheckCollisionPointRec(aEdgeSeekerRight, tileRec))
+//		{
+//			position.x += aMovementSpeed;		//approaches to the Right if not on an Edge
+//			attackArea.x = position.x + 32;
+//            attackArea.y = position.y + 12;
+//			aWallSeekerRight.x = position.x + 33;
+//			aWallSeekerRight.y = position.y + 16;
+//		}
+//		if (direction == RIGHT && CheckCollisionPointRec(aWallSeekerRight, tileRec))
+//		{
+//			direction = LEFT;
+//		}
+//		else if (direction == LEFT && CheckCollisionPointRec(aWallSeekerLeft, tileRec))
+//		{
+//			direction = RIGHT;
+//		}
+//	}
+//	hitbox.x = position.x;
+//	hitbox.y = position.y;
+//}

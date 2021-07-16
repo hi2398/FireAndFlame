@@ -14,5 +14,7 @@ protected:
 
 private:
     int roamingFrameCounter = 0;
+    int collisionCounter = 0;
+    int decisionTimer = 0;
     Rectangle drawRec;
 };

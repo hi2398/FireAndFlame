@@ -17,4 +17,5 @@ private:
     int approachingFrameCounter = 0;
     Rectangle drawRec;
     float movingDistance = 0;
+   
 };
