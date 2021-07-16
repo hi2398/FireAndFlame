@@ -13,13 +13,14 @@ void IceBossScene::Update() {
         if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {
             bossActivated=true;
             enemies.emplace_back(std::make_unique<IceBoss>(bossSpawnPoint));
-            //tilemap->AddCollisionTile({});
-            //tilemap->RemoveCollisionTile();
+            for (const auto& loc : blockadeColliders) {
+                tilemap->AddCollisionTile(loc);
+            }
         }
     }
 
     if (bossActivated) {
-        std::cout << "Boss activate\n";
+        BossDeath(); //evaluates if boss is alive, auto cleanups if dead (removes blockades etc)
     }
 
 
@@ -33,13 +34,17 @@ void IceBossScene::Draw() {
     }
 }
 
-bool IceBossScene::IsBossAlive() {
+bool IceBossScene::BossDeath() {
 
     //search if boss exists
     for (const auto &enemy : enemies) { //if boss still exists, return true
         if (enemy->GetEnemyType() == EnemyTypes::Boss) return true;
     }
-    //if not found, he is not alive
+    //if not found, he is not alive, remove the blockades and set bool to true
+    tilemap->RemoveCollisionTile();
+    tilemap->RemoveCollisionTile();
+    tilemap->RemoveCollisionTile();
+    tilemap->RemoveCollisionTile();
     bossDefeated=true;
     return false;
 }

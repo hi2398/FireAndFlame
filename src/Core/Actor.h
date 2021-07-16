@@ -18,6 +18,7 @@ public:
     void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
+    void SetDirection(Direction direction);
     float GetGravityMultiplier() const;
     void SetGrounded(bool grounded);
     bool IsGrounded() const;
@@ -75,6 +76,8 @@ public:
 
     bool GetActionBlocked();
     void SetActionBlocked(bool actionBlocked);
+
+    void LookAtPlayer(); //change direction to look at player
 
 protected:
     Vector2 lastTickPos;

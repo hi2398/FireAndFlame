@@ -16,9 +16,8 @@ protected:
 
 private:
     NextSeekAction nextAction{NextSeekAction::Decide};
-    std::shared_ptr<State> MeleeApproach();
-    std::shared_ptr<State> RangedMove();
-
+    std::shared_ptr<State> MeleeApproach(Actor& actor);
+    std::shared_ptr<State> RangedMove(Actor& actor);
 };
 
 

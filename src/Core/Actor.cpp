@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "Actor.h"
+#include "../Global.h"
 
 Actor::Actor(ObjectTypes type) : Object(type), lastTickPos(position) {
 
@@ -309,4 +310,15 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 			SetHeadCollision(false);
 		}
 	}
+}
+
+void Actor::SetDirection(Direction direction) {
+    this->direction=direction;
+}
+
+void Actor::LookAtPlayer() {
+    if ((playerCharacter->GetPosition().x- GetPosition().x) <0) {
+        SetDirection(LEFT);
+    } else SetDirection(RIGHT);
+
 }
