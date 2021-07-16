@@ -41,7 +41,7 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 //			else//Ist nicht gestunned
 //			{
 //				//std::cout << "not stunned";
-//                hasLineOfSight = this->CheckLineOfSight(position, playerCharacter->GetPosition(), sceneManager->GetTilemap());
+//                
 //				if (hasLineOfSight)//Hat Blickkontakt
 //				{
 //                    lastSeen = playerCharacter->GetPosition();
@@ -160,7 +160,12 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 //}
 
 void Miner::Update() {
-	activeState->Update(*this);
+	activeState = activeState->Update(*this);
+
+	CollisionLeft(sceneManager->GetTilemap());
+	CollisionRight(sceneManager->GetTilemap());
+	CollisionGround(sceneManager->GetTilemap());
+	CollisionHead(sceneManager->GetTilemap());
 }
 
 void Miner::Draw()
@@ -176,8 +181,6 @@ void Miner::Draw()
 	}*/
 }
 
-Miner::~Miner()
-{}
 
 void Miner::Move(Direction pDirection)
 {

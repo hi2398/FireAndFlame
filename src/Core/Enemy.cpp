@@ -10,9 +10,6 @@ Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
 	srand(time(nullptr));
 }
 
-void Enemy::EnemyDefaultIdle() {
-	idleFrameCounter++;
-}
 
 
 EnemyTypes Enemy::GetEnemyType() const {
@@ -46,7 +43,7 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 
 	Vector2 nextCheckLocation = Vector2Add(startLocation, checkInterval);
 	//see if next position to check is even in area of player
-	while (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
+	if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
 	{
 	    nextCheckLocation=Vector2Add(nextCheckLocation, checkInterval);
 		Rectangle tileRec = { 0,0,32,32 };
@@ -62,7 +59,6 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 			    std::cout << "Player found" << std::endl;
                 return true;
 			}
-			break;
 		}
 	}
     return false;

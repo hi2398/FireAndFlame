@@ -7,10 +7,9 @@
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
 enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Saugi, Boss};
 
+
 class Enemy : public Actor {
 public:
-
-    void EnemyDefaultIdle();
     void Draw() override {};
     void Update() override {};
     [[nodiscard]] EnemyTypes GetEnemyType() const;
@@ -47,7 +46,6 @@ protected:
     Texture2D texture{};
     Vector2 lastSeen{};
 
-    int idleFrameCounter = 0;
     
 private:
 

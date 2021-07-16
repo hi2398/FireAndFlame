@@ -13,6 +13,6 @@ protected:
 
 
 private:
-
-
+    int idleFrameCounter = 0;
+    Rectangle drawRec;
 };

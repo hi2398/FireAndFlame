@@ -12,7 +12,7 @@ public:
 	explicit Miner(Vector2 initialPos);
 	void Update() override;
 	void Draw() override;
-	~Miner();
+	~Miner() = default;
 private:
 	bool aOnScreen;
 	Vector2 aEdgeSeekerRight;
