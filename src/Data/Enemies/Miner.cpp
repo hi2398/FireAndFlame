@@ -162,6 +162,7 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 void Miner::Update() {
 	activeState = activeState->Update(*this);
 
+	if (!IsGrounded()) position.y += 2.0f;
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());

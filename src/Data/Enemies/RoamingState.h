@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/EState.h"
 
-class RoamingState : public State {
+class RoamingState : public EState {
 public:
-    std::shared_ptr <State> Update(Actor& actor) override;
-    void Draw(Actor& actor)override;
+    std::shared_ptr <EState> Update(Enemy& enemy) override;
+    void Draw(Enemy& enemy)override;
 
     ~RoamingState() = default;
 

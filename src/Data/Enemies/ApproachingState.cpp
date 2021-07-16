@@ -4,13 +4,12 @@
 #include "ApproachingState.h"
 #include "raymath.h"
 
-std::shared_ptr<State> ApproachingState::Update(Actor& actor)
+std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 {
 
 	if constexpr (DEBUG_BUILD) {
 		std::cout << "Enemy State: Approaching\n";
 	}
-	auto enemy = dynamic_cast<Enemy&>(actor);
 
 
 	switch (enemy.GetEnemyType())
@@ -49,12 +48,11 @@ std::shared_ptr<State> ApproachingState::Update(Actor& actor)
 
 		//moving while aggro
 		Vector2 movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
-		if (movingToPlayer.x > 0) movingDistance = 5.0f;
-		else if (movingToPlayer.x < 0) movingDistance = -5.0f;
+		if (movingToPlayer.x > 0) movingDistance = 1.0f;
+		else if (movingToPlayer.x < 0) movingDistance = -1.0f;
 
-		std::cout << enemy.GetPosition().x << "\n";
 		enemy.SetPosition({enemy.GetPosition().x + movingDistance, enemy.GetPosition().y});
-		std::cout << enemy.GetPosition().x << "\n";
+
 		//enter idle when losing aggro after 5 secs
 		if (aggroCooldown >= 300) {
 			return std::make_shared<IdleState>();
@@ -66,9 +64,8 @@ std::shared_ptr<State> ApproachingState::Update(Actor& actor)
 	return shared_from_this();
 }
 
-void ApproachingState::Draw(Actor& actor)
+void ApproachingState::Draw(Enemy& enemy)
 {
-	auto enemy = static_cast<Enemy&>(actor);
 	DrawTexture(enemy.GetTexture(), enemy.GetPosition().x, enemy.GetPosition().y, WHITE);
 	DrawRectangle(drawRec.x, drawRec.y, drawRec.width, drawRec.height, RED);
 	DrawText(TextFormat("%f", enemy.GetPosition().x), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 50, 30, RED);

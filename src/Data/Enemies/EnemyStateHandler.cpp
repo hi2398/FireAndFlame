@@ -9,16 +9,14 @@ EnemyStateHandler::EnemyStateHandler() {
 	nextState = std::make_shared<IdleState>();
 }
 
-std::shared_ptr<State> EnemyStateHandler::Update(Actor& actor)
+std::shared_ptr<EState> EnemyStateHandler::Update(Enemy& enemy)
 {
-	auto enemy = static_cast<Enemy&>(actor);
 	nextState = nextState->Update(enemy);
 	return shared_from_this();
 }
 
-void EnemyStateHandler::Draw(Actor& actor)
+void EnemyStateHandler::Draw(Enemy& enemy)
 {
-	auto enemy = static_cast<Enemy&>(actor);
 	nextState->Draw(enemy);
 }
 

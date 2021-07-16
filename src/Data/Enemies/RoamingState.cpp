@@ -4,12 +4,11 @@
 #include "ApproachingState.h"
 #include "RoamingState.h"
 
-std::shared_ptr<State> RoamingState::Update(Actor& actor)
+std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 {
 	if constexpr (DEBUG_BUILD) {
 		std::cout << "Enemy State: Roaming\n";
 	}
-	auto enemy = static_cast<Enemy&>(actor);
 
 	switch (enemy.GetEnemyType())
 	{
@@ -50,9 +49,8 @@ std::shared_ptr<State> RoamingState::Update(Actor& actor)
 	return shared_from_this();
 }
 
-void RoamingState::Draw(Actor& actor)
+void RoamingState::Draw(Enemy& enemy)
 {
-	auto enemy = static_cast<Enemy&>(actor);
 	DrawTexture(enemy.GetTexture(), enemy.GetPosition().x, enemy.GetPosition().y, WHITE);
 	DrawRectangle(drawRec.x, drawRec.y, drawRec.width, drawRec.height, RED);
 }
