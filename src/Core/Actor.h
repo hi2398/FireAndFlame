@@ -71,10 +71,10 @@ public:
     AttackDirection GetAttackDirection() const;
     void SetAttackDirection(Direction direction);
 
-    bool GetIsSwiping();
+    bool GetIsSwiping() const;
     void SetIsSwiping(bool isSwiping);
 
-    bool GetActionBlocked();
+    bool GetActionBlocked() const;
     void SetActionBlocked(bool actionBlocked);
 
     void LookAtPlayer(); //change direction to look at player
