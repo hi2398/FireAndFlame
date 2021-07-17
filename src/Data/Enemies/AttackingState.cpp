@@ -5,7 +5,7 @@
 #include "StunnedState.h"
 
 std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
-	if constexpr (DEBUG_BUILD) {
+	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Attacking\n";
 	}
 

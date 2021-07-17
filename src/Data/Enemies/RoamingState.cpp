@@ -7,7 +7,7 @@
 
 std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 {
-	if constexpr (DEBUG_BUILD) {
+	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Roaming\n";
 	}
 
