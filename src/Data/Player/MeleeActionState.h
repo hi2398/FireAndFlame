@@ -21,6 +21,7 @@ private:
     int stabbingDistance = 0;
     int chargingCounter = 0;
     int resetAttack = 0;
+    Rectangle collisionRec;
 };
 
 

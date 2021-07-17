@@ -1,8 +1,8 @@
 #pragma once
 
 //created by Robin on 05.07.2021
-#include "../Core/Enemy.h"
-
+#include "../../Core/Enemy.h"
+#include "../../Core/EState.h"
 
 
 
@@ -12,7 +12,7 @@ public:
 	explicit Miner(Vector2 initialPos);
 	void Update() override;
 	void Draw() override;
-	~Miner();
+	~Miner() = default;
 private:
 	bool aOnScreen;
 	Vector2 aEdgeSeekerRight;
@@ -23,4 +23,5 @@ private:
 	int aMovementSpeed = 1;
 	void Move(Direction pDirection);
 
+	std::shared_ptr<EState> activeState;
 };

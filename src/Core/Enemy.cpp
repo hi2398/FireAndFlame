@@ -5,16 +5,35 @@
 #include <cmath>
 #include "raymath.h"
 
+Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
+	this->enemyType = enemyType;
+	srand(time(nullptr));
+}
+
+
 
 EnemyTypes Enemy::GetEnemyType() const {
 	return enemyType;
+}
+
+EnemyState Enemy::GetEnemyState() {
+	return state;
+}
+
+void Enemy::SetEnemyState(EnemyState state) {
+	this->state = state;
+}
+
+float Enemy::GetEnemyMovementSpeed()
+{
+	return movementSpeed;
 }
 
 
 void Enemy::ReceiveDamage(int damage)
 {
     health -= damage;
-	if (health == 0)
+	if (health <= 0)
 	{
 		markedDestroy= true;
 	}
@@ -29,7 +48,7 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 
 	Vector2 nextCheckLocation = Vector2Add(startLocation, checkInterval);
 	//see if next position to check is even in area of player
-	while (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
+	if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
 	{
 	    nextCheckLocation=Vector2Add(nextCheckLocation, checkInterval);
 		Rectangle tileRec = { 0,0,32,32 };
@@ -45,7 +64,6 @@ bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const s
 			    std::cout << "Player found" << std::endl;
                 return true;
 			}
-			break;
 		}
 	}
     return false;
@@ -74,10 +92,48 @@ bool Enemy::MakeDecision(int probability)
 	}
 }
 
-#include "Enemy.h"
+void Enemy::UpdateCollider() {
+	hitbox = { position.x, position.y, (float)texture.width, (float)texture.height };
+}
 
+Rectangle Enemy::GetCollider() const {
+    return hitbox;
+}
 
-Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
-    this->enemyType=enemyType;
-	srand(time(nullptr));
+Texture2D Enemy::GetTexture() {
+	return texture;
+}
+
+void Enemy::UpdateAttackHitbox()
+{
+	switch (GetDirection())
+	{
+	case LEFT:
+		attackHitbox = { position.x - 20, position.y + (float)texture.height / 4, 20, (float)texture.height / 2 };
+		break;
+	case RIGHT:
+		attackHitbox = { position.x + texture.width, position.y + (float)texture.height / 4, 20, (float)texture.height / 2 };
+		break;
+	default:
+		break;
+	}
+}
+
+Rectangle Enemy::GetAttackHitbox() {
+	return attackHitbox;
+}
+
+bool Enemy::IsInvulnerable()
+{
+	return invulnerable;
+}
+
+void Enemy::SetInvulnerable(bool invulnerable)
+{
+	this->invulnerable = invulnerable;
+}
+
+int Enemy::GetDamageValue()
+{
+	return damageValue;
 }

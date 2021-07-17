@@ -2,6 +2,7 @@
 // Created by Ashty on 06.06.2021.
 //
 
+#include <iostream>
 #include "Tilemap.h"
 
 Tilemap::Tilemap(const std::string& tileDescription, const std::string& levelDescription) {
@@ -57,4 +58,12 @@ void Tilemap::InitTileRecs() {
 
 const std::vector<Vector2> &Tilemap::GetTileColliders() const {
     return tileWorldPosCollision;
+}
+
+void Tilemap::AddCollisionTile(Vector2 loc) {
+    tileWorldPosCollision.emplace_back(loc);
+}
+
+void Tilemap::RemoveCollisionTile() {
+    tileWorldPosCollision.pop_back();
 }

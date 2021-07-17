@@ -39,7 +39,7 @@ void PlayerCharacter::Update() {
         playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
     }
 
-	
+	//world collision
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
@@ -49,7 +49,14 @@ void PlayerCharacter::Update() {
 	if (health >= 100) health = 100;
 	if (health <= 0) health = 0;
 
-	
+	//player invincibility frames
+	if (invulnerable) {
+		invulnerableCounter++;
+		if (invulnerableCounter >= 60) {
+			invulnerableCounter = 0;
+			invulnerable = false;
+		}
+	}	
 
 	//player hitbox update
 	playerHitbox = { (float)position.x + 6, (float)position.y, playerWidth, playerHeight };
@@ -93,6 +100,20 @@ ACTION PlayerCharacter::GetNextAction() {
 
 void PlayerCharacter::SetNextAction(ACTION action) {
 	nextAction = action;
+}
+
+bool PlayerCharacter::IsInvulnerable()
+{
+	return invulnerable;
+}
+
+void PlayerCharacter::SetInvulnerable(bool invulnerable)
+{
+	this->invulnerable = invulnerable;
+}
+
+const int PlayerCharacter::GetMaxHealth() {
+    return max_health;
 }
 
 

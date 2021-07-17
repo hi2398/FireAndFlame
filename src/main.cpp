@@ -7,6 +7,7 @@
 #include "Global.h"
 #include "config.h"
 #include "helper.h"
+#include "Scenes/NeutralArea.h"
 #include "Scenes/MainMenu.h"
 #include "Scenes/IceBossScene.h"
 
@@ -32,7 +33,7 @@ if  constexpr(DEBUG_BUILD){
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(Game::ScreenWidth, Game::ScreenHeight);
     // Texture scale filter to use
-    SetTextureFilter(target.texture, FILTER_POINT);
+    SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();

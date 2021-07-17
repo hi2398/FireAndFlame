@@ -22,6 +22,9 @@ std::shared_ptr<State> RangedActionState::Update(Actor &actor) {
             }
         case ACTION::RANGED_ATTACK:
             if (!isShootingFireball) {
+                //decrease player health when casting fireball
+                playerCharacter->SetHealth(playerCharacter->GetHealth() - 2.0f);
+
                 fireballDirection = playerCharacter->GetDirection();
                 if (playerCharacter->GetDirection() == 1)vectorFireball.x = playerCharacter->GetPosition().x + 25;
                 if (playerCharacter->GetDirection() == -1)vectorFireball.x = playerCharacter->GetPosition().x + 9;
@@ -35,10 +38,21 @@ std::shared_ptr<State> RangedActionState::Update(Actor &actor) {
                     return std::make_shared<IdleActionState>();
                 }
             }
+
+            for (auto &enemies: sceneManager->GetEnemies()) {
+				if (CheckCollisionPointRec(vectorFireball, enemies->GetCollider())) {
+                    enemies->ReceiveDamage(10);
+                    enemies->SetInvulnerable(true);
+				}
+            }
+            
+
         default:
             //TODO: handle ranged state
             return shared_from_this();
     }
+
+
 }
 
 void RangedActionState::Draw(Actor& actor) {

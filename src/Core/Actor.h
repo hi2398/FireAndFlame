@@ -76,6 +76,9 @@ public:
     bool GetActionBlocked();
     void SetActionBlocked(bool actionBlocked);
 
+    Direction GetDirection();
+    void SetDirection(Direction direction);
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};

@@ -20,9 +20,13 @@ public:
 
     int GetHealth() const;
     void SetHealth(int health);
+    const static int GetMaxHealth();
 
     ACTION GetNextAction();
     void SetNextAction(ACTION action);
+
+    bool IsInvulnerable();
+    void SetInvulnerable(bool invulnerable);
 
 
 	//2Dcam
@@ -35,7 +39,7 @@ public:
 
 
     //draw player only in game scene
-    bool visible = true;
+    bool active = true;
 
     //collision detection with scene objects
 	bool isGrounded = false;
@@ -52,10 +56,12 @@ protected:
 private:
     const float playerWidth = 20.0f;
     const float playerHeight = 32.0f;
-
-    int health{100};
+    static constexpr int max_health{100};
+    int health{max_health};
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
+    bool invulnerable{ false };
+    int invulnerableCounter = 0;
 
     //attack
     ACTION nextAction{ACTION::NONE};
