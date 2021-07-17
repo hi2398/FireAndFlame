@@ -2,17 +2,17 @@
 
 #include "../../Core/EState.h"
 
-class IdleState : public EState {
+class StunnedState : public EState {
 public:
     std::shared_ptr <EState> Update(Enemy& enemy) override;
     void Draw(Enemy& enemy)override;
 
-    ~IdleState() = default;
+    ~StunnedState() = default;
 
 protected:
 
 
 private:
-    int idleFrameCounter = 0;
-    Rectangle drawRec;
+    int stunnedFrameCounter = 0;
+    int stunnedOffset = 0;
 };

@@ -3,6 +3,7 @@
 #include "../../Global.h"
 #include "IdleActionState.h"
 #include "RangedActionState.h"
+#include "raymath.h"
 
 std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 	// set spear rotation before attacking
@@ -187,15 +188,59 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 		default:
 			break;
 		}
-		
-
-	default:
-		return shared_from_this();
 	}
+
+	//the hit collision is not working for rotated rectangles
+	//thats why I use a combination of different rectangles for collision, which mimics the swiping motion of the actual spear/rectangle
+	
+	switch (playerCharacter->GetDirection())
+	{
+	case LEFT:
+		collisionRec = { playerCharacter->GetPosition().x + 16.0f - 31.0f, playerCharacter->GetPosition().y - 6.0f, 30, 32 };
+		break;
+	case RIGHT:
+		collisionRec = { playerCharacter->GetPosition().x + 16.0f + 9.0f, playerCharacter->GetPosition().y - 6.0f, 30, 30 };
+		break;
+	}
+
+
+
+	//check if an enemy gets hit
+	for (auto& enemies : sceneManager->GetEnemies()) {
+
+			switch (playerCharacter->attackState)
+			{
+			case 0:
+			case 1://same function for first two attack states
+				if (!enemies->IsInvulnerable() && playerCharacter->GetIsSwiping() && (CheckCollisionRecs(collisionRec, enemies->GetCollider()))) {
+					enemies->ReceiveDamage(1);
+					enemies->SetInvulnerable(true);
+				}
+				break;
+			case 2:
+				if (!enemies->IsInvulnerable() && playerCharacter->GetIsSwiping() && CheckCollisionRecs(spearHitbox, enemies->GetCollider())) {
+					enemies->ReceiveDamage(3);
+					enemies->SetInvulnerable(true);
+				}
+				break;
+			default:
+				break;
+			}
+			
+	}
+
+
+	return shared_from_this();
 }
 
 void MeleeActionState::Draw(Actor& actor) {
 	if (playerCharacter->GetIsSwiping()) {
-		DrawRectanglePro(spearHitbox, { 10, 3 }, spearRotation, RED);		
+		//actual hitbox
+		/*DrawRectangle(collisionRec.x, collisionRec.y, collisionRec.width, collisionRec.height, GREEN);*/
+
+		//pseudo hitbox
+		DrawRectanglePro(spearHitbox, { 10,3 }, spearRotation, RED);
 	}
+
+
 }

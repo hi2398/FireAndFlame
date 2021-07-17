@@ -1,7 +1,7 @@
 #include "MovementState.h"
 #include "IdleGroundedSubState.h"
 #include "JumpingSubState.h"
-
+#include "PlayerCharacter.h"
 
 #include <iostream>
 
@@ -13,6 +13,7 @@ MovementState::MovementState() {
 }
 
 std::shared_ptr<State> MovementState::Update(Actor &actor) {
+
     actor.SetActionBlocked(false);
     if (actor.IsGrounded()) {
         aerialSubState = std::make_shared<JumpingSubState>();
@@ -33,6 +34,7 @@ std::shared_ptr<State> MovementState::Update(Actor &actor) {
 }
 
 void MovementState::Draw(Actor& actor) {
+    auto player = static_cast<PlayerCharacter&>(actor);
     if (actor.IsGrounded()) {
         groundedSubState->Draw(actor); //IdleGroundedSubState or MovingGroundedSubState
     }

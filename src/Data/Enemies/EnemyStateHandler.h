@@ -1,14 +1,14 @@
 #pragma once
-#include "../../Core/Enemy.h"
-#include "../../Core/State.h"
 
-class EnemyStateHandler :  public State{
+#include "../../Core/EState.h"
+
+class EnemyStateHandler :  public EState{
 public:
 
     EnemyStateHandler();
 
-    std::shared_ptr<State> Update(Actor& actor) override;
-    void Draw(Actor& actor) override;
+    std::shared_ptr<EState> Update(Enemy& enemy) override;
+    void Draw(Enemy& enemy) override;
 
     ~EnemyStateHandler() override = default;
 
@@ -16,5 +16,5 @@ protected:
 
 
 private:
-    std::shared_ptr<State> nextState;
+    std::shared_ptr<EState> nextState;
 };

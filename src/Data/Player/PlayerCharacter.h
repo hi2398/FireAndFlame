@@ -25,6 +25,9 @@ public:
     ACTION GetNextAction();
     void SetNextAction(ACTION action);
 
+    bool IsInvulnerable();
+    void SetInvulnerable(bool invulnerable);
+
 
 	//2Dcam
 	Camera2D camera = { 0 };
@@ -57,6 +60,8 @@ private:
     int health{max_health};
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
+    bool invulnerable{ false };
+    int invulnerableCounter = 0;
 
     //attack
     ACTION nextAction{ACTION::NONE};

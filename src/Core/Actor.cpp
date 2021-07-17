@@ -207,6 +207,14 @@ void Actor::SetActionBlocked(bool actionBlocked)
 	this->actionBlocked = actionBlocked;
 }
 
+Direction Actor::GetDirection() {
+	return direction;
+}
+
+void Actor::SetDirection(Direction direction) {
+	this->direction = direction;
+}
+
 void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 {
 	//tile rectangles
