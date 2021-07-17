@@ -7,21 +7,33 @@
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
 enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Saugi, Boss};
 
+
 class Enemy : public Actor {
 public:
-
-    void EnemyDefaultIdle();
     void Draw() override {};
     void Update() override {};
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     virtual void ReceiveDamage(int damage);
+
+    void UpdateCollider();
     Rectangle GetCollider() const;
+
     ~Enemy() override = default;
 
     EnemyState GetEnemyState();
     void SetEnemyState(EnemyState state);
 
+    float GetEnemyMovementSpeed();
+
     Texture2D GetTexture();
+
+    void UpdateAttackHitbox();
+    Rectangle GetAttackHitbox();
+
+    bool IsInvulnerable();
+    void SetInvulnerable(bool invulnerable);
+
+    int GetDamageValue();
 
 protected:
     static bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
@@ -46,8 +58,11 @@ protected:
     Rectangle attackArea{};
     Texture2D texture{};
     Vector2 lastSeen{};
-
-    int idleFrameCounter = 0;
+    float movementSpeed{ 1.0f };
+    Rectangle attackHitbox = {};
+    bool invulnerable{ false };
+    int invulnerableCounter = 0;
+    int damageValue = 5;
     
 private:
 

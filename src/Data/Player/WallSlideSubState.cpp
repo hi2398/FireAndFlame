@@ -31,6 +31,8 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
 				    actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
 			        }
 			    break;
+			case MOVEMENT::IDLE:
+				return std::make_shared<FallingSubState>();
         }
 	}
 	else if (actor.GetWallCollisionRight()) {
