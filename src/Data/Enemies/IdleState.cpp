@@ -57,5 +57,4 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 void IdleState::Draw(Enemy& enemy)
 {
 	DrawTextureRec(enemy.GetTexture(), { 0,0, (float)enemy.GetTexture().width * -enemy.GetDirection(), (float)enemy.GetTexture().height }, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
-	//DrawTexture(enemy.GetTexture(), enemy.GetPosition().x, enemy.GetPosition().y, WHITE);
 }

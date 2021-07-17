@@ -23,9 +23,6 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		}
 	}
 
-	
-
-
 	if (enemy.IsInvulnerable()) {
 		return std::make_shared<StunnedState>();
 	}

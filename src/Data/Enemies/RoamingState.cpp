@@ -13,9 +13,6 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 
 	switch (enemy.GetEnemyType())
 	{
-	case EnemyTypes::SpringHog:
-		
-		break;
 	default:
 		//frameCounter for animation
 		roamingFrameCounter++;
