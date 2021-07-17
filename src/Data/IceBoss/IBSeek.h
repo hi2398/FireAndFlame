@@ -18,6 +18,9 @@ private:
     NextSeekAction nextAction{NextSeekAction::Decide};
     std::shared_ptr<State> MeleeApproach(Actor& actor);
     std::shared_ptr<State> RangedMove(Actor& actor);
+    const Vector2* rangedSpot{nullptr};
+    static constexpr Vector2 leftRangedSpot{22*32, 36*32};
+    static constexpr Vector2 rightRangedSpot{35*32, 36*32};
 };
 
 

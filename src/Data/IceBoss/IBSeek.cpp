@@ -23,7 +23,18 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
         }
         //for melee and ranged only set next action, then either move to player in this state for melee or move away for ranged
         if (IceBoss::Decide()) nextAction=NextSeekAction::Melee;
-        else nextAction=NextSeekAction::Ranged;
+        else {
+            nextAction=NextSeekAction::Ranged;
+            //if next ranged spot hasnt been set, then set it so the boss dashes backwards
+                switch (actor.GetDirection()) {
+                    case LEFT:
+                        rangedSpot=&rightRangedSpot;
+                        break;
+                    case RIGHT:
+                        rangedSpot=&leftRangedSpot;
+                        break;
+                }
+        }
     }
 
     //move to player for melee, move away for ranged
@@ -49,12 +60,12 @@ void IBSeek::Draw(Actor &actor) {
 std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
 
     //get player location, check distance from boss and make direction out of that
-    auto playerPos=playerCharacter->GetPosition();
-    auto distance= Vector2Subtract(playerPos, actor.GetPosition());
-    auto direction= Vector2Normalize(distance);
-    Vector2 posNextFrame{actor.GetPosition().x+(direction.x*IceBoss::GetMovementSpeed()*IceBoss::SpeedMultiplier()), actor.GetPosition().y};
+    auto playerPos = playerCharacter->GetPosition();
+    auto distance = Vector2Subtract(playerPos, actor.GetPosition());
+    auto direction = Vector2Normalize(distance);
+    auto xPos=actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier());
+    Vector2 posNextFrame{xPos, actor.GetPosition().y};
     actor.SetPosition(posNextFrame);
-    std::cout << actor.GetPosition().x << " " << actor.GetPosition().y << "\n";
 
     //if close enough, execute attack
     if (Vector2Distance(playerCharacter->GetPosition(), actor.GetPosition())<=32){
@@ -65,8 +76,26 @@ std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
 }
 
 std::shared_ptr<State> IBSeek::RangedMove(Actor& actor) {
-    //if done, switch to ranged to attack
-    return std::make_shared<IBRanged>();
-    //timestep the move, return self
-    return shared_from_this();
+
+    //if close enough to the ranged spot, switch state and null out pointer
+    if (rangedSpot) {
+        if (Vector2Distance(actor.GetPosition(), *rangedSpot) <= 10.f) {
+            rangedSpot = nullptr;
+            return std::make_shared<IBRanged>();
+        }
+        if (Vector2Distance(actor.GetPosition(), *rangedSpot) <= 64.f) { //if is in range of two tiles, dash fast instead
+            auto direction = Vector2Normalize(Vector2Add(actor.GetPosition(), *rangedSpot));
+            auto xPos = actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier() * 4.f);
+            actor.SetPosition({xPos, actor.GetPosition().y});
+            return shared_from_this();
+        } else {
+            //timestep the move, return self
+            //jump backwards to ranged spot, then shoot
+            auto direction = Vector2Normalize(Vector2Add(actor.GetPosition(), *rangedSpot));
+            auto xPos = actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier());
+            actor.SetPosition({xPos, actor.GetPosition().y});
+            return shared_from_this();
+        }
+    } else throw std::invalid_argument("Invalid Pointer in IceBoss Ranged Spot");
+
 }

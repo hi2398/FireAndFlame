@@ -40,7 +40,7 @@ private:
 
     static constexpr float meleeRange{32.f};
     static constexpr float rangedMinDistance{128.f};
-    static constexpr float movementSpeed{5.f};
+    static constexpr float movementSpeed{3.f};
 
 
 };
