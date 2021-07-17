@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "Actor.h"
+#include "../Global.h"
 
 Actor::Actor(ObjectTypes type) : Object(type), lastTickPos(position) {
 
@@ -187,7 +188,7 @@ void Actor::SetAttackDirection(Direction direction)
 	if (direction == RIGHT) attackDirection = ATT_RIGHT;
 }
 
-bool Actor::GetIsSwiping()
+bool Actor::GetIsSwiping() const
 {
 	return isSwiping;
 }
@@ -197,7 +198,7 @@ void Actor::SetIsSwiping(bool isSwiping)
 	this->isSwiping = isSwiping;
 }
 
-bool Actor::GetActionBlocked()
+bool Actor::GetActionBlocked() const
 {
 	return actionBlocked;
 }
@@ -207,9 +208,6 @@ void Actor::SetActionBlocked(bool actionBlocked)
 	this->actionBlocked = actionBlocked;
 }
 
-Direction Actor::GetDirection() {
-	return direction;
-}
 
 void Actor::SetDirection(Direction direction) {
 	this->direction = direction;
@@ -317,4 +315,11 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 			SetHeadCollision(false);
 		}
 	}
+}
+
+void Actor::LookAtPlayer() {
+    if ((playerCharacter->GetPosition().x- GetPosition().x) <0) {
+        SetDirection(LEFT);
+    } else SetDirection(RIGHT);
+
 }

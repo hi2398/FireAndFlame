@@ -55,3 +55,7 @@ float IceBoss::GetRangedMinDistance() {
     return rangedMinDistance;
 }
 
+float IceBoss::GetMovementSpeed() {
+    return movementSpeed;
+}
+

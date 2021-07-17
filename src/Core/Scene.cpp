@@ -34,7 +34,7 @@ void Scene::RemoveMarkedDelete() {
         }else ++enemyIterator;
     }
 
-    //remove interactables marked elete
+    //remove interactables marked delete
     auto interactableIterator= interactables.begin();
     while (interactableIterator!=interactables.end()) {
         if ((*interactableIterator)->IsMarkedDestroy()) {

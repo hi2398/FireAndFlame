@@ -18,6 +18,7 @@ public:
     void SetLastPosition(Vector2 lastPos);
     Vector2 GetLastPosition();
     Direction GetDirection() const;
+    void SetDirection(Direction direction);
     float GetGravityMultiplier() const;
     void SetGrounded(bool grounded);
     bool IsGrounded() const;
@@ -70,14 +71,13 @@ public:
     AttackDirection GetAttackDirection() const;
     void SetAttackDirection(Direction direction);
 
-    bool GetIsSwiping();
+    bool GetIsSwiping() const;
     void SetIsSwiping(bool isSwiping);
 
-    bool GetActionBlocked();
+    bool GetActionBlocked() const;
     void SetActionBlocked(bool actionBlocked);
 
-    Direction GetDirection();
-    void SetDirection(Direction direction);
+    void LookAtPlayer(); //change direction to look at player
 
 protected:
     Vector2 lastTickPos;
