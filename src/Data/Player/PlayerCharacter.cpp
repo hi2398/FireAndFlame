@@ -27,9 +27,11 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
+
 	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 
 	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
+
 	actionState = actionState->Update(*this);
 
 
@@ -63,15 +65,15 @@ void PlayerCharacter::Update() {
 
 	//player hitbox update
 	playerHitbox = { (float)position.x + 6, (float)position.y, playerWidth, playerHeight };
-	
+
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
-    for (const auto& interactable : sceneManager->GetInteractables()) {
-        if(CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())){
-            interactable->Interact(*this);
-        }
-    }
+	for (const auto& interactable : sceneManager->GetInteractables()) {
+		if (CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())) {
+			interactable->Interact(*this);
+		}
+	}
 }
 
 void PlayerCharacter::Draw() {
@@ -85,8 +87,8 @@ int PlayerCharacter::GetHealth() const {
 
 void PlayerCharacter::SetHealth(int health) {
 	this->health = health;
-	if(health <= 0){
-	    //sceneManager->SetNextScene(std::make_unique<DeathScreen>()); TODO enable me when save and load is finished
+	if (health <= 0) {
+		//sceneManager->SetNextScene(std::make_unique<DeathScreen>()); TODO enable me when save and load is finished
 	}
 }
 
@@ -116,7 +118,7 @@ void PlayerCharacter::SetInvulnerable(bool invulnerable)
 }
 
 const int PlayerCharacter::GetMaxHealth() {
-    return max_health;
+	return max_health;
 }
 
 void PlayerCharacter::ChangePlayerMovement(bool playerMovement) {
