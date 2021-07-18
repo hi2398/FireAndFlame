@@ -34,7 +34,7 @@ void DialogueManager::DrawDialogue() {
         if(nextSent.length()>60){
             fontSizeForDialogue = 23;
         }else fontSizeForDialogue = 30;
-        DrawText(nextSentenceInQueue, 230, 535, fontSizeForDialogue, BLUE);
+        DrawText(nextSentenceInQueue, 220, 535, fontSizeForDialogue, BLUE);
         DrawText("PRESS F TO CONTINUE", 820, 610, 15, BLUE);
     }
 }
