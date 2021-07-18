@@ -35,7 +35,7 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 	}
 
 	//quit wall jump when touching another wall
-	if ((actor.GetWallCollisionLeft() && actor.GetDirection() == 1) || (actor.GetWallCollisionRight() && actor.GetDirection() == -1)) {
+	if ((actor.GetWallCollisionLeft() && actor.GetDirection() == RIGHT) || (actor.GetWallCollisionRight() && actor.GetDirection() == LEFT)) {
 		actor.SetWallJumpCommand(false);
 		actor.SetJumpCommand(false);
 		actor.SetJumpBlocked(false);

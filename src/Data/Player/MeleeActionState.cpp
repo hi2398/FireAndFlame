@@ -191,7 +191,7 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& actor) {
 	}
 
 	//the hit collision is not working for rotated rectangles
-	//thats why I use a combination of different rectangles for collision, which mimics the swiping motion of the actual spear/rectangle
+	//thats why I use a combination of different rectangles for collision, which mimic the swiping motion of the actual spear/rectangle
 	
 	switch (playerCharacter->GetDirection())
 	{
