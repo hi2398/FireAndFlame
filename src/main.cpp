@@ -9,6 +9,7 @@
 #include "helper.h"
 #include "Scenes/Tutorial.h"
 #include "Scenes/MainMenu.h"
+#include "Scenes/NeutralArea.h"
 #include "Scenes/IceBossScene.h"
 
 

@@ -4,6 +4,7 @@
 IceBossScene::IceBossScene() {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
+    playerCharacter->SetHealth(100);
 }
 
 void IceBossScene::Update() {

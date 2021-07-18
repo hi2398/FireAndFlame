@@ -3,10 +3,12 @@
 #include "../Data/DialogueObject.h"
 #include "../Data/SceneChangerObject.h"
 #include "../Data/Enemies/Miner.h"
+#include "../Data/Coal.h"
 
 Tutorial::Tutorial() {
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
+    playerCharacter->SetHealth(90);
     npc1Tex = LoadTexture("assets/graphics/PLAYER.png"); // TODO change NPC Texture
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Tutorial.json");
 
@@ -18,6 +20,11 @@ Tutorial::Tutorial() {
 
     Vector2 tempVec = {86*32,36*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss));
+
+    tempVec =  {39 * 32, 97 * 32 };
+    interactables.emplace_back(std::make_unique<Coal>(tempVec));
+
+
     tempVec = {87*32,39*32};
     tilemap->AddCollisionTile(tempVec);
 
