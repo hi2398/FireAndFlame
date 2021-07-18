@@ -2,6 +2,7 @@
 #include "../Global.h"
 #include "../Data/DialogueObject.h"
 #include "../Data/SceneChangerObject.h"
+#include "../Data/Enemies/Miner.h"
 
 Tutorial::Tutorial() {
     playerCharacter->SetPosition(playerStart);
@@ -15,8 +16,19 @@ Tutorial::Tutorial() {
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText4.json",npc4Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText5.json",npc5Pos,npc1Tex));
 
-    Vector2 tempVec = {87*32,36*32};
+    Vector2 tempVec = {86*32,36*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss));
+    tempVec = {87*32,39*32};
+    tilemap->AddCollisionTile(tempVec);
+
+    tempVec = {52*32,46*32};
+    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    tempVec = {64*32,42*32};
+    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    tempVec = {67*32,42*32};
+    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    tempVec = {86*32,39*32};
+    enemies.emplace_back(std::make_unique<Miner>(tempVec));
 
     door1[0] = {58*32,76*32};
     door1[1] = {58*32,75*32};
