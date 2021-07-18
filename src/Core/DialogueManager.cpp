@@ -31,6 +31,10 @@ void DialogueManager::DrawDialogue() {
     const char *nextSentenceInQueue = nextSent.c_str();
     if(dialogueActive) {
         DrawRectangleRec(dialogueBox, RED);
-        DrawText(nextSentenceInQueue, 320, 420, 30, BLUE);
+        if(nextSent.length()>60){
+            fontSizeForDialogue = 23;
+        }else fontSizeForDialogue = 30;
+        DrawText(nextSentenceInQueue, 230, 535, fontSizeForDialogue, BLUE);
+        DrawText("PRESS F TO CONTINUE", 820, 610, 15, BLUE);
     }
 }
