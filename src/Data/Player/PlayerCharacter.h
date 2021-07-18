@@ -28,6 +28,12 @@ public:
     bool IsInvulnerable();
     void SetInvulnerable(bool invulnerable);
 
+    bool disablePlayerMovement = false;
+    void ChangePlayerMovement(bool playerMovement);
+    
+    void SetPlayerDecreasingHealth(bool isDecreasing){
+        isHealthDecreasing = isDecreasing;
+    }
 
 	//2Dcam
 	Camera2D camera = { 0 };
@@ -61,6 +67,7 @@ private:
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
     bool invulnerable{ false };
+    bool isHealthDecreasing = true;
     int invulnerableCounter = 0;
 
     //attack

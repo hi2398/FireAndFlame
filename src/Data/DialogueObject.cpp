@@ -3,7 +3,6 @@
 //
 
 #include "DialogueObject.h"
-#include <iostream>
 
 DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Texture2D texture) : Interactable(InteractableType::DialogObj){
     objFilepath = dialogFilepath;
@@ -23,5 +22,7 @@ void DialogueObject::Draw() {
 }
 
 void DialogueObject::Update() {
-
+    if(CheckCollisionRecs(playerCharacter->playerHitbox,interactionZone)){
+        hud->changeInteractable(true);
+    }else hud->changeInteractable(false);
 }

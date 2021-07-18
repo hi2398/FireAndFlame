@@ -15,6 +15,13 @@ void HUD::DrawHUD() {
     if (healthBar.width > 0) {
 		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
     }
+    if(isInteractable){
+        DrawText("PRESS F",600,500,30,WHITE); //TODO Change after controls are fixed
+    }
     DrawRectangleLines(healthBar.x, healthBar.y, 200, healthBar.height, BLACK);
     if (healthBar.width > 0) DrawTextureEx(textureFire, { healthBar.width - textureFire.width/2, healthBar.y - 10 }, 0.0f, 2.0f, WHITE);
+}
+
+void HUD::changeInteractable(bool interactable) {
+    isInteractable = interactable;
 }

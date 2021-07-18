@@ -1,11 +1,15 @@
 #include "DialogueManager.h"
-#include <iostream>
+#include "../Global.h"
 
 void DialogueManager::UpdateDialogue(std::string filePath) {
     if(sentences.empty()&&nextSent!="-") {
         nextSent="-";
         dialogueActive=false;
+        playerCharacter->SetPlayerDecreasingHealth(true);
+        playerCharacter->ChangePlayerMovement(false);
     }else{
+        playerCharacter->ChangePlayerMovement(true);
+        playerCharacter->SetPlayerDecreasingHealth(false);
         if (sentences.empty()) {
             std::ifstream dialogueFileTemp(filePath);
             nlohmann::json dialogueFile = nlohmann::json::parse(dialogueFileTemp);
