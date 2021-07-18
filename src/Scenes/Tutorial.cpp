@@ -1,6 +1,7 @@
 #include "Tutorial.h"
 #include "../Global.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SceneChangerObject.h"
 
 Tutorial::Tutorial() {
     playerCharacter->SetPosition(playerStart);
@@ -13,6 +14,9 @@ Tutorial::Tutorial() {
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText3.json",npc3Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText4.json",npc4Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText5.json",npc5Pos,npc1Tex));
+
+    Vector2 tempVec = {87*32,36*32};
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss));
 
     door1[0] = {58*32,76*32};
     door1[1] = {58*32,75*32};
