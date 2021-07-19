@@ -2,6 +2,7 @@
 #include "../Global.h"
 #include "../Scenes/NeutralArea.h"
 #include "../Scenes/AreaOne.h"
+#include "../Scenes/IceBossScene.h"
 
 SceneChangerObject::SceneChangerObject(Vector2 location, SceneEnums sceneEnum) : Interactable(InteractableType::SceneChangeCollider){
     position = location;
@@ -16,6 +17,9 @@ void SceneChangerObject::Interact(Actor &actor) {
             break;
         case SceneEnums::AreaOne :
             sceneManager->SetNextScene(std::make_unique<AreaOne>());
+            break;
+        case SceneEnums::IceBoss :
+            sceneManager->SetNextScene(std::make_unique<IceBossScene>());
             break;
     }
 }

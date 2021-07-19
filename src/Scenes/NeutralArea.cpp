@@ -7,6 +7,7 @@
 NeutralArea::NeutralArea(){
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
+    playerCharacter->SetHealth(100);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/NEUTRAL_AREA.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
     // Delete this section, only for testing
@@ -21,7 +22,11 @@ NeutralArea::NeutralArea(){
     // A
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{20*32-100, 36*32};
-    enemies.emplace_back(std::make_unique<Miner>(vec2));
+    for (int i = 0; i < 10; i++) {
+        enemies.emplace_back(std::make_unique<Miner>(vec2));
+    }
+    
+ 
 
     textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");
     textureMiddleground = LoadTexture("assets/graphics/backgrounds/background2.png");

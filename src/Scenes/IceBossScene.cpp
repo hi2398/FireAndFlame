@@ -7,6 +7,7 @@ IceBossScene::IceBossScene() {
     playerCharacter->SetPosition(playerStart);
     Vector2 temp={30*32, 36*32};
     interactables.emplace_back(std::make_unique<IceZone>(temp));
+    playerCharacter->SetHealth(100);
 }
 
 void IceBossScene::Update() {

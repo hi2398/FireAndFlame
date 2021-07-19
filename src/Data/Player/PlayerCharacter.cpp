@@ -27,16 +27,21 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
+
 	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
-	movementState = movementState->Update(*this);
+
+	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
+
 	actionState = actionState->Update(*this);
 
 
 	//regularly decrease health
-    ++healthTimer;
-    if (healthTimer >= HEALTH_INTERVAL) {
-        healthTimer = 0;
-        playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+	if(isHealthDecreasing) {
+        ++healthTimer;
+        if (healthTimer >= HEALTH_INTERVAL) {
+            healthTimer = 0;
+            playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+        }
     }
 
 	//world collision
@@ -56,19 +61,19 @@ void PlayerCharacter::Update() {
 			invulnerableCounter = 0;
 			invulnerable = false;
 		}
-	}	
+	}
 
 	//player hitbox update
 	playerHitbox = { (float)position.x + 6, (float)position.y, playerWidth, playerHeight };
-	
+
 	//camera update
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 
-    for (const auto& interactable : sceneManager->GetInteractables()) {
-        if(CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())){
-            interactable->Interact(*this);
-        }
-    }
+	for (const auto& interactable : sceneManager->GetInteractables()) {
+		if (CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())) {
+			interactable->Interact(*this);
+		}
+	}
 }
 
 void PlayerCharacter::Draw() {
@@ -82,8 +87,8 @@ int PlayerCharacter::GetHealth() const {
 
 void PlayerCharacter::SetHealth(int health) {
 	this->health = health;
-	if(health <= 0){
-	    //sceneManager->SetNextScene(std::make_unique<DeathScreen>()); TODO enable me when save and load is finished
+	if (health <= 0) {
+		//sceneManager->SetNextScene(std::make_unique<DeathScreen>()); TODO enable me when save and load is finished
 	}
 }
 
@@ -113,7 +118,11 @@ void PlayerCharacter::SetInvulnerable(bool invulnerable)
 }
 
 const int PlayerCharacter::GetMaxHealth() {
-    return max_health;
+	return max_health;
+}
+
+void PlayerCharacter::ChangePlayerMovement(bool playerMovement) {
+    disablePlayerMovement = playerMovement;
 }
 
 
