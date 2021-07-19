@@ -5,8 +5,6 @@
 IceBossScene::IceBossScene() {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
-    Vector2 temp={30*32, 36*32};
-    interactables.emplace_back(std::make_unique<IceZone>(temp));
     playerCharacter->SetHealth(100);
 }
 

@@ -4,7 +4,7 @@
 IceZone::IceZone(Vector2 location) : Interactable(InteractableType::IceZone) {
    position=location;
    iceZone = LoadTexture("assets/Bosses/IceBoss/Ice_Zone.png");
-   interactionZone={position.x, position.y, 96, 20};
+   interactionZone={position.x, position.y-10, 96, 30};
 }
 
 void IceZone::Update() {
@@ -13,12 +13,10 @@ void IceZone::Update() {
 
 void IceZone::Draw() {
     DrawTextureV(iceZone, position, WHITE);
-    DrawRectangleRec(interactionZone, GREEN);
 
 }
 
 void IceZone::Interact(Actor &actor) {
-    //TODO: When player interacts, drain health
     if (actor.GetType()==ObjectTypes::Player){
         if (damageTimer!=0){
             --damageTimer;
