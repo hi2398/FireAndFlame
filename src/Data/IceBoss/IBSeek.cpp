@@ -85,7 +85,7 @@ std::shared_ptr<State> IBSeek::RangedMove(Actor& actor) {
         }
         if (Vector2Distance(actor.GetPosition(), *rangedSpot) <= 64.f) { //if is in range of two tiles, dash fast instead
             auto direction = Vector2Normalize(Vector2Add(actor.GetPosition(), *rangedSpot));
-            auto xPos = actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier() * 4.f);
+            auto xPos = actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier() * 2.f);
             actor.SetPosition({xPos, actor.GetPosition().y});
             return shared_from_this();
         } else {
