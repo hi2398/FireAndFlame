@@ -1,11 +1,15 @@
 #include "DialogueManager.h"
-#include <iostream>
+#include "../Global.h"
 
 void DialogueManager::UpdateDialogue(std::string filePath) {
     if(sentences.empty()&&nextSent!="-") {
         nextSent="-";
         dialogueActive=false;
+        playerCharacter->SetPlayerDecreasingHealth(true);
+        playerCharacter->ChangePlayerMovement(false);
     }else{
+        playerCharacter->ChangePlayerMovement(true);
+        playerCharacter->SetPlayerDecreasingHealth(false);
         if (sentences.empty()) {
             std::ifstream dialogueFileTemp(filePath);
             nlohmann::json dialogueFile = nlohmann::json::parse(dialogueFileTemp);
@@ -27,6 +31,10 @@ void DialogueManager::DrawDialogue() {
     const char *nextSentenceInQueue = nextSent.c_str();
     if(dialogueActive) {
         DrawRectangleRec(dialogueBox, RED);
-        DrawText(nextSentenceInQueue, 320, 420, 30, BLUE);
+        if(nextSent.length()>60){
+            fontSizeForDialogue = 23;
+        }else fontSizeForDialogue = 30;
+        DrawText(nextSentenceInQueue, 220, 535, fontSizeForDialogue, BLUE);
+        DrawText("PRESS F TO CONTINUE", 820, 610, 15, BLUE);
     }
 }

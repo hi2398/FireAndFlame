@@ -3,7 +3,6 @@
 //
 
 #include "DialogueObject.h"
-#include <iostream>
 
 DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Texture2D texture) : Interactable(InteractableType::DialogObj){
     objFilepath = dialogFilepath;
@@ -13,6 +12,7 @@ DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Tex
 }
 
 void DialogueObject::Interact(Actor &actor) {
+    hud->changeInteractable(true);
     if(IsKeyPressed(KEY_F) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)){
         sceneManager->UpdateDialogInScene(objFilepath);
     }

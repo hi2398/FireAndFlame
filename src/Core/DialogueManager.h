@@ -12,7 +12,8 @@ public:
 protected:
 private:
     std::queue<std::string> sentences;
-    Rectangle dialogueBox = {300,400,700,300};
+    Rectangle dialogueBox = {200,490,900,150};
+    int fontSizeForDialogue = 30;
     std::string nextSent = "-";
     bool dialogueActive = {false};
 };

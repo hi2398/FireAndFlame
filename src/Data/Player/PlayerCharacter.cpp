@@ -27,19 +27,22 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
-	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2 / camera.zoom), camera.offset.y * (2 / camera.zoom) };
-	movementState = movementState->Update(*this);
+
+	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
+
+	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
+
 	actionState = actionState->Update(*this);
 
 
 	//regularly decrease health
-	++healthTimer;
-	if (healthTimer >= HEALTH_INTERVAL) {
-		healthTimer = 0;
-		playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
-	}
-
-
+	if(isHealthDecreasing) {
+        ++healthTimer;
+        if (healthTimer >= HEALTH_INTERVAL) {
+            healthTimer = 0;
+            playerCharacter->SetHealth(playerCharacter->GetHealth() - 1);
+        }
+    }
 
 	//world collision
 	CollisionLeft(sceneManager->GetTilemap());
@@ -116,6 +119,10 @@ void PlayerCharacter::SetInvulnerable(bool invulnerable)
 
 const int PlayerCharacter::GetMaxHealth() {
 	return max_health;
+}
+
+void PlayerCharacter::ChangePlayerMovement(bool playerMovement) {
+    disablePlayerMovement = playerMovement;
 }
 
 
