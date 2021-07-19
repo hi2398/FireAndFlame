@@ -14,8 +14,9 @@ protected:
 
 
 private:
-
-
+    Texture2D iceZone;
+    const int damageInterval{5}; //60=1s, 5 means it does 12dmg per second
+    int damageTimer{0};
 };
 
 
