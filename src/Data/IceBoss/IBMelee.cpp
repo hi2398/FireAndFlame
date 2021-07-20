@@ -1,6 +1,7 @@
 #include <iostream>
 #include "IBMelee.h"
 #include "IBSeek.h"
+#include "IceBoss.h"
 
 IBMelee::IBMelee() {
 
@@ -18,5 +19,12 @@ std::shared_ptr<State> IBMelee::Update(Actor &actor) {
 }
 
 void IBMelee::Draw(Actor &actor) {
-
+    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
+    DrawTextureRec(iceBoss.GetMovingTexture(),
+                   { 0,
+                     0,
+                     (float) iceBoss.GetMovingTexture().width * actor.GetDirection(),
+                     (float) iceBoss.GetMovingTexture().height },
+                   actor.GetPosition(),
+                   WHITE);
 }

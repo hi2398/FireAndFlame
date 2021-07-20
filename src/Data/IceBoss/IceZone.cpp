@@ -4,7 +4,7 @@
 IceZone::IceZone(Vector2 location) : Interactable(InteractableType::IceZone) {
    position=location;
    iceZone = LoadTexture("assets/Bosses/IceBoss/Ice_Zone.png");
-   interactionZone={position.x, position.y-10, 96, 30};
+   interactionZone={position.x, position.y, 96, 20};
 }
 
 void IceZone::Update() {
