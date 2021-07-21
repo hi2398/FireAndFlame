@@ -12,7 +12,7 @@ Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 	hitbox.width = 32;
 	hitbox.height = 32;
 	movementSpeed = 1.0f;
-	activeState = std::make_shared<EnemyStateHandler>();
+	activeState = std::make_shared<EnemyStateHandler>(*this);
 
     /*stunCounter = stunDuration;
     attackCounter = attackDuration;

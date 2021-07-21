@@ -23,7 +23,8 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 			else {
 				actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
 			}
-		
+
+			activeFrame = {0,0, -32, 32};
 			break;
 	case MOVEMENT::MOVE_RIGHT:
 		
@@ -33,43 +34,38 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 			else {
 				actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
 			}
-		
+
+			activeFrame = { 0,0, 32, 32 };
 			break;
 	case MOVEMENT::IDLE:
 		return std::make_shared<IdleGroundedSubState>();
 	case MOVEMENT::DASH_LEFT:
 		actor.Dash(LEFT);
+		frameCounterDash++;
+		activeFrame = { (float)-32 * frameCounterDash, 32* 2, -32, 32 };
 		break;
 	case MOVEMENT::DASH_RIGHT:
 		actor.Dash(RIGHT);
+		frameCounterDash++;
+		activeFrame = { (float)32 * frameCounterDash, 32* 2, 32, 32};
 		break;
 	}
 	return shared_from_this();
 }
 
 void MovingGroundedSubState::Draw(Actor& actor) {
-	if (actor.GetIsSwiping()) {
-		switch (actor.GetAttackDirection()) {
-		case ATT_LEFT:
-			DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-			break;
-		case ATT_RIGHT:
-			DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-			break;
-		}
+	/*if (actor.GetIsSwiping()) {
+		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width * actor.GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 	}
 	else {
-		switch (actor.GetDirection()) {
-		case LEFT:
-			DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-
-			break;
-		case RIGHT:
-			DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-
-			break;
-		}
+		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width * actor.GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+	}*/
+	
+	
+	if (actor.GetIsSwiping()) {
+		DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 	}
-	
-	
+	else {
+		DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+	}
 }
