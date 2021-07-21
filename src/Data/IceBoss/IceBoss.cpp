@@ -13,7 +13,7 @@ IceBoss::IceBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     parts.emplace_back(Part{ -8, 24, 1, LoadTexture("assets/Bosses/IceBoss/Part.png"), 7});
     state = std::make_unique<IBSeek>();
     IceBoss::multiplier=&normalMultiplier; //set multiplier to point to the normal multiplier until boss goes into aggressive mode
-    meleeRange.x=position.x-32;
+    meleeRange.x=position.x-16;
     meleeRange.y=position.y;
 }
 
@@ -22,7 +22,7 @@ void IceBoss::Update() {
     //states needed: part breaking, melee attack, ranged attack, pause(spawn minions+throw three barrels), seek player
     //all actions need an speed multiplier for aggression
     state=state->Update(*this);
-    meleeRange.x=position.x-32;
+    meleeRange.x=position.x-16;
     meleeRange.y=position.y;
 
 

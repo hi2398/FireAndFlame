@@ -67,6 +67,12 @@ void IBSeek::Draw(Actor &actor) {
 }
 
 std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
+    //to avoid weird chases, if player is above boss, decide new
+    if (actor.GetPosition().y-playerCharacter->GetPosition().y>10 && abs(actor.GetPosition().x-playerCharacter->GetPosition().x) <64) {
+        nextAction=NextSeekAction::Decide;
+        return shared_from_this();
+    }
+
     auto& iceBoss=dynamic_cast<IceBoss&>(actor);
     //first, check in which direction the player is
     if(Vector2Subtract(playerCharacter->GetPosition(), iceBoss.GetPosition()).x <=0){
@@ -81,7 +87,8 @@ std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
         return std::make_shared<IBMelee>();
     }
     //else continue moving towards him
-
+    float nextPosX = actor.GetPosition().x+actor.GetDirection()*IceBoss::SpeedMultiplier()*IceBoss::GetMovementSpeed();
+    actor.SetPosition({nextPosX, actor.GetPosition().y});
     return shared_from_this();
 }
 
