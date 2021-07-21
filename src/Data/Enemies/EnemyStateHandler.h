@@ -5,7 +5,7 @@
 class EnemyStateHandler :  public EState{
 public:
 
-    EnemyStateHandler(Enemy& enemy);
+    EnemyStateHandler();
 
     std::shared_ptr<EState> Update(Enemy& enemy) override;
     void Draw(Enemy& enemy) override;

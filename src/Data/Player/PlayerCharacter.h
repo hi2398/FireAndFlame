@@ -57,8 +57,6 @@ public:
     Texture2D texturePlayer;
     Texture2D textureWallSlide;
 
-    Texture2D spriteSheetMagmos;
-
 protected:
 
 private:

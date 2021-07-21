@@ -23,7 +23,7 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
 
 void IdleGroundedSubState::Draw(Actor& actor) {
     auto player = static_cast<PlayerCharacter&>(actor);
-        DrawTextureRec(playerCharacter->spriteSheetMagmos,
+        DrawTextureRec(playerCharacter->texturePlayer,
                        { 0,
                          0,
                          (float)playerCharacter->texturePlayer.width*player.GetDirection(),
