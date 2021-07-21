@@ -13,8 +13,8 @@ protected:
 
 
 private:
-
-
+    Rectangle activeFrame = {};
+    int frameCounterDash = 0;
 };
 
 
