@@ -53,13 +53,7 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
 
 void IBSeek::Draw(Actor &actor) {
     auto& iceBoss=dynamic_cast<IceBoss&>(actor);
-    DrawTextureRec(iceBoss.GetMovingTexture(),
-                   { 0,
-                     0,
-                     (float) iceBoss.GetMovingTexture().width * iceBoss.GetDirection(),
-                     (float) iceBoss.GetMovingTexture().height },
-                   iceBoss.GetPosition(),
-                   WHITE);
+    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
 }
 
 std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {

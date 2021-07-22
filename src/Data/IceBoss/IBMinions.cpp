@@ -19,11 +19,5 @@ std::shared_ptr<State> IBMinions::Update(Actor &actor) {
 
 void IBMinions::Draw(Actor &actor) {
     auto& iceBoss=dynamic_cast<IceBoss&>(actor);
-    DrawTextureRec(iceBoss.GetMovingTexture(),
-                   { 0,
-                     0,
-                     (float) iceBoss.GetMovingTexture().width * actor.GetDirection(),
-                     (float) iceBoss.GetMovingTexture().height },
-                   actor.GetPosition(),
-                   WHITE);
+    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
 }
