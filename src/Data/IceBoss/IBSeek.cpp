@@ -25,15 +25,12 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
         if (IceBoss::Decide()) nextAction=NextSeekAction::Melee;
         else {
             nextAction=NextSeekAction::Ranged;
-            //if next ranged spot hasnt been set, then set it so the boss dashes backwards
-                switch (actor.GetDirection()) {
-                    case LEFT:
-                        rangedSpot=&rightRangedSpot;
-                        break;
-                    case RIGHT:
-                        rangedSpot=&leftRangedSpot;
-                        break;
-                }
+            //set next ranged spot based on distance
+            if (Vector2Distance(actor.GetPosition(), rightRangedSpot)<Vector2Distance(actor.GetPosition(), leftRangedSpot)){
+                rangedSpot=&rightRangedSpot;
+            } else {
+                rangedSpot=&leftRangedSpot;
+            }
         }
     }
 
@@ -46,9 +43,8 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
         case NextSeekAction::Ranged:
             //move away from player and shoot
             return RangedMove(actor);
-
-            case NextSeekAction::Decide: default:
-                break;
+        case NextSeekAction::Decide: default:
+            throw std::logic_error("should not be able to reach this point in IBSeek");
 
     }
     throw std::logic_error("should not be able to reach this point in IBSeek");
@@ -75,13 +71,7 @@ std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
 
     auto& iceBoss=dynamic_cast<IceBoss&>(actor);
     //first, check in which direction the player is
-    if(Vector2Subtract(playerCharacter->GetPosition(), iceBoss.GetPosition()).x <=0){
-        std::cout << "Dir left\n";
-        iceBoss.SetDirection(Direction::LEFT);
-    } else {
-        std::cout << "Dir right\n";
-        iceBoss.SetDirection(Direction::RIGHT);
-    }
+    CalcWalkingDirection(actor, playerCharacter->GetPosition());
     //if player is in range, attack him
     if (CheckCollisionRecs(playerCharacter->playerHitbox, iceBoss.GetMeleeRange())) {
         return std::make_shared<IBMelee>();
@@ -93,6 +83,29 @@ std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
 }
 
 std::shared_ptr<State> IBSeek::RangedMove(Actor& actor) {
-    //TODO: Implement
-    return std::make_shared<IBRanged>();
+    //if the jump is finished, execute the ranged attack
+    if (rangedTimer==0){
+        return std::make_shared<IBRanged>(actor.GetPosition());
+    }
+    //check if boss is at the jump spot
+    if (Vector2Distance(actor.GetPosition(), jumpStart) <= 20 && !jumpStarted){
+        jumpStarted = true;
+    } else { //if not, check which direction to walk in
+        CalcWalkingDirection(actor, jumpStart);
+        float nextPosX = actor.GetPosition().x+actor.GetDirection()*IceBoss::SpeedMultiplier()*IceBoss::GetMovementSpeed();
+        actor.SetPosition({nextPosX, actor.GetPosition().y});
+    }
+    if (jumpStarted) { //jump
+        Vector2Lerp(jumpStart, *rangedSpot, 1.f-rangedTimer/60.f);
+        --rangedTimer;
+    }
+    return shared_from_this();
+}
+
+void IBSeek::CalcWalkingDirection(Actor &actor, Vector2 targetLoc) {
+    if (Vector2Subtract(targetLoc, actor.GetPosition()).x <= 0) {
+        actor.SetDirection(Direction::LEFT);
+    } else {
+        actor.SetDirection(Direction::RIGHT);
+    }
 }
