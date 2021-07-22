@@ -2,6 +2,7 @@
 #include "IBMelee.h"
 #include "IBSeek.h"
 #include "IceBoss.h"
+#include "../../Global.h"
 
 IBMelee::IBMelee() {
 
@@ -9,11 +10,14 @@ IBMelee::IBMelee() {
 
 std::shared_ptr<State> IBMelee::Update(Actor &actor) {
 
-    std::cout << "IBMelee\n";
-    //if melee attack is done, decide go back to seek
-    return std::make_shared<IBSeek>();
-
-
+    if (meleeTimer==0) return std::make_shared<IBSeek>();
+    //TODO: melee
+    --meleeTimer;
+    Vector2 attackCenter= {actor.GetPosition().x+16*actor.GetDirection(), actor.GetPosition().y+16};
+    if (CheckCollisionCircleRec(attackCenter, attackCollisionRad, playerCharacter->playerHitbox) && !playerHit) {
+        playerCharacter->SetHealth(playerCharacter->GetHealth()-meleeDamage);
+        playerHit=true;
+    }
     //as long as melee attack isnt done, continue returning from this
     return shared_from_this();
 }

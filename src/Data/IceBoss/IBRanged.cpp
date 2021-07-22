@@ -19,7 +19,6 @@ std::shared_ptr<State> IBRanged::Update(Actor &actor) {
         actor.SetPosition(Vector2Lerp(startLocation, jumpEnd, 1.f-jumpTimer/60.f));
         --jumpTimer;
     }
-    std::cout << "IBRanged\n";
     if (animTimer==0) {
         Vector2 spawnLoc{targetLocation.x-32, targetLocation.y+32};
         sceneManager->AddInteractable(std::make_unique<IceZone>(spawnLoc));
