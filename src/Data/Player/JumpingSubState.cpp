@@ -5,6 +5,14 @@
 #include "../../Global.h"
 
 
+
+JumpingSubState::JumpingSubState()
+{
+    //throws exception cause player hasnt been constructed yet
+	//activeFrame.width = 32 * playerCharacter->GetDirection();
+
+}
+
 std::shared_ptr<State> JumpingSubState::Update(Actor& actor) {
 	const auto actorPos = actor.GetPosition(); //func alias
 

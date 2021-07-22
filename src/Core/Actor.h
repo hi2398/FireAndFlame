@@ -79,6 +79,8 @@ public:
 
     void LookAtPlayer(); //change direction to look at player
 
+    void DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourceRec = {0, 0, 32, 32}) const;
+
 protected:
     Vector2 lastTickPos;
     Direction direction{RIGHT};

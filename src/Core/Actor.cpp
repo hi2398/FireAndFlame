@@ -167,6 +167,16 @@ Vector2 Actor::Dash(int direction) {
 	return position;
 }
 
+void Actor::DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourceRec) const {
+    DrawTextureRec(texture,
+                   { sourceRec.x,
+                     sourceRec.y,
+                     (float) sourceRec.width * GetDirection(),
+                     (float) sourceRec.height },
+                   location,
+                   WHITE);
+}
+
 bool Actor::GetCanDash() const
 {
 	return canDash;

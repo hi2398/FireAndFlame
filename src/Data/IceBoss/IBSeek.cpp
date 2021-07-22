@@ -16,7 +16,7 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
     actor.LookAtPlayer(); //while seeking, always look at player
 
     if (nextAction==NextSeekAction::Decide){
-
+        std::cout << "Deciding";
         //if player health is under 50%, spawn minions with a chance, instantly switch state cause spawn point is fixed
         if (playerCharacter->GetHealth() < playerCharacter->GetMaxHealth()/2){
             if (IceBoss::Decide()) return std::make_shared<IBMinions>();
@@ -25,15 +25,12 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
         if (IceBoss::Decide()) nextAction=NextSeekAction::Melee;
         else {
             nextAction=NextSeekAction::Ranged;
-            //if next ranged spot hasnt been set, then set it so the boss dashes backwards
-                switch (actor.GetDirection()) {
-                    case LEFT:
-                        rangedSpot=&rightRangedSpot;
-                        break;
-                    case RIGHT:
-                        rangedSpot=&leftRangedSpot;
-                        break;
-                }
+            //set next ranged spot based on distance
+            if (Vector2Distance(actor.GetPosition(), rightRangedSpot)<Vector2Distance(actor.GetPosition(), leftRangedSpot)){
+                rangedSpot=&rightRangedSpot;
+            } else {
+                rangedSpot=&leftRangedSpot;
+            }
         }
     }
 
@@ -46,56 +43,66 @@ std::shared_ptr<State> IBSeek::Update(Actor &actor) {
         case NextSeekAction::Ranged:
             //move away from player and shoot
             return RangedMove(actor);
+        case NextSeekAction::Decide: default:
+            throw std::logic_error("should not be able to reach this point in IBSeek");
 
-            case NextSeekAction::Decide: default:
-            throw std::logic_error("should not be able to reach decide action at this point in IBSeek");
     }
+    throw std::logic_error("should not be able to reach this point in IBSeek");
 }
 
 
 void IBSeek::Draw(Actor &actor) {
-
+    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
+    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
 }
 
 std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
+    //to avoid weird chases, if player is above boss, decide new
+    if (actor.GetPosition().y-playerCharacter->GetPosition().y>10 && abs(actor.GetPosition().x-playerCharacter->GetPosition().x) <64) {
+        nextAction=NextSeekAction::Decide;
+        return shared_from_this();
+    }
 
-    //get player location, check distance from boss and make direction out of that
-    auto playerPos = playerCharacter->GetPosition();
-    auto distance = Vector2Subtract(playerPos, actor.GetPosition());
-    auto direction = Vector2Normalize(distance);
-    auto xPos=actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier());
-    Vector2 posNextFrame{xPos, actor.GetPosition().y};
-    actor.SetPosition(posNextFrame);
-
-    //if close enough, execute attack
-    if (Vector2Distance(playerCharacter->GetPosition(), actor.GetPosition())<=32){
+    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
+    //first, check in which direction the player is
+    CalcWalkingDirection(actor, playerCharacter->GetPosition());
+    //if player is in range, attack him
+    if (CheckCollisionRecs(playerCharacter->playerHitbox, iceBoss.GetMeleeRange())) {
         return std::make_shared<IBMelee>();
     }
-    //otherwise, continue next frame
+    //else continue moving towards him
+    float nextPosX = actor.GetPosition().x+actor.GetDirection()*IceBoss::SpeedMultiplier()*IceBoss::GetMovementSpeed();
+    actor.SetPosition({nextPosX, actor.GetPosition().y});
     return shared_from_this();
 }
 
 std::shared_ptr<State> IBSeek::RangedMove(Actor& actor) {
 
-    //if close enough to the ranged spot, switch state and null out pointer
-    if (rangedSpot) {
-        if (Vector2Distance(actor.GetPosition(), *rangedSpot) <= 10.f) {
-            rangedSpot = nullptr;
-            return std::make_shared<IBRanged>();
-        }
-        if (Vector2Distance(actor.GetPosition(), *rangedSpot) <= 64.f) { //if is in range of two tiles, dash fast instead
-            auto direction = Vector2Normalize(Vector2Add(actor.GetPosition(), *rangedSpot));
-            auto xPos = actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier() * 4.f);
-            actor.SetPosition({xPos, actor.GetPosition().y});
-            return shared_from_this();
-        } else {
-            //timestep the move, return self
-            //jump backwards to ranged spot, then shoot
-            auto direction = Vector2Normalize(Vector2Add(actor.GetPosition(), *rangedSpot));
-            auto xPos = actor.GetPosition().x + (direction.x * IceBoss::GetMovementSpeed() * IceBoss::SpeedMultiplier());
-            actor.SetPosition({xPos, actor.GetPosition().y});
-            return shared_from_this();
-        }
-    } else throw std::invalid_argument("Invalid Pointer in IceBoss Ranged Spot");
+    //if the jump is finished, execute the ranged attack
+    if (rangedTimer==0) return std::make_shared<IBRanged>(actor.GetPosition());
 
+    //check if boss is at the jump spot
+    if (Vector2Distance(actor.GetPosition(), jumpStart) <= 20 && !jumpStarted){
+        std::cout << jumpStarted;
+        jumpStarted = true;
+    } else {
+        //if not, check which direction to walk in
+        CalcWalkingDirection(actor, jumpStart);
+        float nextPosX = actor.GetPosition().x+actor.GetDirection()*IceBoss::SpeedMultiplier()*IceBoss::GetMovementSpeed();
+        actor.SetPosition({nextPosX, actor.GetPosition().y});
+    }
+    if (jumpStarted) { //jump
+
+        actor.SetPosition(Vector2Lerp(jumpStart, *rangedSpot, 1.f-rangedTimer/60.f));
+        --rangedTimer;
+    }
+    return shared_from_this();
+}
+
+void IBSeek::CalcWalkingDirection(Actor &actor, Vector2 targetLoc) {
+    if (Vector2Subtract(targetLoc, actor.GetPosition()).x <= 0) {
+        actor.SetDirection(Direction::LEFT);
+    } else {
+        actor.SetDirection(Direction::RIGHT);
+    }
 }
