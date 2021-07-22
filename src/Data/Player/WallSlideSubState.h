@@ -14,5 +14,8 @@ protected:
 
 private:
 
+    int wallFrameCounter = 0;
+    int thisFrame = 0;
+    Rectangle activeFrame{};
 
 };

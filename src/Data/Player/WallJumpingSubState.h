@@ -16,4 +16,8 @@ protected:
 private:
     int wallJumpDirection;
 
+
+    int wallJumpFrameCounter = 0;
+    int thisFrame = 0;
+    Rectangle activeFrame{};
 };

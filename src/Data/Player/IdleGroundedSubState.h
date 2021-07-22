@@ -13,7 +13,9 @@ protected:
 
 
 private:
-
+    int idleFrameCounter = 0;
+    int thisFrame= 0;
+    Rectangle activeFrame{};
 
 };
 

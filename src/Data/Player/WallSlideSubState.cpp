@@ -48,8 +48,18 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
 			    return std::make_shared<FallingSubState>();
 		}
 	}
-
 	else if (!actor.GetWallJumpCommand()) return std::make_shared<FallingSubState>();
+
+
+	//frame handling
+	wallFrameCounter++;
+	if (wallFrameCounter >= 15) {
+		thisFrame++;
+		wallFrameCounter = 0;
+	}
+	activeFrame = { (float)32 * thisFrame, 32, (float)32 * playerCharacter->GetDirection(), 32 };
+
+	
 
 	//Jumping Off Wall
 	if (actor.GetWallJumpCommand()) {
@@ -64,13 +74,9 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
 }
 
 void WallSlideSubState::Draw(Actor& actor) {
-
-
-	if (actor.GetWallCounter() >= 5) {
-		DrawTextureRec(playerCharacter->textureWallSlide, { 0, 0, (float)playerCharacter->texturePlayer.width * playerCharacter->GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-	}
-	else {
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width * playerCharacter->GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-	}
+	DrawTextureRec(playerCharacter->spriteSheetMagmos,
+		activeFrame,
+		playerCharacter->GetPosition(),
+		WHITE);
 	
 }

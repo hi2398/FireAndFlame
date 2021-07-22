@@ -14,6 +14,12 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
         case MOVEMENT::MOVE_RIGHT:
         return std::make_shared<MovingGroundedSubState>();
     case MOVEMENT::IDLE:
+        idleFrameCounter++;
+        if (idleFrameCounter >= 15) {
+            thisFrame++;
+            idleFrameCounter = 0;
+        }
+        activeFrame = { (float)-32 * thisFrame, 0, (float)32 * playerCharacter->GetDirection(), 32 };
         return shared_from_this();
     case MOVEMENT::DASH_LEFT:
     case MOVEMENT::DASH_RIGHT:
@@ -24,10 +30,7 @@ std::shared_ptr<State> IdleGroundedSubState::Update(Actor &actor) {
 void IdleGroundedSubState::Draw(Actor& actor) {
     auto player = static_cast<PlayerCharacter&>(actor);
         DrawTextureRec(playerCharacter->spriteSheetMagmos,
-                       { 0,
-                         0,
-                         (float)playerCharacter->texturePlayer.width*player.GetDirection(),
-                         (float)playerCharacter->texturePlayer.height },
+                       activeFrame,
                          playerCharacter->GetPosition(),
                            WHITE);
 }

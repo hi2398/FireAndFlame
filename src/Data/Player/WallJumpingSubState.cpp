@@ -42,16 +42,19 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
 		return std::make_shared<WallSlideSubState>();
 	}
 
+	wallJumpFrameCounter++;
+	if (wallJumpFrameCounter >= 15) {
+		thisFrame++;
+		wallJumpFrameCounter = 0;
+	}
+	activeFrame = { (float)32 * thisFrame, 0, (float)32 * wallJumpDirection ,32 };
+
 	return shared_from_this();
 }
 
 void WallJumpingSubState::Draw(Actor& actor) {
-	switch (actor.GetDirection()) {
-	case RIGHT:
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-		break;
-	case LEFT:
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-		break;
-	}
+	DrawTextureRec(playerCharacter->spriteSheetMagmos,
+		activeFrame,
+		playerCharacter->GetPosition(),
+		WHITE);
 }
