@@ -5,8 +5,8 @@
 #include "RoamingState.h"
 #include "IdleState.h"
 
-EnemyStateHandler::EnemyStateHandler() {
-	nextState = std::make_shared<IdleState>();
+EnemyStateHandler::EnemyStateHandler(Enemy &enemy) : EState(enemy){
+	nextState = std::make_shared<IdleState>(enemy);
 }
 
 std::shared_ptr<EState> EnemyStateHandler::Update(Enemy& enemy)

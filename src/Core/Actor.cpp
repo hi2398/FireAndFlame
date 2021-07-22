@@ -159,8 +159,8 @@ void Actor::SetIsDashing(bool isDashing) {
 Vector2 Actor::Dash(int direction) {
 	dashCounter++;
 	isDashing = true;
-	position.x += dashDistance * direction / 6;
-	if (dashCounter >= 6) {
+	position.x += dashDistance * direction / 12;
+	if (dashCounter >= 12) {
 		isDashing = false;
 		dashCounter = 0;
 	}

@@ -5,6 +5,10 @@
 #include "RoamingState.h"
 #include "StunnedState.h"
 
+RoamingState::RoamingState(Enemy& enemy) : EState(enemy)
+{
+}
+
 std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 {
 	if constexpr (DEBUG_ENEMY_STATES) {
@@ -25,14 +29,14 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				//enter approaching state on player sight left
-				return std::make_shared<ApproachingState>();
+				return std::make_shared<ApproachingState>(enemy);
 			}
 			break;
 		case RIGHT:
 			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				//enter approaching state on player sight right
-				return std::make_shared<ApproachingState>();
+				return std::make_shared<ApproachingState>(enemy);
 			}
 			break;
 		default:
@@ -103,13 +107,13 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		//enter idle state randomly every few seconds (0.5% chance per tick)
 		int decideAction = GetRandomValue(1, 400);
 		if (decideAction < 2) {
-			return std::make_shared<IdleState>();
+			return std::make_shared<IdleState>(enemy);
 		}
 		break;
 	}
 
 	if (enemy.IsInvulnerable()) {
-		return std::make_shared<StunnedState>();
+		return std::make_shared<StunnedState>(enemy);
 	}
 
 	return shared_from_this();
