@@ -15,6 +15,7 @@ protected:
 
 private:
     Texture2D iceZone;
+    int lifetime{180};
     const int damageInterval{5}; //60=1s, 5 means it does 12dmg per second
     int damageTimer{0};
 };

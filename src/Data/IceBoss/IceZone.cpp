@@ -8,7 +8,8 @@ IceZone::IceZone(Vector2 location) : Interactable(InteractableType::IceZone) {
 }
 
 void IceZone::Update() {
-
+    --lifetime;
+    if (lifetime==0) markedDestroy = true;
 }
 
 void IceZone::Draw() {

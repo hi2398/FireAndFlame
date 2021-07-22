@@ -21,6 +21,9 @@ private:
     Vector2 startLocation{};
     Vector2 barrelPos;
     Texture2D barrel;
+    bool jumpStarted{false};
+    int jumpTimer{60};
+    const Vector2 jumpEnd{29*32, 36*32};
 
 };
 

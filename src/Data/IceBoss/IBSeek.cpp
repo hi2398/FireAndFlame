@@ -83,20 +83,23 @@ std::shared_ptr<State> IBSeek::MeleeApproach(Actor& actor) {
 }
 
 std::shared_ptr<State> IBSeek::RangedMove(Actor& actor) {
+
     //if the jump is finished, execute the ranged attack
-    if (rangedTimer==0){
-        return std::make_shared<IBRanged>(actor.GetPosition());
-    }
+    if (rangedTimer==0) return std::make_shared<IBRanged>(actor.GetPosition());
+
     //check if boss is at the jump spot
     if (Vector2Distance(actor.GetPosition(), jumpStart) <= 20 && !jumpStarted){
+        std::cout << jumpStarted;
         jumpStarted = true;
-    } else { //if not, check which direction to walk in
+    } else {
+        //if not, check which direction to walk in
         CalcWalkingDirection(actor, jumpStart);
         float nextPosX = actor.GetPosition().x+actor.GetDirection()*IceBoss::SpeedMultiplier()*IceBoss::GetMovementSpeed();
         actor.SetPosition({nextPosX, actor.GetPosition().y});
     }
     if (jumpStarted) { //jump
-        Vector2Lerp(jumpStart, *rangedSpot, 1.f-rangedTimer/60.f);
+
+        actor.SetPosition(Vector2Lerp(jumpStart, *rangedSpot, 1.f-rangedTimer/60.f));
         --rangedTimer;
     }
     return shared_from_this();
