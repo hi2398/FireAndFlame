@@ -8,10 +8,6 @@
 
 #include "raymath.h"
 
-ApproachingState::ApproachingState(Enemy& enemy) : EState(enemy)
-{
-}
-
 std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 {
 
@@ -26,7 +22,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		//frameCounter for animation
 		approachingFrameCounter++;
 
-		//check line of sight in approaching
+		//check line of sight in idle
 		Rectangle enemySight;
 		switch (enemy.GetDirection())
 		{
@@ -76,19 +72,19 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 		//enter idle when losing aggro after 5 secs
 		if (aggroCooldown >= 300) {
-			return std::make_shared<RoamingState>(enemy);
+			return std::make_shared<RoamingState>();
 		}
 
 		//enter attacking state when in range
 		if (CheckCollisionRecs(playerCharacter->playerHitbox, enemy.GetAttackHitbox())) {
-			return std::make_shared<AttackingState>(enemy);
+			return std::make_shared<AttackingState>();
 		}
 
 		break;
 	}
 
 	if (enemy.IsInvulnerable()) {
-		return std::make_shared<StunnedState>(enemy);
+		return std::make_shared<StunnedState>();
 	}
 
 

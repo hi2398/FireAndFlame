@@ -4,6 +4,7 @@
 #include "WallSlideSubState.h"
 #include "../../Global.h"
 
+
 JumpingSubState::JumpingSubState()
 {
     //throws exception cause player hasnt been constructed yet
@@ -36,8 +37,6 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& actor) {
 		else {
 			actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
 		}
-
-		activeFrame = { 0,0, -32, 32 };
 		break;
 	case MOVEMENT::MOVE_RIGHT:
 
@@ -47,27 +46,18 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& actor) {
 		else {
 			actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
 		}
-
-		activeFrame = { 0,0, 32, 32 };
 		break;
 	case MOVEMENT::DASH_LEFT:
 		actor.Dash(LEFT);
 		actor.SetJumpSpeed(5.0f);
 		actor.SetJumpCommand(false);
-		frameCounterDash++;
-		activeFrame = { (float)-32 * frameCounterDash, 32 * 2, -32, 32 };
 		return std::make_shared<FallingSubState>();
 		break;
 	case MOVEMENT::DASH_RIGHT:
 		actor.Dash(RIGHT);
 		actor.SetJumpSpeed(5.0f);
 		actor.SetJumpCommand(false);
-		frameCounterDash++;
-		activeFrame = { (float)32 * frameCounterDash, 32 * 2, -32, 32 };
 		return std::make_shared<FallingSubState>();
-		break;
-	default:
-		activeFrame = {0,0,(float)32* actor.GetDirection(), 32};
 		break;
 	}
 
@@ -125,14 +115,12 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& actor) {
 }
 
 void JumpingSubState::Draw(Actor& actor) {
-	/*switch (actor.GetDirection()) {
+	switch (actor.GetDirection()) {
 	case LEFT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 		break;
 	case RIGHT:
 		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 		break;
-	}*/
-
-	DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+	}
 }

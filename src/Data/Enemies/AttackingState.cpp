@@ -4,10 +4,6 @@
 #include "AttackingState.h"
 #include "StunnedState.h"
 
-AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
-{
-}
-
 std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Attacking\n";
@@ -20,7 +16,7 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		
 		//exit attacking state when out of range
 		if (!CheckCollisionRecs(playerCharacter->playerHitbox, enemy.GetAttackHitbox())) {
-			return std::make_shared<ApproachingState>(enemy);
+			return std::make_shared<ApproachingState>();
 		}
 		else {
 			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemy.GetDamageValue());
@@ -28,7 +24,7 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 	}
 
 	if (enemy.IsInvulnerable()) {
-		return std::make_shared<StunnedState>(enemy);
+		return std::make_shared<StunnedState>();
 	}
 	return  shared_from_this();
 }

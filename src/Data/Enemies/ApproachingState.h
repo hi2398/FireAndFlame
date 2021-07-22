@@ -4,7 +4,6 @@
 
 class ApproachingState : public EState {
 public:
-    ApproachingState(Enemy& enemy);
     std::shared_ptr <EState> Update(Enemy& enemy) override;
     void Draw(Enemy& enemy)override;
 

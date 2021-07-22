@@ -5,10 +5,6 @@
 #include "RoamingState.h"
 #include "StunnedState.h"
 
-IdleState::IdleState(Enemy& enemy) : EState(enemy)
-{
-}
-
 std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 {
 	if constexpr (DEBUG_ENEMY_STATES) {
@@ -31,14 +27,14 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				//enter approaching state on player sight left
-				return std::make_shared<ApproachingState>(enemy);
+				return std::make_shared<ApproachingState>();
 			}
 			break;
 		case RIGHT:
 			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				//enter approaching state on player sight right
-				return std::make_shared<ApproachingState>(enemy);
+				return std::make_shared<ApproachingState>();
 			}
 			break;
 		default:
@@ -46,13 +42,13 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		}
 		int decision = GetRandomValue(1, 100);
 		if (decision < 2) {
-			return std::make_shared<RoamingState>(enemy);
+			return std::make_shared<RoamingState>();
 		}
 		break;
 	}
 
 	if (enemy.IsInvulnerable()) {
-		return std::make_shared<StunnedState>(enemy);
+		return std::make_shared<StunnedState>();
 	}
 	
 	return shared_from_this();

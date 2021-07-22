@@ -11,8 +11,6 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
 	textureWallSlide = LoadTexture("assets/graphics/PLAYER_WALL.png");
 
-	spriteSheetMagmos = LoadTexture("assets/graphics/MagmosSpritesheet.png");
-
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 	camera.offset = { 640, 360 };
 	camera.rotation = 0.0f;
