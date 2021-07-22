@@ -7,9 +7,8 @@
 #include "Global.h"
 #include "config.h"
 #include "helper.h"
-#include "Scenes/Tutorial.h"
-#include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
+#include "Scenes/MainMenu.h"
 #include "Scenes/IceBossScene.h"
 
 
@@ -39,7 +38,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<Tutorial>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();

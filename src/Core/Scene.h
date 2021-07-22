@@ -19,7 +19,9 @@ public:
     [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;
     [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
 
-    
+    void AddEnemy(std::unique_ptr<Enemy> enemy);
+    void AddInteractable(std::unique_ptr<Interactable> interactable);
+
     void RemoveMarkedDelete();
 
 protected:
