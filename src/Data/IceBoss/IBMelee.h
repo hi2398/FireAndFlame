@@ -14,7 +14,10 @@ protected:
 
 
 private:
-
+    int meleeTimer{60};
+    float attackCollisionRad{16};
+    const int meleeDamage{5};
+    bool playerHit{false}; //prevent multihits
 
 };
 

@@ -26,6 +26,9 @@ public:
     [[nodiscard]] const std::list<std::unique_ptr<Enemy>> &GetEnemies() const;
     [[nodiscard]] const std::unique_ptr<Tilemap>& GetTilemap();
 
+    void AddEnemy(std::unique_ptr<Enemy> enemy);
+    void AddInteractable(std::unique_ptr<Interactable> interactable);
+
     void SaveGame(std::string saveFolder, int slot);
     void LoadGame(std::string saveFolder, int slot);
 
