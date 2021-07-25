@@ -2,7 +2,7 @@
 #include "Object.h"
 #include "Actor.h"
 
-enum class InteractableType{Coal,SceneChangeCollider,DialogObj};
+enum class InteractableType{Coal,SceneChangeCollider,DialogObj, IceZone, FinalBossAttack};
 
 class Interactable : public Object {
 public:
