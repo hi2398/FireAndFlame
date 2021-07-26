@@ -6,7 +6,7 @@
 #include "../../Global.h"
 #include "IceZone.h"
 
-IBRanged::IBRanged(Vector2 startLocation) {
+IBRanged::IBRanged(Vector2 startLocation){
     this->startLocation=startLocation;
     barrel= LoadTexture("assets/Bosses/IceBoss/Barrel.png");
     barrelPos=startLocation;

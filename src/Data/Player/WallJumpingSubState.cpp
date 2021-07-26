@@ -5,53 +5,56 @@
 #include "WallJumpingSubState.h"
 #include "../../Global.h"
 
-std::shared_ptr<State> WallJumpingSubState::Update(Actor& actor) {
+WallJumpingSubState::WallJumpingSubState(Actor& player) : PlayerStates(player) {
+
+}
+
+std::shared_ptr<State> WallJumpingSubState::Update(Actor& player) {
 
 	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Wall Jump\n";
 	}
 
-	actor.SetTimesJumped(1);
-	actor.SetJumpBlocked(true);
-	actor.SetWallCounter(0);
+	player.SetTimesJumped(1);
+	player.SetJumpBlocked(true);
+	player.SetWallCounter(0);
 
-	if (actor.GetHeadCollision()) {
-		actor.SetJumpSpeed(5.0f);
-		actor.SetJumpBlocked(false);
-		return std::make_shared<FallingSubState>();
+	if (player.GetHeadCollision()) {
+		player.SetJumpSpeed(5.0f);
+		player.SetJumpBlocked(false);
+		return std::make_shared<FallingSubState>(player);
 	}
 
 
 	//wall jump
-	if (actor.GetJumpSpeed() == 5.0f) wallJumpDirection = -actor.GetDirection();
-	actor.SetPosition({ actor.GetPosition().x + 3.0f * wallJumpDirection, actor.GetPosition().y - actor.GetJumpSpeed() });
-	actor.SetJumpSpeed(actor.GetJumpSpeed() - 0.1f * actor.GetGravityMultiplier());
-	if (actor.GetJumpSpeed() <= 0) {
-		actor.SetJumpSpeed(5.0f);
-		actor.SetWallJumpCommand(false);
-		actor.SetJumpCommand(false);
-		actor.SetJumpBlocked(false);
-		return std::make_shared<FallingSubState>();
+	if (player.GetJumpSpeed() == 5.0f) wallJumpDirection = -player.GetDirection();
+	player.SetPosition({ player.GetPosition().x + 3.0f * wallJumpDirection, player.GetPosition().y - player.GetJumpSpeed() });
+	player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
+	if (player.GetJumpSpeed() <= 0) {
+		player.SetJumpSpeed(5.0f);
+		player.SetWallJumpCommand(false);
+		player.SetJumpCommand(false);
+		player.SetJumpBlocked(false);
+		return std::make_shared<FallingSubState>(player);
 	}
 
 	//quit wall jump when touching another wall
-	if ((actor.GetWallCollisionLeft() && actor.GetDirection() == RIGHT) || (actor.GetWallCollisionRight() && actor.GetDirection() == LEFT)) {
-		actor.SetWallJumpCommand(false);
-		actor.SetJumpCommand(false);
-		actor.SetJumpBlocked(false);
-		return std::make_shared<WallSlideSubState>();
+	if ((player.GetWallCollisionLeft() && player.GetDirection() == RIGHT) || (player.GetWallCollisionRight() && player.GetDirection() == LEFT)) {
+		player.SetWallJumpCommand(false);
+		player.SetJumpCommand(false);
+		player.SetJumpBlocked(false);
+		return std::make_shared<WallSlideSubState>(player);
 	}
+
+	
+	activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 0, (float)32 * wallJumpDirection ,32 };
 
 	return shared_from_this();
 }
 
-void WallJumpingSubState::Draw(Actor& actor) {
-	switch (actor.GetDirection()) {
-	case RIGHT:
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-		break;
-	case LEFT:
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)-playerCharacter->texturePlayer.width, (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-		break;
-	}
+void WallJumpingSubState::Draw(Actor& player) {
+	DrawTextureRec(playerCharacter->lowerBody,
+		activeFrame,
+		player.GetPosition(),
+		WHITE);
 }

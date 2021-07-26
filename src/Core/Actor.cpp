@@ -43,9 +43,7 @@ bool Actor::GetJumpCommand() const {
 }
 
 MOVEMENT Actor::GetNextMovement() {
-    MOVEMENT tmp = nextMovement;
-    nextMovement = MOVEMENT::IDLE;
-    return tmp;
+    return nextMovement;
 }
 
 void Actor::SetNextMovement(MOVEMENT movement) {

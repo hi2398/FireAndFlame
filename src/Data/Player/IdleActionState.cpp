@@ -5,7 +5,11 @@
 #include <stdexcept>
 #include <iostream>
 
-std::shared_ptr<State> IdleActionState::Update(Actor& actor) {
+IdleActionState::IdleActionState(Actor& player) : PlayerStates(player) {
+
+}
+
+std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 	//attack reset
 	if (playerCharacter->attackState > 0) {
 		playerCharacter->resetAttack++;
@@ -19,8 +23,8 @@ std::shared_ptr<State> IdleActionState::Update(Actor& actor) {
 		if constexpr (DEBUG_PLAYER_STATES) {
 			std::cout << "new state: melee" << std::endl;
 		}
-		if (!playerCharacter->GetActionBlocked()) {
-			return std::make_shared<MeleeActionState>();
+		if (!player.GetActionBlocked()) {
+			return std::make_shared<MeleeActionState>(player);
 		}
 		else return shared_from_this();
 
@@ -28,19 +32,52 @@ std::shared_ptr<State> IdleActionState::Update(Actor& actor) {
 		if constexpr (DEBUG_PLAYER_STATES) {
 			std::cout << "new state: ranged" << std::endl;
 		}
-		if (!playerCharacter->GetActionBlocked()) {
-			return std::make_shared<RangedActionState>();
+		if (!player.GetActionBlocked()) {
+			return std::make_shared<RangedActionState>(player);
 		}
 		else return shared_from_this();
 
 	case ACTION::NONE:
-	default:
+		
+		
+
+		switch (player.GetNextMovement())
+		{
+		case MOVEMENT::MOVE_LEFT:
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, -32, 32 };
+			break;
+		case MOVEMENT::MOVE_RIGHT:
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, 32, 32 };
+			break;
+		case MOVEMENT::IDLE:
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 0, (float)32 * player.GetDirection(), 32 };
+			break;
+		default:
+			break;
+		}
 
 		return shared_from_this();
+	default:
+		break;
 	}
 	throw std::invalid_argument("bad state");
 }
 
-void IdleActionState::Draw(Actor& actor) {
-
+void IdleActionState::Draw(Actor& player) {
+	if (player.IsGrounded() && !player.GetIsDashing()) {
+		switch (player.GetNextMovement())
+		{
+		case MOVEMENT::MOVE_LEFT:
+			DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
+			break;
+		case MOVEMENT::MOVE_RIGHT:
+			DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
+			break;
+		case MOVEMENT::IDLE:
+			DrawTextureRec(playerCharacter->upperBody, activeFrame, {player.GetPosition()}, WHITE);
+			break;
+		default:
+			break;
+		}
+	}
 }
