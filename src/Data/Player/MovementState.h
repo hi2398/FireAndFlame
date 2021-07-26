@@ -1,14 +1,13 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/PlayerStates.h"
 
-class MovementState : public State{
+class MovementState : public PlayerStates {
 public:
+    MovementState(Actor&player);
 
-    MovementState();
-
-    std::shared_ptr<State> Update(Actor &actor) override;
-    void Draw(Actor& actor) override;
+    std::shared_ptr<State> Update(Actor& player) override;
+    void Draw(Actor& player) override;
 
     ~MovementState() override = default;
 

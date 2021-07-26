@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/PlayerStates.h"
 
-class WallSlideSubState : public State {
+class WallSlideSubState : public PlayerStates {
 public:
-    std::shared_ptr <State> Update(Actor& actor) override;
-    void Draw(Actor& actor) override;
+    WallSlideSubState(Actor& player);
+    std::shared_ptr <State> Update(Actor& player) override;
+    void Draw(Actor& player) override;
 
     ~WallSlideSubState() override = default;
 
@@ -13,9 +14,5 @@ protected:
 
 
 private:
-
-    int wallFrameCounter = 0;
-    int thisFrame = 0;
-    Rectangle activeFrame{};
 
 };

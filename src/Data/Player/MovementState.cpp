@@ -7,38 +7,37 @@
 
 
 
-MovementState::MovementState() {
-    groundedSubState=std::make_shared<IdleGroundedSubState>();
-    aerialSubState=std::make_shared<JumpingSubState>();
+MovementState::MovementState(Actor& player) : PlayerStates(player) {
+    groundedSubState=std::make_shared<IdleGroundedSubState>(player);
+    aerialSubState=std::make_shared<JumpingSubState>(player);
 }
 
-std::shared_ptr<State> MovementState::Update(Actor &actor) {
+std::shared_ptr<State> MovementState::Update(Actor& player) {
 
-    actor.SetActionBlocked(false);
-    if (actor.IsGrounded()) {
-        aerialSubState = std::make_shared<JumpingSubState>();
-        actor.SetCanDash(true);
-        actor.SetWallCounter(0);
-        actor.SetTimesJumped(0);
-        actor.SetJumpCommand(false);
-        actor.SetWallJumpCommand(false);
-        actor.SetJumpSpeed(5.0f);
-        actor.SetFallingSpeed(0.0f);
-        groundedSubState=groundedSubState->Update(actor); //IdleGroundedSubState or MovingGroundedSubState
+    player.SetActionBlocked(false);
+    if (player.IsGrounded()) {
+        aerialSubState = std::make_shared<JumpingSubState>(player);
+        player.SetCanDash(true);
+        player.SetWallCounter(0);
+        player.SetTimesJumped(0);
+        player.SetJumpCommand(false);
+        player.SetWallJumpCommand(false);
+        player.SetJumpSpeed(5.0f);
+        player.SetFallingSpeed(0.0f);
+        groundedSubState=groundedSubState->Update(player); //IdleGroundedSubState or MovingGroundedSubState
     } else {
-        aerialSubState=aerialSubState->Update(actor); //FallingSubState or JumpingSubState
+        aerialSubState=aerialSubState->Update(player); //FallingSubState or JumpingSubState
     }
 
 
     return shared_from_this(); //always return this, acts as a container
 }
 
-void MovementState::Draw(Actor& actor) {
-    auto player = static_cast<PlayerCharacter&>(actor);
-    if (actor.IsGrounded()) {
-        groundedSubState->Draw(actor); //IdleGroundedSubState or MovingGroundedSubState
+void MovementState::Draw(Actor& player) {
+    if (player.IsGrounded()) {
+        groundedSubState->Draw(player); //IdleGroundedSubState or MovingGroundedSubState
     }
     else {
-        aerialSubState->Draw(actor); //FallingSubState or JumpingSubState
+        aerialSubState->Draw(player); //FallingSubState or JumpingSubState
     }
 }

@@ -106,13 +106,17 @@ protected:
     bool isSwiping{ false };
     bool actionBlocked{ false };
 
+	//Movement
+	MOVEMENT nextMovement{ MOVEMENT::IDLE };
+
     void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionRight(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionHead(const std::unique_ptr<Tilemap>& tilemap);
+
+
 private:
-    //Movement
-    MOVEMENT nextMovement{ MOVEMENT::IDLE };
+    
     
 };
 

@@ -8,8 +8,8 @@
 #include "../../Scenes/DeathScreen.h"
 
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
-	texturePlayer = LoadTexture("assets/graphics/PLAYER.png");
-	textureWallSlide = LoadTexture("assets/graphics/PLAYER_WALL.png");
+	upperBody = LoadTexture("assets/graphics/MagmosUpperBody.png");
+	lowerBody = LoadTexture("assets/graphics/MagmosLegs.png");
 
 	spriteSheetMagmos = LoadTexture("assets/graphics/MagmosSpritesheet.png");
 
@@ -18,8 +18,8 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	camera.rotation = 0.0f;
 	camera.zoom = 2.0f;
 	observer = std::make_shared<PlayerObserver>(*this);
-	movementState = std::make_shared<MovementState>();
-	actionState = std::make_shared<IdleActionState>();
+	movementState = std::make_shared<MovementState>(*this);
+	actionState = std::make_shared<IdleActionState>(*this);
 	position = { 0, 0 };
 
 	gravityMultiplier = 2.0;
@@ -36,6 +36,12 @@ void PlayerCharacter::Update() {
 
 	actionState = actionState->Update(*this);
 
+	//animation frame counter
+	playerFrameCounter++;
+	if (playerFrameCounter >= 15) {
+		currentFrame++;
+		playerFrameCounter = 0;
+	}
 
 	//regularly decrease health
 	if(isHealthDecreasing) {
@@ -76,6 +82,8 @@ void PlayerCharacter::Update() {
 			interactable->Interact(*this);
 		}
 	}
+
+	nextMovement = MOVEMENT::IDLE;
 }
 
 void PlayerCharacter::Draw() {
@@ -127,4 +135,10 @@ void PlayerCharacter::ChangePlayerMovement(bool playerMovement) {
     disablePlayerMovement = playerMovement;
 }
 
+int PlayerCharacter::GetFrame() {
+	return playerFrameCounter;
+}
 
+int PlayerCharacter::GetCurrentFrame() {
+	return currentFrame;
+}
