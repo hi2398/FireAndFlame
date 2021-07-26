@@ -4,6 +4,10 @@
 #include "StunnedState.h"
 
 
+StunnedState::StunnedState(Enemy& enemy) : EState(enemy)
+{
+}
+
 std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Stunned\n";
@@ -15,7 +19,7 @@ std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 		stunnedFrameCounter++;
 
 		if (stunnedFrameCounter >= 30) {
-			return std::make_shared<ApproachingState>();
+			return std::make_shared<ApproachingState>(enemy);
 		}
 	}
 	return  shared_from_this();

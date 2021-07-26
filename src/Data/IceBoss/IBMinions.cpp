@@ -1,6 +1,7 @@
 #include <iostream>
 #include "IBMinions.h"
 #include "IBSeek.h"
+#include "IceBoss.h"
 
 IBMinions::IBMinions() {
 
@@ -17,5 +18,6 @@ std::shared_ptr<State> IBMinions::Update(Actor &actor) {
 }
 
 void IBMinions::Draw(Actor &actor) {
-
+    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
+    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
 }

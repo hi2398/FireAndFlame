@@ -138,3 +138,11 @@ void SceneManager::Draw() {
 Vector2 SceneManager::GetVirtualMousePosition() {
     return virtualMousePosition;
 }
+
+void SceneManager::AddEnemy(std::unique_ptr<Enemy> enemy) {
+    activeScene->AddEnemy(std::move(enemy));
+}
+
+void SceneManager::AddInteractable(std::unique_ptr<Interactable> interactable) {
+    activeScene->AddInteractable(std::move(interactable));
+}

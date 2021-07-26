@@ -43,9 +43,7 @@ bool Actor::GetJumpCommand() const {
 }
 
 MOVEMENT Actor::GetNextMovement() {
-    MOVEMENT tmp = nextMovement;
-    nextMovement = MOVEMENT::IDLE;
-    return tmp;
+    return nextMovement;
 }
 
 void Actor::SetNextMovement(MOVEMENT movement) {
@@ -159,12 +157,22 @@ void Actor::SetIsDashing(bool isDashing) {
 Vector2 Actor::Dash(int direction) {
 	dashCounter++;
 	isDashing = true;
-	position.x += dashDistance * direction / 6;
-	if (dashCounter >= 6) {
+	position.x += dashDistance * direction / 12;
+	if (dashCounter >= 12) {
 		isDashing = false;
 		dashCounter = 0;
 	}
 	return position;
+}
+
+void Actor::DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourceRec) const {
+    DrawTextureRec(texture,
+                   { sourceRec.x,
+                     sourceRec.y,
+                     (float) sourceRec.width * GetDirection(),
+                     (float) sourceRec.height },
+                   location,
+                   WHITE);
 }
 
 bool Actor::GetCanDash() const

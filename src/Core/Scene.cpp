@@ -64,3 +64,11 @@ void Scene::Draw() {
     DrawTextureEx(textureMiddleground, middlegroundPosition, 0, 1.0f, WHITE);
     DrawTextureEx(textureForeground, foregroundPosition, 0, 1.0f, WHITE);
 }
+
+void Scene::AddEnemy(std::unique_ptr<Enemy> enemy) {
+    enemies.emplace_back(std::move(enemy));
+}
+
+void Scene::AddInteractable(std::unique_ptr<Interactable> interactable) {
+    interactables.emplace_back(std::move(interactable));
+}

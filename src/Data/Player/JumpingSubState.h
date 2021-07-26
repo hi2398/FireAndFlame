@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/PlayerStates.h"
 
-class JumpingSubState : public State {
+class JumpingSubState : public PlayerStates {
 public:
-    std::shared_ptr <State> Update(Actor &actor) override;
-    void Draw(Actor& actor) override;
+    JumpingSubState(Actor&player);
+    std::shared_ptr <State> Update(Actor& player) override;
+    void Draw(Actor& player) override;
 
     ~JumpingSubState() override = default;
 
@@ -14,8 +15,7 @@ protected:
 
 private:
     int jumpState = 0;
-
-
+    int frameCounterDash = 0;
 };
 
 

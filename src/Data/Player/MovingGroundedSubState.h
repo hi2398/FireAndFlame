@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/PlayerStates.h"
 
-class MovingGroundedSubState : public State{
+class MovingGroundedSubState : public PlayerStates {
 public:
-    std::shared_ptr <State> Update(Actor &actor) override;
-    void Draw(Actor& actor) override;
+    MovingGroundedSubState(Actor& player);
+    std::shared_ptr <State> Update(Actor& player) override;
+    void Draw(Actor& player) override;
 
     ~MovingGroundedSubState() override = default;
 
@@ -13,8 +14,7 @@ protected:
 
 
 private:
-
-
+    int frameCounterDash = 0;
 };
 
 

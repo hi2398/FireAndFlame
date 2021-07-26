@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/PlayerStates.h"
 
-class FallingSubState : public State {
+class FallingSubState : public PlayerStates {
 public:
-    std::shared_ptr <State> Update(Actor &actor) override;
-    void Draw(Actor& actor) override;
+    FallingSubState(Actor& player);
+    std::shared_ptr <State> Update(Actor& player) override;
+    void Draw(Actor& player) override;
 
     ~FallingSubState() override = default;
 
@@ -14,8 +15,6 @@ protected:
 
 private:
     float gravity = 1.0f;
-    
-
 
 };
 
