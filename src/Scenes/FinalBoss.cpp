@@ -20,7 +20,7 @@ FinalBoss::FinalBoss() {
     chasingBossPositions[4] = {50*32,49*32, 16,16};
     chasingBossPositions[5] = {63*32,56*32, 16,16};
     chasingBossPositions[6] = {77*32,50*32, 16,16};
-    chasingBossPositions[7] = {84*32,30*32, 16,16};
+    chasingBossPositions[7] = {105*32,45*32, 16,16};
 
     playerCollidersForBossMovement[0] = {25*32,70*32, 32,256};
     playerCollidersForBossMovement[1] = {34*32,64*32, 32,500};
@@ -36,6 +36,8 @@ FinalBoss::FinalBoss() {
     tempVec = {70*32,50*32};
     interactables.emplace_back(std::make_unique<Coal>(tempVec));
 
+    tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-160};
+    interactables.emplace_back(std::make_unique<EnergyAttack>(tempVec));
     tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-550};
     chasingBoss = std::make_unique<ChasingBoss>(tempVec);
 

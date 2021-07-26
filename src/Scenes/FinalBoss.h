@@ -1,6 +1,7 @@
 #pragma once
 #include "../Core/Scene.h"
 #include "../Data/FinalBoss/SpearAttack.h"
+#include "../Data/FinalBoss/EnergyAttack.h"
 #include "../Data/FinalBoss/ChasingBoss.h"
 #include "vector"
 
