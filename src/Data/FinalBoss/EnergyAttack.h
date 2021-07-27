@@ -15,7 +15,7 @@ private:
 
     bool hasDamagedPlayer = false;
 
-    int magnitude = 25; // speed of energy attack
+    int magnitude; // speed of energy attack
     int prepareCounter = 120; // how long the energy attack needs until it flies towards the player
 protected:
 };

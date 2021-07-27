@@ -1,0 +1,14 @@
+//
+// Created by Ashty on 26.07.2021.
+//
+
+#ifndef FIREANDFLAME_FBBIGSPEARATK_H
+#define FIREANDFLAME_FBBIGSPEARATK_H
+
+
+class FBBigSpearAtk {
+
+};
+
+
+#endif //FIREANDFLAME_FBBIGSPEARATK_H

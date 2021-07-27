@@ -10,7 +10,7 @@
 #include "Scenes/Tutorial.h"
 #include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
-#include "Scenes/IceBossScene.h"
+#include "Scenes/FinalBoss.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -39,7 +39,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<Tutorial>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();

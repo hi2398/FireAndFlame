@@ -5,6 +5,8 @@
 #include "FinalBoss.h"
 #include "../Global.h"
 #include "../Data/Coal.h"
+#include "../Data/FinalBoss/FinalBossEnemy.h"
+
 
 FinalBoss::FinalBoss() {
     playerCharacter->SetPosition(playerStart);
@@ -58,7 +60,7 @@ void FinalBoss::Update() {
         isPlatformSequenceActive = false;
         playerCharacter->SetHealth(100);
     }
-    if(CheckCollisionRecs(bossFightSequenceCollider,playerCharacter->playerHitbox)){
+    if(CheckCollisionRecs(bossFightSequenceCollider,playerCharacter->playerHitbox)&&!isBossFightSequenceActive){
         isBossFightSequenceActive = true;
         ActivateBorder();
     }
@@ -112,4 +114,6 @@ void FinalBoss::ActivateBorder() {
         Vector2 tempVec = {bossFightBorder[i].x,bossFightBorder[i].y};
         tilemap->AddCollisionTile(tempVec);
     }
+    Vector2 tempVec = {94*32,46*32};
+    enemies.emplace_back(std::make_unique<FinalBossEnemy>(tempVec));
 }
