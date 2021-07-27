@@ -2,6 +2,7 @@
 
 #include "../../Core/Enemy.h"
 #include "../../Core/State.h"
+#include "BossSword.h"
 
 class FinalBossEnemy : public Enemy{
 public:
@@ -15,6 +16,7 @@ protected:
 
 
 private:
+    std::shared_ptr<BossSword> sword;
     int magnitude = 80;
     Vector2 bossPosition, moveTowardsPosition;
     Texture2D texture;

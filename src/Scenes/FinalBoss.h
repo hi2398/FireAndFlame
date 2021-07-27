@@ -3,6 +3,7 @@
 #include "../Data/FinalBoss/SpearAttack.h"
 #include "../Data/FinalBoss/EnergyAttack.h"
 #include "../Data/FinalBoss/ChasingBoss.h"
+#include "../Data/FinalBoss/BossSword.h"
 #include "vector"
 
 class FinalBoss : public Scene{
@@ -23,6 +24,7 @@ public:
 
 private:
     std::shared_ptr<ChasingBoss> chasingBoss;
+    std::shared_ptr<BossSword> sword;
     Vector2 playerStart = {17*32,84*32};
 
     Rectangle platformerSequenceCollider = {14*32,78*32,32*5,32};

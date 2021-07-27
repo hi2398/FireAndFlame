@@ -40,6 +40,8 @@ FinalBoss::FinalBoss() {
 
     tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-550};
     chasingBoss = std::make_unique<ChasingBoss>(tempVec);
+    tempVec = {playerCharacter->GetPosition().x-16,playerCharacter->GetPosition().y-550};
+    sword = std::make_unique<BossSword>(tempVec);
 
     for(int i = 0; i<18; i++){
         bossFightBorder[i] = {(float)(86*32)+(32*i),57*32, 32, 32};
@@ -49,12 +51,15 @@ FinalBoss::FinalBoss() {
 void FinalBoss::Update() {
     Scene::Update();
     chasingBoss->Update();
+    sword->Update();
     if(CheckCollisionRecs(platformerSequenceCollider,playerCharacter->playerHitbox)&&!isPlatformSequenceActive){
         isPlatformSequenceActive = true;
         chasingBoss->MovePosition({chasingBossPositions[0].x,chasingBossPositions[0].y});
+        sword->ChangeTarget({chasingBossPositions[0].x-16,chasingBossPositions[0].y});
     }
     if(CheckCollisionRecs(disablePlatformerSequenceCollider,playerCharacter->playerHitbox)&&isPlatformSequenceActive){
         chasingBoss->MovePosition({chasingBossPositions[7].x,chasingBossPositions[7].y});
+        sword->ChangeTarget({chasingBossPositions[7].x-16,chasingBossPositions[7].y});
         isPlatformSequenceActive = false;
         playerCharacter->SetHealth(100);
     }
@@ -64,21 +69,27 @@ void FinalBoss::Update() {
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[0],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[1].x,chasingBossPositions[1].y});
+        sword->ChangeTarget({chasingBossPositions[1].x-16,chasingBossPositions[1].y});
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[1],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[2].x,chasingBossPositions[2].y});
+        sword->ChangeTarget({chasingBossPositions[2].x-16,chasingBossPositions[2].y});
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[2],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[3].x,chasingBossPositions[3].y});
+        sword->ChangeTarget({chasingBossPositions[3].x-16,chasingBossPositions[3].y});
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[3],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[4].x,chasingBossPositions[4].y});
+        sword->ChangeTarget({chasingBossPositions[4].x-16,chasingBossPositions[4].y});
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[4],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[5].x,chasingBossPositions[5].y});
+        sword->ChangeTarget({chasingBossPositions[5].x-16,chasingBossPositions[5].y});
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[5],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[6].x,chasingBossPositions[6].y});
+        sword->ChangeTarget({chasingBossPositions[6].x-16,chasingBossPositions[6].y});
     }
     if(isPlatformSequenceActive) {
         UpdatePlatformSequence();
@@ -88,6 +99,7 @@ void FinalBoss::Update() {
 void FinalBoss::Draw() {
     Scene::Draw();
     chasingBoss->Draw();
+    sword->Draw();
 }
 
 void FinalBoss::UpdatePlatformSequence() {
