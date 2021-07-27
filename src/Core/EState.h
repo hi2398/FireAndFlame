@@ -12,6 +12,8 @@ public:
     virtual ~EState() = default;
 protected:
     Rectangle activeFrame{};
+    Vector2 trianglePoint1{};
+    Vector2 trianglePoint2{};
 private:
 
 };
