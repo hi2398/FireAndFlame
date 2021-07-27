@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "../../Core/Enemy.h"
 #include "../../../src/Global.h"
 #include "IdleState.h"
@@ -10,7 +12,22 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 {
 	toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
 
-	attackDirection = (playerCharacter->GetPosition().x - enemy.GetPosition().x) / (32 * 4);
+	float yDiff =  enemy.GetPosition().y - playerCharacter->GetPosition().y;
+	float xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
+	
+	if (yDiff < 0) {
+		attackDirection = xDiff * pow((1 + (pow (yDiff, 2)/ pow (xDiff, 2))), -1)/ (32 * 4);
+	}
+	else if (yDiff > 0) {
+		attackDirection = xDiff * pow((1 - (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
+	}
+	else {
+		attackDirection = xDiff  / (32 * 4);
+	}
+	
+	
+
+	
 }
 
 std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
@@ -32,7 +49,7 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		toastMissile.x += toastDistance;
 		toastDistance += 3.0f * attackDirection;
 		
-		if (!CheckCollisionPointRec(toastMissile, playerCharacter->visibleScreen)) {
+		if (!CheckCollisionPointRec(toastMissile, playerCharacter->visibleScreen) && toastMissile.y > enemy.GetPosition().y) {
 			return std::make_shared<ApproachingState>(enemy);
 		}
 
