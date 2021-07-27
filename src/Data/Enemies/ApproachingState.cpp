@@ -18,16 +18,38 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Approaching\n";
 	}
+	//frameCounter for animation
+	approachingFrameCounter++;
 
 
+	Rectangle enemySight;
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::ToastCat:
+		//check line of sight in approaching
+		switch (enemy.GetDirection())
+		{
+		case LEFT:
+			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
+				return std::make_shared<AttackingState>(enemy);
+			}
+			break;
+		case RIGHT:
+			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
+				return std::make_shared<AttackingState>(enemy);
+			}
+			break;
+		default:
+			break;
+		}
+		return std::make_shared<RoamingState>(enemy);
+		break;
 	default:
-		//frameCounter for animation
-		approachingFrameCounter++;
+			
 
 		//check line of sight in approaching
-		Rectangle enemySight;
 		switch (enemy.GetDirection())
 		{
 		case LEFT:

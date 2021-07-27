@@ -2,6 +2,7 @@
 #include "../../Core/Enemy.h"
 #include "../../../src/Global.h"
 #include "ApproachingState.h"
+#include "AttackingState.h"
 #include "RoamingState.h"
 #include "StunnedState.h"
 
@@ -14,17 +15,45 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Idle\n";
 	}
+//frameCounter for animation
+		idleFrameCounter++;
+	
+	Rectangle enemySight;
+	int decision;
 
-	
-	
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::ToastCat:
+		//check line of sight in idle
+		
+		switch (enemy.GetDirection())
+		{
+		case LEFT:
+			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
+				//enter approaching state on player sight left
+				return std::make_shared<AttackingState>(enemy);
+			}
+			break;
+		case RIGHT:
+			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
+				//enter approaching state on player sight right
+				return std::make_shared<AttackingState>(enemy);
+			}
+			break;
+		default:
+			break;
+		}
+		decision = GetRandomValue(1, 100);
+		if (decision < 2) {
+			return std::make_shared<RoamingState>(enemy);
+		}
+		break;
 	default:
-		//frameCounter for animation
-		idleFrameCounter++;
+		
 		
 		//check line of sight in idle
-		Rectangle enemySight;
 		switch (enemy.GetDirection())
 		{
 		case LEFT:
@@ -44,7 +73,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		default:
 			break;
 		}
-		int decision = GetRandomValue(1, 100);
+		decision = GetRandomValue(1, 100);
 		if (decision < 2) {
 			return std::make_shared<RoamingState>(enemy);
 		}
