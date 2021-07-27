@@ -11,10 +11,10 @@
 #include "../../Global.h"
 
 FBIdleFly::FBIdleFly() {
-
 }
 
 std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
+    actor.SetPosition({94*32,73*32});
     if(decideCounter <= 0){
         if(playerCharacter->GetHealth() <= 25){
             return std::make_shared<FBFlyDown>();

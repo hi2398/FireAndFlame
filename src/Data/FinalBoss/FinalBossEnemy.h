@@ -16,7 +16,7 @@ protected:
 
 private:
     int magnitude = 80;
-    Vector2 bossPosition, moveTowardsPosition, targetPosition;
+    Vector2 bossPosition, moveTowardsPosition;
     Texture2D texture;
     std::shared_ptr<State> state;
 };

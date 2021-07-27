@@ -14,4 +14,5 @@ public:
 protected:
 
 private:
+    int waitCounter = 60;
 };

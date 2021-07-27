@@ -38,8 +38,6 @@ FinalBoss::FinalBoss() {
     tempVec = {70*32,50*32};
     interactables.emplace_back(std::make_unique<Coal>(tempVec));
 
-    tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-160};
-    interactables.emplace_back(std::make_unique<EnergyAttack>(tempVec));
     tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-550};
     chasingBoss = std::make_unique<ChasingBoss>(tempVec);
 

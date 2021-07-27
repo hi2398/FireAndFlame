@@ -2,8 +2,6 @@
 
 #include "../../Core/State.h"
 
-enum class NextAction{None ,SpearAtk, SwordAtk, EnergyAtk, FlyDown};
-
 class FBSpawnE : public State{
 public:
     FBSpawnE();
@@ -12,5 +10,6 @@ public:
     ~FBSpawnE() override = default;
 
 private:
+    int waitCounter = 180;
 protected:
 };
