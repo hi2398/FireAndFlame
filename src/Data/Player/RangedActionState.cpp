@@ -25,6 +25,17 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
                 return std::make_shared<IdleActionState>(player);
             }
         case ACTION::RANGED_ATTACK:
+            
+                /*activeFrame = {(float) 32 * playerCharacter->GetCurrentFrame(), 32 * 4, (float)32 * playerCharacter->GetDirection(), 32};*/
+
+
+            stateFrameCounter++;
+            if (stateFrameCounter >= 4 && thisFrame < 2) {
+                stateFrameCounter = 0;
+                thisFrame++;
+            }
+            activeFrame = { (float)32 * thisFrame, 32 * 4, (float)32 * player.GetDirection(), 32 };
+            
             if (!isShootingFireball) {
                 //decrease player health when casting fireball
                 playerCharacter->SetHealth(playerCharacter->GetHealth() - 2.0f);
@@ -36,7 +47,7 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
             }
             isShootingFireball = true;
             if (isShootingFireball) {
-                vectorFireball.x += 30.0f *fireballDirection;
+                vectorFireball.x += 20.0f *fireballDirection;
                 if (vectorFireball.x > ((float)GetScreenWidth() / 2) + player.GetPosition().x || vectorFireball.x < player.GetPosition().x - ((float)GetScreenWidth() / 2)) {
                     isShootingFireball = false;
                     return std::make_shared<IdleActionState>(player);
@@ -50,17 +61,17 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
 				}
             }
             
-
+            break;
         default:
             //TODO: handle ranged state
-            return shared_from_this();
+            break;
     }
-
+    return shared_from_this();
 
 }
 
 void RangedActionState::Draw(Actor& player) {
-    if (isShootingFireball) {
-        DrawCircle(static_cast<int>(vectorFireball.x), static_cast<int>(vectorFireball.y), 8.0f, RED);
-    }
+    DrawCircle(static_cast<int>(vectorFireball.x), static_cast<int>(vectorFireball.y), 8.0f, RED);
+    
+    DrawTextureRec(playerCharacter->upperBody, activeFrame, {player.GetPosition()}, WHITE);
 }
