@@ -40,20 +40,24 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 	case ACTION::NONE:
 		
 		
-
-		switch (player.GetNextMovement())
-		{
-		case MOVEMENT::MOVE_LEFT:
-			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, -32, 32 };
-			break;
-		case MOVEMENT::MOVE_RIGHT:
-			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, 32, 32 };
-			break;
-		case MOVEMENT::IDLE:
-			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 0, (float)32 * player.GetDirection(), 32 };
-			break;
-		default:
-			break;
+		if (player.IsGrounded()) {
+			switch (player.GetNextMovement())
+			{
+			case MOVEMENT::MOVE_LEFT:
+				activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, -32, 32 };
+				break;
+			case MOVEMENT::MOVE_RIGHT:
+				activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, 32, 32 };
+				break;
+			case MOVEMENT::IDLE:
+				activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 0, (float)32 * player.GetDirection(), 32 };
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			activeFrame = {(float) 32 * playerCharacter->GetCurrentFrame(), 32 * 0, (float) 32 * player.GetDirection(), 32};
 		}
 
 		return shared_from_this();
@@ -65,6 +69,7 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 
 void IdleActionState::Draw(Actor& player) {
 	if (player.IsGrounded() && !player.GetIsDashing()) {
+		//upper body while grounded
 		switch (player.GetNextMovement())
 		{
 		case MOVEMENT::MOVE_LEFT:
@@ -79,5 +84,8 @@ void IdleActionState::Draw(Actor& player) {
 		default:
 			break;
 		}
+	} // upper body while airborne
+	else if (!player.IsGrounded() && !player.GetIsDashing() && !player.GetActionBlocked()) {
+		DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
 	}
 }

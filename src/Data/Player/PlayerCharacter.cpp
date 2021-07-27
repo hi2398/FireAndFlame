@@ -87,8 +87,9 @@ void PlayerCharacter::Update() {
 }
 
 void PlayerCharacter::Draw() {
-	actionState->Draw(*this);
+	
 	movementState->Draw(*this);
+	actionState->Draw(*this);
 }
 
 int PlayerCharacter::GetHealth() const {

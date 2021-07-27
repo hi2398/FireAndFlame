@@ -16,4 +16,13 @@ protected:
 private:
     int attackFrameCounter = 0;
     Rectangle attackHitbox = {};
+
+    float toastSpeed = 15.0f;
+    float toastDistance = 0.0f;
+    float attackDirection = 1;
+    float toastGravity = 1.0f;
+    bool homingToast{ false };
+    Texture2D toastTexture;
+    Vector2 toastMissile{};
+    Rectangle toastHitbox;
 };
