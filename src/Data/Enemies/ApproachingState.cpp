@@ -39,6 +39,46 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 		return std::make_shared<RoamingState>(enemy);
 		break;
+	case EnemyTypes::Howler:
+
+
+		//chase Player & stop on ledge
+		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
+		edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
+		Vector2 movingToPlayer;
+		movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		if (movingToPlayer.x > 0) movingDistance = enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(RIGHT);
+		else if (movingToPlayer.x < 0) movingDistance = -enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(LEFT);
+
+		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
+		{
+			tileRec.x = collTile.x;
+			tileRec.y = collTile.y;
+
+			
+			if (CheckCollisionRecs(edgeSeekerLeft, tileRec)) {
+				collCheckLeft++;
+			}
+			if (CheckCollisionRecs(edgeSeekerRight, tileRec)) {
+				collCheckRight++;
+			}
+			
+
+
+		}
+
+		if ((collCheckLeft == 0 || collCheckRight == 0) && enemy.IsGrounded()) {
+			enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 3 * enemy.GetDirection(), enemy.GetPosition().y - howlerJumpSpeed});
+			howlerJumpSpeed -= 0.1f;
+		}
+		else {
+			enemy.SetPosition({ enemy.GetPosition().x + movingDistance, enemy.GetPosition().y });
+		}
+
+
+		
+
+		break;
 	default:
 			
 
@@ -68,9 +108,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 		
 		//chase Player & stop on ledge
-		Rectangle edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-		Rectangle edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-		Rectangle tileRec = { 0,0,32,32 };
+		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
+		edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
 		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
 		{
 			tileRec.x = collTile.x;

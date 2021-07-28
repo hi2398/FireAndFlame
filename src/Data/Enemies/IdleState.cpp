@@ -34,9 +34,13 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 			trianglePoint2)) {
 			return std::make_shared<AttackingState>(enemy);
 		}
-		decision = GetRandomValue(1, 100);
-		if (decision < 2) {
-			return std::make_shared<RoamingState>(enemy);
+		break;
+	case EnemyTypes::Howler:
+		//check sight detection in certain radius
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
+			5 * 32)) {
+			return std::make_shared<ApproachingState>(enemy);
 		}
 		break;
 	default:
@@ -62,11 +66,13 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		default:
 			break;
 		}
-		decision = GetRandomValue(1, 100);
-		if (decision < 2) {
-			return std::make_shared<RoamingState>(enemy);
-		}
 		break;
+	}
+
+	//every enemy enters this part
+	decision = GetRandomValue(1, 100);
+	if (decision < 2) {
+		return std::make_shared<RoamingState>(enemy);
 	}
 
 	if (enemy.IsInvulnerable()) {
