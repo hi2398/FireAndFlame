@@ -1,23 +1,25 @@
-#include "ToastCat.h"
+#include "Howler.h"
 #include "../../Global.h"
 #include "EnemyStateHandler.h"
 
 
-ToastCat::ToastCat(Vector2 initialPos) : Enemy(EnemyTypes::ToastCat)
+Howler::Howler(Vector2 initialPos) : Enemy(EnemyTypes::Howler)
 {
-    texture = LoadTexture("assets/graphics/Enemies/ToastCat.png");
-    toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+	texture = LoadTexture("assets/graphics/Enemies/ToastCat.png");
+	
 	position.x = initialPos.x;
 	position.y = initialPos.y;
 
 	activeState = std::make_shared<EnemyStateHandler>(*this);
 
+	
 }
 
-void ToastCat::Update()
+void Howler::Update()
 {
 	activeState = activeState->Update(*this);
 
+	UpdateAttackHitbox();
 	UpdateCollider();
 
 	if (invulnerable) {
@@ -35,9 +37,7 @@ void ToastCat::Update()
 	CollisionHead(sceneManager->GetTilemap());
 }
 
-void ToastCat::Draw()
+void Howler::Draw()
 {
 	activeState->Draw(*this);
-	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
-

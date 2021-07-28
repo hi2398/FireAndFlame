@@ -27,14 +27,20 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 	{
 	case EnemyTypes::ToastCat:
 		//check line of sight while roaming
-		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(), 
-			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 }, 
-			trianglePoint1, 
+		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
+			trianglePoint1,
 			trianglePoint2)) {
 			return std::make_shared<AttackingState>(enemy);
 		}
-
-
+		break;
+	case EnemyTypes::Howler:
+		//check sight detection in certain radius
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
+			5 * 32)) {
+			return std::make_shared<ApproachingState>(enemy);
+		}
 		break;
 	default:
 		

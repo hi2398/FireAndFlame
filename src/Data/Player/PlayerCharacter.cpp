@@ -10,6 +10,7 @@
 PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	upperBody = LoadTexture("assets/graphics/MagmosUpperBody.png");
 	lowerBody = LoadTexture("assets/graphics/MagmosLegs.png");
+	attackSprite = LoadTexture("assets/graphics/AttackSprites.png");
 
 	spriteSheetMagmos = LoadTexture("assets/graphics/MagmosSpritesheet.png");
 
