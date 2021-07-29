@@ -5,7 +5,9 @@
 #include "../../Global.h"
 
 IdleGroundedSubState::IdleGroundedSubState(Actor& player) : PlayerStates(player) {
-
+    if (player.GetIsDashing()) {
+        activeFrame.y = 32 * 2;
+    }
 }
 
 std::shared_ptr<State> IdleGroundedSubState::Update(Actor& player) {

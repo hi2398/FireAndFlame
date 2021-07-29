@@ -107,6 +107,7 @@ protected:
     bool isSwiping{ false };
     bool actionBlocked{ false };
 
+
 	//Movement
 	MOVEMENT nextMovement{ MOVEMENT::IDLE };
 
