@@ -16,10 +16,9 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		std::cout << "Enemy State: Idle\n";
 	}
 	//frameCounter for animation
-	idleFrameCounter++;
+	stateFrameCounter++;
 	
 	Rectangle enemySight;
-	int decision;
 
 	//Vector points for triangle sight
 	trianglePoint1 = { enemy.GetPosition().x + (32 * 5 * enemy.GetDirection()), enemy.GetPosition().y - 32 * 3 };
@@ -27,6 +26,13 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::ToastCat:
+		//frame handling
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		activeFrame = {};
+
 		//check line of sight in idle
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(), 
 			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
@@ -42,6 +48,12 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 			5 * 32)) {
 			return std::make_shared<ApproachingState>(enemy);
 		}
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		if (thisFrame == 2) thisFrame = 0;
+		activeFrame = {(float) 32 * thisFrame, 32 * 0 ,(float)- 32 * enemy.GetDirection(), 32};
 		break;
 	default:
 		
@@ -70,7 +82,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	}
 
 	//every enemy enters this part
-	decision = GetRandomValue(1, 100);
+	int decision = GetRandomValue(1, 100);
 	if (decision < 2) {
 		return std::make_shared<RoamingState>(enemy);
 	}
@@ -93,5 +105,5 @@ void IdleState::Draw(Enemy& enemy)
 	
 
 
-	DrawTextureRec(enemy.GetTexture(), { 0,0, (float)enemy.GetTexture().width * -enemy.GetDirection(), (float)enemy.GetTexture().height }, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
 }

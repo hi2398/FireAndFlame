@@ -8,6 +8,7 @@
 
 RoamingState::RoamingState(Enemy& enemy) : EState(enemy)
 {
+
 }
 
 std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
@@ -16,7 +17,7 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		std::cout << "Enemy State: Roaming\n";
 	}
 	//frameCounter for animation
-	roamingFrameCounter++;
+	stateFrameCounter++;
 
 
 	Rectangle enemySight;
@@ -28,16 +29,22 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 	case EnemyTypes::ToastCat:
 		//check line of sight while roaming
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
-			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
 			trianglePoint1,
 			trianglePoint2)) {
 			return std::make_shared<AttackingState>(enemy);
 		}
 		break;
 	case EnemyTypes::Howler:
+		//frame handling
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
 		//check sight detection in certain radius
 		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
-			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
 			5 * 32)) {
 			return std::make_shared<ApproachingState>(enemy);
 		}
@@ -49,14 +56,14 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		switch (enemy.GetDirection())
 		{
 		case LEFT:
-			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			enemySight = { enemy.GetPosition().x + 16 - 160, enemy.GetPosition().y + 16, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				//enter approaching state on player sight left
 				return std::make_shared<ApproachingState>(enemy);
 			}
 			break;
 		case RIGHT:
-			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				//enter approaching state on player sight right
 				return std::make_shared<ApproachingState>(enemy);
@@ -99,8 +106,8 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 	}
 
 	//check for ledges
-	Rectangle edgeSeekerLeft = { enemy.GetPosition().x - 2, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-	Rectangle edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width + 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
+	Rectangle edgeSeekerLeft = { enemy.GetPosition().x - 2, enemy.GetPosition().y + 32, 1, 1 };
+	Rectangle edgeSeekerRight = { enemy.GetPosition().x + 32 + 1, enemy.GetPosition().y + 32, 1, 1 };
 	Rectangle tileRec = { 0,0,32,32 };
 	for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
 	{
@@ -148,11 +155,5 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 
 void RoamingState::Draw(Enemy& enemy)
 {
-
-	if constexpr (DEBUG_ENEMY_STATES) {
-		DrawLine(trianglePoint1.x, trianglePoint1.y, enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, GREEN);
-		DrawLine(trianglePoint2.x, trianglePoint2.y, enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, GREEN);
-		DrawLine(trianglePoint1.x, trianglePoint1.y, trianglePoint2.x, trianglePoint2.y, GREEN);
-	}
-	DrawTextureRec(enemy.GetTexture(), { 0,0, (float)enemy.GetTexture().width * -enemy.GetDirection(), (float)enemy.GetTexture().height }, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
 }

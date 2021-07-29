@@ -14,9 +14,10 @@ protected:
 
 
 private:
-    int attackFrameCounter = 0;
+    int attackCounter = 0;
     Rectangle attackHitbox = {};
 
+    //toastcat variables
     float toastSpeed = 15.0f;
     float toastDistance = 0.0f;
     float attackDirection = 1;
@@ -25,4 +26,7 @@ private:
     Texture2D toastTexture;
     Vector2 toastMissile{};
     Rectangle toastHitbox;
+
+    //howler variables
+    float movingDistance = 0;
 };
