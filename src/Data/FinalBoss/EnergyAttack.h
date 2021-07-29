@@ -13,7 +13,7 @@ private:
     Vector2 attackPoint;
     Vector2 moveTowardsPosition;
 
-    bool hasDamagedPlayer = false;
+    bool allowedToDamagePlayer = false;
 
     int magnitude; // speed of energy attack
     int prepareCounter = 120; // how long the energy attack needs until it flies towards the player

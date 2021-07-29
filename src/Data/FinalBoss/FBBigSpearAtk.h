@@ -1,14 +1,18 @@
-//
-// Created by Ashty on 26.07.2021.
-//
+#pragma once
 
-#ifndef FIREANDFLAME_FBBIGSPEARATK_H
-#define FIREANDFLAME_FBBIGSPEARATK_H
+#include "../../Core/State.h"
+
+class FBBigSpearAtk : public State{
+public:
+    FBBigSpearAtk();
+    std::shared_ptr <State> Update(Actor &actor) override;
+    void Draw(Actor &actor) override;
+    ~FBBigSpearAtk() override = default;
+
+protected:
 
 
-class FBBigSpearAtk {
-
+private:
+    int attackCounter = 120;
+    bool secondAttack = false;
 };
-
-
-#endif //FIREANDFLAME_FBBIGSPEARATK_H

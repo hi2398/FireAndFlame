@@ -24,3 +24,7 @@ void Object::SetPosition(Vector2 position) {
 bool Object::IsMarkedDestroy() const {
     return markedDestroy;
 }
+
+void Object::MarkToDestroy() {
+    markedDestroy=true;
+}

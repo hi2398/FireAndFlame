@@ -1,14 +1,18 @@
-//
-// Created by Ashty on 26.07.2021.
-//
+#pragma once
 
-#ifndef FIREANDFLAME_FBIDLEDOWN_H
-#define FIREANDFLAME_FBIDLEDOWN_H
+#include "../../Core/State.h"
+
+class FBIdleDown : public State {
+public:
+    FBIdleDown();
+    std::shared_ptr <State> Update(Actor &actor) override;
+    void Draw(Actor &actor) override;
+    ~FBIdleDown() override = default;
+
+protected:
 
 
-class FBIdleDown {
-
+private:
+    int decideCounter = 260;
+    int attackCounter = 250;
 };
-
-
-#endif //FIREANDFLAME_FBIDLEDOWN_H

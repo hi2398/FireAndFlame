@@ -146,3 +146,8 @@ void SceneManager::AddEnemy(std::unique_ptr<Enemy> enemy) {
 void SceneManager::AddInteractable(std::unique_ptr<Interactable> interactable) {
     activeScene->AddInteractable(std::move(interactable));
 }
+
+void SceneManager::RemoveAllInteractables() {
+    activeScene->RemoveInteractables();
+}
+

@@ -10,7 +10,9 @@ public:
     void Update() override;
     void Draw() override;
     void ChangeTargetPosition(Vector2 newPos);
+    void ChangeSwordPosition(Vector2 newPos);
     void ReceiveDamage(int damage) override;
+    int GetHealth();
     ~FinalBossEnemy() override = default;
 protected:
 
@@ -21,4 +23,5 @@ private:
     Vector2 bossPosition, moveTowardsPosition;
     Texture2D texture;
     std::shared_ptr<State> state;
+    int swordCounter = 0;
 };

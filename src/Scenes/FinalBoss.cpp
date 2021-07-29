@@ -6,6 +6,7 @@
 #include "../Global.h"
 #include "../Data/Coal.h"
 #include "../Data/FinalBoss/FinalBossEnemy.h"
+#include "../Data/FinalBoss/BossEnergySwordAttack.h"
 
 
 FinalBoss::FinalBoss() {

@@ -72,3 +72,13 @@ void Scene::AddEnemy(std::unique_ptr<Enemy> enemy) {
 void Scene::AddInteractable(std::unique_ptr<Interactable> interactable) {
     interactables.emplace_back(std::move(interactable));
 }
+
+void Scene::RemoveInteractables() { //TODO Make it work pls :D
+    auto interactableIterator= interactables.begin();
+    while (interactableIterator!=interactables.end()) {
+        if (!(*interactableIterator)->IsMarkedDestroy()) {
+            (*interactableIterator)->MarkToDestroy();
+            ++interactableIterator;
+        }
+    }
+}

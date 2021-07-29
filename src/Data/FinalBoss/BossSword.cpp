@@ -12,23 +12,21 @@ BossSword::BossSword(Vector2 position) : Interactable(InteractableType::FinalBos
 }
 
 void BossSword::Interact(Actor &actor) {
-    if(!hasDamagedPlayer){
+
+}
+
+void BossSword::Update() {
+    if(CheckCollisionRecs(playerCharacter->playerHitbox,interactionZone)&&!hasDamagedPlayer){
         hasDamagedPlayer = true;
         damageCounter = 60;
         playerCharacter->SetHealth(playerCharacter->GetHealth()-10);
     }
-}
-
-void BossSword::Update() {
-    interactionZone = {position.x,position.y,(float)texture.width,(float)texture.height};
-    if(hasDamagedPlayer){
-        --damageCounter;
-        if(damageCounter <= 0){
-            hasDamagedPlayer = false;
-        }
-    }
+    if(damageCounter <= 0){
+        hasDamagedPlayer = false;
+    }else --damageCounter;
     moveTowardsPosition = {position.x - targetPosition.x,position.y - targetPosition.y};
     position = {position.x-(moveTowardsPosition.x/magnitude),position.y-(moveTowardsPosition.y/magnitude)};
+    interactionZone = {position.x,position.y,(float)texture.width,(float)texture.height};
 }
 
 void BossSword::Draw() {

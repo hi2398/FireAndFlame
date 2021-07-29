@@ -10,8 +10,7 @@ EnergyAttack::EnergyAttack(Vector2 position): Interactable(InteractableType::Fin
 }
 
 void EnergyAttack::Interact(Actor &actor) {
-    if(!hasDamagedPlayer){
-        hasDamagedPlayer = true;
+    if(allowedToDamagePlayer){
         playerCharacter->SetHealth(playerCharacter->GetHealth()-10);
         markedDestroy = true;
     }
@@ -20,12 +19,13 @@ void EnergyAttack::Interact(Actor &actor) {
 void EnergyAttack::Update() {
     --prepareCounter;
     if(prepareCounter <= 10){
+        allowedToDamagePlayer = true;
         moveTowardsPosition = {energyAttackPosition.x - attackPoint.x,energyAttackPosition.y - attackPoint.y};
         energyAttackPosition = {energyAttackPosition.x-(moveTowardsPosition.x/magnitude),energyAttackPosition.y-(moveTowardsPosition.y/magnitude)};
         attackPoint = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y};
         attackPoint = {attackPoint.x-(moveTowardsPosition.x/2), attackPoint.y-(moveTowardsPosition.y/2)};
     }
-    if(prepareCounter <= -200){markedDestroy = true;}
+    if(prepareCounter <= -160){markedDestroy = true;}
     interactionZone = {energyAttackPosition.x,energyAttackPosition.y,(float)texture.width,(float)texture.height};
 }
 

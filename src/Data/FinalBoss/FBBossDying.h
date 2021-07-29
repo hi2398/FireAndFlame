@@ -1,16 +1,18 @@
 #pragma once
 
 #include "../../Core/State.h"
-class FBSpawnEDown : public State{
+
+
+class FBBossDying: public State {
 public:
-    FBSpawnEDown();
+    FBBossDying();
     std::shared_ptr <State> Update(Actor &actor) override;
     void Draw(Actor &actor) override;
-    ~FBSpawnEDown() override = default;
+    ~FBBossDying() override = default;
 
 protected:
 
 
 private:
-    int waitCounter = 180;
+
 };

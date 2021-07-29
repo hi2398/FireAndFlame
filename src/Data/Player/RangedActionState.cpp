@@ -55,7 +55,7 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
             }
 
             for (auto &enemies: sceneManager->GetEnemies()) {
-				if (CheckCollisionPointRec(vectorFireball, enemies->GetCollider())) {
+				if (CheckCollisionPointRec(vectorFireball, enemies->GetCollider())&&!enemies->IsInvulnerable()) {
                     enemies->ReceiveDamage(10);
                     enemies->SetInvulnerable(true);
 				}

@@ -2,8 +2,6 @@
 
 #include "../../Core/State.h"
 
-//enum class NextAction{None ,SpearAtk, SwordAtk, EnergyAtk, FlyDown};
-
 class FBSwordAtk : public State {
 public:
     FBSwordAtk();
@@ -15,6 +13,5 @@ protected:
 
 
 private:
-    //NextAction nextAction{NextAction::None};
-    int decideCounter = 200;
+    int decideCounter = 280;
 };

@@ -4,7 +4,7 @@
 SpearAttack::SpearAttack(Vector2 position) : Interactable(InteractableType::FinalBossAttack){
     interactionZone = {position.x,position.y,32,10};
     spearPosition = {position.x,position.y};
-    texture = LoadTexture("assets/graphics/Enemies/BossEnemies/spear.png");
+    texture = LoadTexture("assets/graphics/Enemies/BossEnemies/BossSpearAttack.png");
 }
 
 void SpearAttack::Interact(Actor &actor){
