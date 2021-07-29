@@ -4,7 +4,13 @@
 #include "../../Global.h"
 
 MovingGroundedSubState::MovingGroundedSubState(Actor& player) : PlayerStates(player) {
-	activeFrame.y = 32;
+	
+	if (player.GetIsDashing()) {
+		activeFrame.y = 32 * 2;
+	}
+	else {
+		activeFrame.y = 32;
+	}
 }
 
 std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
@@ -55,15 +61,8 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
 }
 
 void MovingGroundedSubState::Draw(Actor& player) {
-	
-	/*if (player.GetIsSwiping()) {
-		DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { player.GetPosition().x, player.GetPosition().y }, WHITE);
-	}
-	else {
-		DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { player.GetPosition().x, player.GetPosition().y }, WHITE);
-	}*/
-
 	if (player.GetIsDashing()) {
+		activeFrame.y = 32 * 2; //id doesnt make sense that this is needed, but it fixes a small visual bug, selecting the wrong frame
 		DrawTextureRec(playerCharacter->upperBody, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 	}
 	else {

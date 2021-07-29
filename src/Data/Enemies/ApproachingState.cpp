@@ -19,8 +19,20 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		std::cout << "Enemy State: Approaching\n";
 	}
 	//frameCounter for animation
-	approachingFrameCounter++;
-
+	stateFrameCounter++;
+	//frame handling
+	if (stateFrameCounter >= 15) {
+		thisFrame++;
+		stateFrameCounter = 0;
+	}
+	if (enemy.GetJumpCommand() || !enemy.IsGrounded()) {
+		thisFrame = 1;
+		activeFrame = { (float)32 * thisFrame, 32 * 2 ,(float)-32 * enemy.GetDirection(), 32 };
+	}
+	else {
+		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
+	}
+	
 
 	Rectangle enemySight;
 	//Vector points for triangle sight
@@ -32,7 +44,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	case EnemyTypes::ToastCat:
 		//check line of sight in approaching
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
-			{ enemy.GetPosition().x + enemy.GetTexture().width/2, enemy.GetPosition().y + enemy.GetTexture().height/2}, 
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16}, 
 			trianglePoint1, 
 			trianglePoint2)) {
 			return std::make_shared<AttackingState>(enemy);
@@ -43,13 +55,13 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 
 		//chase Player & stop on ledge
-		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-		edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-		Vector2 movingToPlayer;
+		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + 32, 1, 1 };
+		edgeSeekerRight = { enemy.GetPosition().x + 32, enemy.GetPosition().y + 32, 1, 1 };
+		
 		movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
-		if (movingToPlayer.x > 0) movingDistance = enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(RIGHT);
-		else if (movingToPlayer.x < 0) movingDistance = -enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(LEFT);
-
+		if (movingToPlayer.x > 0 && !enemy.GetJumpCommand()) movingDistance = enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(RIGHT);
+		else if (movingToPlayer.x < 0 && !enemy.GetJumpCommand()) movingDistance = -enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(LEFT);
+			
 		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
 		{
 			tileRec.x = collTile.x;
@@ -67,15 +79,44 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 		}
 
-		if ((collCheckLeft == 0 || collCheckRight == 0) && enemy.IsGrounded()) {
-			enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 3 * enemy.GetDirection(), enemy.GetPosition().y - howlerJumpSpeed});
-			howlerJumpSpeed -= 0.1f;
+		//jump over ledge
+		if (collCheckLeft == 0 && enemy.IsGrounded() || enemy.GetJumpCommand()) {
+			enemy.SetJumpCommand(true);
+			enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 3 * enemy.GetDirection(), enemy.GetPosition().y - enemy.GetJumpSpeed() });
+			enemy.SetJumpSpeed(enemy.GetJumpSpeed()- 0.2f);
+		}
+		else if (collCheckRight == 0 && enemy.IsGrounded() || enemy.GetJumpCommand()) {
+			enemy.SetJumpCommand(true);
+			enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 3 * enemy.GetDirection(), enemy.GetPosition().y - enemy.GetJumpSpeed() });
+			enemy.SetJumpSpeed(enemy.GetJumpSpeed() - 0.2f);
+		}
+		else {//or just move normally
+			if (movingToPlayer.x <= 16 && movingToPlayer.x >= -16) {
+				if (thisFrame >= 2) thisFrame = 0;
+				activeFrame.y = 0;
+			}
+			else {
+				if (enemy.IsGrounded()) enemy.SetPosition({ enemy.GetPosition().x + movingDistance * 2, enemy.GetPosition().y });
+			}
+			
+		}
+
+		//check sight detection in certain radius
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
+			3 * 32) && enemy.IsGrounded()) {
+			return std::make_shared<AttackingState>(enemy);
+		}
+
+		//aggro check
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
+			5 * 32) && enemy.IsGrounded()) {
+			aggroCooldown = 0;
 		}
 		else {
-			enemy.SetPosition({ enemy.GetPosition().x + movingDistance, enemy.GetPosition().y });
+			aggroCooldown++;
 		}
-
-
 		
 
 		break;
@@ -128,10 +169,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 
 
-		//enter idle when losing aggro after 5 secs
-		if (aggroCooldown >= 300) {
-			return std::make_shared<RoamingState>(enemy);
-		}
+		
 
 		//enter attacking state when in range
 		if (CheckCollisionRecs(playerCharacter->playerHitbox, enemy.GetAttackHitbox())) {
@@ -140,21 +178,21 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 		break;
 	}
+	//enter idle when losing aggro after 5 secs
+	if (aggroCooldown >= 300) {
+		return std::make_shared<RoamingState>(enemy);
+	}
 
 	if (enemy.IsInvulnerable()) {
 		return std::make_shared<StunnedState>(enemy);
 	}
 
-
+	collCheckLeft = 0;
+	collCheckRight = 0;
 	return shared_from_this();
 }
 
 void ApproachingState::Draw(Enemy& enemy)
 {
-	if constexpr (DEBUG_ENEMY_STATES) {
-		DrawLine(trianglePoint1.x, trianglePoint1.y, enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, GREEN);
-		DrawLine(trianglePoint2.x, trianglePoint2.y, enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, GREEN);
-		DrawLine(trianglePoint1.x, trianglePoint1.y, trianglePoint2.x, trianglePoint2.y, GREEN);
-	}
-	DrawTextureRec(enemy.GetTexture(), { 0,0, (float)enemy.GetTexture().width * -enemy.GetDirection(), (float)enemy.GetTexture().height }, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
 }

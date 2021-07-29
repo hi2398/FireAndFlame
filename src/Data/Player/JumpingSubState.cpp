@@ -8,7 +8,9 @@
 
 JumpingSubState::JumpingSubState(Actor& player) : PlayerStates(player)
 {
-    
+	if (player.GetIsDashing()) {
+		activeFrame.y = 32 * 2;
+	}
 }
 
 std::shared_ptr<State> JumpingSubState::Update(Actor& player) {

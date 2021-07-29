@@ -18,11 +18,11 @@ private:
     int approachingFrameCounter = 0;
     Rectangle drawRec;
     float movingDistance = 0;
+    Vector2 movingToPlayer;
 
     int collCheckLeft = 0;
     int collCheckRight = 0;
 
-    float howlerJumpSpeed = 5.0f;
 
     Rectangle edgeSeekerLeft{};
     Rectangle edgeSeekerRight{};

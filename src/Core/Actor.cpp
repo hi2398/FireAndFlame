@@ -227,7 +227,6 @@ void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {
@@ -251,7 +250,6 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {
@@ -277,7 +275,6 @@ void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {
@@ -303,7 +300,6 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {

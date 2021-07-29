@@ -6,7 +6,7 @@
 #include "../../Global.h"
 
 WallSlideSubState::WallSlideSubState(Actor& player) : PlayerStates(player) {
-
+	
 }
 
 std::shared_ptr<State> WallSlideSubState::Update(Actor& player) {
