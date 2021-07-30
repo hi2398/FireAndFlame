@@ -13,7 +13,7 @@ DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Tex
 
 void DialogueObject::Interact(Actor &actor) {
     hud->changeInteractable(true);
-    if(IsKeyPressed(KEY_F) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)){
+    if(IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)){
         sceneManager->UpdateDialogInScene(objFilepath);
     }
 }

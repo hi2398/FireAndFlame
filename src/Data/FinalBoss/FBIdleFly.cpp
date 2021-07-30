@@ -18,7 +18,7 @@ FBIdleFly::FBIdleFly() {
 std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
     actor.SetPosition({94*32,73*32});
     FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
-    if(boss.GetHealth()<= 99){
+    if(boss.GetHealth()<= 2){
         return std::make_shared<FBIdleDown>();
     }
     if(decideCounter <= 0){

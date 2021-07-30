@@ -1,7 +1,7 @@
 #include "MainMenu.h"
 #include "../Global.h"
 #include <iostream>
-#include "NeutralArea.h"
+#include "Tutorial.h"
 
 MainMenu::MainMenu() {
     tilemap=std::make_unique<Tilemap>();
@@ -191,7 +191,7 @@ void MainMenu::Update() {
                     loadSave1ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
-                    sceneManager->SetNextScene(std::make_unique<NeutralArea>());
+                    sceneManager->SetNextScene(std::make_unique<Tutorial>());
                 }
             }else{
                 loadSave1ButtonIndex = 0;
@@ -203,7 +203,7 @@ void MainMenu::Update() {
                     loadSave2ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
-                    sceneManager->SetNextScene(std::make_unique<NeutralArea>());
+                    sceneManager->SetNextScene(std::make_unique<Tutorial>());
                 }
             }else{
                 loadSave2ButtonIndex = 0;
@@ -215,7 +215,7 @@ void MainMenu::Update() {
                     loadSave3ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
-                    sceneManager->SetNextScene(std::make_unique<NeutralArea>());
+                    sceneManager->SetNextScene(std::make_unique<Tutorial>());
                 }
             }else{
                 loadSave3ButtonIndex = 0;

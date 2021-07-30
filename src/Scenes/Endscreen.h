@@ -12,7 +12,7 @@ public:
     ~Endscreen() override = default;
 
 private:
-    float endscreenCounter = 0.0f;
+    float endscreenCounter;
     std::string endText[17];
 protected:
 

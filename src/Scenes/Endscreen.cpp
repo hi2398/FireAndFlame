@@ -8,11 +8,12 @@
 #include <iostream>
 
 Endscreen::Endscreen() {
+    endscreenCounter= 0.0f;
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
     //TODO Rework
     endText[0] = "FÜR FORTNITE schrie Magmos, als er den Technomancer besiegte";
-    endText[1] = "Alle bösen Roboter wurden besiegt, außer die Saugies <3";
+    endText[1] = "Alle bösen Roboter wurden zerstört, außer die Saugies <3";
     endText[2] = "Und weiterer cooler Story Text!";
     endText[3] = "Habt ihr euch schon das neue Roblox update angeguckt?";
     endText[4] = "THE END?";
@@ -31,9 +32,10 @@ Endscreen::Endscreen() {
 }
 
 void Endscreen::Update() {
+    std::cout << endscreenCounter << "\n";
     endscreenCounter = endscreenCounter + 0.4f;
     std::cout << endscreenCounter << "\n";
-    if(endscreenCounter >= 1700){
+    if(endscreenCounter >= 1650){
         sceneManager->SetNextScene(std::make_unique<MainMenu>());
     }
 }

@@ -12,6 +12,7 @@ void HUD::UpdateHUD() {
     if(isEndscreenActive){
         if(endscreenCounter <= 0){
             sceneManager->SetNextScene(std::make_unique<Endscreen>());
+            isEndscreenActive = false;
         }
         --endscreenCounter;
         ++endscreenColor.a;
@@ -24,7 +25,7 @@ void HUD::DrawHUD() {
 		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
     }
     if(isInteractable){
-        DrawText("PRESS F",600,500,30,WHITE); //TODO Change after controls are fixed
+        DrawText("PRESS E",600,500,30,WHITE);
         isInteractable = false;
     }
     DrawRectangleLines(healthBar.x, healthBar.y, 200, healthBar.height, BLACK);
