@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Enemies/ToastCat.h"
+#include "../Data/Enemies/Howler.h"
 #include "raymath.h"
 
 
@@ -22,14 +23,14 @@ NeutralArea::NeutralArea(){
     Texture2D tempTex = LoadTexture("assets/graphics/PLAYER.png");
     // A
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
-    Vector2 vec2{60*32-100, 70*32};
+    Vector2 vec2{20*32-100, 36*32};
 
     /*for (int i = 0; i < 10; i++) {
         enemies.emplace_back(std::make_unique<Miner>(vec2));
     }*/
     
     /*for (int i = 0; i < 10; i++) {*/
-        enemies.emplace_back(std::make_unique<ToastCat>(vec2));
+        enemies.emplace_back(std::make_unique<Howler>(vec2));
     /*}*/
  
 

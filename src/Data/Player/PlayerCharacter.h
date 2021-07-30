@@ -59,6 +59,7 @@ public:
 
     Texture2D upperBody;
     Texture2D lowerBody;
+    Texture2D attackSprite;
     Texture2D spriteSheetMagmos;
 
 protected:

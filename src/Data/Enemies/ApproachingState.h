@@ -18,5 +18,14 @@ private:
     int approachingFrameCounter = 0;
     Rectangle drawRec;
     float movingDistance = 0;
+    Vector2 movingToPlayer;
+
+    int collCheckLeft = 0;
+    int collCheckRight = 0;
+
+
+    Rectangle edgeSeekerLeft{};
+    Rectangle edgeSeekerRight{};
+    Rectangle tileRec{ 0,0,32,32 };
    
 };

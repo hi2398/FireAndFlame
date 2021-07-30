@@ -93,7 +93,7 @@ bool Enemy::MakeDecision(int probability)
 }
 
 void Enemy::UpdateCollider() {
-	hitbox = { position.x, position.y, (float)texture.width, (float)texture.height };
+	hitbox = { position.x, position.y, 32, 32 };
 }
 
 Rectangle Enemy::GetCollider() const {
