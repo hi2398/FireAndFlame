@@ -12,6 +12,7 @@ void HUD::UpdateHUD() {
     if(isEndscreenActive){
         if(endscreenCounter <= 0){
             sceneManager->SetNextScene(std::make_unique<Endscreen>());
+            isEndscreenActive = false;
         }
         --endscreenCounter;
         ++endscreenColor.a;

@@ -7,7 +7,7 @@
 #include "Global.h"
 #include "config.h"
 #include "helper.h"
-#include "Scenes/Tutorial.h"
+#include "Scenes/Endscreen.h"
 #include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"

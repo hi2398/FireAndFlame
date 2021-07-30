@@ -74,11 +74,7 @@ void Scene::AddInteractable(std::unique_ptr<Interactable> interactable) {
 }
 
 void Scene::RemoveInteractables() { //TODO Make it work pls :D
-    auto interactableIterator= interactables.begin();
-    while (interactableIterator!=interactables.end()) {
-        if (!(*interactableIterator)->IsMarkedDestroy()) {
-            (*interactableIterator)->MarkToDestroy();
-            ++interactableIterator;
-        }
+    for (const auto& interactable : interactables) {
+        interactable->MarkToDestroy();
     }
 }
