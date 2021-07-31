@@ -44,8 +44,8 @@ void FinalBossEnemy::Draw() {
 void FinalBossEnemy::ReceiveDamage(int damage) {
     health -= damage;
     if(health <= 0){
-        playerCharacter->SetInvulnerable(true);
-        hud->executeEndscreenSwap();
+        sceneManager->RemoveAllInteractables();
+        playerCharacter->SetHealth(100);
     }
 }
 

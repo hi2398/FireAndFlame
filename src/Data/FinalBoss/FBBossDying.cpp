@@ -7,7 +7,7 @@
 
 FBBossDying::FBBossDying() {
     sceneManager->RemoveAllInteractables();
-    playerCharacter->SetHealth(100);
+    hud->executeEndscreenSwap();
 }
 
 std::shared_ptr<State> FBBossDying::Update(Actor &actor) {
