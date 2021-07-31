@@ -23,6 +23,7 @@ public:
     void AddInteractable(std::unique_ptr<Interactable> interactable);
 
     void RemoveMarkedDelete();
+    void RemoveInteractables();
 
 protected:
     DialogueManager dialogueMananger;

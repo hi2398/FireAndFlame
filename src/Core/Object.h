@@ -14,6 +14,7 @@ public:
     [[nodiscard]] Vector2 GetPosition() const;
     [[nodiscard]] ObjectTypes GetType() const;
     [[nodiscard]] bool IsMarkedDestroy() const;
+    void MarkToDestroy();
 
     virtual ~Object() = default;
 

@@ -82,6 +82,7 @@ public:
     void DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourceRec = {0, 0, 32, 32}) const;
 
 protected:
+    int health = 3;
     Vector2 lastTickPos;
     Direction direction{RIGHT};
     bool grounded{false};

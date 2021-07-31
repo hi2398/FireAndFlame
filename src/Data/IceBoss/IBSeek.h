@@ -20,7 +20,7 @@ private:
     std::shared_ptr<State> MeleeApproach(Actor& actor);
     std::shared_ptr<State> RangedMove(Actor& actor);
     const Vector2* rangedSpot{nullptr};
-    static constexpr Vector2 leftRangedSpot{26*32, 33*32};
+    static constexpr Vector2 leftRangedSpot{24*32, 33*32};
     static constexpr Vector2 rightRangedSpot{33*32, 33*32};
     const Vector2 jumpStart{29*32, 36*32};
     bool jumpStarted{false};

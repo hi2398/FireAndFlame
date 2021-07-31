@@ -15,7 +15,6 @@ Vector2 Actor::GetLastPosition() {
     return lastTickPos;
 }
 
-
 Direction Actor::GetDirection() const {
     return direction;
 }

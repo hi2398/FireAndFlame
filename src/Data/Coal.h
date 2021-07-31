@@ -17,7 +17,7 @@ public:
 	~Coal() override;
 
 private:
-	static constexpr int fuel = 10;
+	static constexpr int fuel = 25;
 	Texture2D texture;
 	Rectangle hitbox{};
 	bool isGrounded = false;

@@ -35,5 +35,5 @@ std::shared_ptr<State> IBRanged::Update(Actor &actor) {
 void IBRanged::Draw(Actor &actor) {
     auto& iceBoss=dynamic_cast<IceBoss&>(actor);
     iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
-    DrawTextureV(barrel, barrelPos, WHITE);
+    if(0 < animTimer && animTimer < 90)DrawTextureV(barrel, barrelPos, WHITE);
 }
