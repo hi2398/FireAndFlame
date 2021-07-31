@@ -15,6 +15,8 @@ protected:
 
 private:
     int roamingFrameCounter = 0;
+    int flyRoamingCounter = 0;
+    float verticalDirection = 1;
     int collisionCounter = 0;
     int decisionTimer = 0;
     Rectangle drawRec;

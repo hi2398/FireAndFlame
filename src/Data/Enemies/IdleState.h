@@ -14,6 +14,6 @@ protected:
 
 
 private:
-    int idleFrameCounter = 0;
+    int flyIdleCounter = 0;
     Rectangle drawRec;
 };

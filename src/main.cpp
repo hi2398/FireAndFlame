@@ -39,7 +39,7 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();

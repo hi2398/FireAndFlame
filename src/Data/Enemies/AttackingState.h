@@ -27,6 +27,9 @@ private:
     Vector2 toastMissile{};
     Rectangle toastHitbox;
 
+    float yDiff;
+    float xDiff;
+
     //howler variables
     float movingDistance = 0;
 };

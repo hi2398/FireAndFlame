@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Enemies/ToastCat.h"
+#include "../Data/Enemies/Fly.h"
 #include "../Data/Enemies/Howler.h"
 #include "raymath.h"
 
@@ -26,11 +27,11 @@ NeutralArea::NeutralArea(){
     Vector2 vec2{20*32-100, 36*32};
 
     
-    enemies.emplace_back(std::make_unique<Miner>(vec2));
+    /*enemies.emplace_back(std::make_unique<Miner>(vec2));*/
 
-    enemies.emplace_back(std::make_unique<ToastCat>(vec2));
+    enemies.emplace_back(std::make_unique<Fly>(vec2));
     
-    enemies.emplace_back(std::make_unique<Howler>(vec2));
+    /*enemies.emplace_back(std::make_unique<Howler>(vec2));*/
  
 
     textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");

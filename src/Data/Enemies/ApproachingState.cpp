@@ -10,6 +10,14 @@
 
 ApproachingState::ApproachingState(Enemy& enemy) : EState(enemy)
 {
+	switch (enemy.GetEnemyType())
+	{
+	case EnemyTypes::ToastCat:
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+		break;
+	default:
+		break;
+	}
 }
 
 std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
@@ -35,6 +43,43 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Flyer:
+		flyApproachingCounter++;
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		if (thisFrame >= 3) thisFrame = 0;
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+
+		Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		Vector2 movingToPlayer = Vector2Normalize(playerReference);
+		if (playerReference.x > 0) {
+			
+			enemy.SetDirection(RIGHT);
+		}
+		else {
+			
+			enemy.SetDirection(LEFT);
+		}
+		enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y + movingToPlayer.y});
+
+		//enter attack after some time or when in range
+		if (flyApproachingCounter >= 180 || CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 4*32)) {
+			return std::make_shared<AttackingState>(enemy);
+		}
+
+		//aggro check
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
+			5 * 32)) {
+			aggroCooldown = 0;
+		}
+		else {
+			aggroCooldown++;
+		}
+
+		break;
 	case EnemyTypes::ToastCat:
 		//check line of sight in approaching
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
@@ -127,7 +172,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		switch (enemy.GetDirection())
 		{
 		case LEFT:
-			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			enemySight = { enemy.GetPosition().x + 16 - 160, enemy.GetPosition().y + 16, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				aggroCooldown = 0;
 			}
@@ -136,7 +181,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			}
 			break;
 		case RIGHT:
-			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				aggroCooldown = 0;
 			}

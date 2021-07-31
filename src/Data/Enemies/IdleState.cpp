@@ -8,6 +8,7 @@
 
 IdleState::IdleState(Enemy& enemy) : EState(enemy)
 {
+
 }
 
 std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
@@ -25,17 +26,26 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	trianglePoint2 = { enemy.GetPosition().x + (32 * 5 * enemy.GetDirection()), enemy.GetPosition().y + 32 * 4 };
 	switch (enemy.GetEnemyType())
 	{
-	case EnemyTypes::ToastCat:
-		//frame handling
-		if (stateFrameCounter >= 15) {
-			thisFrame++;
-			stateFrameCounter = 0;
+	case EnemyTypes::Flyer:
+		if (!enemy.IsGrounded()) return std::make_shared<RoamingState>(enemy);
+		flyIdleCounter++;
+
+		//check sight detection in certain radius
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
+			5 * 32)) {
+			return std::make_shared<ApproachingState>(enemy);
 		}
-		activeFrame = {};
+
+		if (flyIdleCounter >= 240) {
+			return std::make_shared<RoamingState>(enemy);
+		}
+		break;
+	case EnemyTypes::ToastCat:
 
 		//check line of sight in idle
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(), 
-			{ enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2 },
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
 			trianglePoint1, 
 			trianglePoint2)) {
 			return std::make_shared<AttackingState>(enemy);
@@ -84,7 +94,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 
 	//every enemy enters this part
 	int decision = GetRandomValue(1, 100);
-	if (decision < 2) {
+	if (decision < 2 && enemy.GetEnemyType() != EnemyTypes::Flyer) {
 		return std::make_shared<RoamingState>(enemy);
 	}
 

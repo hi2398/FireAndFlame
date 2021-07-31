@@ -12,11 +12,15 @@
 
 AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 {
-	if (enemy.GetEnemyType() == EnemyTypes::ToastCat) {
+
+	switch (enemy.GetEnemyType())
+	{
+	case EnemyTypes::ToastCat:
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 		toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
 
-		float yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
-		float xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
+		yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
+		xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
 
 		if (yDiff < 0) {
 			attackDirection = xDiff * pow((1 + (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
@@ -27,6 +31,26 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 		else {
 			attackDirection = xDiff / (32 * 4);
 		}
+		break;
+	case EnemyTypes::Flyer:
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+		toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+
+		yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
+		xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
+
+		if (yDiff < 0) {
+			attackDirection = xDiff * pow((1 + (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
+		}
+		else if (yDiff > 0) {
+			attackDirection = xDiff * pow((1 - (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
+		}
+		else {
+			attackDirection = xDiff / (32 * 4);
+		}
+		break;
+	default:
+		break;
 	}
 	
 }
@@ -39,7 +63,15 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Flyer:
 	case EnemyTypes::ToastCat:
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		if (thisFrame >= 3) thisFrame = 0;
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+
 		toastMissile = {enemy.GetPosition().x + 16 - 5, enemy.GetPosition().y};
 		
 		toastMissile.y = toastMissile.y - toastSpeed;

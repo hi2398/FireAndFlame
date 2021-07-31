@@ -9,6 +9,7 @@ RangedActionState::RangedActionState(Actor& player) : PlayerStates(player) {
 }
 
 std::shared_ptr<State> RangedActionState::Update(Actor& player) {
+    if (player.GetActionBlocked() || player.GetIsDashing()) return std::make_shared<IdleActionState>(player);
     switch (playerCharacter->GetNextAction()) {
         case ACTION::MELEE_ATTACK:
             if (actionDone) {

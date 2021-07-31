@@ -23,6 +23,8 @@ private:
     int collCheckLeft = 0;
     int collCheckRight = 0;
 
+    int flyApproachingCounter;
+
 
     Rectangle edgeSeekerLeft{};
     Rectangle edgeSeekerRight{};

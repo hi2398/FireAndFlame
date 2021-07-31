@@ -31,6 +31,37 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Flyer:
+		flyRoamingCounter++;
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		if (thisFrame >= 2) thisFrame = 0;
+		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
+		//check sight detection in certain radius minus triangle
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
+			5 * 32)) {
+			return std::make_shared<ApproachingState>(enemy);
+		}
+
+		//enter idle when on ground & after set time
+		if (flyRoamingCounter >= 300 && enemy.IsGrounded()) {
+			return std::make_shared<IdleState>(enemy);
+		}
+
+		
+		if (GetRandomValue(0, 100) == 0) {
+			verticalDirection *= -1;
+		}
+
+		enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * enemy.GetDirection(), enemy.GetPosition().y - enemy.GetEnemyMovementSpeed() * verticalDirection});
+		
+		
+		
+
+		break;
 	case EnemyTypes::ToastCat:
 		//check line of sight while roaming
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
@@ -72,8 +103,6 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		default:
 			break;
 		}
-
-		
 		break;
 	}
 
@@ -105,42 +134,46 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		enemy.SetDirection(LEFT);
 	}
 
-	//check for ledges
-	Rectangle edgeSeekerLeft = { enemy.GetPosition().x - 2, enemy.GetPosition().y + 32, 1, 1 };
-	Rectangle edgeSeekerRight = { enemy.GetPosition().x + 32 + 1, enemy.GetPosition().y + 32, 1, 1 };
-	Rectangle tileRec = { 0,0,32,32 };
-	for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
-	{
-		tileRec.x = collTile.x;
-		tileRec.y = collTile.y;
-		if ((CheckCollisionRecs(edgeSeekerLeft, tileRec) && enemy.GetDirection() == LEFT) || (CheckCollisionRecs(edgeSeekerRight, tileRec) && enemy.GetDirection() == RIGHT)) {
-			collisionCounter++;
-			//moving while roaming
-			switch (enemy.GetDirection())
-			{
-			case LEFT:
-				enemy.SetPosition({ enemy.GetPosition().x - enemy.GetEnemyMovementSpeed(), enemy.GetPosition().y });
-				break;
-			case RIGHT:
-				enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed(), enemy.GetPosition().y });
-				break;
-			default:
-				break;
+	if (enemy.GetEnemyType() != EnemyTypes::Flyer) {
+
+		//check for ledges
+		Rectangle edgeSeekerLeft = { enemy.GetPosition().x - 2, enemy.GetPosition().y + 32, 1, 1 };
+		Rectangle edgeSeekerRight = { enemy.GetPosition().x + 32 + 1, enemy.GetPosition().y + 32, 1, 1 };
+		Rectangle tileRec = { 0,0,32,32 };
+		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
+		{
+			tileRec.x = collTile.x;
+			tileRec.y = collTile.y;
+			if ((CheckCollisionRecs(edgeSeekerLeft, tileRec) && enemy.GetDirection() == LEFT) || (CheckCollisionRecs(edgeSeekerRight, tileRec) && enemy.GetDirection() == RIGHT)) {
+				collisionCounter++;
+				//moving while roaming
+				switch (enemy.GetDirection())
+				{
+				case LEFT:
+					enemy.SetPosition({ enemy.GetPosition().x - enemy.GetEnemyMovementSpeed(), enemy.GetPosition().y });
+					break;
+				case RIGHT:
+					enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed(), enemy.GetPosition().y });
+					break;
+				default:
+					break;
+				}
 			}
 		}
-	}
-	if (collisionCounter == 0) {
-		if (enemy.GetDirection() == LEFT) {
-			enemy.SetDirection(RIGHT);
+		if (collisionCounter == 0) {
+			if (enemy.GetDirection() == LEFT) {
+				enemy.SetDirection(RIGHT);
+			}
+			else if (enemy.GetDirection() == RIGHT) {
+				enemy.SetDirection(LEFT);
+			}
 		}
-		else if (enemy.GetDirection() == RIGHT) {
-			enemy.SetDirection(LEFT);
-		}
+
 	}
 
 	//enter idle state randomly every few seconds (0.5% chance per tick)
 	int decideAction = GetRandomValue(1, 400);
-	if (decideAction < 2) {
+	if (decideAction < 2 && enemy.GetEnemyType() != EnemyTypes::Flyer) {
 		return std::make_shared<IdleState>(enemy);
 	}
 
