@@ -11,6 +11,7 @@ class Scene {
 public:
     virtual void Update();
     virtual void Draw();
+    void DrawBackground() const;
     virtual ~Scene() = default;
 
     [[nodiscard]] DialogueManager &GetDialogueManager();
@@ -44,7 +45,6 @@ protected:
     Vector2 middlegroundPosition{};
     Vector2 backgroundPosition{};
 private:
-
 };
 
 

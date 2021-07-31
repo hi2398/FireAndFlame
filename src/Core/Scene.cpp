@@ -60,6 +60,9 @@ void Scene::Update() {
 }
 
 void Scene::Draw() {
+}
+
+void Scene::DrawBackground() const {
     DrawTextureEx(textureBackground, backgroundPosition, 0, 1.0f, WHITE);
     DrawTextureEx(textureMiddleground, middlegroundPosition, 0, 1.0f, WHITE);
     DrawTextureEx(textureForeground, foregroundPosition, 0, 1.0f, WHITE);
