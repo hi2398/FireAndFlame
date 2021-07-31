@@ -82,6 +82,7 @@ public:
     void DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourceRec = {0, 0, 32, 32}) const;
 
 protected:
+    int health = 3;
     Vector2 lastTickPos;
     Direction direction{RIGHT};
     bool grounded{false};
@@ -106,13 +107,18 @@ protected:
     bool isSwiping{ false };
     bool actionBlocked{ false };
 
+
+	//Movement
+	MOVEMENT nextMovement{ MOVEMENT::IDLE };
+
     void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionRight(const std::unique_ptr<Tilemap>& tilemap);
     void CollisionHead(const std::unique_ptr<Tilemap>& tilemap);
+
+
 private:
-    //Movement
-    MOVEMENT nextMovement{ MOVEMENT::IDLE };
+    
     
 };
 

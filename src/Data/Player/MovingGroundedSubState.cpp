@@ -3,9 +3,18 @@
 #include "IdleGroundedSubState.h"
 #include "../../Global.h"
 
-std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
-	const auto actorLastPos = actor.GetLastPosition(); //func alias
-	const auto actorPos = actor.GetPosition(); //func alias
+MovingGroundedSubState::MovingGroundedSubState(Actor& player) : PlayerStates(player) {
+	
+	if (player.GetIsDashing()) {
+		activeFrame.y = 32 * 2;
+	}
+	else {
+		activeFrame.y = 32;
+	}
+}
+
+std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
+
 
 
 	if constexpr (DEBUG_PLAYER_STATES) {
@@ -13,39 +22,37 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 	}
 
 
-	switch (actor.GetNextMovement())
+	switch (player.GetNextMovement())
 	{
 	case MOVEMENT::MOVE_LEFT:
 		
-			if (actor.GetIsRunning()) {
-				actor.SetPosition({ actor.GetPosition().x - 5.0f, actor.GetPosition().y });
+			if (player.GetIsRunning()) {
+				player.SetPosition({ player.GetPosition().x - 5.0f, player.GetPosition().y });
 			}
 			else {
-				actor.SetPosition({ actor.GetPosition().x - 3.0f, actor.GetPosition().y });
+				player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
 			}
-
-			activeFrame = {0,0, -32, 32};
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32, -32, 32};
 			break;
 	case MOVEMENT::MOVE_RIGHT:
 		
-			if (actor.GetIsRunning()) {
-				actor.SetPosition({ actor.GetPosition().x + 5.0f, actor.GetPosition().y });
+			if (player.GetIsRunning()) {
+				player.SetPosition({ player.GetPosition().x + 5.0f, player.GetPosition().y });
 			}
 			else {
-				actor.SetPosition({ actor.GetPosition().x + 3.0f, actor.GetPosition().y });
+				player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
 			}
-
-			activeFrame = { 0,0, 32, 32 };
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(),32, 32, 32 };
 			break;
 	case MOVEMENT::IDLE:
-		return std::make_shared<IdleGroundedSubState>();
+		return std::make_shared<IdleGroundedSubState>(player);
 	case MOVEMENT::DASH_LEFT:
-		actor.Dash(LEFT);
+		player.Dash(LEFT);
 		frameCounterDash++;
 		activeFrame = { (float)-32 * frameCounterDash, 32* 2, -32, 32 };
 		break;
 	case MOVEMENT::DASH_RIGHT:
-		actor.Dash(RIGHT);
+		player.Dash(RIGHT);
 		frameCounterDash++;
 		activeFrame = { (float)32 * frameCounterDash, 32* 2, 32, 32};
 		break;
@@ -53,19 +60,12 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& actor) {
 	return shared_from_this();
 }
 
-void MovingGroundedSubState::Draw(Actor& actor) {
-	/*if (actor.GetIsSwiping()) {
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width * actor.GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+void MovingGroundedSubState::Draw(Actor& player) {
+	if (player.GetIsDashing()) {
+		activeFrame.y = 32 * 2; //id doesnt make sense that this is needed, but it fixes a small visual bug, selecting the wrong frame
+		DrawTextureRec(playerCharacter->upperBody, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 	}
 	else {
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width * actor.GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-	}*/
-	
-	
-	if (actor.GetIsSwiping()) {
-		DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-	}
-	else {
-		DrawTextureRec(playerCharacter->spriteSheetMagmos, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
+		DrawTextureRec(playerCharacter->lowerBody, activeFrame, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
 	}
 }

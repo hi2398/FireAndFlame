@@ -28,6 +28,7 @@ public:
 
     void AddEnemy(std::unique_ptr<Enemy> enemy);
     void AddInteractable(std::unique_ptr<Interactable> interactable);
+    void RemoveAllInteractables();
 
     void SaveGame(std::string saveFolder, int slot);
     void LoadGame(std::string saveFolder, int slot);

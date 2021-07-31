@@ -16,7 +16,7 @@ Coal::Coal(Vector2 location) : Interactable(InteractableType::Coal)
 
 void Coal::Interact(Actor& actor)
 {
-    if (playerCharacter->GetHealth() <= 90) playerCharacter->SetHealth(playerCharacter->GetHealth() + fuel);
+    if (playerCharacter->GetHealth() <= 75) playerCharacter->SetHealth(playerCharacter->GetHealth() + fuel);
     else {
         playerCharacter->SetHealth(100);
     }

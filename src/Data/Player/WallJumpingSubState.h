@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/PlayerStates.h"
 
 
-class WallJumpingSubState : public State {
+class WallJumpingSubState : public PlayerStates {
 public:
-    std::shared_ptr <State> Update(Actor& actor) override;
-    void Draw(Actor& actor) override;
+    WallJumpingSubState(Actor& player);
+    std::shared_ptr <State> Update(Actor& player) override;
+    void Draw(Actor& player) override;
 
     ~WallJumpingSubState() override = default;
 
@@ -15,5 +16,4 @@ protected:
 
 private:
     int wallJumpDirection;
-
 };

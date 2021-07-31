@@ -15,7 +15,6 @@ Vector2 Actor::GetLastPosition() {
     return lastTickPos;
 }
 
-
 Direction Actor::GetDirection() const {
     return direction;
 }
@@ -43,9 +42,7 @@ bool Actor::GetJumpCommand() const {
 }
 
 MOVEMENT Actor::GetNextMovement() {
-    MOVEMENT tmp = nextMovement;
-    nextMovement = MOVEMENT::IDLE;
-    return tmp;
+    return nextMovement;
 }
 
 void Actor::SetNextMovement(MOVEMENT movement) {
@@ -229,7 +226,6 @@ void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {
@@ -253,7 +249,6 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {
@@ -279,7 +274,6 @@ void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {
@@ -305,7 +299,6 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 	Rectangle tileRec = { 0,0,32,32 };
 
 	//player vector alias
-	const auto lastPos = GetLastPosition();
 	const auto newPos = GetPosition();
 
 	for (const auto& collTile : tilemap->GetTileColliders()) {

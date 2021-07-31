@@ -54,9 +54,12 @@ public:
 	int resetAttack = 0;
 	int attackState = 0;
 
-    Texture2D texturePlayer;
-    Texture2D textureWallSlide;
+    int GetFrame();
+    int GetCurrentFrame();
 
+    Texture2D upperBody;
+    Texture2D lowerBody;
+    Texture2D attackSprite;
     Texture2D spriteSheetMagmos;
 
 protected:
@@ -71,6 +74,9 @@ private:
     bool invulnerable{ false };
     bool isHealthDecreasing = true;
     int invulnerableCounter = 0;
+
+    int playerFrameCounter = 0;
+    int currentFrame = 0;
 
     //attack
     ACTION nextAction{ACTION::NONE};

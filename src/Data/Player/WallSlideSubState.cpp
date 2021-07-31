@@ -5,72 +5,77 @@
 #include "WallJumpingSubState.h"
 #include "../../Global.h"
 
-std::shared_ptr<State> WallSlideSubState::Update(Actor& actor) {
+WallSlideSubState::WallSlideSubState(Actor& player) : PlayerStates(player) {
+	
+}
+
+std::shared_ptr<State> WallSlideSubState::Update(Actor& player) {
 
 	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Wall Slide\n";
 	}
 
 	//short delay when entering wall slide
-	actor.SetWallCounter(actor.GetWallCounter() + 1);
-	actor.SetCanDash(true);
-	actor.SetActionBlocked(true);
+	player.SetWallCounter(player.GetWallCounter() + 1);
+	player.SetCanDash(true);
+	player.SetActionBlocked(true);
 
 	//Sliding Down Wall
-	if (actor.GetWallCollisionLeft()) {
+	if (player.GetWallCollisionLeft()) {
 		//left side Wall
-		switch (actor.GetNextMovement())
+		switch (player.GetNextMovement())
 		{
 		    case MOVEMENT::MOVE_LEFT:
-		        if (actor.GetWallCounter() >= 15) {
-				    actor.SetPosition({ actor.GetPosition().x, actor.GetPosition().y + 2.0f });
+		        if (player.GetWallCounter() >= 15) {
+					player.SetPosition({ player.GetPosition().x, player.GetPosition().y + 2.0f });
 			    }
 			    break;
 			case MOVEMENT::MOVE_RIGHT:
 
-				return std::make_shared<FallingSubState>();
+				return std::make_shared<FallingSubState>(player);
 			    break;
 			case MOVEMENT::IDLE:
-				return std::make_shared<FallingSubState>();
+				return std::make_shared<FallingSubState>(player);
         }
 	}
-	else if (actor.GetWallCollisionRight()) {
+	else if (player.GetWallCollisionRight()) {
 
-		switch (actor.GetNextMovement()) {
+		switch (player.GetNextMovement()) {
 		//right Side Wall
 		    case MOVEMENT::MOVE_LEFT:
-				return std::make_shared<FallingSubState>();
+				return std::make_shared<FallingSubState>(player);
 			break;
 			case MOVEMENT::MOVE_RIGHT:
-			    if (actor.GetWallCounter() >= 15) actor.SetPosition({ actor.GetPosition().x , actor.GetPosition().y + 2.0f });
+			    if (player.GetWallCounter() >= 15) player.SetPosition({ player.GetPosition().x , player.GetPosition().y + 2.0f });
 			break;
 			case MOVEMENT::IDLE:
-			    return std::make_shared<FallingSubState>();
+			    return std::make_shared<FallingSubState>(player);
 		}
 	}
+	else if (!player.GetWallJumpCommand()) return std::make_shared<FallingSubState>(player);
 
-	else if (!actor.GetWallJumpCommand()) return std::make_shared<FallingSubState>();
+
+	//frame handling
+	activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32, (float)32 * playerCharacter->GetDirection(), 32 };
+
+	
 
 	//Jumping Off Wall
-	if (actor.GetWallJumpCommand()) {
-		actor.SetJumpSpeed(5.0f);
-		return std::make_shared<WallJumpingSubState>();
+	if (player.GetWallJumpCommand()) {
+		player.SetJumpSpeed(5.0f);
+		return std::make_shared<WallJumpingSubState>(player);
 	}
 	//reset actor values
-	actor.SetTimesJumped(1);
-	actor.SetFallingSpeed(2.0f);
+	player.SetTimesJumped(1);
+	player.SetFallingSpeed(2.0f);
 
 	return shared_from_this();
 }
 
-void WallSlideSubState::Draw(Actor& actor) {
-
-
-	if (actor.GetWallCounter() >= 5) {
-		DrawTextureRec(playerCharacter->textureWallSlide, { 0, 0, (float)playerCharacter->texturePlayer.width * playerCharacter->GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-	}
-	else {
-		DrawTextureRec(playerCharacter->texturePlayer, { 0, 0, (float)playerCharacter->texturePlayer.width * playerCharacter->GetDirection(), (float)playerCharacter->texturePlayer.height }, { playerCharacter->GetPosition().x, playerCharacter->GetPosition().y }, WHITE);
-	}
+void WallSlideSubState::Draw(Actor& player) {
+	DrawTextureRec(playerCharacter->upperBody,
+		activeFrame,
+		player.GetPosition(),
+		WHITE);
 	
 }
