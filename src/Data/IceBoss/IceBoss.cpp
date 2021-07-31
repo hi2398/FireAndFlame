@@ -42,6 +42,7 @@ void IceBoss::Draw() {
 void IceBoss::ReceiveDamage(int damage) {
     //TODO: handle boss dmg
     //TODO: when two parts are broken, switch multiplier to aggressive
+    health-=damage;
 }
 
 bool IceBoss::Decide() {

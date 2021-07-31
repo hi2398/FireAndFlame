@@ -14,7 +14,7 @@ struct Part {
 class IceBoss : public Enemy {
 public:
 
-    IceBoss(Vector2 location);
+    explicit IceBoss(Vector2 location);
     void Update() override;
     void Draw() override;
     void ReceiveDamage(int damage) override;
