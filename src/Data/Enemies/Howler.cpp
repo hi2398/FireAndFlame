@@ -13,6 +13,8 @@ Howler::Howler(Vector2 initialPos) : Enemy(EnemyTypes::Howler)
 	activeState = std::make_shared<EnemyStateHandler>(*this);
 
 	jumpSpeed = 5.0f;
+
+	health = 10;
 }
 
 void Howler::Update()

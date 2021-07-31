@@ -18,7 +18,12 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 	}
 	//frameCounter for animation
 	stateFrameCounter++;
-
+	//frame handling
+	if (stateFrameCounter >= 15) {
+		thisFrame++;
+		stateFrameCounter = 0;
+	}
+	activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
 
 	Rectangle enemySight;
 	trianglePoint1 = { enemy.GetPosition().x + (32 * 5 * enemy.GetDirection()), enemy.GetPosition().y - 32 * 3 };
@@ -36,12 +41,7 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		}
 		break;
 	case EnemyTypes::Howler:
-		//frame handling
-		if (stateFrameCounter >= 15) {
-			thisFrame++;
-			stateFrameCounter = 0;
-		}
-		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
+		
 		//check sight detection in certain radius
 		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
 			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },

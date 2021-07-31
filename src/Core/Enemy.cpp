@@ -109,10 +109,10 @@ void Enemy::UpdateAttackHitbox()
 	switch (GetDirection())
 	{
 	case LEFT:
-		attackHitbox = { position.x - 20, position.y + (float)texture.height / 4, 20, (float)texture.height / 2 };
+		attackHitbox = { position.x - 20, position.y + 32 / 4, 20, 32 / 2 };
 		break;
 	case RIGHT:
-		attackHitbox = { position.x + texture.width, position.y + (float)texture.height / 4, 20, (float)texture.height / 2 };
+		attackHitbox = { position.x + 32, position.y + 32 / 4, 20, 32 / 2 };
 		break;
 	default:
 		break;

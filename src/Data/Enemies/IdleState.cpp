@@ -48,12 +48,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 			5 * 32)) {
 			return std::make_shared<ApproachingState>(enemy);
 		}
-		if (stateFrameCounter >= 15) {
-			thisFrame++;
-			stateFrameCounter = 0;
-		}
-		if (thisFrame == 2) thisFrame = 0;
-		activeFrame = {(float) 32 * thisFrame, 32 * 0 ,(float)- 32 * enemy.GetDirection(), 32};
+		
 		break;
 	default:
 		
@@ -80,6 +75,12 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		}
 		break;
 	}
+	if (stateFrameCounter >= 15) {
+		thisFrame++;
+		stateFrameCounter = 0;
+	}
+	if (thisFrame == 2) thisFrame = 0;
+	activeFrame = { (float)32 * thisFrame, 32 * 0 ,(float)-32 * enemy.GetDirection(), 32 };
 
 	//every enemy enters this part
 	int decision = GetRandomValue(1, 100);

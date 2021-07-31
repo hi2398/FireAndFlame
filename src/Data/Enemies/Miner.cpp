@@ -4,7 +4,7 @@
 
 Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
 {
-	texture = LoadTexture("assets/graphics/Enemies/Miner.png");
+	texture = LoadTexture("assets/graphics/Enemies/Miner_01_Spritesheet.png");
 	position.x = initialPos.x;
 	position.y = initialPos.y;
 	hitbox.x = initialPos.x;

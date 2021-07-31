@@ -80,7 +80,11 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		}
 		break;
 	default:
-		
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 		
 		//exit attacking state when out of range
 		if (!CheckCollisionRecs(playerCharacter->playerHitbox, enemy.GetAttackHitbox())) {

@@ -6,13 +6,20 @@
 
 StunnedState::StunnedState(Enemy& enemy) : EState(enemy)
 {
-	activeFrame = { 0,0, (float)-32 * enemy.GetDirection(), 32 };
+	activeFrame = { 0,32 * 3, (float)-32 * enemy.GetDirection(), 32 };
 }
 
 std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 	if constexpr (DEBUG_ENEMY_STATES) {
 		std::cout << "Enemy State: Stunned\n";
 	}
+	stateFrameCounter++;
+	if (stateFrameCounter >= 15) {
+		thisFrame++;
+		stateFrameCounter = 0;
+	}
+	if (thisFrame >= 2) thisFrame = 0;
+	activeFrame = { (float)32 * thisFrame, 32 * 3, (float)-32 * enemy.GetDirection(), 32 };
 
 	switch (enemy.GetEnemyType())
 	{
@@ -28,6 +35,7 @@ std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 			stunnedOffset = 0;
 			return std::make_shared<ApproachingState>(enemy);
 		}
+		break;
 	}
 	return  shared_from_this();
 }

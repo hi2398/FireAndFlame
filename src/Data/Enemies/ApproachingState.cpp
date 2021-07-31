@@ -25,13 +25,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		thisFrame++;
 		stateFrameCounter = 0;
 	}
-	if (enemy.GetJumpCommand() || !enemy.IsGrounded()) {
-		thisFrame = 1;
-		activeFrame = { (float)32 * thisFrame, 32 * 2 ,(float)-32 * enemy.GetDirection(), 32 };
-	}
-	else {
-		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
-	}
+	activeFrame = {(float) 32 * thisFrame, 32 * 4, (float) -32 * enemy.GetDirection(), 32};
 	
 
 	Rectangle enemySight;
@@ -52,7 +46,13 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		return std::make_shared<RoamingState>(enemy);
 		break;
 	case EnemyTypes::Howler:
-
+		if (enemy.GetJumpCommand() || !enemy.IsGrounded()) {
+			thisFrame = 1;
+			activeFrame = { (float)32 * thisFrame, 32 * 2 ,(float)-32 * enemy.GetDirection(), 32 };
+		}
+		else {
+			activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
+		}
 
 		//chase Player & stop on ledge
 		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + 32, 1, 1 };
@@ -149,8 +149,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 		
 		//chase Player & stop on ledge
-		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-		edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
+		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + 32, 1, 1 };
+		edgeSeekerRight = { enemy.GetPosition().x + 32, enemy.GetPosition().y + 32, 1, 1 };
 		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
 		{
 			tileRec.x = collTile.x;
