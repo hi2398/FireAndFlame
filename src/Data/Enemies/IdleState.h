@@ -16,4 +16,7 @@ protected:
 private:
     int flyIdleCounter = 0;
     Rectangle drawRec;
+
+    //SpiderBot variables
+    float spiderBotRotation = 0;
 };

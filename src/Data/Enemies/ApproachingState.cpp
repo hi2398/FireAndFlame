@@ -43,7 +43,81 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::SpringHog:
+
+		break;
+	case EnemyTypes::SpiderBot:
+		if (thisFrame >= 2) thisFrame = 0;
+		activeFrame = { (float)32 * thisFrame, 32 * 4 ,(float)-32 * enemy.GetDirection(), 32 };
+
+		approachingSpeed = enemy.GetEnemyMovementSpeed() * 4;
+
+		//handle enemy direction
+		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 32 * 4)) {
+			return std::make_shared<AttackingState>(enemy);
+		}
+		else {
+			Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+			Vector2 movingToPlayer = Vector2Normalize(playerReference);
+			if (playerReference.x > 0) {
+
+				enemy.SetDirection(LEFT);
+			}
+			else {
+
+				enemy.SetDirection(RIGHT);
+			}
+		}
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+			enemy.SetPosition({ enemy.GetPosition().x - approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y + approachingSpeed * enemy.GetDirection() });
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y - approachingSpeed * enemy.GetDirection() });
+		}
+
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y + approachingSpeed * enemy.GetDirection() });
+
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y - approachingSpeed * enemy.GetDirection() });
+
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+
+		
+		break;
 	case EnemyTypes::Flyer:
+		//enter attack after some time or when in range
+		if (flyApproachingCounter >= 180) {
+			return std::make_shared<AttackingState>(enemy);
+		}
+
 		flyApproachingCounter++;
 		if (stateFrameCounter >= 15) {
 			thisFrame++;
@@ -64,10 +138,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 		enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y + movingToPlayer.y});
 
-		//enter attack after some time or when in range
-		if (flyApproachingCounter >= 180 || CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 4*32)) {
-			return std::make_shared<AttackingState>(enemy);
-		}
+		
 
 		//aggro check
 		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
@@ -239,5 +310,10 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 void ApproachingState::Draw(Enemy& enemy)
 {
-	DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	if (enemy.GetEnemyType() == EnemyTypes::SpiderBot) {
+		DrawTexturePro(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 32, 32 }, { 16, 16 }, spiderBotRotation, WHITE);
+	}
+	else {
+		DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	}
 }

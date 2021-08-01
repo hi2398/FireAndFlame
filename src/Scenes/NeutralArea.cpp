@@ -4,6 +4,8 @@
 #include "../Data/Enemies/ToastCat.h"
 #include "../Data/Enemies/Fly.h"
 #include "../Data/Enemies/Howler.h"
+#include "../Data/Enemies/SpiderBot.h"
+#include "../Data/Enemies/SpringHog.h"
 #include "raymath.h"
 
 
@@ -27,12 +29,28 @@ NeutralArea::NeutralArea(){
     Vector2 vec2{20*32-100, 36*32};
 
     
-    /*enemies.emplace_back(std::make_unique<Miner>(vec2));*/
-
-    enemies.emplace_back(std::make_unique<Fly>(vec2));
-    
-    /*enemies.emplace_back(std::make_unique<Howler>(vec2));*/
- 
+    switch (5)
+    {
+    case 0:
+        enemies.emplace_back(std::make_unique<Miner>(vec2));
+        break;
+    case 1:
+        enemies.emplace_back(std::make_unique<SpiderBot>(vec2));
+        break;
+    case 2:
+        enemies.emplace_back(std::make_unique<Howler>(vec2));
+        break;
+    case 3:
+        enemies.emplace_back(std::make_unique<ToastCat>(vec2));
+        break;
+    case 4:
+        enemies.emplace_back(std::make_unique<Fly>(vec2));
+        break;
+    case 5:
+        enemies.emplace_back(std::make_unique<SpringHog>(vec2));
+    default:
+        break;
+    }
 
     textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");
     textureMiddleground = LoadTexture("assets/graphics/backgrounds/background2.png");

@@ -5,7 +5,8 @@
 
 
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
-enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Saugi, Boss};
+enum class EnemyTypes { ToastCat, Miner, SpiderBot, Flyer, SpringHog, Howler, Saugi, Boss};
+enum class EnemyLevel {Low, Medium, High};
 
 
 class Enemy : public Actor {
@@ -35,6 +36,8 @@ public:
 
     int GetDamageValue();
 
+    
+
 protected:
     static bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
     static float GetDistance(Vector2 startLocation, Vector2 endLocation);
@@ -63,6 +66,7 @@ protected:
     bool invulnerable{ false };
     int invulnerableCounter = 0;
     int damageValue = 5;
+
     
 private:
 

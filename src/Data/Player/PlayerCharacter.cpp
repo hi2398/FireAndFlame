@@ -84,6 +84,12 @@ void PlayerCharacter::Update() {
 		}
 	}
 
+	for (const auto& enemies : sceneManager->GetEnemies()) {
+		if (CheckCollisionRecs(playerHitbox, enemies->GetCollider())) {
+			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemies->GetDamageValue());
+		}
+	}
+
 	nextMovement = MOVEMENT::IDLE;
 }
 

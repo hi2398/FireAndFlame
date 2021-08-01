@@ -23,7 +23,11 @@ private:
     int collCheckLeft = 0;
     int collCheckRight = 0;
 
-    int flyApproachingCounter;
+    int flyApproachingCounter = 0;
+
+    //SpiderBot variables
+    float spiderBotRotation = 0;
+    float approachingSpeed = 0;
 
 
     Rectangle edgeSeekerLeft{};
