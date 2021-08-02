@@ -19,7 +19,7 @@ void Fly::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider();
+	UpdateCollider(0, 20, 32, 12);
 
 	if (invulnerable) {
 		invulnerableCounter++;

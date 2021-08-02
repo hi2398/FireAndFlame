@@ -39,36 +39,6 @@ void Enemy::ReceiveDamage(int damage)
 	}
 }
 
-bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap)
-{
-	Vector2 lineOfSight = Vector2Subtract(endLocation, startLocation);
-
-	Vector2 direction = Vector2Normalize(lineOfSight);
-	Vector2 checkInterval = Vector2Scale(direction, 10);
-
-	Vector2 nextCheckLocation = Vector2Add(startLocation, checkInterval);
-	//see if next position to check is even in area of player
-	if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
-	{
-	    nextCheckLocation=Vector2Add(nextCheckLocation, checkInterval);
-		Rectangle tileRec = { 0,0,32,32 };
-		for (const auto& collTile : tilemap->GetTileColliders()) {
-			tileRec.x = collTile.x;
-			tileRec.y = collTile.y;
-
-            //if line of sight hits opaque object, return
-			if (CheckCollisionPointRec(nextCheckLocation, tileRec)) {
-				return false;
-			} //if raycast hits player, return true
-			else if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->playerHitbox)) {
-			    std::cout << "Player found" << std::endl;
-                return true;
-			}
-		}
-	}
-    return false;
-}
-
 float Enemy::GetDistance(Vector2 startLocation, Vector2 endLocation)
 {
 	return Vector2Distance(startLocation, endLocation);
@@ -92,8 +62,8 @@ bool Enemy::MakeDecision(int probability)
 	}
 }
 
-void Enemy::UpdateCollider() {
-	hitbox = { position.x, position.y, 32, 32 };
+void Enemy::UpdateCollider(float xOffset, float yOffset, float width, float height) {
+	hitbox = { position.x + xOffset, position.y + yOffset, width, height };
 }
 
 Rectangle Enemy::GetCollider() const {

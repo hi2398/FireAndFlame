@@ -19,7 +19,7 @@ void SpiderBot::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider();
+	UpdateCollider(0, 0, 32, 32);
 
 	if (invulnerable) {
 		invulnerableCounter++;

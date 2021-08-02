@@ -19,7 +19,7 @@ void Miner::Update() {
 	activeState = activeState->Update(*this);
 
 	UpdateAttackHitbox();
-	UpdateCollider();
+	UpdateCollider(0, 15, 32, 17);
 
 	if (invulnerable) {
 		invulnerableCounter++;

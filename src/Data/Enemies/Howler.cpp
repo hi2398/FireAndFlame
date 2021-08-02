@@ -23,7 +23,7 @@ void Howler::Update()
 	activeState = activeState->Update(*this);
 
 	UpdateAttackHitbox();
-	UpdateCollider();
+	UpdateCollider(0, 0, 32, 32);
 
 	if (invulnerable) {
 		invulnerableCounter++;

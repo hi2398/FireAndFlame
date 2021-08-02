@@ -12,11 +12,11 @@
 
 AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 {
-
+	activeFrame.y = 32 * 5;
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::SpringHog:
-
+		activeFrame = { 32, 32 * 3, (float)32 * enemy.GetDirection() , 32};
 		yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
 		xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
 
@@ -33,7 +33,13 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 		break;
 	case EnemyTypes::ToastCat:
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
-		missileTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+		if (GetRandomValue(0, 19) == 0) {
+			missileTexture = LoadTexture("assets/graphics/Enemies/Burned_Toast.png");
+		}
+		else {
+			missileTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+		}
+	
 
 		yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
 		xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
@@ -56,6 +62,7 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 		missile = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16};
 		break;
 	default:
+		
 		break;
 	}
 	
@@ -73,13 +80,8 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		if (enemy.IsGrounded() && groundedCounter >= 30) return std::make_shared<ApproachingState>(enemy);
 		//set variables based on grounded/aerial state
 		groundedCounter++;
-		if (enemy.IsGrounded()) {
-			thisFrame = 0;
-		}
-		else {
-			thisFrame = 1;
-		}
-		activeFrame = { (float)32 * thisFrame, 32 * 3 ,(float)-32 * enemy.GetDirection(), 32 };
+		thisFrame = 1;
+		activeFrame = { (float)32 * thisFrame, 32 * 3 ,(float)32 * enemy.GetDirection(), 32 };
 
 		//jump to player position
 		jumpDistance = 3.5f * attackDirection;
@@ -200,7 +202,6 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		missileHitbox = { missile.x, missile.y, (float)missileTexture.width, (float)missileTexture.height };
 		if (CheckCollisionRecs(missileHitbox, playerCharacter->playerHitbox)) {
 			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemy.GetDamageValue());
-			return std::make_shared<ApproachingState>(enemy);
 		}
 		break;
 	case EnemyTypes::Howler:

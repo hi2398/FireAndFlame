@@ -8,7 +8,46 @@
 
 RoamingState::RoamingState(Enemy& enemy) : EState(enemy)
 {
+	switch (enemy.GetEnemyType())
+	{
+	case EnemyTypes::SpiderBot:
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+		}
 
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+		}
+		break;
+	case EnemyTypes::SpringHog:
+		activeFrame.width = (float) 32 * enemy.GetDirection();
+		break;
+	default:
+		break;
+	}
 }
 
 std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
@@ -42,7 +81,7 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 			thisFrame = 1;
 			groundedCounter = 0;
 		}
-		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
+		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)32 * enemy.GetDirection(), 32 };
 
 		//springhog sight
 		enemySight = { enemy.GetPosition().x - 4 * 32 + 16, enemy.GetPosition().y + 6, 32 * 8, 20 };
@@ -70,7 +109,17 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 			}
 		}
 		if (horizontalJumpCheck > 0) horizontalJumpCheck = 1;
-
+		else if (enemy.IsGrounded() && horizontalJumpCheck == 0){
+			switch (enemy.GetDirection())
+			{
+			case LEFT:
+				enemy.SetDirection(RIGHT);
+				break;
+			case RIGHT:
+				enemy.SetDirection(LEFT);
+				break;
+			}
+		}
 		if (groundedCounter >= 45) enemy.SetJumpCommand(true);
 
 		if (enemy.GetJumpCommand()) {
@@ -175,7 +224,8 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
 			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
 			trianglePoint1,
-			trianglePoint2)) {
+			trianglePoint2) ||
+			CheckCollisionRecs(playerCharacter->playerHitbox, { enemy.GetPosition().x + 16, enemy.GetPosition().y, 32, 32 })) {
 			return std::make_shared<AttackingState>(enemy);
 		}
 		break;
@@ -284,7 +334,10 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 	if (decideAction < 2 && enemy.GetEnemyType() != EnemyTypes::Flyer && enemy.GetEnemyType() != EnemyTypes::SpringHog) {
 		return std::make_shared<IdleState>(enemy);
 	}
-
+	if (enemy.GetEnemyType() == EnemyTypes::SpringHog) {
+		if (decideAction < 2) decided = true;
+		if (decided && enemy.IsGrounded()) return std::make_shared<IdleState>(enemy);
+	}
 
 
 	if (enemy.IsInvulnerable()) {

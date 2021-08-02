@@ -16,7 +16,7 @@ public:
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     virtual void ReceiveDamage(int damage);
 
-    void UpdateCollider();
+    void UpdateCollider(float xOffset, float yOffset, float width, float height);
     Rectangle GetCollider() const;
 
     ~Enemy() override = default;
@@ -39,7 +39,6 @@ public:
     
 
 protected:
-    static bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
     static float GetDistance(Vector2 startLocation, Vector2 endLocation);
     explicit Enemy(EnemyTypes enemyType);
     bool CheckOnScreen();

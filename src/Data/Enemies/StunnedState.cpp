@@ -4,10 +4,53 @@
 #include "AttackingState.h"
 #include "StunnedState.h"
 
+#include <raymath.h>
+
 
 StunnedState::StunnedState(Enemy& enemy) : EState(enemy)
 {
 	activeFrame = { 0,32 * 3, (float)-32 * enemy.GetDirection(), 32 };
+
+	switch (enemy.GetEnemyType())
+	{
+	case EnemyTypes::SpiderBot:
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+		}
+		break;
+	case EnemyTypes::SpringHog:
+		activeFrame = { 0,32 * 3, (float)32 * enemy.GetDirection(), 32 };
+		break;
+	default:
+		break;
+	}
 }
 
 std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
@@ -61,9 +104,26 @@ std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 		}
 		break;
 	}
+	//set direction before exiting Stunned State
+	if (stunnedFrameCounter == 59) {
+		Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		if (playerReference.x > 0) {
+
+			enemy.SetDirection(RIGHT);
+		}
+		else {
+
+			enemy.SetDirection(LEFT);
+		}
+	}
 	return  shared_from_this();
 }
 
 void StunnedState::Draw(Enemy& enemy) {
-	DrawTextureRec(enemy.GetTexture(),activeFrame, { enemy.GetPosition().x + stunnedOffset, enemy.GetPosition().y }, WHITE);
+	if (enemy.GetEnemyType() == EnemyTypes::SpiderBot) {
+		DrawTexturePro(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x + 16 + stunnedOffset, enemy.GetPosition().y + 16, 32, 32 }, { 16, 16 }, spiderBotRotation, WHITE);
+	}
+	else {
+		DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x + stunnedOffset, enemy.GetPosition().y }, WHITE);
+	}
 }

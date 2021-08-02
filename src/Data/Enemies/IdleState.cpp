@@ -8,7 +8,46 @@
 
 IdleState::IdleState(Enemy& enemy) : EState(enemy)
 {
+	switch (enemy.GetEnemyType())
+	{
+	case EnemyTypes::SpiderBot:
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+		}
 
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+		}
+		break;
+	case EnemyTypes::SpringHog:
+		activeFrame.width = (float)32 * enemy.GetDirection();
+		break;
+	default:
+		break;
+	}
 }
 
 std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
@@ -18,7 +57,12 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	}
 	//frameCounter for animation
 	stateFrameCounter++;
-	
+	if (stateFrameCounter >= 15) {
+		thisFrame++;
+		stateFrameCounter = 0;
+	}
+	if (thisFrame == 2) thisFrame = 0;
+	activeFrame = { (float)32 * thisFrame, 32 * 0 ,(float)-32 * enemy.GetDirection(), 32 };
 	Rectangle enemySight;
 
 	//Vector points for triangle sight
@@ -27,6 +71,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::SpringHog:
+		activeFrame = { (float)32 * thisFrame, 32 * 0 ,(float)32 * enemy.GetDirection(), 32 };
 		enemySight = {enemy.GetPosition().x - 4 * 32 + 16, enemy.GetPosition().y + 6, 32 * 8, 20};
 		if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 			return std::make_shared<AttackingState>(enemy);
@@ -92,7 +137,8 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(), 
 			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
 			trianglePoint1, 
-			trianglePoint2)) {
+			trianglePoint2) ||
+			CheckCollisionRecs(playerCharacter->playerHitbox, {enemy.GetPosition().x + 16, enemy.GetPosition().y, 32, 32})) {
 			return std::make_shared<AttackingState>(enemy);
 		}
 		break;
@@ -130,12 +176,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 		}
 		break;
 	}
-	if (stateFrameCounter >= 15) {
-		thisFrame++;
-		stateFrameCounter = 0;
-	}
-	if (thisFrame == 2) thisFrame = 0;
-	activeFrame = { (float)32 * thisFrame, 32 * 0 ,(float)-32 * enemy.GetDirection(), 32 };
+	
 
 	//every enemy enters this part
 	int decision = GetRandomValue(1, 100);

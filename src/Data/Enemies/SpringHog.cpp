@@ -13,14 +13,14 @@ SpringHog::SpringHog(Vector2 initialPos) : Enemy(EnemyTypes::SpringHog)
 	activeState = std::make_shared<EnemyStateHandler>(*this);
 
 	movementSpeed = 3.0f;
-	jumpSpeed = 5.0f;
+	jumpSpeed = 3.0f;
 }
 
 void SpringHog::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider();
+	UpdateCollider(0,0, 32, 32);
 
 	if (invulnerable) {
 		invulnerableCounter++;
@@ -37,7 +37,7 @@ void SpringHog::Update()
 	CollisionGround(sceneManager->GetTilemap());
 	CollisionHead(sceneManager->GetTilemap());
 
-	if (IsGrounded()) SetJumpCommand(false), SetJumpSpeed(5.0f);
+	if (IsGrounded()) SetJumpCommand(false), SetJumpSpeed(3.0f);
 	if (GetHeadCollision()) SetJumpSpeed(0.0f);
 	if (!IsGrounded() && !GetJumpCommand()) position.y += 2.0f;
 }

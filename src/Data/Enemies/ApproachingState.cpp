@@ -15,7 +15,44 @@ ApproachingState::ApproachingState(Enemy& enemy) : EState(enemy)
 	case EnemyTypes::ToastCat:
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 		break;
+	case EnemyTypes::SpiderBot:
+		activeFrame = { 0,32 * 4,(float)32 * enemy.GetDirection(), 32 };
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+		}
+		break;
+	case EnemyTypes::SpringHog:
+		activeFrame = { 32, 32 * 3, (float) 32 * enemy.GetDirection(), 32};
+		break;
 	default:
+		activeFrame.y = 32 * 4;
 		break;
 	}
 }
@@ -44,6 +81,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::SpringHog:
+		//set springhog direction to player direction
 		playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
 		if (playerReference.x > 0) {
 
@@ -53,27 +91,14 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 			enemy.SetDirection(LEFT);
 		}
-		//set variables based on grounded/aerial state
-		if (enemy.IsGrounded()) {
-			thisFrame = 0;
-		}
-		else {
-			thisFrame = 1;
-		}
-		activeFrame = { (float)32 * thisFrame, 32 * 3 ,(float)-32 * enemy.GetDirection(), 32 };
-
+		activeFrame = { 32, 32 * 3, (float)32 * enemy.GetDirection(), 32 };
 		//springhog sight
 		if (enemy.IsGrounded()) {
-			enemySight = { enemy.GetPosition().x - 5 * 32 + 16, enemy.GetPosition().y + 6, 32 * 10, 20 };
-			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
+			if (CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16}, 32 * 4)) {
 				return std::make_shared<AttackingState>(enemy);
 			}
 			else return std::make_shared<RoamingState>(enemy);
 		}
-		
-
-		
-
 		break;
 	case EnemyTypes::SpiderBot:
 		if (thisFrame >= 2) thisFrame = 0;
@@ -185,7 +210,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
 			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16}, 
 			trianglePoint1, 
-			trianglePoint2)) {
+			trianglePoint2) ||
+			CheckCollisionRecs(playerCharacter->playerHitbox, { enemy.GetPosition().x + 16, enemy.GetPosition().y, 32, 32 })) {
 			return std::make_shared<AttackingState>(enemy);
 		}
 		return std::make_shared<RoamingState>(enemy);
@@ -324,7 +350,13 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	}
 	//enter idle when losing aggro after 5 secs
 	if (aggroCooldown >= 300) {
-		return std::make_shared<RoamingState>(enemy);
+		if (enemy.GetEnemyType() == EnemyTypes::Howler) {
+			if (enemy.IsGrounded()) return std::make_shared<RoamingState>(enemy);
+		}
+		else {
+			return std::make_shared<RoamingState>(enemy);
+		}
+		
 	}
 
 	if (enemy.IsInvulnerable()) {

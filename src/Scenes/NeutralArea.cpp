@@ -48,6 +48,7 @@ NeutralArea::NeutralArea(){
         break;
     case 5:
         enemies.emplace_back(std::make_unique<SpringHog>(vec2));
+        break;
     default:
         break;
     }

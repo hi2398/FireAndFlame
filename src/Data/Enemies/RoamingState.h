@@ -31,6 +31,7 @@ private:
     Rectangle leftJumpCheck = {};
     float horizontalJumpCheck = 1;
     int groundedCounter = 0;
+    bool decided{ false };
 
     Rectangle leftFoot{};
     Rectangle rightFoot{};
