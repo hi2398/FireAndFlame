@@ -6,6 +6,7 @@
 #include "../Data/Enemies/Howler.h"
 #include "../Data/Enemies/SpiderBot.h"
 #include "../Data/Enemies/SpringHog.h"
+#include "../Data/Enemies/Saugi.h"
 #include "raymath.h"
 
 
@@ -15,6 +16,7 @@ NeutralArea::NeutralArea(){
     playerCharacter->SetHealth(100);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json","assets/Tilemaps/Neutral_Area_Tilemap.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
+    
     // Delete this section, only for testing
     Vector2 tempVec= playerCharacter->GetPosition();
     tempVec.x+=256;
@@ -26,28 +28,42 @@ NeutralArea::NeutralArea(){
     Texture2D tempTex = LoadTexture("assets/graphics/PLAYER.png");
     // A
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
-    Vector2 vec2{20*32-100, 36*32};
+    Vector2 vec2{20*32, 36*32};
+    Vector2 vec3{15 * 32, 36*32};
+    Vector2 vec4{ 30 * 32, 36 * 32 };
 
+    interactables.emplace_back(std::make_unique<Coal>(vec3));
+    interactables.emplace_back(std::make_unique<Coal>(vec4));
     
-    switch (5)
+    switch (6)
     {
     case 0:
-        enemies.emplace_back(std::make_unique<Miner>(vec2));
+        enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::Low));
+        enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::Medium));
+        enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::High));
         break;
     case 1:
-        enemies.emplace_back(std::make_unique<SpiderBot>(vec2));
+        enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Low));
+        enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Medium));
         break;
     case 2:
-        enemies.emplace_back(std::make_unique<Howler>(vec2));
+        enemies.emplace_back(std::make_unique<Howler>(vec2, EnemyLevel::Low));
+        enemies.emplace_back(std::make_unique<Howler>(vec2, EnemyLevel::Medium));
         break;
     case 3:
         enemies.emplace_back(std::make_unique<ToastCat>(vec2));
         break;
     case 4:
-        enemies.emplace_back(std::make_unique<Fly>(vec2));
+        enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::Low));
+        enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::Medium));
+        enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::High));
         break;
     case 5:
-        enemies.emplace_back(std::make_unique<SpringHog>(vec2));
+        enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Low));
+        enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Medium));
+        break;
+    case 6:
+        enemies.emplace_back(std::make_unique<Saugi>(vec2));
         break;
     default:
         break;

@@ -1,6 +1,7 @@
 #include "../../Core/Enemy.h"
 #include "../../../src/Global.h"
 #include "ApproachingState.h"
+#include "RoamingState.h"
 #include "AttackingState.h"
 #include "StunnedState.h"
 
@@ -67,6 +68,17 @@ std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Saugi:
+		stunnedFrameCounter++;
+		if (stunnedFrameCounter % 16) {
+			if (stunnedOffset == 0) stunnedOffset = 2;
+			else if (stunnedOffset == 2) stunnedOffset = 0;
+		}
+		if (stunnedFrameCounter >= 60) {
+			stunnedOffset = 0;
+			return std::make_shared<RoamingState>(enemy);
+		}
+		break;
 	case EnemyTypes::SpringHog:
 		enemy.SetJumpCommand(false);
 		stunnedFrameCounter++;

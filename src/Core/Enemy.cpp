@@ -107,3 +107,8 @@ int Enemy::GetDamageValue()
 {
 	return damageValue;
 }
+
+EnemyLevel Enemy::GetEnemyLevel() const
+{
+	return enemyLevel;
+}

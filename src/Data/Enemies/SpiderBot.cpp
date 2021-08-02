@@ -3,9 +3,22 @@
 #include "EnemyStateHandler.h"
 
 
-SpiderBot::SpiderBot(Vector2 initialPos) : Enemy(EnemyTypes::SpiderBot)
+SpiderBot::SpiderBot(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::SpiderBot)
 {
-	texture = LoadTexture("assets/graphics/Enemies/SpiderBot_01_Spritesheet.png");
+	this->enemyLevel = enemyLevel;
+	switch (enemyLevel)
+	{
+	case EnemyLevel::Low:
+		texture = LoadTexture("assets/graphics/Enemies/SpiderBot_01_Spritesheet.png");
+		health = 3;
+		break;
+	case EnemyLevel::Medium:
+		texture = LoadTexture("assets/graphics/Enemies/SpiderBot_02_Spritesheet.png");
+		health = 10;
+		break;
+	default:
+		break;
+	}
 
 	position.x = initialPos.x;
 	position.y = initialPos.y;

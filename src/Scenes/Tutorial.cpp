@@ -29,13 +29,13 @@ Tutorial::Tutorial() {
     tilemap->AddCollisionTile(tempVec);
 
     tempVec = {52*32,46*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {64*32,42*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {67*32,42*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {86*32,39*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
 
     door1[0] = {58*32,76*32};
     door1[1] = {58*32,75*32};

@@ -81,6 +81,9 @@ public:
 
     void DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourceRec = {0, 0, 32, 32}) const;
 
+    int GetHealth() const;
+    void SetHealth(int health);
+
 protected:
     int health = 3;
     Vector2 lastTickPos;

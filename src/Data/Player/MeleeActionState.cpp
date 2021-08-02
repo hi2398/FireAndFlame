@@ -69,23 +69,6 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 			return std::make_shared<IdleActionState>(player);
 		}
 	case ACTION::MELEE_ATTACK:
-		/*switch (player.GetAttackDirection())
-		{
-		case ATT_LEFT:
-			if (playerCharacter->attackState == 2) {
-				spearHitbox.x = player.GetPosition().x + 16.0f - (32.0f);
-				spearHitbox.y = player.GetPosition().y + 11.0f;
-			}
-			else {
-				spearHitbox.x = player.GetPosition().x + 16.0f - (9.0f);
-				spearHitbox.y = player.GetPosition().y + 11.0f;
-			}
-			break;
-		case ATT_RIGHT:
-			spearHitbox.x = player.GetPosition().x + 16.0f + 9.0f;
-			spearHitbox.y = player.GetPosition().y + 11.0f;
-			break;
-		}*/
 
 		//update attack function
 		if (!player.GetIsSwiping()) player.SetIsSwiping(true), playerCharacter->resetAttack = 0;

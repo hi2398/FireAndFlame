@@ -8,7 +8,7 @@
 class SpringHog : public Enemy
 {
 public:
-	explicit SpringHog(Vector2 initialPos);
+	explicit SpringHog(Vector2 initialPos, EnemyLevel enemyLevel);
 	void Update() override;
 	void Draw() override;
 	~SpringHog() = default;

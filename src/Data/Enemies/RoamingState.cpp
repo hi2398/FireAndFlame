@@ -70,6 +70,31 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Saugi:
+		for (const auto& coal : sceneManager->GetInteractables()) {
+			//check line of sight in idle
+			switch (enemy.GetDirection())
+			{
+			case LEFT:
+				enemySight = { enemy.GetPosition().x + 16 - 6 * 32, enemy.GetPosition().y + 16, 6 * 32, 5 };
+
+				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+					//enter approaching state on coal sight left
+					return std::make_shared<ApproachingState>(enemy);
+				}
+				break;
+			case RIGHT:
+				enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
+				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+					//enter approaching state on player sight right
+					return std::make_shared<ApproachingState>(enemy);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		break;
 	case EnemyTypes::SpringHog:
 		//set variables based on grounded/aerial state
 		if (enemy.IsGrounded()) {
@@ -266,7 +291,7 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 
 	//change direction while roaming
 	decisionTimer++;
-	if (decisionTimer >= 180) {
+	if (decisionTimer >= 180 && enemy.GetEnemyType() != EnemyTypes::SpringHog) {
 		int decideDirection = GetRandomValue(1, 100);
 		if (decideDirection < 2) {
 			decisionTimer = 0;

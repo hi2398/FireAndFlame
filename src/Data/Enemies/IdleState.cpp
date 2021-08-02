@@ -70,6 +70,31 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	trianglePoint2 = { enemy.GetPosition().x + (32 * 5 * enemy.GetDirection()), enemy.GetPosition().y + 32 * 4 };
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Saugi:
+		for (const auto& coal : sceneManager->GetInteractables()) {
+			//check line of sight in idle
+			switch (enemy.GetDirection())
+			{
+			case LEFT:
+				enemySight = { enemy.GetPosition().x + 16 - 6 * 32, enemy.GetPosition().y + 16, 6 * 32, 5 };
+
+				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+					//enter approaching state on coal sight left
+					return std::make_shared<ApproachingState>(enemy);
+				}
+				break;
+			case RIGHT:
+				enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
+				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+					//enter approaching state on player sight right
+					return std::make_shared<ApproachingState>(enemy);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		break;
 	case EnemyTypes::SpringHog:
 		activeFrame = { (float)32 * thisFrame, 32 * 0 ,(float)32 * enemy.GetDirection(), 32 };
 		enemySight = {enemy.GetPosition().x - 4 * 32 + 16, enemy.GetPosition().y + 6, 32 * 8, 20};

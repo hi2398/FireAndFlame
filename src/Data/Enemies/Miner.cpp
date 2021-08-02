@@ -2,9 +2,27 @@
 #include "../../Global.h"
 #include "EnemyStateHandler.h"
 
-Miner::Miner(Vector2 initialPos): Enemy(EnemyTypes::Miner)
+Miner::Miner(Vector2 initialPos, EnemyLevel enemyLevel): Enemy(EnemyTypes::Miner)
 {
-	texture = LoadTexture("assets/graphics/Enemies/Miner_01_Spritesheet.png");
+	this->enemyLevel = enemyLevel;
+	switch (enemyLevel)
+	{
+	case EnemyLevel::Low:
+		texture = LoadTexture("assets/graphics/Enemies/Miner_01_Spritesheet.png");
+		health = 3;
+		break;
+	case EnemyLevel::Medium:
+		texture = LoadTexture("assets/graphics/Enemies/Miner_02_Spritesheet.png");
+		health = 5;
+		break;
+	case EnemyLevel::High:
+		texture = LoadTexture("assets/graphics/Enemies/Miner_03_Spritesheet.png");
+		health = 10;
+		break;
+	default:
+		break;
+	}
+	
 	position.x = initialPos.x;
 	position.y = initialPos.y;
 	hitbox.x = initialPos.x;

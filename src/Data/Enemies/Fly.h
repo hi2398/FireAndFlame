@@ -8,7 +8,7 @@
 class Fly : public Enemy
 {
 public:
-	explicit Fly(Vector2 initialPos);
+	explicit Fly(Vector2 initialPos, EnemyLevel enemyLevel);
 	void Update() override;
 	void Draw() override;
 	~Fly() = default;

@@ -3,9 +3,22 @@
 #include "EnemyStateHandler.h"
 
 
-SpringHog::SpringHog(Vector2 initialPos) : Enemy(EnemyTypes::SpringHog)
+SpringHog::SpringHog(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::SpringHog)
 {
-	texture = LoadTexture("assets/graphics/Enemies/Hogbot_Spritesheet.png");
+	this->enemyLevel = enemyLevel;
+	switch (enemyLevel)
+	{
+	case EnemyLevel::Low:
+		texture = LoadTexture("assets/graphics/Enemies/Hogbot_Spritesheet.png");
+		health = 3;
+		break;
+	case EnemyLevel::Medium:
+		texture = LoadTexture("assets/graphics/Enemies/Hogbot_02_Spritesheet.png");
+		health = 10;
+		break;
+	default:
+		break;
+	}
 
 	position.x = initialPos.x;
 	position.y = initialPos.y;

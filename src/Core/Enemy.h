@@ -36,6 +36,8 @@ public:
 
     int GetDamageValue();
 
+    EnemyLevel GetEnemyLevel() const;
+
     
 
 protected:
@@ -44,6 +46,7 @@ protected:
     bool CheckOnScreen();
     bool MakeDecision(int probability);
     EnemyTypes enemyType;
+    EnemyLevel enemyLevel;
     int health{3};
     bool hasLineOfSight{false};
     bool isAttacking;

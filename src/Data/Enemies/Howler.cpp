@@ -3,9 +3,22 @@
 #include "EnemyStateHandler.h"
 
 
-Howler::Howler(Vector2 initialPos) : Enemy(EnemyTypes::Howler)
+Howler::Howler(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::Howler)
 {
-	texture = LoadTexture("assets/graphics/Enemies/Doggo_01_Spritesheet.png");
+	this->enemyLevel = enemyLevel;
+	switch (enemyLevel)
+	{
+	case EnemyLevel::Low:
+		texture = LoadTexture("assets/graphics/Enemies/Doggo_01_Spritesheet.png");
+		health = 10;
+		break;
+	case EnemyLevel::Medium:
+		texture = LoadTexture("assets/graphics/Enemies/Doggo_02_Spritesheet.png");
+		health = 15;
+		break;
+	default:
+		break;
+	}
 	
 	position.x = initialPos.x;
 	position.y = initialPos.y;
@@ -13,8 +26,6 @@ Howler::Howler(Vector2 initialPos) : Enemy(EnemyTypes::Howler)
 	activeState = std::make_shared<EnemyStateHandler>(*this);
 
 	jumpSpeed = 5.0f;
-
-	health = 10;
 }
 
 void Howler::Update()

@@ -174,6 +174,16 @@ void Actor::DrawDirectional(Vector2 location, Texture2D texture, Rectangle sourc
                    WHITE);
 }
 
+int Actor::GetHealth() const
+{
+	return health;
+}
+
+void Actor::SetHealth(int health)
+{
+	this->health = health;
+}
+
 bool Actor::GetCanDash() const
 {
 	return canDash;
