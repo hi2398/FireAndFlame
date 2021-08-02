@@ -21,7 +21,7 @@ protected:
 
 
 private:
-    static constexpr Vector2 playerStart{20*32, 39*32};
+    static constexpr Vector2 playerStart{20*32, 48*32};
     bool BossDeath();
     bool bossActivated{false};
     bool bossDefeated{false};
