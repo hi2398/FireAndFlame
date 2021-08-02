@@ -15,6 +15,22 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::SpringHog:
+
+		yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
+		xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
+
+		if (yDiff < 0) {
+			attackDirection = xDiff * pow((1 + (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
+		}
+		else if (yDiff > 0) {
+			attackDirection = xDiff * pow((1 - (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
+		}
+		else {
+			attackDirection = xDiff / (32 * 4);
+		}
+
+		break;
 	case EnemyTypes::ToastCat:
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 		missileTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
@@ -53,6 +69,32 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::SpringHog:
+		if (enemy.IsGrounded() && groundedCounter >= 30) return std::make_shared<ApproachingState>(enemy);
+		//set variables based on grounded/aerial state
+		groundedCounter++;
+		if (enemy.IsGrounded()) {
+			thisFrame = 0;
+		}
+		else {
+			thisFrame = 1;
+		}
+		activeFrame = { (float)32 * thisFrame, 32 * 3 ,(float)-32 * enemy.GetDirection(), 32 };
+
+		//jump to player position
+		jumpDistance = 3.5f * attackDirection;
+		if (!enemy.GetJumpCommand() && !enemy.GetHeadCollision()) enemy.SetJumpSpeed(4.0f);
+		enemy.SetJumpCommand(true);
+		if (enemy.GetJumpCommand()) {
+			enemy.SetPosition({ enemy.GetPosition().x + jumpDistance, enemy.GetPosition().y - enemy.GetJumpSpeed() });
+			enemy.SetJumpSpeed(enemy.GetJumpSpeed() - 0.2f);
+			
+		}
+		
+
+		
+
+		break;
 	case EnemyTypes::SpiderBot:
 		if (stateFrameCounter >= 15) {
 			thisFrame++;

@@ -29,7 +29,7 @@ std::shared_ptr<EState> IdleState::Update(Enemy& enemy)
 	case EnemyTypes::SpringHog:
 		enemySight = {enemy.GetPosition().x - 4 * 32 + 16, enemy.GetPosition().y + 6, 32 * 8, 20};
 		if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
-			return std::make_shared<ApproachingState>(enemy);
+			return std::make_shared<AttackingState>(enemy);
 		}
 		break;
 	case EnemyTypes::SpiderBot:

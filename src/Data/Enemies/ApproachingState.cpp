@@ -44,6 +44,35 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::SpringHog:
+		playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		if (playerReference.x > 0) {
+
+			enemy.SetDirection(RIGHT);
+		}
+		else {
+
+			enemy.SetDirection(LEFT);
+		}
+		//set variables based on grounded/aerial state
+		if (enemy.IsGrounded()) {
+			thisFrame = 0;
+		}
+		else {
+			thisFrame = 1;
+		}
+		activeFrame = { (float)32 * thisFrame, 32 * 3 ,(float)-32 * enemy.GetDirection(), 32 };
+
+		//springhog sight
+		if (enemy.IsGrounded()) {
+			enemySight = { enemy.GetPosition().x - 5 * 32 + 16, enemy.GetPosition().y + 6, 32 * 10, 20 };
+			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
+				return std::make_shared<AttackingState>(enemy);
+			}
+			else return std::make_shared<RoamingState>(enemy);
+		}
+		
+
+		
 
 		break;
 	case EnemyTypes::SpiderBot:
@@ -57,8 +86,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			return std::make_shared<AttackingState>(enemy);
 		}
 		else {
-			Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
-			Vector2 movingToPlayer = Vector2Normalize(playerReference);
+			playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+			movingToPlayer = Vector2Normalize(playerReference);
 			if (playerReference.x > 0) {
 
 				enemy.SetDirection(LEFT);
@@ -126,8 +155,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		if (thisFrame >= 3) thisFrame = 0;
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 
-		Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
-		Vector2 movingToPlayer = Vector2Normalize(playerReference);
+		playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		movingToPlayer = Vector2Normalize(playerReference);
 		if (playerReference.x > 0) {
 			
 			enemy.SetDirection(RIGHT);
@@ -272,7 +301,6 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			tileRec.x = collTile.x;
 			tileRec.y = collTile.y;
 
-			Vector2 movingToPlayer;
 			movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
 			if (movingToPlayer.x > 0) movingDistance = enemy.GetEnemyMovementSpeed()*1.5, enemy.SetDirection(RIGHT);
 			else if (movingToPlayer.x < 0) movingDistance = -enemy.GetEnemyMovementSpeed()*1.5, enemy.SetDirection(LEFT);

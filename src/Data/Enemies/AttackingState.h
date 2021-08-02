@@ -39,4 +39,8 @@ private:
 
     //spiderbot vartiable
     float spiderBotRotation = 0;
+
+    //springhog variables
+    float jumpDistance = 0.0f;
+    int groundedCounter = 0;
 };

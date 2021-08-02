@@ -14,7 +14,7 @@ protected:
 
 
 private:
-    Rectangle tileRec;
+    Rectangle tileRec = { 0,0,32,32 };
 
     int roamingFrameCounter = 0;
     int flyRoamingCounter = 0;
@@ -25,6 +25,12 @@ private:
 
     //SpiderBot variables
     float spiderBotRotation = 0;
+
+    //springhog variables
+    Rectangle rightJumpCheck = {};
+    Rectangle leftJumpCheck = {};
+    float horizontalJumpCheck = 1;
+    int groundedCounter = 0;
 
     Rectangle leftFoot{};
     Rectangle rightFoot{};
