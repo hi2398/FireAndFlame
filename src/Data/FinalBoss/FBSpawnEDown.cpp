@@ -9,13 +9,13 @@
 
 FBSpawnEDown::FBSpawnEDown() {
     Vector2 tempVec = {89*32,60*32};
-    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec));
+    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {92*32,60*32};
-    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec));
+    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {98*32,60*32};
-    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec));
+    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {101*32,60*32};
-    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec));
+    sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
 }
 
 std::shared_ptr<State> FBSpawnEDown::Update(Actor &actor) {

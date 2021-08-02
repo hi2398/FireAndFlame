@@ -1,20 +1,39 @@
-#include "ToastCat.h"
+#include "Fly.h"
 #include "../../Global.h"
 #include "EnemyStateHandler.h"
 
 
-ToastCat::ToastCat(Vector2 initialPos) : Enemy(EnemyTypes::ToastCat)
+Fly::Fly(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::Flyer)
 {
-	texture = LoadTexture("assets/graphics/Enemies/ToastCat_Spritesheet.png");
-    toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+	this->enemyLevel = enemyLevel;
+	switch (enemyLevel)
+	{
+	case EnemyLevel::Low:
+		texture = LoadTexture("assets/graphics/Enemies/Fliege_01_Spritesheet.png");
+		health = 3;
+		break;
+	case EnemyLevel::Medium:
+		texture = LoadTexture("assets/graphics/Enemies/Fliege_02_Spritesheet.png");
+		health = 5;
+		break;
+	case EnemyLevel::High:
+		texture = LoadTexture("assets/graphics/Enemies/Fliege_03_Spritesheet.png");
+		health = 10;
+		break;
+	default:
+		break;
+	}
+	
+
 	position.x = initialPos.x;
 	position.y = initialPos.y;
 
 	activeState = std::make_shared<EnemyStateHandler>(*this);
 
+	movementSpeed = 0.5f;
 }
 
-void ToastCat::Update()
+void Fly::Update()
 {
 	activeState = activeState->Update(*this);
 
@@ -28,16 +47,15 @@ void ToastCat::Update()
 		}
 	}
 
-	if (!IsGrounded()) position.y += 2.0f;
+	
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
 	CollisionHead(sceneManager->GetTilemap());
 }
 
-void ToastCat::Draw()
+void Fly::Draw()
 {
 	activeState->Draw(*this);
 	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
-

@@ -1,43 +1,39 @@
-#include "Miner.h"
+#include "SpringHog.h"
 #include "../../Global.h"
 #include "EnemyStateHandler.h"
 
-Miner::Miner(Vector2 initialPos, EnemyLevel enemyLevel): Enemy(EnemyTypes::Miner)
+
+SpringHog::SpringHog(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::SpringHog)
 {
 	this->enemyLevel = enemyLevel;
 	switch (enemyLevel)
 	{
 	case EnemyLevel::Low:
-		texture = LoadTexture("assets/graphics/Enemies/Miner_01_Spritesheet.png");
+		texture = LoadTexture("assets/graphics/Enemies/Hogbot_Spritesheet.png");
 		health = 3;
 		break;
 	case EnemyLevel::Medium:
-		texture = LoadTexture("assets/graphics/Enemies/Miner_02_Spritesheet.png");
-		health = 5;
-		break;
-	case EnemyLevel::High:
-		texture = LoadTexture("assets/graphics/Enemies/Miner_03_Spritesheet.png");
+		texture = LoadTexture("assets/graphics/Enemies/Hogbot_02_Spritesheet.png");
 		health = 10;
 		break;
 	default:
 		break;
 	}
-	
+
 	position.x = initialPos.x;
 	position.y = initialPos.y;
-	hitbox.x = initialPos.x;
-	hitbox.y = initialPos.y;
-	hitbox.width = 32;
-	hitbox.height = 32;
-	movementSpeed = 1.0f;
+
 	activeState = std::make_shared<EnemyStateHandler>(*this);
+
+	movementSpeed = 3.0f;
+	jumpSpeed = 3.0f;
 }
 
-void Miner::Update() {
+void SpringHog::Update()
+{
 	activeState = activeState->Update(*this);
 
-	UpdateAttackHitbox();
-	UpdateCollider(0, 15, 32, 17);
+	UpdateCollider(0,0, 32, 32);
 
 	if (invulnerable) {
 		invulnerableCounter++;
@@ -46,16 +42,21 @@ void Miner::Update() {
 			invulnerable = false;
 		}
 	}
+	
 
-	if (!IsGrounded()) position.y += 2.0f;
+
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
 	CollisionHead(sceneManager->GetTilemap());
+
+	if (IsGrounded()) SetJumpCommand(false), SetJumpSpeed(3.0f);
+	if (GetHeadCollision()) SetJumpSpeed(0.0f);
+	if (!IsGrounded() && !GetJumpCommand()) position.y += 2.0f;
 }
 
-void Miner::Draw()
+void SpringHog::Draw()
 {
 	activeState->Draw(*this);
-	DrawText(TextFormat("%i", health), position.x, position.y-50, 30, WHITE);
+	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }

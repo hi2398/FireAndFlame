@@ -9,7 +9,7 @@
 class Miner : public Enemy
 {
 public:
-	explicit Miner(Vector2 initialPos);
+	explicit Miner(Vector2 initialPos, EnemyLevel enemyLevel);
 	void Update() override;
 	void Draw() override;
 	~Miner() = default;

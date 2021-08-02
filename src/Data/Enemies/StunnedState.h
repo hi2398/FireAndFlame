@@ -16,4 +16,6 @@ protected:
 private:
     int stunnedFrameCounter = 0;
     int stunnedOffset = 0;
+
+    int spiderBotRotation = 0;
 };

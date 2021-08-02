@@ -1,20 +1,22 @@
 #pragma once
 
-//created by Robin on 05.07.2021
 #include "../../Core/Enemy.h"
 #include "../../Core/EState.h"
 
 
 
-class Howler : public Enemy
+class SpiderBot : public Enemy
 {
 public:
-	explicit Howler(Vector2 initialPos, EnemyLevel enemyLevel);
+	explicit SpiderBot(Vector2 initialPos, EnemyLevel enemyLevel);
 	void Update() override;
 	void Draw() override;
-	~Howler() = default;
-private:
+	~SpiderBot() = default;
 
+	
+
+private:
+	void CheckEdgeColl();
 
 	std::shared_ptr<EState> activeState;
 };

@@ -23,10 +23,24 @@ private:
     float attackDirection = 1;
     float toastGravity = 1.0f;
     bool homingToast{ false };
-    Texture2D toastTexture;
-    Vector2 toastMissile{};
-    Rectangle toastHitbox;
+    Texture2D missileTexture;
+    Vector2 missile{};
+    Rectangle missileHitbox;
+    float yDiff;
+    float xDiff;
+
+    //flyer variables
+    float missileSpeed = 5.0f;
+    Vector2 playerReference{};
+    Vector2 shootToPlayer{};
 
     //howler variables
     float movingDistance = 0;
+
+    //spiderbot vartiable
+    float spiderBotRotation = 0;
+
+    //springhog variables
+    float jumpDistance = 0.0f;
+    int groundedCounter = 0;
 };

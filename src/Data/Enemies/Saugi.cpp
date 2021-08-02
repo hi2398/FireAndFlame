@@ -1,24 +1,25 @@
-#include "ToastCat.h"
+#include "Saugi.h"
 #include "../../Global.h"
 #include "EnemyStateHandler.h"
 
 
-ToastCat::ToastCat(Vector2 initialPos) : Enemy(EnemyTypes::ToastCat)
+Saugi::Saugi(Vector2 initialPos) : Enemy(EnemyTypes::Saugi)
 {
-	texture = LoadTexture("assets/graphics/Enemies/ToastCat_Spritesheet.png");
-    toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+	texture = LoadTexture("assets/graphics/Enemies/Saugi_Spritesheet.png");
+
 	position.x = initialPos.x;
 	position.y = initialPos.y;
 
 	activeState = std::make_shared<EnemyStateHandler>(*this);
 
+	movementSpeed = 0.5f;
 }
 
-void ToastCat::Update()
+void Saugi::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider(0, 20, 32, 12);
+	UpdateCollider(6, 20, 20, 12);
 
 	if (invulnerable) {
 		invulnerableCounter++;
@@ -29,15 +30,15 @@ void ToastCat::Update()
 	}
 
 	if (!IsGrounded()) position.y += 2.0f;
+
 	CollisionLeft(sceneManager->GetTilemap());
 	CollisionRight(sceneManager->GetTilemap());
 	CollisionGround(sceneManager->GetTilemap());
 	CollisionHead(sceneManager->GetTilemap());
 }
 
-void ToastCat::Draw()
+void Saugi::Draw()
 {
 	activeState->Draw(*this);
 	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
-
