@@ -77,6 +77,8 @@ private:
     int playerFrameCounter = 0;
     int currentFrame = 0;
 
+    bool invulnerableVisualized{ false };
+
     //attack
     ACTION nextAction{ACTION::NONE};
 

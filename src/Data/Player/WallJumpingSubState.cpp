@@ -6,7 +6,7 @@
 #include "../../Global.h"
 
 WallJumpingSubState::WallJumpingSubState(Actor& player) : PlayerStates(player) {
-
+	player.SetJumpCommand(false);
 }
 
 std::shared_ptr<State> WallJumpingSubState::Update(Actor& player) {
@@ -15,16 +15,21 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& player) {
 		std::cout << "New State: Wall Jump\n";
 	}
 
-	player.SetTimesJumped(1);
-	player.SetJumpBlocked(true);
+	
 	player.SetWallCounter(0);
+
+	if (player.GetJumpCommand()) {
+		player.SetWallJumpCommand(false);
+		return std::make_shared<JumpingSubState>(player);
+	}
 
 	if (player.GetHeadCollision()) {
 		player.SetJumpSpeed(5.0f);
 		player.SetJumpBlocked(false);
+		player.SetWallJumpCommand(false);
 		return std::make_shared<FallingSubState>(player);
 	}
-
+	player.SetTimesJumped(1);
 
 	//wall jump
 	if (player.GetJumpSpeed() == 5.0f) wallJumpDirection = -player.GetDirection();

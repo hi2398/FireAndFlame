@@ -31,7 +31,9 @@ void Fireball::Update()
         }
     }
     else if (user == ObjectTypes::Enemy) {
-        if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - 10);
+        if (CheckCollisionRecs(playerCharacter->playerHitbox, interactionZone)) {
+            if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - 10);
+        }
     }
 }
 
