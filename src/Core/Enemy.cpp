@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cmath>
 #include "raymath.h"
+#include "../Data/Coal.h"
 
 Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
 	this->enemyType = enemyType;
@@ -35,6 +36,7 @@ void Enemy::ReceiveDamage(int damage)
     health -= damage;
 	if (health <= 0)
 	{
+		sceneManager->AddInteractable(std::make_unique<Coal>(GetPosition()));
 		markedDestroy= true;
 	}
 }
@@ -112,3 +114,4 @@ EnemyLevel Enemy::GetEnemyLevel() const
 {
 	return enemyLevel;
 }
+

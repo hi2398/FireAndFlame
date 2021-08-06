@@ -39,7 +39,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 			player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
 		}
 
-		activeFrame = { 0,0, -32, 32 };
+		activeFrame = { 0,32 * 3, -32, 32 };
 		break;
 	case MOVEMENT::MOVE_RIGHT:
 
@@ -50,7 +50,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 			player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
 		}
 
-		activeFrame = { 0,0, 32, 32 };
+		activeFrame = { 0,32 * 3, 32, 32 };
 		break;
 	case MOVEMENT::DASH_LEFT:
 		player.Dash(LEFT);
@@ -69,7 +69,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		return std::make_shared<FallingSubState>(player);
 		break;
 	default:
-		activeFrame = {0,0,(float)32* player.GetDirection(), 32};
+		activeFrame = {0,32 * 3,(float)32* player.GetDirection(), 32};
 		break;
 	}
 

@@ -9,6 +9,8 @@
 #include "AttackingState.h"
 #include "StunnedState.h"
 #include "ToastCat.h"
+#include "Toast.h"
+#include "Foam.h"
 
 AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 {
@@ -33,33 +35,51 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 		break;
 	case EnemyTypes::ToastCat:
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
-		if (GetRandomValue(0, 19) == 0) {
-			missileTexture = LoadTexture("assets/graphics/Enemies/Burned_Toast.png");
+		toastInit = { enemy.GetPosition().x + 16, enemy.GetPosition().y};
+		sceneManager->AddInteractable(std::make_unique<Toast>(toastInit));
+		break;
+	case EnemyTypes::SpiderBot:
+		foamInit = { enemy.GetPosition().x + 16 + 10 * enemy.GetDirection(), enemy.GetPosition().y + 10 };
+		sceneManager->AddInteractable(std::make_unique<Foam>(foamInit));
+		thisFrame = 2;
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+		
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
 		}
-		else {
-			missileTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
 		}
-	
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+		}
 
-		yDiff = enemy.GetPosition().y - playerCharacter->GetPosition().y;
-		xDiff = playerCharacter->GetPosition().x - enemy.GetPosition().x;
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+		}
 
-		if (yDiff < 0) {
-			attackDirection = xDiff * pow((1 + (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
 		}
-		else if (yDiff > 0) {
-			attackDirection = xDiff * pow((1 - (pow(yDiff, 2) / pow(xDiff, 2))), -1) / (32 * 4);
-		}
-		else {
-			attackDirection = xDiff / (32 * 4);
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
 		}
 		break;
 	case EnemyTypes::Flyer:
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
-		missileTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
-		playerReference = { playerCharacter->GetPosition().x - enemy.GetPosition().x, playerCharacter->GetPosition().y - enemy.GetPosition().y };
-		shootToPlayer = Vector2Normalize(playerReference);
-		missile = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16};
+		
+		foamInit = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 };
+		sceneManager->AddInteractable(std::make_unique<Foam>(foamInit));
 		break;
 	default:
 		
@@ -93,16 +113,12 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 			
 		}
 		
-
-		
-
 		break;
 	case EnemyTypes::SpiderBot:
-		if (stateFrameCounter >= 15) {
-			thisFrame++;
+		if (stateFrameCounter >= 30 && thisFrame > 0) {
+			thisFrame--;
 			stateFrameCounter = 0;
 		}
-		if (thisFrame >= 3) thisFrame = 0;
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 
 		//normal walking
@@ -157,6 +173,13 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 32 * 6)) {
 			return std::make_shared<RoamingState>(enemy);
 		}
+
+		attackCounter++;
+
+		if (attackCounter >= 150) {
+			return std::make_shared<ApproachingState>(enemy);
+		}
+
 		break;
 	case EnemyTypes::Flyer:
 		if (stateFrameCounter >= 15) {
@@ -165,17 +188,13 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		}
 		if (thisFrame >= 3) thisFrame = 0;
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+		
+		attackCounter++;
 
-		missile = { missile.x + shootToPlayer.x * missileSpeed, missile.y + shootToPlayer.y * missileSpeed };
-		missileHitbox = { missile.x, missile.y, (float)missileTexture.width, (float)missileTexture.height };
-
-		if (!CheckCollisionPointRec(missile, playerCharacter->visibleScreen)) {
+		if (attackCounter >= 30) {
 			return std::make_shared<ApproachingState>(enemy);
 		}
-		if (CheckCollisionRecs(missileHitbox, playerCharacter->playerHitbox)) {
-			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemy.GetDamageValue());
-			return std::make_shared<ApproachingState>(enemy);
-		}
+		
 		break;
 	case EnemyTypes::ToastCat:
 		if (stateFrameCounter >= 15) {
@@ -185,24 +204,10 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		if (thisFrame >= 3) thisFrame = 0;
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 
-		missile = {enemy.GetPosition().x + 16 - 5, enemy.GetPosition().y};
+		attackCounter++;
 		
-		missile.y = missile.y - toastSpeed;
-		toastSpeed += 5.0f * toastGravity;
-		toastGravity -= 0.05f;
+		if (attackCounter >= 150) return std::make_shared<ApproachingState>(enemy);
 		
-
-		missile.x += toastDistance;
-		toastDistance += 3.0f * attackDirection;
-		
-		if (!CheckCollisionPointRec(missile, playerCharacter->visibleScreen) && missile.y > enemy.GetPosition().y) {
-			return std::make_shared<ApproachingState>(enemy);
-		}
-
-		missileHitbox = { missile.x, missile.y, (float)missileTexture.width, (float)missileTexture.height };
-		if (CheckCollisionRecs(missileHitbox, playerCharacter->playerHitbox)) {
-			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemy.GetDamageValue());
-		}
 		break;
 	case EnemyTypes::Howler:
 		attackCounter++;
@@ -255,6 +260,4 @@ void AttackingState::Draw(Enemy& enemy) {
 	else {
 		DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
 	}
-
-	DrawTexture(missileTexture, missile.x, missile.y, WHITE);
 }

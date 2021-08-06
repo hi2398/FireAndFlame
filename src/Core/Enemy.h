@@ -4,6 +4,7 @@
 #include "Actor.h"
 
 
+
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
 enum class EnemyTypes { ToastCat, Miner, SpiderBot, Flyer, SpringHog, Howler, Saugi, Boss};
 enum class EnemyLevel {Low, Medium, High};
@@ -38,7 +39,6 @@ public:
 
     EnemyLevel GetEnemyLevel() const;
 
-    
 
 protected:
     static float GetDistance(Vector2 startLocation, Vector2 endLocation);

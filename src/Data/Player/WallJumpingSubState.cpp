@@ -47,7 +47,7 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& player) {
 	}
 
 	
-	activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 0, (float)32 * wallJumpDirection ,32 };
+	activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 3, (float)32 * wallJumpDirection ,32 };
 
 	return shared_from_this();
 }

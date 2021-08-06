@@ -60,7 +60,7 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 5, (float)32 * player.GetDirection(), 32 };
 		}
 		else {
-			activeFrame = {(float) 32 * playerCharacter->GetCurrentFrame(), 32 * 0, (float) 32 * player.GetDirection(), 32};
+			activeFrame = {(float) 32 * playerCharacter->GetCurrentFrame(), 32 * 6, (float) 32 * player.GetDirection(), 32};
 		}
 
 		return shared_from_this();

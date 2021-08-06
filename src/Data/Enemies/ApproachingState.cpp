@@ -16,7 +16,7 @@ ApproachingState::ApproachingState(Enemy& enemy) : EState(enemy)
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
 		break;
 	case EnemyTypes::SpiderBot:
-		activeFrame = { 0,32 * 4,(float)32 * enemy.GetDirection(), 32 };
+		activeFrame = { 0,32 * 4,(float)-32 * enemy.GetDirection(), 32 };
 		//normal walking
 		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
 			spiderBotRotation = 0;
@@ -223,9 +223,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			
 			enemy.SetDirection(LEFT);
 		}
-		enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y + movingToPlayer.y});
-
-		
+		if (playerReference.y >=  5) enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y + movingToPlayer.y});
+		else enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y - 1.0f});
 
 		//aggro check
 		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),

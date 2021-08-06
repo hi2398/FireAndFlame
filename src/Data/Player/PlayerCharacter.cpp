@@ -24,6 +24,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	position = { 0, 0 };
 
 	gravityMultiplier = 2.0;
+	health = max_health;
 
 	canDoubleJump = true;
 }
@@ -100,7 +101,7 @@ void PlayerCharacter::Draw() {
 }
 
 int PlayerCharacter::GetHealth() const {
-	return health;
+	return this->health;
 }
 
 void PlayerCharacter::SetHealth(int health) {
