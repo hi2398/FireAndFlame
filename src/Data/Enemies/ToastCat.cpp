@@ -5,7 +5,7 @@
 
 ToastCat::ToastCat(Vector2 initialPos) : Enemy(EnemyTypes::ToastCat)
 {
-    texture = LoadTexture("assets/graphics/Enemies/ToastCat.png");
+	texture = LoadTexture("assets/graphics/Enemies/ToastCat_Spritesheet.png");
     toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
 	position.x = initialPos.x;
 	position.y = initialPos.y;
@@ -18,7 +18,7 @@ void ToastCat::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider();
+	UpdateCollider(0, 20, 32, 12);
 
 	if (invulnerable) {
 		invulnerableCounter++;

@@ -4,8 +4,10 @@
 #include "Actor.h"
 
 
+
 enum class EnemyState {Idle, Roaming, Approaching, Fleeing, Stunned, Attacking, Seeking};
-enum class EnemyTypes { ToastCat, Miner, WatchBot, Flyer, SpringHog, Howler, Saugi, Boss};
+enum class EnemyTypes { ToastCat, Miner, SpiderBot, Flyer, SpringHog, Howler, Saugi, Boss};
+enum class EnemyLevel {Low, Medium, High};
 
 
 class Enemy : public Actor {
@@ -15,7 +17,7 @@ public:
     [[nodiscard]] EnemyTypes GetEnemyType() const;
     virtual void ReceiveDamage(int damage);
 
-    void UpdateCollider();
+    void UpdateCollider(float xOffset, float yOffset, float width, float height);
     Rectangle GetCollider() const;
 
     ~Enemy() override = default;
@@ -35,13 +37,16 @@ public:
 
     int GetDamageValue();
 
+    EnemyLevel GetEnemyLevel() const;
+
+
 protected:
-    static bool CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap);
     static float GetDistance(Vector2 startLocation, Vector2 endLocation);
     explicit Enemy(EnemyTypes enemyType);
     bool CheckOnScreen();
     bool MakeDecision(int probability);
     EnemyTypes enemyType;
+    EnemyLevel enemyLevel;
     int health{3};
     bool hasLineOfSight{false};
     bool isAttacking;
@@ -63,6 +68,7 @@ protected:
     bool invulnerable{ false };
     int invulnerableCounter = 0;
     int damageValue = 5;
+
     
 private:
 

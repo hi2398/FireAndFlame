@@ -10,7 +10,7 @@ Tutorial::Tutorial() {
     playerCharacter->active = true;
     playerCharacter->SetHealth(90);
     npc1Tex = LoadTexture("assets/graphics/PLAYER.png"); // TODO change NPC Texture
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Tutorial.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json","assets/Tilemaps/Tutorial_Tilemap.json");
 
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText1.json",npc1Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText2.json",npc2Pos,npc1Tex));
@@ -29,13 +29,13 @@ Tutorial::Tutorial() {
     tilemap->AddCollisionTile(tempVec);
 
     tempVec = {52*32,46*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {64*32,42*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {67*32,42*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {86*32,39*32};
-    enemies.emplace_back(std::make_unique<Miner>(tempVec));
+    enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
 
     door1[0] = {58*32,76*32};
     door1[1] = {58*32,75*32};

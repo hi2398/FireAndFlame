@@ -13,7 +13,7 @@ public:
 protected:
 
 private:
-
+    int wallJumpDirection = 1;
 };
 
 

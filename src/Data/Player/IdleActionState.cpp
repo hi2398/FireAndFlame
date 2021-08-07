@@ -23,20 +23,20 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 		if constexpr (DEBUG_PLAYER_STATES) {
 			std::cout << "new state: melee" << std::endl;
 		}
-		if (!player.GetActionBlocked()) {
+		if (!player.GetActionBlocked() && !player.GetIsDashing()) {
 			return std::make_shared<MeleeActionState>(player);
 		}
 		else return shared_from_this();
-
+		break;
 	case ACTION::RANGED_ATTACK:
 		if constexpr (DEBUG_PLAYER_STATES) {
 			std::cout << "new state: ranged" << std::endl;
 		}
-		if (!player.GetActionBlocked()) {
+		if (!player.GetActionBlocked() && !player.GetIsDashing()) {
 			return std::make_shared<RangedActionState>(player);
 		}
 		else return shared_from_this();
-
+		break;
 	case ACTION::NONE:
 		
 		
@@ -56,9 +56,15 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 				break;
 			}
 		}
-		else {
-			activeFrame = {(float) 32 * playerCharacter->GetCurrentFrame(), 32 * 0, (float) 32 * player.GetDirection(), 32};
+		else if (player.GetJumpCommand() || player.GetWallJumpCommand()) {
+			if (player.GetWallJumpCommand()) wallJumpDirection = -1;
+			else wallJumpDirection = 1;
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 6, (float)32 * player.GetDirection() * wallJumpDirection, 32 };
 		}
+		else if (!player.GetJumpCommand()){
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 5, (float)32 * player.GetDirection(), 32 };
+		}
+		
 
 		return shared_from_this();
 	default:

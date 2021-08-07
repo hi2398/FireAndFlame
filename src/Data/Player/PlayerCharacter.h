@@ -68,7 +68,6 @@ private:
     const float playerWidth = 20.0f;
     const float playerHeight = 32.0f;
     static constexpr int max_health{100};
-    int health{max_health};
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
     bool invulnerable{ false };
@@ -77,6 +76,8 @@ private:
 
     int playerFrameCounter = 0;
     int currentFrame = 0;
+
+    bool invulnerableVisualized{ false };
 
     //attack
     ACTION nextAction{ACTION::NONE};

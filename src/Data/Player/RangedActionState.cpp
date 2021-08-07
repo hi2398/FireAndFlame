@@ -3,12 +3,14 @@
 #include "../../Global.h"
 #include "IdleActionState.h"
 #include "MeleeActionState.h"
+#include "Fireball.h"
 
 RangedActionState::RangedActionState(Actor& player) : PlayerStates(player) {
 
 }
 
 std::shared_ptr<State> RangedActionState::Update(Actor& player) {
+    if (player.GetActionBlocked() || player.GetIsDashing()) return std::make_shared<IdleActionState>(player);
     switch (playerCharacter->GetNextAction()) {
         case ACTION::MELEE_ATTACK:
             if (actionDone) {
@@ -25,41 +27,31 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
                 return std::make_shared<IdleActionState>(player);
             }
         case ACTION::RANGED_ATTACK:
-            
-                /*activeFrame = {(float) 32 * playerCharacter->GetCurrentFrame(), 32 * 4, (float)32 * playerCharacter->GetDirection(), 32};*/
-
-
             stateFrameCounter++;
+
+            //player frames
             if (stateFrameCounter >= 4 && thisFrame < 2) {
                 stateFrameCounter = 0;
                 thisFrame++;
             }
-            activeFrame = { (float)32 * thisFrame, 32 * 4, (float)32 * player.GetDirection(), 32 };
+			activeFrame = { (float)32 * thisFrame, 32 * 4, (float)32 * player.GetDirection(), 32 };
+            
             
             if (!isShootingFireball) {
                 //decrease player health when casting fireball
-                playerCharacter->SetHealth(playerCharacter->GetHealth() - 2.0f);
+                playerCharacter->SetHealth(playerCharacter->GetHealth() - 5.0f);
 
                 fireballDirection = playerCharacter->GetDirection();
                 if (player.GetDirection() == 1)vectorFireball.x = player.GetPosition().x + 25;
                 if (player.GetDirection() == -1)vectorFireball.x = player.GetPosition().x + 9;
-                vectorFireball.y = player.GetPosition().y + 11;
+                vectorFireball.y = player.GetPosition().y;
+
+                sceneManager->AddInteractable(std::make_unique<Fireball>(vectorFireball, fireballDirection, player.GetType()));
             }
             isShootingFireball = true;
             if (isShootingFireball) {
-                vectorFireball.x += 20.0f *fireballDirection;
-                if (vectorFireball.x > ((float)GetScreenWidth() / 2) + player.GetPosition().x || vectorFireball.x < player.GetPosition().x - ((float)GetScreenWidth() / 2)) {
-                    isShootingFireball = false;
-                    return std::make_shared<IdleActionState>(player);
-                }
-            }
-
-            for (auto &enemies: sceneManager->GetEnemies()) {
-
-				if (CheckCollisionPointRec(vectorFireball, enemies->GetCollider()) && !enemies->IsInvulnerable()) {
-                    enemies->ReceiveDamage(10);
-                    enemies->SetInvulnerable(true);
-				}
+                actionCounter++;
+                if (actionCounter >= 20) return std::make_shared<IdleActionState>(player);
             }
             
             break;
@@ -71,8 +63,6 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
 
 }
 
-void RangedActionState::Draw(Actor& player) {
-    DrawCircle(static_cast<int>(vectorFireball.x), static_cast<int>(vectorFireball.y), 8.0f, RED);
-    
+void RangedActionState::Draw(Actor& player) { 
     DrawTextureRec(playerCharacter->upperBody, activeFrame, {player.GetPosition()}, WHITE);
 }

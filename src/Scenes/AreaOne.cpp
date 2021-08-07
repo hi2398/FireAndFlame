@@ -6,7 +6,7 @@
 
 AreaOne::AreaOne(){
     playerCharacter->SetPosition({0, 101 * 32});
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placehalter_2.json","assets/Tilemaps/Testmap/Area_1.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json","assets/Tilemaps/Area_One_Tilemap.json");
     // Delete this section, only for testing
     Vector2 tempVec= playerCharacter->GetPosition();
     tempVec.x-=256;

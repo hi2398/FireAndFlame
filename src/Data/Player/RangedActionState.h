@@ -14,12 +14,14 @@ protected:
 
 
 private:
-    bool actionDone{false};
+    bool actionDone{false};  
+    
 
     //fireball
     int fireballDirection;
     Vector2 vectorFireball = { 0 };
     bool isShootingFireball = false;
+    int actionCounter = 0;
 };
 
 

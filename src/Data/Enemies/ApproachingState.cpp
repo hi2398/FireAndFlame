@@ -10,6 +10,51 @@
 
 ApproachingState::ApproachingState(Enemy& enemy) : EState(enemy)
 {
+	switch (enemy.GetEnemyType())
+	{
+	case EnemyTypes::ToastCat:
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+		break;
+	case EnemyTypes::SpiderBot:
+		activeFrame = { 0,32 * 4,(float)-32 * enemy.GetDirection(), 32 };
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+		}
+		break;
+	case EnemyTypes::SpringHog:
+		activeFrame = { 32, 32 * 3, (float) 32 * enemy.GetDirection(), 32};
+		break;
+	default:
+		activeFrame.y = 32 * 4;
+		break;
+	}
 }
 
 std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
@@ -25,13 +70,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		thisFrame++;
 		stateFrameCounter = 0;
 	}
-	if (enemy.GetJumpCommand() || !enemy.IsGrounded()) {
-		thisFrame = 1;
-		activeFrame = { (float)32 * thisFrame, 32 * 2 ,(float)-32 * enemy.GetDirection(), 32 };
-	}
-	else {
-		activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
-	}
+	activeFrame = {(float) 32 * thisFrame, 32 * 4, (float) -32 * enemy.GetDirection(), 32};
 	
 
 	Rectangle enemySight;
@@ -41,18 +80,182 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 	switch (enemy.GetEnemyType())
 	{
+	case EnemyTypes::Saugi:
+		for (const auto& coal : sceneManager->GetInteractables()) {
+			//check line of sight in idle
+			switch (enemy.GetDirection())
+			{
+			case LEFT:
+				enemySight = { enemy.GetPosition().x + 16 - 6 * 32, enemy.GetPosition().y + 16, 6 * 32, 5 };
+
+				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+					enemy.SetPosition({enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 5 * enemy.GetDirection(), enemy.GetPosition().y});
+				}
+				break;
+			case RIGHT:
+				enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
+				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+					enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 5 * enemy.GetDirection(), enemy.GetPosition().y });
+				}
+				break;
+			default:
+				break;
+			}
+
+			if (CheckCollisionRecs(coal->GetInteractionZone(), enemy.GetCollider()) && coal->GetInteractableType() == InteractableType::Coal) {
+				coal->Interact(enemy);
+				return std::make_shared<RoamingState>(enemy);
+			}
+
+			if (CheckCollisionRecs(coal->GetInteractionZone(), playerCharacter->playerHitbox) && coal->GetInteractableType() == InteractableType::Coal) {
+				coal->Interact(enemy);
+				return std::make_shared<StunnedState>(enemy);
+			}
+		}
+		break;
+	case EnemyTypes::SpringHog:
+		//set springhog direction to player direction
+		playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		if (playerReference.x > 0) {
+
+			enemy.SetDirection(RIGHT);
+		}
+		else {
+
+			enemy.SetDirection(LEFT);
+		}
+		activeFrame = { 32, 32 * 3, (float)32 * enemy.GetDirection(), 32 };
+		//springhog sight
+		if (enemy.IsGrounded()) {
+			if (CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16}, 32 * 4)) {
+				return std::make_shared<AttackingState>(enemy);
+			}
+			else return std::make_shared<RoamingState>(enemy);
+		}
+		break;
+	case EnemyTypes::SpiderBot:
+		if (thisFrame >= 2) thisFrame = 0;
+		activeFrame = { (float)32 * thisFrame, 32 * 4 ,(float)-32 * enemy.GetDirection(), 32 };
+
+		approachingSpeed = enemy.GetEnemyMovementSpeed() * 4;
+
+		//handle enemy direction
+		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 32 * 4)) {
+			return std::make_shared<AttackingState>(enemy);
+		}
+		else {
+			playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+			movingToPlayer = Vector2Normalize(playerReference);
+			if (playerReference.x > 0) {
+
+				enemy.SetDirection(LEFT);
+			}
+			else {
+
+				enemy.SetDirection(RIGHT);
+			}
+		}
+		//normal walking
+		if (enemy.IsGrounded() && !enemy.GetHeadCollision() && !enemy.GetWallCollisionLeft() && !enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+		//walk on ceiling
+		else if (enemy.GetHeadCollision()) {
+			spiderBotRotation = 180;
+			enemy.SetPosition({ enemy.GetPosition().x - approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionLeft() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 90;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y + approachingSpeed * enemy.GetDirection() });
+		}
+		if (enemy.GetHeadCollision() && enemy.GetWallCollisionRight() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 270;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y - approachingSpeed * enemy.GetDirection() });
+		}
+
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionLeft()) {
+			spiderBotRotation = 90;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y + approachingSpeed * enemy.GetDirection() });
+
+		}
+		if (enemy.GetWallCollisionLeft() && enemy.IsGrounded() && enemy.GetDirection() == RIGHT) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+
+		//walk up/down left wall
+		if (enemy.GetWallCollisionRight()) {
+			spiderBotRotation = 270;
+			enemy.SetPosition({ enemy.GetPosition().x, enemy.GetPosition().y - approachingSpeed * enemy.GetDirection() });
+
+		}
+		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+
+		
+		break;
+	case EnemyTypes::Flyer:
+		//enter attack after some time or when in range
+		if (flyApproachingCounter >= 180) {
+			return std::make_shared<AttackingState>(enemy);
+		}
+
+		flyApproachingCounter++;
+		if (stateFrameCounter >= 15) {
+			thisFrame++;
+			stateFrameCounter = 0;
+		}
+		if (thisFrame >= 3) thisFrame = 0;
+		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
+
+		playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		movingToPlayer = Vector2Normalize(playerReference);
+		if (playerReference.x > 0) {
+			
+			enemy.SetDirection(RIGHT);
+		}
+		else {
+			
+			enemy.SetDirection(LEFT);
+		}
+		if (playerReference.y >=  5) enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y + movingToPlayer.y});
+		else enemy.SetPosition({ enemy.GetPosition().x + movingToPlayer.x, enemy.GetPosition().y - 1.0f});
+
+		//aggro check
+		if (CheckCollisionPointCircle(playerCharacter->GetPosition(),
+			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 },
+			5 * 32)) {
+			aggroCooldown = 0;
+		}
+		else {
+			aggroCooldown++;
+		}
+
+		break;
 	case EnemyTypes::ToastCat:
 		//check line of sight in approaching
 		if (CheckCollisionPointTriangle(playerCharacter->GetPosition(),
 			{ enemy.GetPosition().x + 16, enemy.GetPosition().y + 16}, 
 			trianglePoint1, 
-			trianglePoint2)) {
+			trianglePoint2) ||
+			CheckCollisionRecs(playerCharacter->playerHitbox, { enemy.GetPosition().x + 16, enemy.GetPosition().y, 32, 32 })) {
 			return std::make_shared<AttackingState>(enemy);
 		}
 		return std::make_shared<RoamingState>(enemy);
 		break;
 	case EnemyTypes::Howler:
-
+		if (enemy.GetJumpCommand() || !enemy.IsGrounded()) {
+			thisFrame = 1;
+			activeFrame = { (float)32 * thisFrame, 32 * 2 ,(float)-32 * enemy.GetDirection(), 32 };
+		}
+		else {
+			activeFrame = { (float)32 * thisFrame, 32 * 1 ,(float)-32 * enemy.GetDirection(), 32 };
+		}
 
 		//chase Player & stop on ledge
 		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + 32, 1, 1 };
@@ -127,7 +330,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		switch (enemy.GetDirection())
 		{
 		case LEFT:
-			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2 - 160, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			enemySight = { enemy.GetPosition().x + 16 - 160, enemy.GetPosition().y + 16, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				aggroCooldown = 0;
 			}
@@ -136,7 +339,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			}
 			break;
 		case RIGHT:
-			enemySight = { enemy.GetPosition().x + enemy.GetTexture().width / 2, enemy.GetPosition().y + enemy.GetTexture().height / 2, 160, 5 };
+			enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
 			if (CheckCollisionRecs(playerCharacter->playerHitbox, enemySight)) {
 				aggroCooldown = 0;
 			}
@@ -149,14 +352,13 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 		
 		//chase Player & stop on ledge
-		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
-		edgeSeekerRight = { enemy.GetPosition().x + enemy.GetTexture().width, enemy.GetPosition().y + enemy.GetTexture().height, 1, 1 };
+		edgeSeekerLeft = { enemy.GetPosition().x - 1, enemy.GetPosition().y + 32, 1, 1 };
+		edgeSeekerRight = { enemy.GetPosition().x + 32, enemy.GetPosition().y + 32, 1, 1 };
 		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
 		{
 			tileRec.x = collTile.x;
 			tileRec.y = collTile.y;
 
-			Vector2 movingToPlayer;
 			movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
 			if (movingToPlayer.x > 0) movingDistance = enemy.GetEnemyMovementSpeed()*1.5, enemy.SetDirection(RIGHT);
 			else if (movingToPlayer.x < 0) movingDistance = -enemy.GetEnemyMovementSpeed()*1.5, enemy.SetDirection(LEFT);
@@ -180,7 +382,13 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	}
 	//enter idle when losing aggro after 5 secs
 	if (aggroCooldown >= 300) {
-		return std::make_shared<RoamingState>(enemy);
+		if (enemy.GetEnemyType() == EnemyTypes::Howler) {
+			if (enemy.IsGrounded()) return std::make_shared<RoamingState>(enemy);
+		}
+		else {
+			return std::make_shared<RoamingState>(enemy);
+		}
+		
 	}
 
 	if (enemy.IsInvulnerable()) {
@@ -194,5 +402,10 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 
 void ApproachingState::Draw(Enemy& enemy)
 {
-	DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	if (enemy.GetEnemyType() == EnemyTypes::SpiderBot) {
+		DrawTexturePro(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 32, 32 }, { 16, 16 }, spiderBotRotation, WHITE);
+	}
+	else {
+		DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	}
 }

@@ -12,25 +12,27 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	lowerBody = LoadTexture("assets/graphics/MagmosLegs.png");
 	attackSprite = LoadTexture("assets/graphics/AttackSprites.png");
 
-	spriteSheetMagmos = LoadTexture("assets/graphics/MagmosSpritesheet.png");
-
 	camera.target = { position.x + 20.0f, position.y + 20.0f };
 	camera.offset = { 640, 360 };
 	camera.rotation = 0.0f;
 	camera.zoom = 2.0f;
-	observer = std::make_shared<PlayerObserver>(*this);
-	movementState = std::make_shared<MovementState>(*this);
-	actionState = std::make_shared<IdleActionState>(*this);
+
+
+	
 	position = { 0, 0 };
 
 	gravityMultiplier = 2.0;
-
+	health = max_health;
 	canDoubleJump = true;
+
+	observer = std::make_shared<PlayerObserver>(*this);
+	movementState = std::make_shared<MovementState>(*this);
+	actionState = std::make_shared<IdleActionState>(*this);
 }
 
 
 void PlayerCharacter::Update() {
-
+	std::cout << GetTimesJumped() << "\n";
 	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 
 	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
@@ -66,8 +68,15 @@ void PlayerCharacter::Update() {
 	//player invincibility frames
 	if (invulnerable) {
 		invulnerableCounter++;
+
+		if (invulnerableCounter % 4) {
+			if (invulnerableVisualized == true) invulnerableVisualized = false;
+			else invulnerableVisualized = true;
+		}
+
 		if (invulnerableCounter >= 60) {
 			invulnerableCounter = 0;
+			invulnerableVisualized = false;
 			invulnerable = false;
 		}
 	}
@@ -84,17 +93,25 @@ void PlayerCharacter::Update() {
 		}
 	}
 
+	for (const auto& enemies : sceneManager->GetEnemies()) {
+		if (CheckCollisionRecs(playerHitbox, enemies->GetCollider())) {
+			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemies->GetDamageValue());
+		}
+	}
+
 	nextMovement = MOVEMENT::IDLE;
 }
 
 void PlayerCharacter::Draw() {
+	if (!invulnerableVisualized) {
+		movementState->Draw(*this);
+		actionState->Draw(*this);
+	}
 	
-	movementState->Draw(*this);
-	actionState->Draw(*this);
 }
 
 int PlayerCharacter::GetHealth() const {
-	return health;
+	return this->health;
 }
 
 void PlayerCharacter::SetHealth(int health) {

@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cmath>
 #include "raymath.h"
+#include "../Data/Coal.h"
 
 Enemy::Enemy(EnemyTypes enemyType) : Actor(ObjectTypes::Enemy) {
 	this->enemyType = enemyType;
@@ -35,38 +36,9 @@ void Enemy::ReceiveDamage(int damage)
     health -= damage;
 	if (health <= 0)
 	{
+		sceneManager->AddInteractable(std::make_unique<Coal>(GetPosition()));
 		markedDestroy= true;
 	}
-}
-
-bool Enemy::CheckLineOfSight(Vector2 startLocation, Vector2 endLocation, const std::unique_ptr<Tilemap>& tilemap)
-{
-	Vector2 lineOfSight = Vector2Subtract(endLocation, startLocation);
-
-	Vector2 direction = Vector2Normalize(lineOfSight);
-	Vector2 checkInterval = Vector2Scale(direction, 10);
-
-	Vector2 nextCheckLocation = Vector2Add(startLocation, checkInterval);
-	//see if next position to check is even in area of player
-	if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->visibleScreen))
-	{
-	    nextCheckLocation=Vector2Add(nextCheckLocation, checkInterval);
-		Rectangle tileRec = { 0,0,32,32 };
-		for (const auto& collTile : tilemap->GetTileColliders()) {
-			tileRec.x = collTile.x;
-			tileRec.y = collTile.y;
-
-            //if line of sight hits opaque object, return
-			if (CheckCollisionPointRec(nextCheckLocation, tileRec)) {
-				return false;
-			} //if raycast hits player, return true
-			else if (CheckCollisionPointRec(nextCheckLocation, playerCharacter->playerHitbox)) {
-			    std::cout << "Player found" << std::endl;
-                return true;
-			}
-		}
-	}
-    return false;
 }
 
 float Enemy::GetDistance(Vector2 startLocation, Vector2 endLocation)
@@ -92,8 +64,8 @@ bool Enemy::MakeDecision(int probability)
 	}
 }
 
-void Enemy::UpdateCollider() {
-	hitbox = { position.x, position.y, 32, 32 };
+void Enemy::UpdateCollider(float xOffset, float yOffset, float width, float height) {
+	hitbox = { position.x + xOffset, position.y + yOffset, width, height };
 }
 
 Rectangle Enemy::GetCollider() const {
@@ -109,10 +81,10 @@ void Enemy::UpdateAttackHitbox()
 	switch (GetDirection())
 	{
 	case LEFT:
-		attackHitbox = { position.x - 20, position.y + (float)texture.height / 4, 20, (float)texture.height / 2 };
+		attackHitbox = { position.x - 20, position.y + 8, 1, 16 };
 		break;
 	case RIGHT:
-		attackHitbox = { position.x + texture.width, position.y + (float)texture.height / 4, 20, (float)texture.height / 2 };
+		attackHitbox = { position.x + 32, position.y + 8, 1, 16 };
 		break;
 	default:
 		break;
@@ -137,3 +109,9 @@ int Enemy::GetDamageValue()
 {
 	return damageValue;
 }
+
+EnemyLevel Enemy::GetEnemyLevel() const
+{
+	return enemyLevel;
+}
+

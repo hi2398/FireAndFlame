@@ -16,10 +16,15 @@ Coal::Coal(Vector2 location) : Interactable(InteractableType::Coal)
 
 void Coal::Interact(Actor& actor)
 {
-    if (playerCharacter->GetHealth() <= 75) playerCharacter->SetHealth(playerCharacter->GetHealth() + fuel);
-    else {
-        playerCharacter->SetHealth(100);
+    if (actor.GetType() == ObjectTypes::Player) {
+        if (actor.GetHealth() <= 75) {
+            actor.SetHealth(actor.GetHealth() + fuel);
+        }
+		else {
+			actor.SetHealth(100);
+		}
     }
+   
     markedDestroy=true;
 }
 
@@ -45,7 +50,7 @@ void Coal::Update()
 
             if (CheckCollisionRecs(collidingRectangle, hitbox)) {
                 isGrounded = true;
-                SetPosition({position.x, collTile.y - 32.0f});
+                SetPosition({position.x, collTile.y - 15.0f});
                 return;
             }
         }
