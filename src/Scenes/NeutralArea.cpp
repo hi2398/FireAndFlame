@@ -30,12 +30,12 @@ NeutralArea::NeutralArea(){
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{20*32, 36*32};
     Vector2 vec3{10 * 32, 36*32};
-    Vector2 vec4{ 30 * 32, 36 * 32 };
+    Vector2 vec4{ 54 * 32, 91 * 32 };
 
     interactables.emplace_back(std::make_unique<Coal>(vec3));
     interactables.emplace_back(std::make_unique<Coal>(vec4));
     
-    switch (6)
+    switch (4)
     {
     case 0:
         enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::Low));
@@ -44,7 +44,7 @@ NeutralArea::NeutralArea(){
         break;
     case 1:
         enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Low));
-        enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Medium));
+        /*enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Medium));*/
         break;
     case 2:
         enemies.emplace_back(std::make_unique<Howler>(vec2, EnemyLevel::Low));

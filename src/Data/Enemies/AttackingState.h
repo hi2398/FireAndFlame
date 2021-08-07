@@ -16,23 +16,18 @@ protected:
 private:
     int attackCounter = 0;
     Rectangle attackHitbox = {};
+    float attackDirection{};
 
     //toastcat variables
-    float toastSpeed = 15.0f;
-    float toastDistance = 0.0f;
-    float attackDirection = 1;
-    float toastGravity = 1.0f;
-    bool homingToast{ false };
-    Texture2D missileTexture;
     Vector2 missile{};
-    Rectangle missileHitbox;
     float yDiff;
     float xDiff;
+    Vector2 toastInit{};
 
     //flyer variables
-    float missileSpeed = 5.0f;
     Vector2 playerReference{};
     Vector2 shootToPlayer{};
+    Vector2 foamInit{};
 
     //howler variables
     float movingDistance = 0;

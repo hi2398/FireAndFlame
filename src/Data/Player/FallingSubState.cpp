@@ -35,7 +35,7 @@ std::shared_ptr<State> FallingSubState::Update(Actor& player) {
 			return std::make_shared<WallSlideSubState>(player);
 		}
 
-		activeFrame = { 0,0, -32, 32 };
+		activeFrame = { 0,32 * 2, -32, 32 };
 		break;
 	case MOVEMENT::MOVE_RIGHT:
 		if (player.GetIsRunning()) {
@@ -48,7 +48,7 @@ std::shared_ptr<State> FallingSubState::Update(Actor& player) {
 			return std::make_shared<WallSlideSubState>(player);
 		}
 
-		activeFrame = { 0,0, 32, 32 };
+		activeFrame = { 0,32 * 2, 32, 32 };
 		break;
 	case MOVEMENT::DASH_LEFT:
 		stateFrameCounter++;
@@ -62,7 +62,7 @@ std::shared_ptr<State> FallingSubState::Update(Actor& player) {
 		activeFrame = { (float)32 * stateFrameCounter, 32 * 2, 32, 32 };
 		break;
 	default:
-		activeFrame = { 0,0,(float)32 * player.GetDirection(), 32 };
+		activeFrame = { 0,32 * 2,(float)32 * player.GetDirection(), 32 };
 		break;
 	}
 

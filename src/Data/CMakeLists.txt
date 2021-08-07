@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-
+add_subdirectory(TraitorBoss)
 add_subdirectory(Player)
 add_subdirectory(IceBoss)
 add_subdirectory(Enemies)

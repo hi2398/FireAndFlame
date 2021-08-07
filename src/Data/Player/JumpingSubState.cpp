@@ -38,8 +38,13 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		else {
 			player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
 		}
+		if (player.GetWallCollisionLeft()) {
+			player.SetJumpSpeed(5.0f);
+			player.SetJumpCommand(false);
+			return std::make_shared<WallSlideSubState>(player);
+		}
 
-		activeFrame = { 0,0, -32, 32 };
+		activeFrame = { 0,32 * 3, -32, 32 };
 		break;
 	case MOVEMENT::MOVE_RIGHT:
 
@@ -49,8 +54,13 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		else {
 			player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
 		}
+		if (player.GetWallCollisionRight()) {
+			player.SetJumpSpeed(5.0f);
+			player.SetJumpCommand(false);
+			return std::make_shared<WallSlideSubState>(player);
+		}
 
-		activeFrame = { 0,0, 32, 32 };
+		activeFrame = { 0,32 * 3, 32, 32 };
 		break;
 	case MOVEMENT::DASH_LEFT:
 		player.Dash(LEFT);
@@ -69,7 +79,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		return std::make_shared<FallingSubState>(player);
 		break;
 	default:
-		activeFrame = {0,0,(float)32* player.GetDirection(), 32};
+		activeFrame = {0,32 * 3,(float)32* player.GetDirection(), 32};
 		break;
 	}
 

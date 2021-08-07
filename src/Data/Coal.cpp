@@ -17,7 +17,9 @@ Coal::Coal(Vector2 location) : Interactable(InteractableType::Coal)
 void Coal::Interact(Actor& actor)
 {
     if (actor.GetType() == ObjectTypes::Player) {
-		if (actor.GetHealth() <= 75) actor.SetHealth(actor.GetHealth() + fuel);
+        if (actor.GetHealth() <= 75) {
+            actor.SetHealth(actor.GetHealth() + fuel);
+        }
 		else {
 			actor.SetHealth(100);
 		}
