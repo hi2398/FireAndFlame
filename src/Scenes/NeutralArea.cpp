@@ -17,6 +17,7 @@ NeutralArea::NeutralArea(){
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Neutral_Area_Tilemap.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
 
+
     Vector2 tempVec= {132*32,83*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
     Vector2 vec2{20*32, 36*32};
