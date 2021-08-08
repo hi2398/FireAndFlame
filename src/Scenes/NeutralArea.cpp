@@ -14,26 +14,20 @@ NeutralArea::NeutralArea(){
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json","assets/Tilemaps/Neutral_Area_Tilemap.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Neutral_Area_Tilemap.json");
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
-    
-    // Delete this section, only for testing
-    Vector2 tempVec= playerCharacter->GetPosition();
-    tempVec.x+=256;
-    // A
+
+    Vector2 tempVec= {132*32,83*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
-    //Delete this section, only for testing
-    tempVec.x-=512;
-    tempVec.y+=64;
-    Texture2D tempTex = LoadTexture("assets/graphics/PLAYER.png");
-    // A
-    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{20*32, 36*32};
     Vector2 vec3{10 * 32, 36*32};
     Vector2 vec4{ 54 * 32, 91 * 32 };
-
-    interactables.emplace_back(std::make_unique<Coal>(vec3));
-    interactables.emplace_back(std::make_unique<Coal>(vec4));
+    /* TODO Add Statue and Schilder after receiving dialogue files
+     Statue 67,92
+    Schild 58, 92
+    Schild 72,92
+    Schild 57,88
+     */
     
     switch (4)
     {
@@ -54,7 +48,7 @@ NeutralArea::NeutralArea(){
         enemies.emplace_back(std::make_unique<ToastCat>(vec2));
         break;
     case 4:
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 3; i++) {
 			enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::Low));
 			enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::Medium));
 			enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::High));
