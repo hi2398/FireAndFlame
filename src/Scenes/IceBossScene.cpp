@@ -12,6 +12,7 @@ IceBossScene::IceBossScene() {
     tilemap->AddCollisionTile(tempVec);
 }
 
+
 void IceBossScene::Update() {
 
     if (!bossActivated) {
