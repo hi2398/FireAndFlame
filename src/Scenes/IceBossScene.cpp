@@ -6,6 +6,10 @@ IceBossScene::IceBossScene() {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
     playerCharacter->SetHealth(100);
+    Vector2 tempVec = {19*32, 48*32};
+    tilemap->AddCollisionTile(tempVec);
+    tempVec = {19*32, 47*32};
+    tilemap->AddCollisionTile(tempVec);
 }
 
 void IceBossScene::Update() {

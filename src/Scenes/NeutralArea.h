@@ -24,7 +24,7 @@ protected:
     
 private:
     Rectangle exp = { 0 };
-    static constexpr Vector2 playerStart{ 34 * 32, 115 * 32 };
+    static constexpr Vector2 playerStart{ 41 * 32, 119 * 32 };
 
 
 };
