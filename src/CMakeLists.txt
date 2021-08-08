@@ -11,6 +11,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 if (WIN32)
     cmake_policy(SET CMP0115 OLD)
 endif ()
+if (UNIX AND NOT APPLE)
+    cmake_policy(SET CMP0072 NEW)
+endif ()
 
 
 add_subdirectory(Core)
