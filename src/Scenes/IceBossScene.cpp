@@ -3,7 +3,7 @@
 #include "../Data/IceBoss/IceZone.h"
 
 IceBossScene::IceBossScene() {
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
     playerCharacter->SetHealth(100);
 }
