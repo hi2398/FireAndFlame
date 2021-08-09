@@ -1,0 +1,15 @@
+{ "columns":30,
+ "image":"assets/Tilemaps/Testmap/Tilemap_2.png",
+ "imageheight":320,
+ "imagewidth":960,
+ "margin":0,
+ "name":"Tilemap 2",
+ "spacing":0,
+ "tilecount":300,
+ "tiledversion":"1.6.0",
+ "tileheight":32,
+ "tilewidth":32,
+ "transparentcolor":"#ff00ff",
+ "type":"tileset",
+ "version":"1.6"
+}
