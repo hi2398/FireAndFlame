@@ -8,11 +8,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if (WIN32)
-    cmake_policy(SET CMP0115 OLD)
-endif ()
-
-
 add_subdirectory(Core)
 add_subdirectory(Scenes)
 add_subdirectory(Data)
