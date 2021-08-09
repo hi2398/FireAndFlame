@@ -32,7 +32,6 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 
 void PlayerCharacter::Update() {
-	std::cout << GetTimesJumped() << "\n";
 	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 
 	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
@@ -94,7 +93,7 @@ void PlayerCharacter::Update() {
 	}
 
 	for (const auto& enemies : sceneManager->GetEnemies()) {
-		if (CheckCollisionRecs(playerHitbox, enemies->GetCollider())) {
+		if (CheckCollisionRecs(playerHitbox, enemies->GetCollider()) && enemies->GetEnemyType() != EnemyTypes::Saugi) {
 			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemies->GetDamageValue());
 		}
 	}

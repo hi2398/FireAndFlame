@@ -6,8 +6,9 @@
 void PlayerController::HandleInput() {
 
     //player walking
-	if (IsKeyDown(KEY_D) || (int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0) Notify(EVENT::MOVE_RIGHT);
-	if (IsKeyDown(KEY_A) || (int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0) Notify(EVENT::MOVE_LEFT);
+	if (IsKeyDown(KEY_D) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0) Notify(EVENT::MOVE_RIGHT);
+	if (IsKeyDown(KEY_A) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0) Notify(EVENT::MOVE_LEFT);
+
 
     //player dashing
     if ((IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash()|| 
@@ -18,24 +19,21 @@ void PlayerController::HandleInput() {
         ((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
         playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == LEFT)) Notify(EVENT::DASH_LEFT);
 
-    //running
-    if (IsKeyDown(KEY_LEFT_SHIFT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2)) {
-        playerCharacter->SetIsRunning(true);
-    }
-    else {
-        playerCharacter->SetIsRunning(false);
-    }
+    
+    
 
     //player jumping
-    if ((!playerCharacter->GetHeadCollision() && playerCharacter->IsGrounded()) ||
+	if (playerCharacter->GetWallCollisionLeft() && !playerCharacter->IsGrounded() ||
+		playerCharacter->GetWallCollisionRight() && !playerCharacter->IsGrounded()) {
+		if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::WALL_JUMP);
+	}
+    else if ((!playerCharacter->GetHeadCollision() && playerCharacter->IsGrounded()) ||
         (!playerCharacter->GetHeadCollision() && playerCharacter->GetCanDoubleJump() == true && playerCharacter->GetTimesJumped() < 2)
         ) {
         if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::JUMP);
     }
-    if (playerCharacter->GetWallCollisionLeft() && !playerCharacter->IsGrounded() ||
-        playerCharacter->GetWallCollisionRight() && !playerCharacter->IsGrounded()) {
-        if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::WALL_JUMP);
-    }
+
+    
 
     //player actions
 	if (IsKeyPressed(KEY_ENTER) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT)) Notify(EVENT::MELEE_ATTACK);
@@ -54,6 +52,15 @@ void PlayerController::HandleInput() {
         else if (playerCharacter->GetCanDoubleJump() == false) {
             if (IsKeyReleased(KEY_J)) playerCharacter->SetCanDoubleJump(true);
         }
+
+        //running
+
+        if (IsKeyDown(KEY_LEFT_SHIFT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_2)) {
+            playerCharacter->SetIsRunning(true);
+        }
+        else {
+            playerCharacter->SetIsRunning(false);
+        }
     }
 }
 
@@ -64,5 +71,4 @@ PlayerController::PlayerController() {
 
 PlayerController::~PlayerController() {
     RemoveObserver(playerCharacter->GetObserver());
-
 }

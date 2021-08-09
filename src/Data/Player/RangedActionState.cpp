@@ -42,8 +42,8 @@ std::shared_ptr<State> RangedActionState::Update(Actor& player) {
                 playerCharacter->SetHealth(playerCharacter->GetHealth() - 5.0f);
 
                 fireballDirection = playerCharacter->GetDirection();
-                if (player.GetDirection() == 1)vectorFireball.x = player.GetPosition().x + 25;
-                if (player.GetDirection() == -1)vectorFireball.x = player.GetPosition().x + 9;
+                if (player.GetDirection() == 1)vectorFireball.x = player.GetPosition().x + 20;
+                if (player.GetDirection() == -1)vectorFireball.x = player.GetPosition().x - 20;
                 vectorFireball.y = player.GetPosition().y;
 
                 sceneManager->AddInteractable(std::make_unique<Fireball>(vectorFireball, fireballDirection, player.GetType()));

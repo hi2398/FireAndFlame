@@ -24,7 +24,6 @@ void Fireball::Update()
     if (user == ObjectTypes::Player) {
         for (const auto& enemies : sceneManager->GetEnemies()) {
             if (CheckCollisionRecs(enemies->GetCollider(), interactionZone) && !enemies->IsInvulnerable()) {
-                std::cout << "enemy hit\n";
                 enemies->ReceiveDamage(10);
                 enemies->SetInvulnerable(true);
             }
