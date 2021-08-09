@@ -12,7 +12,7 @@
 #include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
-#include "Scenes/MinerBossScene.h"
+#include "Scenes/AreaTwo.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
