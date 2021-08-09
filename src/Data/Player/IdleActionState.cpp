@@ -56,10 +56,12 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 				break;
 			}
 		}
-		else if (player.GetJumpCommand() || player.GetWallJumpCommand()) {
-			if (player.GetWallJumpCommand()) wallJumpDirection = -1;
-			else wallJumpDirection = 1;
-			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 6, (float)32 * player.GetDirection() * wallJumpDirection, 32 };
+		else if (player.GetWallJumpCommand()) {
+			if (player.GetJumpSpeed() == 5.0f) wallJumpDirection = -player.GetDirection();
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 6, (float)32 * wallJumpDirection, 32 };
+		}
+		else if (player.GetJumpCommand()) {
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 6, (float)32 * player.GetDirection(), 32 };
 		}
 		else if (!player.GetJumpCommand()){
 			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32 * 5, (float)32 * player.GetDirection(), 32 };
@@ -74,24 +76,5 @@ std::shared_ptr<State> IdleActionState::Update(Actor& player) {
 }
 
 void IdleActionState::Draw(Actor& player) {
-	if (player.IsGrounded() && !player.GetIsDashing()) {
-		//upper body while grounded
-		switch (player.GetNextMovement())
-		{
-		case MOVEMENT::MOVE_LEFT:
-			DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
-			break;
-		case MOVEMENT::MOVE_RIGHT:
-			DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
-			break;
-		case MOVEMENT::IDLE:
-			DrawTextureRec(playerCharacter->upperBody, activeFrame, {player.GetPosition()}, WHITE);
-			break;
-		default:
-			break;
-		}
-	} // upper body while airborne
-	else if (!player.IsGrounded() && !player.GetIsDashing() && !player.GetActionBlocked()) {
-		DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
-	}
+	if (!player.GetIsDashing() && !player.GetActionBlocked()) DrawTextureRec(playerCharacter->upperBody, activeFrame, { player.GetPosition() }, WHITE);
 }

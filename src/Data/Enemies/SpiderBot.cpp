@@ -56,7 +56,7 @@ void SpiderBot::Update()
 void SpiderBot::Draw()
 {
 	activeState->Draw(*this);
-	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
+	if constexpr (DEBUG_BUILD) DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
 
 void SpiderBot::CheckEdgeColl() {

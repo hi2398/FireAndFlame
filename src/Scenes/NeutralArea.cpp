@@ -30,12 +30,12 @@ NeutralArea::NeutralArea(){
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/testText.json",tempVec,tempTex));
     Vector2 vec2{20*32, 36*32};
     Vector2 vec3{10 * 32, 36*32};
-    Vector2 vec4{ 54 * 32, 91 * 32 };
+    Vector2 vec4{ 30 * 32, 36 * 32 };
 
     interactables.emplace_back(std::make_unique<Coal>(vec3));
     interactables.emplace_back(std::make_unique<Coal>(vec4));
     
-    switch (4)
+    switch (6)
     {
     case 0:
         enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::Low));
@@ -61,8 +61,10 @@ NeutralArea::NeutralArea(){
         }
         break;
     case 5:
-        enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Low));
-        enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Medium));
+        for (int i = 0; i < 30; i++) {
+            enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Low));
+            enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Medium));
+        }
         break;
     case 6:
         enemies.emplace_back(std::make_unique<Saugi>(vec2));

@@ -57,5 +57,5 @@ void Fly::Update()
 void Fly::Draw()
 {
 	activeState->Draw(*this);
-	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
+	if constexpr (DEBUG_BUILD) DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }

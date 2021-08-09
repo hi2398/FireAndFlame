@@ -27,7 +27,6 @@ Toast::Toast(Vector2 initialPosition) : Interactable(InteractableType::Toast)
 	else {
 		attackDirection = abs(xDiff) / (32 * 5);
 	}
-	std::cout << attackDirection << "\n";
 }
 
 void Toast::Update()

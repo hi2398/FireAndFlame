@@ -16,6 +16,7 @@ protected:
 private:
     int jumpState = 0;
     int frameCounterDash = 0;
+    int enterWallSlideCounter = 0;
 };
 
 
