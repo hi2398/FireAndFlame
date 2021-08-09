@@ -2,6 +2,7 @@
 
 TBAfterFightState::TBAfterFightState(Enemy& enemy) : EState(enemy)
 {
+
 }
 
 std::shared_ptr<EState> TBAfterFightState::Update(Enemy& enemy)
@@ -11,4 +12,5 @@ std::shared_ptr<EState> TBAfterFightState::Update(Enemy& enemy)
 
 void TBAfterFightState::Draw(Enemy& enemy)
 {
+
 }

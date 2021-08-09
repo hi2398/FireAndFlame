@@ -33,7 +33,7 @@ void SpringHog::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider(0,0, 32, 32);
+	UpdateCollider(8,0, 16, 32);
 
 	if (invulnerable) {
 		invulnerableCounter++;
@@ -58,5 +58,5 @@ void SpringHog::Update()
 void SpringHog::Draw()
 {
 	activeState->Draw(*this);
-	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
+	if constexpr (DEBUG_BUILD)  DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }

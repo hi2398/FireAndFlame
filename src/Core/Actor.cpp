@@ -184,6 +184,11 @@ void Actor::SetHealth(int health)
 	this->health = health;
 }
 
+bool Actor::CanUseCoal() const
+{
+	return canUseCoal;
+}
+
 bool Actor::GetCanDash() const
 {
 	return canDash;
