@@ -16,7 +16,7 @@ Coal::Coal(Vector2 location) : Interactable(InteractableType::Coal)
 
 void Coal::Interact(Actor& actor)
 {
-    if (actor.GetType() == ObjectTypes::Player) {
+    if (actor.GetType() == ObjectTypes::Player || actor.CanUseCoal()) {
         if (actor.GetHealth() <= 75) {
             actor.SetHealth(actor.GetHealth() + fuel);
         }
@@ -24,16 +24,10 @@ void Coal::Interact(Actor& actor)
 			actor.SetHealth(100);
 		}
     }
+    
    
     markedDestroy=true;
 }
-
-
-
-
-
-
-
 
 Rectangle Coal::GetHitbox()
 {
@@ -62,15 +56,15 @@ void Coal::Update()
         fallSpeed += 0.1f;
         hitbox.x = position.x + 3;
         hitbox.y = position.y;
-        interactionZone.y=hitbox.x;
-        interactionZone.y=hitbox.y;
+        interactionZone = hitbox;
+        
 	}
 
 }
 
 void Coal::Draw()
 {
-		DrawTexture(texture, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
+	DrawTexture(texture, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
 }
 
 Coal::~Coal()

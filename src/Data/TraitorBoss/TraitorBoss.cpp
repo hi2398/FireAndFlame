@@ -1,9 +1,12 @@
+#include "../../Global.h"
+
 #include "TraitorBoss.h"
 #include "TraitorStateHandler.h"
 
 TraitorBoss::TraitorBoss(Vector2 location) : Enemy(EnemyTypes::Boss)
 {
-	health = 100;
+	canUseCoal = true;
+	health = MAX_HEALTH;
 	SetPosition(location);
 
 	activeState = std::make_shared<TraitorStateHandler>(*this);
@@ -11,15 +14,26 @@ TraitorBoss::TraitorBoss(Vector2 location) : Enemy(EnemyTypes::Boss)
 
 void TraitorBoss::Update()
 {
-	//decrease enemy health
-	if (health > 0) {
-		healthtimer++;
-		if (healthtimer >= HEALTH_INTERVAL) {
-			health--;
-			healthtimer = 0;
+	if (health < MAX_HEALTH) isFighting = true;
+	if (isFighting) {
+		//decrease enemy health
+		if (health > 0) {
+			healthtimer++;
+			if (healthtimer >= HEALTH_INTERVAL) {
+				health--;
+				healthtimer = 0;
+			}
+		}
+		UpdateCollider(0, 0, 32, 32);
+	}
+	
+	//interact with coal
+	for (const auto& interactable : sceneManager->GetInteractables()) {
+		if (interactable->GetInteractableType() == InteractableType::Coal 
+			&& CheckCollisionRecs(interactable->GetInteractionZone(), GetCollider())) {
+			interactable->Interact(*this);
 		}
 	}
-
 
 	activeState->Update(*this);
 }

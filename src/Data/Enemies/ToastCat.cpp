@@ -18,7 +18,7 @@ void ToastCat::Update()
 {
 	activeState = activeState->Update(*this);
 
-	UpdateCollider(0, 20, 32, 12);
+	UpdateCollider(0, 10, 32, 22);
 
 	if (invulnerable) {
 		invulnerableCounter++;
@@ -38,6 +38,6 @@ void ToastCat::Update()
 void ToastCat::Draw()
 {
 	activeState->Draw(*this);
-	DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
+	if constexpr (DEBUG_BUILD) DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
 

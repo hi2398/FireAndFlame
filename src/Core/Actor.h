@@ -84,6 +84,8 @@ public:
     int GetHealth() const;
     void SetHealth(int health);
 
+    bool CanUseCoal() const;
+
 protected:
     int health = 3;
     Vector2 lastTickPos;
@@ -109,6 +111,7 @@ protected:
     AttackDirection attackDirection{ ATT_RIGHT };
     bool isSwiping{ false };
     bool actionBlocked{ false };
+    bool canUseCoal{ false };
 
 
 	//Movement

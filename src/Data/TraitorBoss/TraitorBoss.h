@@ -24,4 +24,6 @@ private:
     int healthtimer = 0;
     static constexpr int HEALTH_INTERVAL{ 30 };
     static constexpr int MAX_HEALTH{ 100 };
+
+    bool isFighting{ false };
 };
