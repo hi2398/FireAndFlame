@@ -3,6 +3,8 @@
 #include "../../Core/Enemy.h"
 #include "../../Core/State.h"
 
+enum class MinerBossPhase{First, Second};
+
 class MinerBoss : public Enemy {
 public:
     explicit MinerBoss(Vector2 location);
@@ -15,10 +17,11 @@ protected:
 
 
 private:
-    const Vector2 levelExit{58*32, 29*32};
+    const Vector2 levelExit{58*32-96, 29*32-96};
 
     std::shared_ptr<State> state;
     void OnDeath();
+    MinerBossPhase bossPhase{MinerBossPhase::First};
 };
 
 
