@@ -7,11 +7,8 @@
 AreaOne::AreaOne(){
     playerCharacter->SetPosition({0, 101 * 32});
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json","assets/Tilemaps/Area_One_Tilemap.json");
-    // Delete this section, only for testing
-    Vector2 tempVec= playerCharacter->GetPosition();
-    tempVec.x-=256;
-    // Delete End
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec));
+    Vector2 tempVec= {32*25,32*26};
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::MinerBoss));
 }
 
 void AreaOne::Update() {
