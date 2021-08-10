@@ -20,6 +20,8 @@ NeutralArea::NeutralArea(){
 
     Vector2 tempVec= {132*32,83*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
+    tempVec= {14*32,68*32};
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo));
     Vector2 vec2{20*32, 36*32};
     Vector2 vec3{10 * 32, 36*32};
   

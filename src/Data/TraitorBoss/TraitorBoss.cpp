@@ -2,6 +2,8 @@
 
 #include "TraitorBoss.h"
 #include "TraitorStateHandler.h"
+#include "../../Scenes/TraitorBoss.h"
+
 
 TraitorBoss::TraitorBoss(Vector2 location) : Enemy(EnemyTypes::Boss)
 {
