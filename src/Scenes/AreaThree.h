@@ -1,14 +1,20 @@
-//
-// Created by Ashty on 09.08.2021.
-//
+#pragma once
+#include "../Core/Scene.h"
+#include "raylib.h"
+#include "../Core/Enemy.h"
+#include "../Data/Coal.h"
+#include <vector>
+#include "../Core/Tilemap.h"
+#include "../Core/Actor.h"
+#include "../Data/SceneChangerObject.h"
 
-#ifndef FIREANDFLAME_AREATHREE_H
-#define FIREANDFLAME_AREATHREE_H
-
-
-class AreaThree {
-
+class AreaThree : public Scene {
+public:
+    AreaThree();
+    void Update() override;
+    void Draw() override;
+    ~AreaThree() override= default;
+private:
+    const Vector2 playerStart = {23*32,112*32};
+protected:
 };
-
-
-#endif //FIREANDFLAME_AREATHREE_H
