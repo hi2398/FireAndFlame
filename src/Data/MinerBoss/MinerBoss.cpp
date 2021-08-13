@@ -2,15 +2,17 @@
 #include "MBPhaseTransitionState.h"
 #include "../../Global.h"
 #include "../SceneChangerObject.h"
+#include "MBDecisionState.h"
 
 MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     SetPosition(location);
-    health=40;
+    health= maxHealth;
     texture= LoadTexture("assets/Bosses/MinerBoss/Miner.png");
-    state=std::make_unique<MBPhaseTransitionState>();
+    state=std::make_unique<MBDecisionState>(*this);
     hitbox={0, 0, 32, 32};
     hitbox.x=position.x;
     hitbox.y=position.y;
+    movementSpeed=3.f;
 }
 
 void MinerBoss::Update() {
@@ -19,20 +21,20 @@ void MinerBoss::Update() {
     state=state->Update(*this);
 
     --invulnerableCounter;
-    if (invulnerableCounter<=0) {
+    if (invulnerableCounter<=0 && bossPhase!=MinerBossPhase::Transition) {
         invulnerable=false;
         invulnerableCounter=15;
     }
-    std::cout << invulnerable;
 }
 
 void MinerBoss::Draw() {
     state->Draw(*this);
-    DrawRectangleRec(hitbox, RED);
 }
 
 void MinerBoss::ReceiveDamage(int damage) {
     health -= damage;
+    invulnerable = true;
+    invulnerableCounter=15;
     if (health <= 0)
     {
         markedDestroy= true;
@@ -41,5 +43,18 @@ void MinerBoss::ReceiveDamage(int damage) {
 }
 
 void MinerBoss::OnDeath() {
+    std::cout << "Miner Boss Death\n";
     sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit));
+}
+
+int MinerBoss::GetMaxHealth() const {
+    return maxHealth;
+}
+
+MinerBossPhase MinerBoss::GetMinerBossPhase() const {
+    return bossPhase;
+}
+
+void MinerBoss::SetMinerBossPhase(MinerBossPhase bossPhase) {
+    this->bossPhase=bossPhase;
 }
