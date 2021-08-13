@@ -22,6 +22,7 @@ public:
 
     void AddEnemy(std::unique_ptr<Enemy> enemy);
     void AddInteractable(std::unique_ptr<Interactable> interactable);
+    void DeleteLastDialogueObj();
 
     void RemoveMarkedDelete();
     void RemoveInteractables();

@@ -13,6 +13,7 @@
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
 #include "Scenes/AreaOne.h"
+#include "Scenes/TraitorBossScene.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -44,7 +45,7 @@ if  constexpr(DEBUG_BUILD){
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<TraitorBossScene>());
 
 
 #ifdef GAME_START_FULLSCREEN

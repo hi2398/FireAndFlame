@@ -35,6 +35,8 @@ public:
         isHealthDecreasing = isDecreasing;
     }
 
+    bool ConrolsDisabled() const;
+
 	//2Dcam
 	Camera2D camera = { 0 };
     //cam hitbox
@@ -73,6 +75,7 @@ private:
     bool invulnerable{ false };
     bool isHealthDecreasing = true;
     int invulnerableCounter = 0;
+    bool controlsBlocked = false;
 
     int playerFrameCounter = 0;
     int currentFrame = 0;

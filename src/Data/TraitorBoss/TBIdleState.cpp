@@ -19,7 +19,7 @@ std::shared_ptr<EState> TBIdleState::Update(Enemy& enemy)
 	if constexpr (DEBUG_ENEMY_STATES) std::cout << "TBIdleState\n";
 
 	decisionCounter++;
-	if (decisionCounter >= 60) {
+	if (decisionCounter >= 60 && enemy.IsGrounded()) {
 		CheckForCoal(enemy);
 		//seek coal when on low health
 		if (enemy.GetHealth() <= 30 && !noCoalFound) return std::make_shared<TBSeekCoal>(enemy);

@@ -3,6 +3,7 @@
 #include "TraitorBoss.h"
 #include "TBBeforeFightState.h"
 #include "TBIdleState.h"
+#include "TBAfterFightState.h"
 #include "../../Scenes/TraitorBossScene.h"
 
 
@@ -13,7 +14,7 @@ TraitorBoss::TraitorBoss(Vector2 location) : Enemy(EnemyTypes::Boss)
 	movementSpeed = 3.0f;
 	SetPosition(location);
 
-	activeState = std::make_shared<TBIdleState>(*this);
+	activeState = std::make_shared<TBBeforeFightState>(*this);
 	texture = LoadTexture("assets/Bosses/TraitorBoss/TraitorUpperBody.png");
 	texture2 = LoadTexture("assets/Bosses/TraitorBoss/TraitorLegs.png");
 	texture3 = LoadTexture("assets/Bosses/TraitorBoss/AttackSprites.png");
@@ -36,7 +37,7 @@ void TraitorBoss::Update()
 				healthtimer = 0;
 			}
 		}
-		else OnDeath();
+		else activeState = std::make_shared<TBAfterFightState>(*this);
 		UpdateCollider(0, 0, 32, 32);
 	}
 

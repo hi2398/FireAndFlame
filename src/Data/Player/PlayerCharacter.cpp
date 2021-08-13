@@ -34,7 +34,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 void PlayerCharacter::Update() {
 	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 
-	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
+	{movementState = movementState->Update(*this); }
 
 	actionState = actionState->Update(*this);
 
@@ -99,6 +99,8 @@ void PlayerCharacter::Update() {
 	}
 
 	nextMovement = MOVEMENT::IDLE;
+
+	if constexpr (DEBUG_PLAYER_POSITION) 	std::cout << position.x / 32 << "\t" << position.y / 32 << "\n";
 }
 
 void PlayerCharacter::Draw() {
@@ -149,8 +151,13 @@ const int PlayerCharacter::GetMaxHealth() {
 	return max_health;
 }
 
-void PlayerCharacter::ChangePlayerMovement(bool playerMovement) {
-    disablePlayerMovement = playerMovement;
+void PlayerCharacter::ChangePlayerMovement(bool blockThis) {
+	controlsBlocked = blockThis;
+}
+
+bool PlayerCharacter::ConrolsDisabled() const
+{
+	return controlsBlocked;
 }
 
 int PlayerCharacter::GetFrame() {
