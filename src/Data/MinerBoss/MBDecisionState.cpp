@@ -1,3 +1,4 @@
+#include <iostream>
 #include "MBDecisionState.h"
 #include "MinerBoss.h"
 #include "MBPhaseTransitionState.h"
@@ -14,7 +15,7 @@ std::shared_ptr<EState> MBDecisionState::Update(Enemy &actor) {
     --delay;
 
     //check if boss should transition to second phase
-    if (minerBoss.GetHealth() <= minerBoss.GetMaxHealth()/2 && minerBoss.GetMinerBossPhase()==MinerBossPhase::First){
+    if ((minerBoss.GetHealth() <= minerBoss.GetMaxHealth()/2) && (minerBoss.GetMinerBossPhase()==MinerBossPhase::First)) {
         minerBoss.SetMinerBossPhase(MinerBossPhase::Transition);
         return std::make_shared<MBPhaseTransitionState>(actor);
     }

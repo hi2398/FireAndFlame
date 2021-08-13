@@ -24,7 +24,9 @@ std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &actor) {
     }
 
     if (done) {
-        minerBoss.SetMinerBossPhase(MinerBossPhase::Second);
+        //bullshit bug fix pointer cast
+        auto minerBossPt=dynamic_cast<MinerBoss*>(&actor);
+        minerBossPt->SetMinerBossPhase(MinerBossPhase::Second);
         return std::make_shared<MBDecisionState>(actor);
     } else return shared_from_this();
 }
