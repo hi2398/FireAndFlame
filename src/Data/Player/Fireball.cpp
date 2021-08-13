@@ -1,6 +1,6 @@
 #include "Fireball.h"
 
-Fireball::Fireball(Vector2 initialPosition, int direction, ObjectTypes user) : Interactable(InteractableType::Fireball)
+Fireball::Fireball(Vector2 initialPosition, Vector2 direction, ObjectTypes user) : Interactable(InteractableType::Fireball)
 {
 	position = initialPosition;
     this->direction = direction;
@@ -16,10 +16,11 @@ void Fireball::Update()
         fireballCounter = 0;
         fireballFrame++;
     }
-    fireballRec = { (float)32 * fireballFrame , 0, (float)32 * direction , 32 };
+    fireballRec = { (float)32 * fireballFrame , 0, (float)32 * direction.x , 32 };
     interactionZone = {position.x, position.y, 32, 16};
 
-    position.x += 8.0f * direction;
+    position.x += 8.0f * direction.x;
+    position.y += 8.0f * direction.y;
 
     if (user == ObjectTypes::Player) {
         for (const auto& enemies : sceneManager->GetEnemies()) {
@@ -34,6 +35,16 @@ void Fireball::Update()
             if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - 10);
         }
     }
+
+
+    for (const auto& tile : sceneManager->GetTilemap()->GetTileColliders()) {
+        tileRec.x = tile.x;
+        tileRec.y = tile.y;
+        if (CheckCollisionRecs(tileRec, interactionZone)) {
+            markedDestroy = true;
+        }
+    }
+
 }
 
 void Fireball::Draw()

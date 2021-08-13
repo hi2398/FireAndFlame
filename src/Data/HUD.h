@@ -8,6 +8,7 @@ public:
     void DrawHUD();
     void changeInteractable(bool interactable);
     void executeEndscreenSwap();
+    void SetBossEnemyHealth(int bossHealth);
     ~HUD() = default;
 protected:
 
@@ -18,6 +19,8 @@ private:
     int endscreenCounter = 255;
     bool isEndscreenActive = false;
     Color endscreenColor = {0,0,0,255};
+    int bossHealth = 0;
+    Rectangle bossHealthBar{};
 };
 
 

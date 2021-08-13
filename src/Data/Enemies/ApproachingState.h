@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../HeartObject.h"
 #include "../../Core/EState.h"
 
 class ApproachingState : public EState {
@@ -36,4 +37,6 @@ private:
     Rectangle tileRec{ 0,0,32,32 };
     Vector2 playerReference{};
     Vector2 movingToPlayer{};
+
+    std::unique_ptr<HeartObject> heart;
 };

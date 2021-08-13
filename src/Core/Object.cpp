@@ -2,7 +2,7 @@
 // Created by Adrian on 27/05/2021.
 //
 
-#include "Interactable.h"
+
 #include "Object.h"
 
 ObjectTypes Object::GetType() const {

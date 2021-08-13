@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "../Global.h"
 #include "../Core/Interactable.h"
+#include "HeartObject.h"
 #include <iostream>
 
 
@@ -23,5 +24,7 @@ private:
 	bool isGrounded = false;
 	float fallSpeed = 1.5f;
 	float gravityMultiplier = 1.5f;
+
+	std::unique_ptr<HeartObject> heart;
 };
 

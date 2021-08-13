@@ -12,8 +12,10 @@ public:
     virtual ~EState() = default;
 protected:
     Rectangle activeFrame{};
+    Rectangle activeFrame2{};
     int stateFrameCounter = 0;
     int thisFrame = 0;
+    int thisFrame2 = 0;
     Vector2 trianglePoint1{};
     Vector2 trianglePoint2{};
 private:

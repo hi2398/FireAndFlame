@@ -76,6 +76,16 @@ Texture2D Enemy::GetTexture() {
 	return texture;
 }
 
+Texture2D Enemy::GetSecondTexture()
+{
+	return texture2;
+}
+
+Texture2D Enemy::GetThirdTexture()
+{
+	return texture3;
+}
+
 void Enemy::UpdateAttackHitbox()
 {
 	switch (GetDirection())
@@ -113,5 +123,16 @@ int Enemy::GetDamageValue()
 EnemyLevel Enemy::GetEnemyLevel() const
 {
 	return enemyLevel;
+}
+
+void Enemy::IncrementActionCounter()
+{
+	this->actionCounter += 1;
+	return;
+}
+
+int Enemy::GetActionCounter() const
+{
+	return actionCounter;
 }
 
