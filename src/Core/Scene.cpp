@@ -50,9 +50,9 @@ void Scene::Update() {
         tmp2 = playerCharacter->GetPosition();
         Vector2 scrollDirection = { tmp2.x - tmp1.x, tmp2.y - tmp1.y };
 
-        foregroundPosition = Vector2Add(foregroundPosition, Vector2Multiply(scrollDirection, { 0.0f, 0.1f }));
-        middlegroundPosition = Vector2Add(middlegroundPosition, Vector2Multiply(scrollDirection, { 0.8f, 0.02f }));
-        backgroundPosition = Vector2Add(backgroundPosition, Vector2Multiply(scrollDirection, { 0.9f, 0.0f }));
+        foregroundBottomPosition = Vector2Add(foregroundBottomPosition, Vector2Multiply(scrollDirection, { 0.6f, 0.2f }));
+        foregroundSidePosition = Vector2Add(foregroundSidePosition, Vector2Multiply(scrollDirection, { 0.6f, 0.2f }));
+        backgroundPosition = Vector2Add(backgroundPosition, Vector2Multiply(scrollDirection, { 1.0f, 0.9f }));
     }
 
 
@@ -63,9 +63,23 @@ void Scene::Draw() {
 }
 
 void Scene::DrawBackground() const {
-    DrawTextureEx(textureBackground, backgroundPosition, 0, 1.0f, WHITE);
-    DrawTextureEx(textureMiddleground, middlegroundPosition, 0, 1.0f, WHITE);
-    DrawTextureEx(textureForeground, foregroundPosition, 0, 1.0f, WHITE);
+    //loop Background
+    for (int y = 0; y < backgroundLoopY; y++) {
+        for (int x = 0; x < backgroundLoopX; x++) {
+            DrawTextureEx(textureBackground, { (float)backgroundPosition.x + x * textureBackground.width/2, (float)backgroundPosition.y + y * textureBackground.height/2 }, 0.0, 0.5, WHITE);
+        }
+    }
+
+    //loop foreground
+    for (int y = 0; y < foregroundLoopY; y++) {
+        for (int x = 0; x < foregroundLoopX; x++) {
+            if (y == foregroundLoopY - 1) {
+                DrawTextureEx(textureForegroundBottom, { (float)foregroundBottomPosition.x + x * textureForegroundBottom.width, (float)foregroundBottomPosition.y + y * textureForegroundBottom.height }, 0.0, 1.0, WHITE);
+            }
+            else DrawTextureEx(textureForegroundSide, { (float)foregroundSidePosition.x + x * textureForegroundSide.width, (float)foregroundSidePosition.y + y * textureForegroundSide.height }, 0.0, 1.0, WHITE);
+        }
+    }
+
 }
 
 void Scene::AddEnemy(std::unique_ptr<Enemy> enemy) {

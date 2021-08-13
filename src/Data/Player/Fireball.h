@@ -5,7 +5,7 @@
 
 class Fireball : public Interactable {
 public:
-	Fireball(Vector2 initialPosition, int direction, ObjectTypes user);
+	Fireball(Vector2 initialPosition, Vector2 direction, ObjectTypes user);
 	void Update() override;
 	void Interact(Actor& actor) {};
 	void Draw() override;
@@ -17,6 +17,8 @@ private:
 	Texture2D fireball{};
 	int fireballCounter = 0;
 	int fireballFrame = 0;
-	int direction = 0;
+	Vector2 direction = {0,0};
 	Rectangle fireballRec{};
+
+	Rectangle tileRec{0,0,32,32};
 };

@@ -24,7 +24,6 @@ void Coal::Interact(Actor& actor)
 			actor.SetHealth(100);
 		}
     }
-    
    
     markedDestroy=true;
 }

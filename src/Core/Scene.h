@@ -32,8 +32,8 @@ protected:
     std::list<std::unique_ptr<Interactable>> interactables;
     std::list<std::unique_ptr<Enemy>> enemies;
 
-    Texture2D textureForeground;
-    Texture2D textureMiddleground;
+    Texture2D textureForegroundBottom;
+    Texture2D textureForegroundSide;
     Texture2D textureBackground;
 
     int skipFrame = 0;
@@ -41,9 +41,14 @@ protected:
     Vector2 tmp1 = {};
     Vector2 tmp2 = {};
 
-    Vector2 foregroundPosition{};
-    Vector2 middlegroundPosition{};
+    Vector2 foregroundBottomPosition{};
+    Vector2 foregroundSidePosition{};
     Vector2 backgroundPosition{};
+
+    int backgroundLoopX = 0;
+    int backgroundLoopY = 0;
+    int foregroundLoopX = 0;
+    int foregroundLoopY = 0;
 private:
 };
 

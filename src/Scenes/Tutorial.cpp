@@ -45,9 +45,25 @@ Tutorial::Tutorial() {
 
     door3[0] = {40*32,76*32};
     door3[1] = {40*32,75*32};
+
+    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
+    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
+    textureBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+
+    foregroundBottomPosition = { 0, - 90 };
+    foregroundSidePosition = { 0, -90 };
+    backgroundPosition = { 0,0 };
+    
+    //fill background loop vector
+    backgroundLoopX = 8;
+    backgroundLoopY = 16;
+
+    foregroundLoopX = 4;
+    foregroundLoopY = 8;
 }
 
 void Tutorial::Update() {
+    Scene::Update();
 
     if(preventHealthDecrease){ // Manages if player loses health in Tutorial
         playerCharacter->SetPlayerDecreasingHealth(false);

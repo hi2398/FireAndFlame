@@ -28,6 +28,8 @@ public:
     float GetEnemyMovementSpeed();
 
     Texture2D GetTexture();
+    Texture2D GetSecondTexture();
+    Texture2D GetThirdTexture();
 
     void UpdateAttackHitbox();
     Rectangle GetAttackHitbox();
@@ -39,6 +41,9 @@ public:
 
     EnemyLevel GetEnemyLevel() const;
 
+    void IncrementActionCounter();
+    int GetActionCounter() const;
+
 
 protected:
     static float GetDistance(Vector2 startLocation, Vector2 endLocation);
@@ -47,7 +52,7 @@ protected:
     bool MakeDecision(int probability);
     EnemyTypes enemyType;
     EnemyLevel enemyLevel;
-    int health{3};
+    //int health{3};
     bool hasLineOfSight{false};
     bool isAttacking;
     EnemyState state{EnemyState::Idle};
@@ -62,13 +67,15 @@ protected:
     Rectangle hitbox{};
     Rectangle attackArea{};
     Texture2D texture{};
+    Texture2D texture2{};
+    Texture2D texture3{};
     Vector2 lastSeen{};
     float movementSpeed{ 1.0f };
     Rectangle attackHitbox = {};
     bool invulnerable{ false };
     int invulnerableCounter = 0;
     int damageValue = 5;
-
+    int actionCounter = 0;
     
 private:
 
