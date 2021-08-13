@@ -6,7 +6,6 @@
 #include "../../Global.h"
 
 WallSlideSubState::WallSlideSubState(Actor& player) : PlayerStates(player) {
-	
 }
 
 std::shared_ptr<State> WallSlideSubState::Update(Actor& player) {
@@ -26,7 +25,7 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& player) {
 		switch (player.GetNextMovement())
 		{
 		    case MOVEMENT::MOVE_LEFT:
-		        if (player.GetWallCounter() >= 5) {
+		        if (player.GetWallCounter() >= 10) {
 					player.SetPosition({ player.GetPosition().x, player.GetPosition().y + 2.0f });
 			    }
 			    break;
@@ -46,7 +45,7 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& player) {
 				return std::make_shared<FallingSubState>(player);
 			break;
 			case MOVEMENT::MOVE_RIGHT:
-			    if (player.GetWallCounter() >= 5) player.SetPosition({ player.GetPosition().x , player.GetPosition().y + 2.0f });
+			    if (player.GetWallCounter() >= 10) player.SetPosition({ player.GetPosition().x , player.GetPosition().y + 2.0f });
 			break;
 			case MOVEMENT::IDLE:
 			    return std::make_shared<FallingSubState>(player);

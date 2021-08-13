@@ -19,6 +19,7 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		std::cout << "New State: Jumping\n";
 	}
 
+	enterWallSlideCounter++;
 	player.SetWallCounter(0);
 
 	//go to falling state if hit head
@@ -38,11 +39,11 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		else {
 			player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
 		}
-		if (player.GetWallCollisionLeft()) {
+		/*if (player.GetWallCollisionLeft() && enterWallSlideCounter >= 15) {
 			player.SetJumpSpeed(5.0f);
 			player.SetJumpCommand(false);
 			return std::make_shared<WallSlideSubState>(player);
-		}
+		}*/
 
 		activeFrame = { 0,32 * 3, -32, 32 };
 		break;
@@ -54,11 +55,11 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 		else {
 			player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
 		}
-		if (player.GetWallCollisionRight()) {
+		/*if (player.GetWallCollisionRight() && enterWallSlideCounter >= 15) {
 			player.SetJumpSpeed(5.0f);
 			player.SetJumpCommand(false);
 			return std::make_shared<WallSlideSubState>(player);
-		}
+		}*/
 
 		activeFrame = { 0,32 * 3, 32, 32 };
 		break;
