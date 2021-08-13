@@ -72,17 +72,17 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 
 		//update attack function
 		if (!player.GetIsSwiping()) player.SetIsSwiping(true), playerCharacter->resetAttack = 0;
-		
+
 		stateFrameCounter++;
 		if (stateFrameCounter >= 5) {
 			thisFrame++;
 			stateFrameCounter = 0;
 		}
-		activeFrame = { (float)64 * thisFrame, (float)32 * playerCharacter->attackState,(float) 64 * player.GetDirection(), 32 };
+		activeFrame = { (float)64 * thisFrame, (float)32 * playerCharacter->attackState,(float)64 * player.GetDirection(), 32 };
 		if (thisFrame >= 3 && playerCharacter->attackState < 2) {
 			player.SetIsSwiping(false);
 			playerCharacter->attackState++;
-		return std::make_shared<IdleActionState>(player);
+			return std::make_shared<IdleActionState>(player);
 		}
 		else if (thisFrame >= 3 && playerCharacter->attackState == 2) {
 			playerCharacter->attackState = 0;
@@ -92,14 +92,14 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 
 	}
 
-	
+
 	//the hit collision is not working for rotated rectangles
 	//thats why I use a combination of different rectangles for collision, which mimic the swiping motion of the actual spear/rectangle
-	
+
 	switch (player.GetDirection())
 	{
 	case LEFT:
-		
+
 		if (playerCharacter->attackState == 2) {
 			collisionRec = { player.GetPosition().x + 16.0f - 46.0f,player.GetPosition().y + 6.0f, 38, 20 };
 		}
@@ -115,7 +115,7 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 			collisionRec = { player.GetPosition().x + 16.0f + 9.0f, player.GetPosition().y, 35, 30 };
 		}
 		break;
-		
+
 		break;
 	}
 
@@ -123,26 +123,22 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 
 	//check if an enemy gets hit
 	for (auto& enemies : sceneManager->GetEnemies()) {
-
+		if (!enemies->IsInvulnerable() && player.GetIsSwiping() && (CheckCollisionRecs(collisionRec, enemies->GetCollider()))) {
 			switch (playerCharacter->attackState)
 			{
 			case 0:
 			case 1://same function for first two attack states
-				if (!enemies->IsInvulnerable() && player.GetIsSwiping() && (CheckCollisionRecs(collisionRec, enemies->GetCollider()))) {
-					enemies->ReceiveDamage(1);
-					enemies->SetInvulnerable(true);
-				}
+				enemies->ReceiveDamage(1);
 				break;
 			case 2:
-				if (!enemies->IsInvulnerable() && player.GetIsSwiping() && CheckCollisionRecs(collisionRec, enemies->GetCollider())) {
-					enemies->ReceiveDamage(3);
-					enemies->SetInvulnerable(true);
-				}
+				enemies->ReceiveDamage(3);
 				break;
 			default:
 				break;
 			}
-			
+			enemies->SetInvulnerable(true);
+			std::cout << "HIT\n";
+		}
 	}
 
 
@@ -150,7 +146,7 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 }
 
 void MeleeActionState::Draw(Actor& player) {
-	
+
 	switch (player.GetDirection())
 	{
 	case LEFT:
@@ -160,7 +156,7 @@ void MeleeActionState::Draw(Actor& player) {
 		DrawTextureRec(playerCharacter->attackSprite, activeFrame, player.GetPosition(), WHITE);
 		break;
 	}
-	
-	
+
+
 
 }

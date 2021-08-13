@@ -7,7 +7,7 @@ extern std::shared_ptr<HUD> hud;
 extern std::shared_ptr<SceneManager> sceneManager;
 
 constexpr bool DEBUG_BUILD = true;
-constexpr bool DEBUG_PLAYER_STATES = true;
+constexpr bool DEBUG_PLAYER_STATES = false;
 constexpr bool DEBUG_ENEMY_STATES = false;
 /*
  * Example Usage, also see main.cpp:

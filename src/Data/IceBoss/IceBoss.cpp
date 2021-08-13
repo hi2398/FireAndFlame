@@ -25,7 +25,15 @@ void IceBoss::Update() {
     meleeRange.x=position.x-16;
     meleeRange.y=position.y;
 
+    UpdateCollider(0,0, 32, 32);
 
+    if (invulnerable) {
+        invulnerableCounter++;
+        if (invulnerableCounter >= 60) {
+            invulnerableCounter = 0;
+            invulnerable = false;
+        }
+    }
 }
 
 void IceBoss::Draw() {

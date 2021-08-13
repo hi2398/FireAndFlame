@@ -51,6 +51,8 @@ ApproachingState::ApproachingState(Enemy& enemy) : EState(enemy)
 	case EnemyTypes::SpringHog:
 		activeFrame = { 32, 32 * 3, (float) 32 * enemy.GetDirection(), 32};
 		break;
+	case EnemyTypes::Saugi:
+		heart = std::make_unique<HeartObject>(enemy.GetPosition(), HeartState::Good, 2);
 	default:
 		activeFrame.y = 32 * 4;
 		break;
@@ -81,6 +83,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::Saugi:
+		heart->Update();
+		heart->UpdatePos(enemy.GetPosition());
 		for (const auto& coal : sceneManager->GetInteractables()) {
 			//check line of sight in idle
 			switch (enemy.GetDirection())
@@ -407,5 +411,9 @@ void ApproachingState::Draw(Enemy& enemy)
 	}
 	else {
 		DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x, enemy.GetPosition().y }, WHITE);
+	}
+
+	if (enemy.GetEnemyType() == EnemyTypes::Saugi) {
+		heart->Draw();
 	}
 }
