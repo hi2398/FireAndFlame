@@ -75,12 +75,14 @@ void MBPhaseTransitionState::Jump(Enemy &enemy) {
 
 void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
     if (!correctZ){
+        enemy.SetDirection(LEFT);
         if (Vector2Distance(enemy.GetPosition(), targetFloorLoc)<=3.f){
             enemy.SetPosition(targetFloorLoc);
             correctZ=true;
+            lerpAlpha=0.f;
         } else {
             enemy.SetPosition(Vector2Lerp(targetFloorLocStart, targetFloorLoc, lerpAlpha));
-            lerpAlpha+=0.03f;
+            lerpAlpha+=0.05f;
         }
         return;
     }
@@ -88,12 +90,37 @@ void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
     switch (endJumpStep) {
         case 0:
             //move two tiles left
+            if (Vector2Distance(enemy.GetPosition(), moveTwoLeftEnd) <=3.f){
+                enemy.SetPosition(moveTwoLeftEnd);
+                lerpAlpha=0.f;
+                ++endJumpStep;
+            } else {
+                enemy.SetPosition(Vector2Lerp(targetFloorLoc, moveTwoLeftEnd, lerpAlpha));
+                lerpAlpha+=0.03f;
+            }
             break;
         case 1:
             //little jump up
+            if (Vector2Distance(enemy.GetPosition(), jumpHighestPoint) <=3.f){
+                enemy.SetPosition(jumpHighestPoint);
+                lerpAlpha=0.f;
+                ++endJumpStep;
+            } else {
+                enemy.SetPosition(Vector2Lerp(moveTwoLeftEnd, jumpHighestPoint, lerpAlpha));
+                lerpAlpha+=0.06f;
+            }
             break;
         case 2:
             //fall down
+            if (Vector2Distance(enemy.GetPosition(), jumpDown) <=3.f){
+                enemy.SetPosition(jumpDown);
+                lerpAlpha=0.f;
+                ++endJumpStep;
+                done=true;
+            } else {
+                enemy.SetPosition(Vector2Lerp(jumpHighestPoint, jumpDown, lerpAlpha));
+                lerpAlpha+=0.03f;
+            }
             break;
 
     }
