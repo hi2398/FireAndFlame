@@ -13,9 +13,6 @@
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
 #include "Scenes/AreaOne.h"
-#include "Scenes/AreaTwo.h"
-#include "Scenes/AreaThree.h"
-#include "Scenes/TraitorBossScene.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
