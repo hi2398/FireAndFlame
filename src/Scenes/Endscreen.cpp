@@ -32,9 +32,7 @@ Endscreen::Endscreen() {
 }
 
 void Endscreen::Update() {
-    std::cout << endscreenCounter << "\n";
     endscreenCounter = endscreenCounter + 0.4f;
-    std::cout << endscreenCounter << "\n";
     if(endscreenCounter >= 1650){
         sceneManager->SetNextScene(std::make_unique<MainMenu>());
     }

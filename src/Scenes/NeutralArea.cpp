@@ -18,10 +18,12 @@ NeutralArea::NeutralArea(){
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
 
 
-    Vector2 tempVec= {132*32,83*32};
+    Vector2 tempVec= {106*32,86*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
-    tempVec= {14*32,68*32};
+    tempVec= {15*32,77*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo));
+    tempVec= {69*32,65*32};
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaThree));
     Vector2 vec2{playerStart.x + 32, playerStart.y};
     Vector2 vec3{playerStart.x + 10 * 32, playerStart.y};
     interactables.emplace_back(std::make_unique<Coal>(vec3));
