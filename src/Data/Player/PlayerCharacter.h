@@ -39,6 +39,9 @@ public:
 
     void ChangeCameraControl();
 
+    bool DashReady() const;
+    void SetDashIsReady(bool ready);
+
 	//2Dcam
 	Camera2D camera = { 0 };
     bool followCam{ true };
@@ -76,10 +79,13 @@ private:
     static constexpr int max_health{100};
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
+    static constexpr int DASH_COOLDOWN{ 60 };
     bool invulnerable{ false };
     bool isHealthDecreasing = true;
     int invulnerableCounter = 0;
     bool controlsBlocked = false;
+    bool dashIsReady{ true };
+    int dashCounter = 0;
 
     int playerFrameCounter = 0;
     int currentFrame = 0;

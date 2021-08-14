@@ -158,6 +158,7 @@ Vector2 Actor::Dash(int direction) {
 	isDashing = true;
 	position.x += dashDistance * direction / 12;
 	if (dashCounter >= 12) {
+		playerCharacter->SetDashIsReady(false);
 		isDashing = false;
 		dashCounter = 0;
 	}
