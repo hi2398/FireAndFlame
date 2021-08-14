@@ -13,5 +13,5 @@ std::shared_ptr<EState> TBBeforeFightState::Update(Enemy& enemy)
 
 void TBBeforeFightState::Draw(Enemy& enemy)
 {
-
+	DrawTexture(enemy.GetTexture(), enemy.GetPosition().x, enemy.GetPosition().y, WHITE);
 }

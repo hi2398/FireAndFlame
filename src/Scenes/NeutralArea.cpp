@@ -22,8 +22,9 @@ NeutralArea::NeutralArea(){
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
     tempVec= {14*32,68*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo));
-    Vector2 vec2{20*32, 36*32};
-    Vector2 vec3{10 * 32, 36*32};
+    Vector2 vec2{playerStart.x + 32, playerStart.y};
+    Vector2 vec3{playerStart.x + 10 * 32, playerStart.y};
+    interactables.emplace_back(std::make_unique<Coal>(vec3));
   
     Vector2 vec4{ 54 * 32, 91 * 32 };
     /* TODO Add Statue and Schilder after receiving dialogue files
@@ -71,12 +72,12 @@ NeutralArea::NeutralArea(){
         break;
     }
 
-    textureForeground = LoadTexture("assets/graphics/backgrounds/background1.png");
-    textureMiddleground = LoadTexture("assets/graphics/backgrounds/background2.png");
+    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/background1.png");
+    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/background2.png");
     textureBackground = LoadTexture("assets/graphics/backgrounds/background3.png");
 
-    foregroundPosition = {playerStart};
-    middlegroundPosition = {playerStart};
+    foregroundBottomPosition = {playerStart};
+    foregroundSidePosition = {playerStart};
     backgroundPosition = { playerStart};
 }
 

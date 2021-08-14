@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../Core/EState.h"
+#include "../HeartObject.h"
 
 class StunnedState : public EState {
 public:
@@ -18,4 +19,6 @@ private:
     int stunnedOffset = 0;
 
     int spiderBotRotation = 0;
+
+    std::unique_ptr<HeartObject> heart;
 };

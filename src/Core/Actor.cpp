@@ -248,7 +248,7 @@ void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 		tileRec.y = collTile.y;
 
 		//player coll ground
-		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 1 };
+		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 0.5 };
 
 		if (CheckCollisionRecs(tileRec, playerFeet)) {
 			SetGrounded(true);
@@ -271,7 +271,7 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.y = collTile.y;
 
 		//player coll left
-		Rectangle playerLeftSide = { newPos.x - 1, newPos.y + 6, 1, 20 };
+		Rectangle playerLeftSide = { newPos.x - 0.5, newPos.y + 6, 0.5, 20 };
 
 		if (CheckCollisionRecs(tileRec, playerLeftSide)) {
 			SetWallCollisionLeft(true);
@@ -296,7 +296,7 @@ void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.y = collTile.y;
 
 		//player coll right
-		Rectangle playerRightSide = { newPos.x + 32, newPos.y + 6, 1, 20 };
+		Rectangle playerRightSide = { newPos.x + 32, newPos.y + 6, 0.5, 20 };
 
 		if (CheckCollisionRecs(tileRec, playerRightSide)) {
 			SetWallCollisionRight(true);
@@ -321,7 +321,7 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.y = collTile.y;
 
 		//player coll head
-		Rectangle playerUpperSide = { newPos.x , newPos.y - 1, 32, 1 };
+		Rectangle playerUpperSide = { newPos.x , newPos.y - 0.5, 32, 0.5 };
 
 		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
 			SetHeadCollision(true);

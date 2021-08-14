@@ -49,6 +49,9 @@ StunnedState::StunnedState(Enemy& enemy) : EState(enemy)
 	case EnemyTypes::SpringHog:
 		activeFrame = { 0,32 * 3, (float)32 * enemy.GetDirection(), 32 };
 		break;
+	case EnemyTypes::Saugi:
+		heart = std::make_unique<HeartObject>(enemy.GetPosition(), HeartState::Bad, 2);
+		break;
 	default:
 		break;
 	}
@@ -69,12 +72,14 @@ std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::Saugi:
+		heart->Update();
+		heart->UpdatePos(enemy.GetPosition());
 		stunnedFrameCounter++;
 		if (stunnedFrameCounter % 16) {
 			if (stunnedOffset == 0) stunnedOffset = 2;
 			else if (stunnedOffset == 2) stunnedOffset = 0;
 		}
-		if (stunnedFrameCounter >= 60) {
+		if (stunnedFrameCounter >= 120) {
 			stunnedOffset = 0;
 			return std::make_shared<RoamingState>(enemy);
 		}
@@ -137,5 +142,9 @@ void StunnedState::Draw(Enemy& enemy) {
 	}
 	else {
 		DrawTextureRec(enemy.GetTexture(), activeFrame, { enemy.GetPosition().x + stunnedOffset, enemy.GetPosition().y }, WHITE);
+	}
+
+	if (enemy.GetEnemyType() == EnemyTypes::Saugi) {
+		heart->Draw();
 	}
 }

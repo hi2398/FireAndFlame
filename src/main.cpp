@@ -12,13 +12,15 @@
 #include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
-#include "Scenes/AreaThree.h"
+#include "Scenes/AreaOne.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
 std::shared_ptr<PlayerController> playerController;
 std::shared_ptr<HUD> hud;
 std::shared_ptr<SceneManager> sceneManager;
+
+
 int main() {
 if  constexpr(DEBUG_BUILD){
     std::cout << "\n=============================\n";
@@ -42,7 +44,7 @@ if  constexpr(DEBUG_BUILD){
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<AreaThree>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
 
 
 #ifdef GAME_START_FULLSCREEN
