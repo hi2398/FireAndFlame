@@ -21,7 +21,7 @@ std::shared_ptr<EState> MBDecisionState::Update(Enemy &actor) {
     }
 
 
-    //if (delay==0) return DecideByChance(actor);
+    if (delay==0) return DecideByChance(actor);
     else return shared_from_this();
 }
 
@@ -31,15 +31,9 @@ void MBDecisionState::Draw(Enemy &actor) {
 }
 
 std::shared_ptr<EState> MBDecisionState::DecideByChance(Enemy& actor) {
-    int switcher = GetRandomValue(1, 3);
-    switch (switcher){
-        case 1:
-            return std::make_shared<MBRangedState>(actor);
-        case 2:
-            return  std::make_shared<MBMeleeAttackState>(actor);
-        case 3:
-            return std::make_shared<MBSummonState>(actor);
-    }
+    int switcher = GetRandomValue(1, 10);
+    if (switcher<=4) return std::make_shared<MBRangedState>(actor);
+    if (switcher<=8) return std::make_shared<MBMeleeAttackState>(actor);
+    else return std::make_shared<MBSummonState>(actor);
 
-    throw std::logic_error("couldnt make decision in MBDecisionState");
 }

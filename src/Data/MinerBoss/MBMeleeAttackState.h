@@ -13,8 +13,10 @@ protected:
 
 
 private:
-
-
+    int timer{30};
+    int meleeDamage{5};
+    float dmgRadius{16.f};
+    bool playerHit{false};
 
 };
 

@@ -271,7 +271,7 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.y = collTile.y;
 
 		//player coll left
-		Rectangle playerLeftSide = { newPos.x - 0.5, newPos.y + 6, 0.5, 20 };
+		Rectangle playerLeftSide = { static_cast<float>(newPos.x - 0.5), newPos.y + 6, 0.5, 20 };
 
 		if (CheckCollisionRecs(tileRec, playerLeftSide)) {
 			SetWallCollisionLeft(true);
@@ -321,7 +321,7 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.y = collTile.y;
 
 		//player coll head
-		Rectangle playerUpperSide = { newPos.x , newPos.y - 0.5, 32, 0.5 };
+		Rectangle playerUpperSide = { newPos.x , static_cast<float>(newPos.y - 0.5), 32, 0.5 };
 
 		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
 			SetHeadCollision(true);

@@ -15,7 +15,7 @@ protected:
 
 private:
     static std::shared_ptr<EState> DecideByChance(Enemy& actor);
-    int delay{30};
+    int delay{60};
 
 };
 

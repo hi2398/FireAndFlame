@@ -13,6 +13,7 @@ protected:
 
 
 private:
+    int timer{30};
 
 
 };
