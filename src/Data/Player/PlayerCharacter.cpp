@@ -54,6 +54,15 @@ void PlayerCharacter::Update() {
         }
     }
 
+	//dash cooldown
+	if (dashIsReady == false) {
+		dashCounter++;
+		if (dashCounter >= DASH_COOLDOWN) {
+			dashCounter = 0;
+			dashIsReady = true;
+		}
+	}
+
 	//world collision
 	CollisionLeft(sceneManager->GetTilemap(), GetType());
 	CollisionRight(sceneManager->GetTilemap(), GetType());
@@ -164,6 +173,16 @@ void PlayerCharacter::ChangeCameraControl()
 {
 	if (followCam == true) followCam = false;
 	else if (followCam == false) followCam = true;
+}
+
+bool PlayerCharacter::DashReady() const
+{
+	return dashIsReady;
+}
+
+void PlayerCharacter::SetDashIsReady(bool ready)
+{
+	this->dashIsReady = ready;
 }
 
 int PlayerCharacter::GetFrame() {
