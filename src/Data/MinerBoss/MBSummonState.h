@@ -18,7 +18,11 @@ private:
     int summonTimer{45};
     SummonSteps summonStep{SummonSteps::MoveToSpot};
     const Vector2 jumpStart{57*32, 90*32};
+    const Vector2 highSpot{58*32, 86*32+16};
     const Vector2 summonSpot{59*32, 87*32};
+
+    int jumpSubstep{0};
+    int returnSubstep{0};
 
     float lerpAlpha{0};
 

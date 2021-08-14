@@ -37,6 +37,7 @@ private:
     Vector2 moveTwoLeftEnd{59*32,53*32};
     Vector2 jumpHighestPoint{58*32+16,52*32+16};
     Vector2 jumpDown{57*32, 59*32};
+
 };
 
 

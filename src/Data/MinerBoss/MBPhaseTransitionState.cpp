@@ -23,6 +23,7 @@ std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &actor) {
             break;
     }
 
+
     if (done) {
         //bullshit bug fix pointer cast
         auto minerBossPt=dynamic_cast<MinerBoss*>(&actor);
@@ -40,6 +41,7 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
         enemy.SetPosition(jumpStart);
         jumpStartLoc=enemy.GetPosition();
     } else enemy.SetPosition({newX, enemy.GetPosition().y});
+
 
 }
 

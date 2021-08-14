@@ -13,7 +13,7 @@ public:
     void ReceiveDamage(int damage) override;
     ~MinerBoss() override = default;
 
-    [[nodiscard]] int GetMaxHealth() const;
+    [[nodiscard]] const int GetMaxHealth() const;
     [[nodiscard]] MinerBossPhase GetMinerBossPhase() const;
     void SetMinerBossPhase(MinerBossPhase bossPhase);
 
@@ -26,6 +26,12 @@ private:
     std::shared_ptr<EState> state;
     void OnDeath();
     MinerBossPhase bossPhase{MinerBossPhase::First};
+
+    //falling debris
+    Texture2D debrisTexture;
+    int debrisTimer{100};
+    const Vector2 debrisStartLoc{57*32, 80*32};
+    const Vector2 debrisEndLoc{57*32, 90*32};
 };
 
 

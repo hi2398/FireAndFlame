@@ -58,15 +58,29 @@ void MBSummonState::MoveToSpot(Enemy &enemy) {
 
 void MBSummonState::JumpUp(Enemy &enemy) {
 
-
-    if (Vector2Distance(enemy.GetPosition(), summonSpot)<=3.f){
-        enemy.SetPosition(summonSpot);
-        lerpAlpha=0.f;
-        summonStep=SummonSteps::Summon;
-    } else {
-        enemy.SetPosition(Vector2Lerp(jumpStart, summonSpot, lerpAlpha));
-        lerpAlpha+=0.05f;
+    switch (jumpSubstep) {
+        case 0:
+            if (Vector2Distance(enemy.GetPosition(), highSpot)<=3.f){
+                enemy.SetPosition(highSpot);
+                lerpAlpha=0.f;
+                ++jumpSubstep;
+            } else {
+                enemy.SetPosition(Vector2Lerp(jumpStart, highSpot, lerpAlpha));
+                lerpAlpha+=0.05f;
+            }
+            break;
+        case 1:
+            if (Vector2Distance(enemy.GetPosition(), summonSpot)<=3.f){
+                enemy.SetPosition(summonSpot);
+                lerpAlpha=0.f;
+                summonStep=SummonSteps::Summon;
+            } else {
+                enemy.SetPosition(Vector2Lerp(highSpot, summonSpot, lerpAlpha));
+                lerpAlpha+=0.2f;
+            }
+            break;
     }
+
 }
 
 void MBSummonState::Summon(Enemy &enemy) {
@@ -81,12 +95,28 @@ void MBSummonState::Summon(Enemy &enemy) {
 
 void MBSummonState::ReturnToGround(Enemy &enemy) {
     enemy.SetDirection(LEFT);
-    if (Vector2Distance(enemy.GetPosition(), jumpStart)<=3.f){
-        enemy.SetPosition(jumpStart);
-        lerpAlpha=0.f;
-        summonStep=SummonSteps::Done;
-    } else {
-        enemy.SetPosition(Vector2Lerp(summonSpot, jumpStart, lerpAlpha));
-        lerpAlpha+=0.05f;
+    switch (returnSubstep) {
+        case 0:
+            if (Vector2Distance(enemy.GetPosition(), highSpot)<=3.f){
+                enemy.SetPosition(highSpot);
+                lerpAlpha=0.f;
+                ++returnSubstep;
+            } else {
+                enemy.SetPosition(Vector2Lerp(summonSpot, highSpot, lerpAlpha));
+                lerpAlpha+=0.2f;
+            }
+            break;
+        case 1:
+            if (Vector2Distance(enemy.GetPosition(), jumpStart)<=3.f){
+                enemy.SetPosition(jumpStart);
+                lerpAlpha=0.f;
+                summonStep=SummonSteps::Done;
+            } else {
+                enemy.SetPosition(Vector2Lerp(highSpot, jumpStart, lerpAlpha));
+                lerpAlpha+=0.05f;
+            }
+
+            break;
     }
+
 }
