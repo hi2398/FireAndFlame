@@ -10,6 +10,7 @@ constexpr bool DEBUG_BUILD = true;
 constexpr bool DEBUG_PLAYER_STATES = false;
 constexpr bool DEBUG_ENEMY_STATES = true;
 constexpr bool DEBUG_PLAYER_POSITION = false;
+
 /*
  * Example Usage, also see main.cpp:
  * if  constexpr(DEBUG_BUILD){ //<-constexpr ensures compile-time evaluation

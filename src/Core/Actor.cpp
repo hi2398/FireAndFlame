@@ -279,13 +279,13 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes o
 
 		Rectangle LeftSide{};
 		//player coll left
+
 		if (objType == ObjectTypes::Player) {
 			LeftSide = {newPos.x + 7, newPos.y + 8, 1, 16 };
 		}
 		else {
 			LeftSide = { (float)(newPos.x - 0.5), newPos.y + 6, 0.5, 20 };
 		}
-		
 
 		if (CheckCollisionRecs(tileRec, LeftSide)) {
 			SetWallCollisionLeft(true);
@@ -354,13 +354,14 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes o
 
 		Rectangle UpperSide{};
 		//player coll head
+
 		if (objType == ObjectTypes::Player) {
 			UpperSide = { newPos.x + 8, newPos.y - 1, 16, 1 };
 		}
 		else {
 			UpperSide = { newPos.x , (float)(newPos.y - 0.5), 32, 0.5 };
 		}
-		
+
 
 		if (CheckCollisionRecs(tileRec, UpperSide)) {
 			SetHeadCollision(true);
