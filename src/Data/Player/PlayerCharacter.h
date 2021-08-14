@@ -29,14 +29,23 @@ public:
     void SetInvulnerable(bool invulnerable);
 
     bool disablePlayerMovement = false;
-    void ChangePlayerMovement(bool playerMovement);
+    void BlockPlayerControls(bool playerMovement);
     
     void SetPlayerDecreasingHealth(bool isDecreasing){
         isHealthDecreasing = isDecreasing;
     }
 
+    bool ConrolsDisabled() const;
+
+    void ChangeCameraControl();
+
+    bool DashReady() const;
+    void SetDashIsReady(bool ready);
+
 	//2Dcam
 	Camera2D camera = { 0 };
+    bool followCam{ true };
+    
     //cam hitbox
     Rectangle visibleScreen = {};
 
@@ -70,14 +79,20 @@ private:
     static constexpr int max_health{100};
     int healthTimer{}; //decrease
     static constexpr int HEALTH_INTERVAL{30};
+    static constexpr int DASH_COOLDOWN{ 60 };
     bool invulnerable{ false };
     bool isHealthDecreasing = true;
     int invulnerableCounter = 0;
+    bool controlsBlocked = false;
+    bool dashIsReady{ true };
+    int dashCounter = 0;
 
     int playerFrameCounter = 0;
     int currentFrame = 0;
 
     bool invulnerableVisualized{ false };
+
+   
 
     //attack
     ACTION nextAction{ACTION::NONE};

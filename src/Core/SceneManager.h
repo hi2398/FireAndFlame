@@ -33,6 +33,8 @@ public:
     void SaveGame(std::string saveFolder, int slot);
     void LoadGame(std::string saveFolder, int slot);
 
+    void ScreenShake(int durationInSeconds);
+
 protected:
 
 private:
@@ -40,6 +42,7 @@ private:
     std::shared_ptr<Scene> activeScene;
     std::shared_ptr<Scene> nextScene;
     std::shared_ptr<BackgroundManager> background = std::make_shared<BackgroundManager>();
+
 };
 
 

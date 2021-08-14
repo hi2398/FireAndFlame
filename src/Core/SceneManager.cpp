@@ -85,6 +85,11 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
     saveFile.close();
 }
 
+void SceneManager::ScreenShake(int durationInSeconds)
+{
+    activeScene->ActivateScreenShake(durationInSeconds);
+}
+
 void SceneManager::Update(Vector2 virtualMousePosition) {
     activeScene = nextScene;
     this->virtualMousePosition = virtualMousePosition;

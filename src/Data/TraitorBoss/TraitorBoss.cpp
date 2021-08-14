@@ -3,6 +3,7 @@
 #include "TraitorBoss.h"
 #include "TBBeforeFightState.h"
 #include "TBIdleState.h"
+#include "TBAfterFightState.h"
 #include "../../Scenes/TraitorBossScene.h"
 
 
@@ -12,8 +13,10 @@ TraitorBoss::TraitorBoss(Vector2 location) : Enemy(EnemyTypes::Boss)
 	health = MAX_HEALTH;
 	movementSpeed = 3.0f;
 	SetPosition(location);
+	SetDirection(LEFT);
+	gravityMultiplier = 2.0f;
 
-	activeState = std::make_shared<TBIdleState>(*this);
+	activeState = std::make_shared<TBBeforeFightState>(*this);
 	texture = LoadTexture("assets/Bosses/TraitorBoss/TraitorUpperBody.png");
 	texture2 = LoadTexture("assets/Bosses/TraitorBoss/TraitorLegs.png");
 	texture3 = LoadTexture("assets/Bosses/TraitorBoss/AttackSprites.png");
@@ -23,21 +26,41 @@ void TraitorBoss::Update()
 {
 	activeState = activeState->Update(*this);
 
-	if (actionCounter == 2) cooldown--;
-	if (cooldown == 0) actionCounter = 0;
+	if (actionCounter >= 2) cooldown--;
+	if (cooldown == 0) {
+		actionCounter = 0;
+		cooldown = 240;
+	}
+
 	hud->SetBossEnemyHealth(health);
-	if (health < MAX_HEALTH) isFighting = true;
-	if (isFighting) {
-		//decrease enemy health
-		if (health > 0) {
-			healthtimer++;
-			if (healthtimer >= HEALTH_INTERVAL) {
-				health--;
-				healthtimer = 0;
-			}
+	if (health < MAX_HEALTH && !isFighting) fightStarted = true;
+	if (fightStarted || isFighting) {
+		isFighting = true;
+		fightStarted = false;
+		if (IsGrounded()) {
+			SetJumpCommand(false);
+			SetJumpSpeed(5.0f);
+			SetFallingSpeed(0.0f);
 		}
-		else OnDeath();
+		else if (!GetJumpCommand() && !IsGrounded()) {
+			position.y += GetFallingSpeed();
+			SetFallingSpeed(GetFallingSpeed() + 0.1 * GetGravityMultiplier());
+		}
 		UpdateCollider(0, 0, 32, 32);
+	}
+
+	//decrease enemy health
+	if (isFighting && health > 0) {
+		healthtimer++;
+		if (healthtimer >= HEALTH_INTERVAL) {
+			health--;
+			healthtimer = 0;
+		}
+	}
+	else {
+		UpdateCollider(0,0,0,0); //erase hitbox after fight
+		isFighting = false;
+		OnDeath();
 	}
 
 	if (invulnerable) {
@@ -56,10 +79,10 @@ void TraitorBoss::Update()
 		}
 	}
 
-	CollisionGround(sceneManager->GetTilemap());
-	CollisionHead(sceneManager->GetTilemap());
-	CollisionLeft(sceneManager->GetTilemap());
-	CollisionRight(sceneManager->GetTilemap());
+	CollisionGround(sceneManager->GetTilemap(), GetType());
+	CollisionHead(sceneManager->GetTilemap(), GetType());
+	CollisionLeft(sceneManager->GetTilemap(), GetType());
+	CollisionRight(sceneManager->GetTilemap(), GetType());
 
 	
 }
@@ -76,5 +99,5 @@ void TraitorBoss::ReceiveDamage(int damage)
 
 void TraitorBoss::OnDeath()
 {
-	markedDestroy = true;
+	playerCharacter->SetHealth(100);
 }

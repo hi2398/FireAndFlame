@@ -32,6 +32,7 @@ std::shared_ptr<State> FallingSubState::Update(Actor& player) {
 			player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
 		}
 		if (player.GetWallCollisionLeft()) {
+			activeFrame = { 0,32 * 1, -32, 32 };
 			return std::make_shared<WallSlideSubState>(player);
 		}
 
@@ -45,6 +46,7 @@ std::shared_ptr<State> FallingSubState::Update(Actor& player) {
 			player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
 		}
 		if (player.GetWallCollisionRight()) {
+			activeFrame = { 0,32 * 1, 32, 32 };
 			return std::make_shared<WallSlideSubState>(player);
 		}
 

@@ -23,4 +23,7 @@ private:
     Vector2 door1[2];
     Vector2 door2[2];
     bool doorActive{ false };
+
+    Sound doorSFX;
+
 };

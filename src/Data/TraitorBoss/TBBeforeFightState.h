@@ -11,5 +11,7 @@ public:
 protected:
 
 private:
+	Texture2D pseudoTexture{};
 
+	int textCounter = 0;
 };

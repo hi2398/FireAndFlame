@@ -45,10 +45,10 @@ void SpringHog::Update()
 	
 
 
-	CollisionLeft(sceneManager->GetTilemap());
-	CollisionRight(sceneManager->GetTilemap());
-	CollisionGround(sceneManager->GetTilemap());
-	CollisionHead(sceneManager->GetTilemap());
+	CollisionLeft(sceneManager->GetTilemap(), GetType());
+	CollisionRight(sceneManager->GetTilemap(), GetType());
+	CollisionGround(sceneManager->GetTilemap(), GetType());
+	CollisionHead(sceneManager->GetTilemap(), GetType());
 
 	if (IsGrounded()) SetJumpCommand(false), SetJumpSpeed(3.0f);
 	if (GetHeadCollision()) SetJumpSpeed(0.0f);

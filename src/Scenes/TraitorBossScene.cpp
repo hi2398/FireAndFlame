@@ -26,18 +26,23 @@ TraitorBossScene::TraitorBossScene() {
     interactables.emplace_back(std::make_unique<Coal>(tmp2));
     interactables.emplace_back(std::make_unique<Coal>(tmp3));
 
+    doorSFX = LoadSound("assets/audio/sfx/Shutting_Doors.wav");
 }
 
 void TraitorBossScene::Update() {
     Scene::Update();
     if (bossActivated && !bossDefeated)CheckBossDeath();
 
-    if (playerCharacter->GetPosition().x >= 51 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !bossActivated && !bossDefeated) {
-        tilemap->AddCollisionTile({door1[0]});
-        tilemap->AddCollisionTile({ door1[1] });
-        tilemap->AddCollisionTile({ door2[0] });
-        tilemap->AddCollisionTile({ door2[1] });
+    if (playerCharacter->GetPosition().x >= 50 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !doorActive) {
+        sceneManager->ScreenShake(20);
+        PlaySound(doorSFX);
         doorActive = true;
+		tilemap->AddCollisionTile({ door1[0] });
+		tilemap->AddCollisionTile({ door1[1] });
+		tilemap->AddCollisionTile({ door2[0] });
+		tilemap->AddCollisionTile({ door2[1] });
+    }
+    if (playerCharacter->GetPosition().x >= 56 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !bossActivated && !bossDefeated) {
         bossActivated = true;
         enemies.emplace_back(std::make_unique<TraitorBoss>(bossSpawn));
     }
@@ -46,7 +51,7 @@ void TraitorBossScene::Update() {
 void TraitorBossScene::Draw() {
     Scene::Draw();
 
-    if (doorActive) {
+    if (doorActive && !bossDefeated) {
 		DrawRectangle(door1[0].x, door1[0].y, 32, 64, RED);
         DrawRectangle(door2[0].x, door2[0].y, 32, 64, RED);
     }
@@ -61,11 +66,11 @@ void TraitorBossScene::CheckBossDeath()
             return;
         }
     }
+    sceneManager->ScreenShake(20);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     bossDefeated = true;
-    doorActive = false;
     return;
 }

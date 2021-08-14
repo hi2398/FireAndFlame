@@ -6,9 +6,10 @@ void DialogueManager::UpdateDialogue(std::string filePath) {
         nextSent="-";
         dialogueActive=false;
         playerCharacter->SetPlayerDecreasingHealth(true);
-        playerCharacter->ChangePlayerMovement(false);
+        playerCharacter->BlockPlayerControls(false);
     }else{
-        playerCharacter->ChangePlayerMovement(true);
+        playerCharacter->BlockPlayerControls(true);
+        playerCharacter->SetIsDashing(false); //so player cant open dialogue and dash away
         playerCharacter->SetPlayerDecreasingHealth(false);
         if (sentences.empty()) {
             std::ifstream dialogueFileTemp(filePath);

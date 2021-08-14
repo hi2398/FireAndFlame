@@ -49,17 +49,19 @@ Tutorial::Tutorial() {
     textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
     textureForegroundSide = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
     textureBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+    textureUpperBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
 
-    foregroundBottomPosition = { 0, - 90 };
-    foregroundSidePosition = { 0, -90 };
-    backgroundPosition = { 0,0 };
+    foregroundPos = { 0, - 90 };
+    backgroundPos = { 0,0 };
     
     //fill background loop vector
     backgroundLoopX = 8;
     backgroundLoopY = 16;
+    backgroundException = 0;
 
     foregroundLoopX = 4;
     foregroundLoopY = 8;
+    foregroundException = 7;
 }
 
 void Tutorial::Update() {

@@ -31,10 +31,10 @@ void Saugi::Update()
 
 	if (!IsGrounded()) position.y += 2.0f;
 
-	CollisionLeft(sceneManager->GetTilemap());
-	CollisionRight(sceneManager->GetTilemap());
-	CollisionGround(sceneManager->GetTilemap());
-	CollisionHead(sceneManager->GetTilemap());
+	CollisionLeft(sceneManager->GetTilemap(), GetType());
+	CollisionRight(sceneManager->GetTilemap(), GetType());
+	CollisionGround(sceneManager->GetTilemap(), GetType());
+	CollisionHead(sceneManager->GetTilemap(), GetType());
 }
 
 void Saugi::Draw()

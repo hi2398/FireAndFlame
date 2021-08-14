@@ -74,13 +74,22 @@ NeutralArea::NeutralArea(){
         break;
     }
 
-    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/background1.png");
-    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/background2.png");
-    textureBackground = LoadTexture("assets/graphics/backgrounds/background3.png");
+    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");
+    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/NeutralArea/Upper_Foreground.png");
+    textureBackground = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
+    textureUpperBackground = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
 
-    foregroundBottomPosition = {playerStart};
-    foregroundSidePosition = {playerStart};
-    backgroundPosition = { playerStart};
+    foregroundPos = {0,0};
+    backgroundPos = { 0,0};
+
+    //fill background loop vector
+    backgroundLoopX = 12;
+    backgroundLoopY = 20;
+    backgroundException = 0;
+
+    foregroundLoopX = 6;
+    foregroundLoopY = 10;
+    foregroundException = 7;
 }
 
 

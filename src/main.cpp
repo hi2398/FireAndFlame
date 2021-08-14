@@ -13,6 +13,9 @@
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
 #include "Scenes/AreaThree.h"
+#include "Scenes/MinerBossScene.h"
+#include "Scenes/AreaOne.h"
+#include "Scenes/TraitorBossScene.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -39,18 +42,23 @@ if  constexpr(DEBUG_BUILD){
     RenderTexture2D target = LoadRenderTexture(Game::ScreenWidth, Game::ScreenHeight);
     // Texture scale filter to use
     SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
+    //Init Audio
+    InitAudioDevice();
+
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
 
+
 	sceneManager = std::make_shared<SceneManager>(std::make_unique<AreaThree>());
+
 
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
-    //test branch
+    
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -91,7 +99,7 @@ if  constexpr(DEBUG_BUILD){
     } // Main game loop end
 
     // De-Initialization here...
-
+    CloseAudioDevice();
     // Unload render texture
     UnloadRenderTexture(target);
 
