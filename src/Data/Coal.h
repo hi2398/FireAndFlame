@@ -23,7 +23,5 @@ private:
 	bool isGrounded = false;
 	float fallSpeed = 1.5f;
 	float gravityMultiplier = 1.5f;
-
-
 };
 

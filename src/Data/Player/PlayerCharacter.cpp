@@ -34,7 +34,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 void PlayerCharacter::Update() {
 	visibleScreen = { camera.target.x - (camera.offset.x / camera.zoom), camera.target.y - (camera.offset.y / camera.zoom), camera.offset.x * (2/camera.zoom), camera.offset.y * (2/camera.zoom)};
 
-	if(!disablePlayerMovement){movementState = movementState->Update(*this);}
+	{movementState = movementState->Update(*this); }
 
 	actionState = actionState->Update(*this);
 
@@ -55,10 +55,10 @@ void PlayerCharacter::Update() {
     }
 
 	//world collision
-	CollisionLeft(sceneManager->GetTilemap());
-	CollisionRight(sceneManager->GetTilemap());
-	CollisionGround(sceneManager->GetTilemap());
-	CollisionHead(sceneManager->GetTilemap());
+	CollisionLeft(sceneManager->GetTilemap(), GetType());
+	CollisionRight(sceneManager->GetTilemap(), GetType());
+	CollisionGround(sceneManager->GetTilemap(), GetType());
+	CollisionHead(sceneManager->GetTilemap(), GetType());
 
 	//health cap
 	if (health >= 100) health = 100;
@@ -84,7 +84,7 @@ void PlayerCharacter::Update() {
 	playerHitbox = { (float)position.x + 6, (float)position.y, playerWidth, playerHeight };
 
 	//camera update
-	camera.target = { position.x + 20.0f, position.y + 20.0f };
+	if (followCam) camera.target = { position.x + 20.0f, position.y + 20.0f };
 
 	for (const auto& interactable : sceneManager->GetInteractables()) {
 		if (CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())) {
@@ -99,6 +99,8 @@ void PlayerCharacter::Update() {
 	}
 
 	nextMovement = MOVEMENT::IDLE;
+
+	if constexpr (DEBUG_PLAYER_POSITION) 	std::cout << position.x / 32 << "\t" << position.y / 32 << "\n";
 }
 
 void PlayerCharacter::Draw() {
@@ -149,8 +151,19 @@ const int PlayerCharacter::GetMaxHealth() {
 	return max_health;
 }
 
-void PlayerCharacter::ChangePlayerMovement(bool playerMovement) {
-    disablePlayerMovement = playerMovement;
+void PlayerCharacter::BlockPlayerControls(bool blockThis) {
+	controlsBlocked = blockThis;
+}
+
+bool PlayerCharacter::ConrolsDisabled() const
+{
+	return controlsBlocked;
+}
+
+void PlayerCharacter::ChangeCameraControl()
+{
+	if (followCam == true) followCam = false;
+	else if (followCam == false) followCam = true;
 }
 
 int PlayerCharacter::GetFrame() {

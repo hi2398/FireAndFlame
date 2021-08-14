@@ -12,4 +12,5 @@ protected:
 
 private:
 	Vector2 playerReference{};
+	int approachingCounter = 0;
 };

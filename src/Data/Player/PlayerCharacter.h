@@ -29,14 +29,20 @@ public:
     void SetInvulnerable(bool invulnerable);
 
     bool disablePlayerMovement = false;
-    void ChangePlayerMovement(bool playerMovement);
+    void BlockPlayerControls(bool playerMovement);
     
     void SetPlayerDecreasingHealth(bool isDecreasing){
         isHealthDecreasing = isDecreasing;
     }
 
+    bool ConrolsDisabled() const;
+
+    void ChangeCameraControl();
+
 	//2Dcam
 	Camera2D camera = { 0 };
+    bool followCam{ true };
+    
     //cam hitbox
     Rectangle visibleScreen = {};
 
@@ -73,11 +79,14 @@ private:
     bool invulnerable{ false };
     bool isHealthDecreasing = true;
     int invulnerableCounter = 0;
+    bool controlsBlocked = false;
 
     int playerFrameCounter = 0;
     int currentFrame = 0;
 
     bool invulnerableVisualized{ false };
+
+   
 
     //attack
     ACTION nextAction{ACTION::NONE};

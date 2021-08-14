@@ -15,6 +15,23 @@ std::shared_ptr<State> WallJumpingSubState::Update(Actor& player) {
 		std::cout << "New State: Wall Jump\n";
 	}
 
+	switch (player.GetNextMovement())
+	{
+	case MOVEMENT::DASH_LEFT :
+		stateFrameCounter++;
+		activeFrame = { (float)-32 * stateFrameCounter, 32 * 2, -32, 32 };
+		player.Dash(LEFT);
+		return std::make_shared<FallingSubState>(player);
+		break;
+	case MOVEMENT::DASH_RIGHT:
+		player.Dash(RIGHT);
+		stateFrameCounter++;
+		activeFrame = { (float)32 * stateFrameCounter, 32 * 2, 32, 32 };
+		return std::make_shared<FallingSubState>(player);
+		break;
+	default:
+		break;
+	}
 	
 	player.SetWallCounter(0);
 

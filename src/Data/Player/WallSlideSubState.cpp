@@ -74,7 +74,7 @@ std::shared_ptr<State> WallSlideSubState::Update(Actor& player) {
 void WallSlideSubState::Draw(Actor& player) {
 	DrawTextureRec(playerCharacter->upperBody,
 		activeFrame,
-		player.GetPosition(),
+		{player.GetPosition().x - 6 * player.GetDirection(), player.GetPosition().y},
 		WHITE);
 	
 }

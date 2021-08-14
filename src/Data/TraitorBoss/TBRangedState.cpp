@@ -1,5 +1,6 @@
 #include "TBRangedState.h"
 #include "TBIdleState.h"
+#include "TBAfterFightState.h"
 #include "../Player/Fireball.h"
 #include "../../Global.h"
 #include "raymath.h"
@@ -26,6 +27,7 @@ TBRangedState::TBRangedState(Enemy& enemy) : EState(enemy)
 std::shared_ptr<EState> TBRangedState::Update(Enemy& enemy)
 {
 	if constexpr (DEBUG_ENEMY_STATES) std::cout << "TBRangedState\n";
+	if (enemy.GetHealth() <= 0 && enemy.IsGrounded()) return std::make_shared<TBAfterFightState>(enemy);
 
 	stateFrameCounter++;
 	stateExeCounter++;

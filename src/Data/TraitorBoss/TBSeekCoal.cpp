@@ -1,5 +1,6 @@
 #include "TBSeekCoal.h"
 #include "TBIdleState.h"
+#include "TBAfterFightState.h"
 #include "../../Global.h"
 #include "raymath.h"
 
@@ -12,7 +13,7 @@ TBSeekCoal::TBSeekCoal(Enemy& enemy) : EState(enemy)
 std::shared_ptr<EState> TBSeekCoal::Update(Enemy& enemy)
 {
 	if constexpr (DEBUG_ENEMY_STATES) std::cout << "TBSeekCoal\n";
-
+	if (enemy.GetHealth() <= 0 && enemy.IsGrounded()) return std::make_shared<TBAfterFightState>(enemy);
 	CheckForCoal(enemy);
 	if (noCoalFound || enemy.GetHealth() >= 35) return std::make_shared<TBIdleState>(enemy);
 
@@ -41,10 +42,10 @@ void TBSeekCoal::CheckForCoal(Enemy& enemy) {
 		if (interactable->GetInteractableType() == InteractableType::Coal) {
 			if (CheckCollisionRecs(interactable->GetInteractionZone(), enemySight)) {
 				Vector2 coalReference = Vector2Subtract(enemy.GetPosition(), interactable->GetPosition());
-				if (coalReference.x < 0 && coalReference.y == 0) {
+				if (coalReference.x < 0) {
 					enemy.SetDirection(RIGHT);
 				}
-				else if (coalReference.x > 0 && coalReference.y == 0) {
+				else if (coalReference.x > 0) {
 					enemy.SetDirection(LEFT);
 				}
 				return;
