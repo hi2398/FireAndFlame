@@ -117,10 +117,10 @@ protected:
 	//Movement
 	MOVEMENT nextMovement{ MOVEMENT::IDLE };
 
-    void CollisionGround(const std::unique_ptr<Tilemap>& tilemap);
-    void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap);
-    void CollisionRight(const std::unique_ptr<Tilemap>& tilemap);
-    void CollisionHead(const std::unique_ptr<Tilemap>& tilemap);
+    void CollisionGround(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType);
+    void CollisionLeft(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType);
+    void CollisionRight(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType);
+    void CollisionHead(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType);
 
 
 private:

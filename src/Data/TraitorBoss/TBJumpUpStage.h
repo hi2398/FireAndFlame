@@ -13,4 +13,6 @@ protected:
 
 private:
 	Vector2 reference{};
+	Vector2 playerReference{};
+	bool jumpSecondTime{ false };
 };

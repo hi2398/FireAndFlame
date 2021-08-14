@@ -10,6 +10,7 @@
 class Scene {
 public:
     virtual void Update();
+    void UpdateScreenShake();
     virtual void Draw();
     void DrawBackground() const;
     virtual ~Scene() = default;
@@ -22,10 +23,11 @@ public:
 
     void AddEnemy(std::unique_ptr<Enemy> enemy);
     void AddInteractable(std::unique_ptr<Interactable> interactable);
-    void DeleteLastDialogueObj();
 
     void RemoveMarkedDelete();
     void RemoveInteractables();
+
+    void ActivateScreenShake(int durationInSeconds);
 
 protected:
     DialogueManager dialogueMananger;
@@ -36,20 +38,29 @@ protected:
     Texture2D textureForegroundBottom;
     Texture2D textureForegroundSide;
     Texture2D textureBackground;
+    Texture2D textureUpperBackground;
 
     int skipFrame = 0;
 
     Vector2 tmp1 = {};
     Vector2 tmp2 = {};
 
-    Vector2 foregroundBottomPosition{};
-    Vector2 foregroundSidePosition{};
-    Vector2 backgroundPosition{};
+    Vector2 foregroundPos{};
+    Vector2 backgroundPos{};
+
+    int foregroundException{};
+    int backgroundException{};
 
     int backgroundLoopX = 0;
     int backgroundLoopY = 0;
     int foregroundLoopX = 0;
     int foregroundLoopY = 0;
+
+    bool screenShakeActivated{ false };
+    int duration = -1;
+    int shakeFrameCounter = 0;
+    float xOffset = 0.0;
+
 private:
 };
 

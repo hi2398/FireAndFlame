@@ -55,10 +55,10 @@ void PlayerCharacter::Update() {
     }
 
 	//world collision
-	CollisionLeft(sceneManager->GetTilemap());
-	CollisionRight(sceneManager->GetTilemap());
-	CollisionGround(sceneManager->GetTilemap());
-	CollisionHead(sceneManager->GetTilemap());
+	CollisionLeft(sceneManager->GetTilemap(), GetType());
+	CollisionRight(sceneManager->GetTilemap(), GetType());
+	CollisionGround(sceneManager->GetTilemap(), GetType());
+	CollisionHead(sceneManager->GetTilemap(), GetType());
 
 	//health cap
 	if (health >= 100) health = 100;
@@ -84,7 +84,7 @@ void PlayerCharacter::Update() {
 	playerHitbox = { (float)position.x + 6, (float)position.y, playerWidth, playerHeight };
 
 	//camera update
-	camera.target = { position.x + 20.0f, position.y + 20.0f };
+	if (followCam) camera.target = { position.x + 20.0f, position.y + 20.0f };
 
 	for (const auto& interactable : sceneManager->GetInteractables()) {
 		if (CheckCollisionRecs(playerHitbox, interactable->GetInteractionZone())) {
@@ -151,13 +151,19 @@ const int PlayerCharacter::GetMaxHealth() {
 	return max_health;
 }
 
-void PlayerCharacter::ChangePlayerMovement(bool blockThis) {
+void PlayerCharacter::BlockPlayerControls(bool blockThis) {
 	controlsBlocked = blockThis;
 }
 
 bool PlayerCharacter::ConrolsDisabled() const
 {
 	return controlsBlocked;
+}
+
+void PlayerCharacter::ChangeCameraControl()
+{
+	if (followCam == true) followCam = false;
+	else if (followCam == false) followCam = true;
 }
 
 int PlayerCharacter::GetFrame() {

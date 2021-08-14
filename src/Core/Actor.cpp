@@ -235,7 +235,7 @@ void Actor::SetDirection(Direction direction) {
 	this->direction = direction;
 }
 
-void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
+void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType)
 {
 	//tile rectangles
 	Rectangle tileRec = { 0,0,32,32 };
@@ -247,10 +247,17 @@ void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 		tileRec.x = collTile.x;
 		tileRec.y = collTile.y;
 
+		Rectangle LowerSide{};
 		//player coll ground
-		Rectangle playerFeet = { newPos.x, newPos.y + 32, 32, 0.5 };
+		if (objType == ObjectTypes::Player) {
+			LowerSide = { newPos.x + 8, newPos.y + 32, 16, 1 };
+		}
+		else {
+			LowerSide = { newPos.x, newPos.y + 32, 32, 0.5 };
+		}
+		
 
-		if (CheckCollisionRecs(tileRec, playerFeet)) {
+		if (CheckCollisionRecs(tileRec, LowerSide)) {
 			SetGrounded(true);
 			SetPosition({ newPos.x, tileRec.y - 32.0f });
 			return;
@@ -259,7 +266,7 @@ void Actor::CollisionGround(const std::unique_ptr<Tilemap>& tilemap)
 	}
 }
 
-void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
+void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType) {
 	//tile rectangles
 	Rectangle tileRec = { 0,0,32,32 };
 
@@ -270,12 +277,24 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.x = collTile.x;
 		tileRec.y = collTile.y;
 
+		Rectangle LeftSide{};
 		//player coll left
-		Rectangle playerLeftSide = { newPos.x - 0.5, newPos.y + 6, 0.5, 20 };
+		if (objType == ObjectTypes::Player) {
+			LeftSide = {newPos.x + 7, newPos.y + 8, 1, 16 };
+		}
+		else {
+			LeftSide = { (float)(newPos.x - 0.5), newPos.y + 6, 0.5, 20 };
+		}
+		
 
-		if (CheckCollisionRecs(tileRec, playerLeftSide)) {
+		if (CheckCollisionRecs(tileRec, LeftSide)) {
 			SetWallCollisionLeft(true);
-			SetPosition({ tileRec.x + 32, newPos.y });
+			if (objType == ObjectTypes::Player) {
+				SetPosition({ tileRec.x + 24, newPos.y });
+			}
+			else {
+				SetPosition({ tileRec.x + 32, newPos.y });
+			}
 			return;
 		}
 		else {
@@ -284,7 +303,7 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap) {
 	}
 }
 
-void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
+void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType) {
 	//tile rectangles
 	Rectangle tileRec = { 0,0,32,32 };
 
@@ -295,12 +314,25 @@ void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.x = collTile.x;
 		tileRec.y = collTile.y;
 
+		Rectangle RightSide{};
 		//player coll right
-		Rectangle playerRightSide = { newPos.x + 32, newPos.y + 6, 0.5, 20 };
+		if (objType == ObjectTypes::Player) {
+			RightSide = { newPos.x + 24, newPos.y + 6, 1, 16 };
+		}
+		else {
+			RightSide = { newPos.x + 32, newPos.y + 6, 0.5, 20 };
+		}
+		
 
-		if (CheckCollisionRecs(tileRec, playerRightSide)) {
+		if (CheckCollisionRecs(tileRec, RightSide)) {
 			SetWallCollisionRight(true);
-			SetPosition({ tileRec.x - 32, newPos.y });
+			if (objType == ObjectTypes::Player) {
+				SetPosition({ tileRec.x - 24, newPos.y });
+			}
+			else {
+				SetPosition({ tileRec.x - 32, newPos.y });
+			}
+			
 			return;
 		}
 		else {
@@ -309,7 +341,7 @@ void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap) {
 	}
 }
 
-void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
+void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes objType) {
 	//tile rectangles
 	Rectangle tileRec = { 0,0,32,32 };
 
@@ -320,10 +352,17 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap) {
 		tileRec.x = collTile.x;
 		tileRec.y = collTile.y;
 
+		Rectangle UpperSide{};
 		//player coll head
-		Rectangle playerUpperSide = { newPos.x , newPos.y - 0.5, 32, 0.5 };
+		if (objType == ObjectTypes::Player) {
+			UpperSide = { newPos.x + 8, newPos.y - 1, 16, 1 };
+		}
+		else {
+			UpperSide = { newPos.x , (float)(newPos.y - 0.5), 32, 0.5 };
+		}
+		
 
-		if (CheckCollisionRecs(tileRec, playerUpperSide)) {
+		if (CheckCollisionRecs(tileRec, UpperSide)) {
 			SetHeadCollision(true);
 			SetJumpCommand(false);
 			SetPosition({ newPos.x, tileRec.y + 32 });

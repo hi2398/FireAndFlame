@@ -12,7 +12,6 @@ protected:
 
 private:
 	Texture2D pseudoTexture{};
-	std::string dialoguePath;
 
 	int textCounter = 0;
 };

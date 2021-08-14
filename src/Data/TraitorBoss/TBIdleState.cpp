@@ -2,8 +2,8 @@
 #include "TBRangedState.h"
 #include "TBSeekCoal.h"
 #include "TBMeleeState.h"
-#include "TBDashState.h"
 #include "TBApproachingState.h"
+#include "TBAfterFightState.h"
 #include "../../Global.h"
 #include <raymath.h>
 
@@ -17,14 +17,15 @@ TBIdleState::TBIdleState(Enemy& enemy) : EState(enemy)
 std::shared_ptr<EState> TBIdleState::Update(Enemy& enemy)
 {
 	if constexpr (DEBUG_ENEMY_STATES) std::cout << "TBIdleState\n";
+	if (enemy.GetHealth() <= 0 && enemy.IsGrounded()) return std::make_shared<TBAfterFightState>(enemy);
 
 	decisionCounter++;
-	if (decisionCounter >= 60 && enemy.IsGrounded()) {
+	if (decisionCounter >= 30  && enemy.IsGrounded()) {
 		CheckForCoal(enemy);
 		//seek coal when on low health
 		if (enemy.GetHealth() <= 30 && !noCoalFound) return std::make_shared<TBSeekCoal>(enemy);
 
-		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), enemy.GetPosition(), 5 * 32) && enemy.GetHealth() >= 40 && enemy.GetActionCounter() < 2) return std::make_shared<TBRangedState>(enemy); //check if player is far enough away
+		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), enemy.GetPosition(), 4 * 32) && enemy.GetHealth() >= 40 && enemy.GetActionCounter() < 2) return std::make_shared<TBRangedState>(enemy); //check if player is far enough away
 		else if (CheckCollisionPointCircle(playerCharacter->GetPosition(), enemy.GetPosition(), 1 * 32)) { // in melee range
 			return std::make_shared<TBMeleeState>(enemy);
 		}
