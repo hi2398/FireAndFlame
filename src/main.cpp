@@ -12,6 +12,8 @@
 #include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
+#include "Scenes/AreaThree.h"
+#include "Scenes/MinerBossScene.h"
 #include "Scenes/AreaOne.h"
 
 
@@ -44,7 +46,7 @@ if  constexpr(DEBUG_BUILD){
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>());
 
 
 #ifdef GAME_START_FULLSCREEN
