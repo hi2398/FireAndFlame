@@ -38,6 +38,9 @@ void SceneChangerObject::Interact(Actor &actor) {
         case SceneEnums::TraitorBoss :
             sceneManager->SetNextScene(std::make_unique<TraitorBossScene>());
             break;
+        case SceneEnums::AreaThree :
+            sceneManager->SetNextScene(std::make_unique<AreaThree>());
+            break;
     }
 }
 

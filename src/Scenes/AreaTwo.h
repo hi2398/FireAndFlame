@@ -15,7 +15,7 @@ public:
     void Draw() override;
     ~AreaTwo() override= default;
 private:
-    const Vector2 playerStart = {106*32,107*32};
+    const Vector2 playerStart = {115*32,114*32};
 protected:
 };
 
