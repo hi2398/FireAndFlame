@@ -13,7 +13,7 @@ public:
     void ReceiveDamage(int damage) override;
     ~MinerBoss() override = default;
 
-    [[nodiscard]] const int GetMaxHealth() const;
+    [[nodiscard]] int GetMaxHealth() const;
     [[nodiscard]] MinerBossPhase GetMinerBossPhase() const;
     void SetMinerBossPhase(MinerBossPhase bossPhase);
 
