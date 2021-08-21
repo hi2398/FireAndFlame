@@ -51,8 +51,8 @@ if  constexpr(DEBUG_BUILD){
 	hud = std::make_shared<HUD>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>());
 
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>());
 
 
 #ifdef GAME_START_FULLSCREEN
