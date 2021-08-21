@@ -55,6 +55,7 @@ void FinalBoss::Update() {
     sword->Update();
     if(CheckCollisionRecs(platformerSequenceCollider,playerCharacter->playerHitbox)&&!isPlatformSequenceActive){
         isPlatformSequenceActive = true;
+        sceneManager->ScreenShake(20);
         chasingBoss->MovePosition({chasingBossPositions[0].x,chasingBossPositions[0].y});
         sword->ChangeTarget({chasingBossPositions[0].x-16,chasingBossPositions[0].y});
     }
