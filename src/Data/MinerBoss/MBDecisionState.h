@@ -14,7 +14,7 @@ protected:
 
 
 private:
-    static std::shared_ptr<EState> DecideByChance(Enemy& actor);
+    static std::shared_ptr<EState> DecideByChance(Enemy& enemy);
     int delay{60};
 
 };

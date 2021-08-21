@@ -5,30 +5,33 @@
 #include "raymath.h"
 
 MBPhaseTransitionState::MBPhaseTransitionState(Enemy &enemy) : EState(enemy) {
+    //bullshit bug fix pointer cast
+    auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
+    minerBossPt->EnableDebris();
 
 }
 
-std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &actor) {
-    auto minerBoss=dynamic_cast<MinerBoss&>(actor);
+std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &enemy) {
+    auto minerBoss=dynamic_cast<MinerBoss&>(enemy);
     switch (currentStep) {
 
         case TransitionStep::MoveToStart:
-            MoveToStart(actor);
+            MoveToStart(enemy);
             break;
         case TransitionStep::Jump:
-            Jump(actor);
+            Jump(enemy);
             break;
         case TransitionStep::MoveToEnd:
-            MoveToEnd(actor);
+            MoveToEnd(enemy);
             break;
     }
 
 
     if (done) {
         //bullshit bug fix pointer cast
-        auto minerBossPt=dynamic_cast<MinerBoss*>(&actor);
+        auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
         minerBossPt->SetMinerBossPhase(MinerBossPhase::Second);
-        return std::make_shared<MBDecisionState>(actor);
+        return std::make_shared<MBDecisionState>(enemy);
     } else return shared_from_this();
 }
 
