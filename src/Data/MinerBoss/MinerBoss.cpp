@@ -3,6 +3,7 @@
 #include "../../Global.h"
 #include "../SceneChangerObject.h"
 #include "MBDecisionState.h"
+#include "raymath.h"
 
 MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     SetPosition(location);
@@ -27,10 +28,25 @@ void MinerBoss::Update() {
         invulnerable=false;
         invulnerableCounter=15;
     }
+
+
+    if (enableDebris){
+        if (debrisTimer>0){
+            --debrisTimer;
+            debrisDrawLoc=Vector2Lerp(debrisStartLoc, debrisEndLoc, 1.f-debrisTimer/100.f);
+
+            if (debrisTimer==0){
+                sceneManager->GetTilemap()->AddCollisionTile(debrisEndLoc);
+            }
+        }
+    }
 }
 
 void MinerBoss::Draw() {
     state->Draw(*this);
+    if (enableDebris){
+        DrawTextureV(debrisTexture, debrisDrawLoc, WHITE);
+    }
 }
 
 void MinerBoss::ReceiveDamage(int damage) {
@@ -59,4 +75,8 @@ MinerBossPhase MinerBoss::GetMinerBossPhase() const {
 
 void MinerBoss::SetMinerBossPhase(MinerBossPhase bossPhase) {
     this->bossPhase=bossPhase;
+}
+
+void MinerBoss::EnableDebris() {
+    enableDebris=true;
 }

@@ -51,7 +51,9 @@ if  constexpr(DEBUG_BUILD){
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
 
+
 	sceneManager = std::make_shared<SceneManager>(std::make_unique<TraitorBossScene>());
+
 
 
 #ifdef GAME_START_FULLSCREEN

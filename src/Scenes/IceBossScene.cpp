@@ -26,7 +26,7 @@ void IceBossScene::Update() {
         }
     }
 
-    if (bossActivated) {
+    if (bossActivated && !bossDefeated) {
         BossDeath(); //evaluates if boss is alive, auto cleanups if dead (removes blockades etc)
     }
 

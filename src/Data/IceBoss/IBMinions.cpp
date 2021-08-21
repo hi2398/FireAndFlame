@@ -3,21 +3,21 @@
 #include "IBSeek.h"
 #include "IceBoss.h"
 
-IBMinions::IBMinions() {
+IBMinions::IBMinions(Enemy& enemy) : EState(enemy) {
 
 }
 
-std::shared_ptr<State> IBMinions::Update(Actor &actor) {
+std::shared_ptr<EState> IBMinions::Update(Enemy &enemy) {
 
     std::cout << "IBMinions\n";
 
     //return to seek once phase is done
-    return std::make_shared<IBSeek>();
+    return std::make_shared<IBSeek>(enemy);
     //return self until all minions defeated
     return shared_from_this();
 }
 
-void IBMinions::Draw(Actor &actor) {
-    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
-    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
+void IBMinions::Draw(Enemy &enemy) {
+    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
+    iceBoss->DrawDirectional(iceBoss->GetPosition(), iceBoss->GetTexture());
 }
