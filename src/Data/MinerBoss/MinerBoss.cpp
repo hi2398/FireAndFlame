@@ -14,13 +14,13 @@ MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     hitbox.y = position.y;
     movementSpeed = 3.f;
 
-    /*state = std::make_unique<MBDecisionState>(*this);*/
+    state = std::make_unique<MBDecisionState>(*this);
 }
 
 void MinerBoss::Update() {
     hitbox.x=position.x;
     hitbox.y=position.y;
-    /*state=state->Update(*this);*/
+    state=state->Update(*this);
 
     --invulnerableCounter;
     if (invulnerableCounter<=0 && bossPhase!=MinerBossPhase::Transition) {
@@ -30,7 +30,7 @@ void MinerBoss::Update() {
 }
 
 void MinerBoss::Draw() {
-    /*state->Draw(*this);*/
+    state->Draw(*this);
 }
 
 void MinerBoss::ReceiveDamage(int damage) {

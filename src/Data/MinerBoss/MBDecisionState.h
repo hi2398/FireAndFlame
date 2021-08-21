@@ -1,11 +1,11 @@
 #pragma once
 
-#include <ostream>
+#include <iostream>
 #include "../../Core/EState.h"
 
 class MBDecisionState : public EState {
 public:
-    explicit MBDecisionState(Enemy &enemy);
+    MBDecisionState(Enemy &enemy);
     std::shared_ptr <EState> Update(Enemy &actor) override;
     void Draw(Enemy &actor) override;
     ~MBDecisionState() override = default;
