@@ -15,6 +15,7 @@
 #include "Scenes/AreaThree.h"
 #include "Scenes/MinerBossScene.h"
 #include "Scenes/AreaOne.h"
+#include "Scenes/AreaTwo.h"
 #include "Scenes/TraitorBossScene.h"
 
 
@@ -51,8 +52,8 @@ if  constexpr(DEBUG_BUILD){
 	hud = std::make_shared<HUD>();
 
 
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<TraitorBossScene>());
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>());
 
 
 #ifdef GAME_START_FULLSCREEN

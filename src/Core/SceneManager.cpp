@@ -85,9 +85,9 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
     saveFile.close();
 }
 
-void SceneManager::ScreenShake(int durationInSeconds)
+void SceneManager::ScreenShake(int durationInFrames)
 {
-    activeScene->ActivateScreenShake(durationInSeconds);
+    activeScene->ActivateScreenShake(durationInFrames);
 }
 
 void SceneManager::Update(Vector2 virtualMousePosition) {
@@ -130,12 +130,14 @@ void SceneManager::Draw() {
         interactable->Draw();
     }
     if (playerCharacter->active) playerCharacter->Draw();
+    activeScene->DrawForeground();
     EndMode2D();
 
     if (playerCharacter->active) hud->DrawHUD();
 
 
     activeScene->GetDialogueManager().DrawDialogue();
+
 
     //setting "last" values stay at the very end to prevent sequence errors
     playerCharacter->SetLastPosition(playerCharacter->GetPosition());
