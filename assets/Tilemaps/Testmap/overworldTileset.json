@@ -1,0 +1,15 @@
+{ "columns":48,
+ "image":"assets/Tilemaps/Testmap/overworldTileset.png",
+ "imageheight":640,
+ "imagewidth":1536,
+ "margin":0,
+ "name":"TilemapRG7",
+ "spacing":0,
+ "tilecount":960,
+ "tiledversion":"1.6.0",
+ "tileheight":32,
+ "tilewidth":32,
+ "transparentcolor":"#ff00ff",
+ "type":"tileset",
+ "version":"1.6"
+}
