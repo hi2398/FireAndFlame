@@ -13,7 +13,7 @@ FinalBoss::FinalBoss() {
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Placeholder_Tile_Atlas.json","assets/Tilemaps/Final_Boss_Tilemap.json");
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json","assets/Tilemaps/Final_Boss_Tilemap.json");
     Vector2 tempVec = {14*32,78*32};
 
     chasingBossPositions[0] = {19*32,70*32, 16,16};
@@ -55,6 +55,7 @@ void FinalBoss::Update() {
     sword->Update();
     if(CheckCollisionRecs(platformerSequenceCollider,playerCharacter->playerHitbox)&&!isPlatformSequenceActive){
         isPlatformSequenceActive = true;
+        sceneManager->ScreenShake(20);
         chasingBoss->MovePosition({chasingBossPositions[0].x,chasingBossPositions[0].y});
         sword->ChangeTarget({chasingBossPositions[0].x-16,chasingBossPositions[0].y});
     }

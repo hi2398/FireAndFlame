@@ -36,6 +36,6 @@ void DialogueManager::DrawDialogue() {
             fontSizeForDialogue = 23;
         }else fontSizeForDialogue = 30;
         DrawText(nextSentenceInQueue, 220, 535, fontSizeForDialogue, BLUE);
-        DrawText("PRESS F TO CONTINUE", 820, 610, 15, BLUE);
+        DrawText("PRESS E OR GAMEPAD Y TO CONTINUE", 800, 610, 15, BLUE);
     }
 }
