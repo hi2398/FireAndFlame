@@ -53,10 +53,11 @@ std::shared_ptr<EState> IBSeek::Update(Enemy &enemy) {
 
 void IBSeek::Draw(Enemy &enemy) {
     auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
-    iceBoss->DrawDirectional(iceBoss->GetPosition(), iceBoss->GetTexture());
+    iceBoss->DrawDirectional(iceBoss->GetPosition(), iceBoss->GetTexture(), texRec);
 }
 
 std::shared_ptr<EState> IBSeek::MeleeApproach(Enemy& enemy) {
+
     //to avoid weird chases, if player is above boss, decide new
     if (enemy.GetPosition().y-playerCharacter->GetPosition().y>10 && abs(enemy.GetPosition().x-playerCharacter->GetPosition().x) <64) {
         nextAction=NextSeekAction::Decide;
@@ -77,6 +78,7 @@ std::shared_ptr<EState> IBSeek::MeleeApproach(Enemy& enemy) {
 }
 
 std::shared_ptr<EState> IBSeek::RangedMove(Enemy &enemy) {
+    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
 
     //if the jump is finished, execute the ranged attack
     if (rangedTimer==0) return std::make_shared<IBRanged>(enemy.GetPosition(), enemy);
@@ -88,12 +90,12 @@ std::shared_ptr<EState> IBSeek::RangedMove(Enemy &enemy) {
     } else {
         //if not, check which direction to walk in
         CalcWalkingDirection(enemy, jumpStart);
-        float nextPosX = enemy.GetPosition().x+enemy.GetDirection()*IceBoss::SpeedMultiplier()*IceBoss::GetMovementSpeed();
+        float nextPosX = enemy.GetPosition().x + enemy.GetDirection() * IceBoss::SpeedMultiplier() * IceBoss::GetMovementSpeed();
         enemy.SetPosition({nextPosX, enemy.GetPosition().y});
     }
     if (jumpStarted) { //jump
-
-        enemy.SetPosition(Vector2Lerp(jumpStart, *rangedSpot, 1.f-rangedTimer/60.f));
+        texRec={static_cast<float>(96*iceBoss->GetPhase()), static_cast<float>(96*iceBoss->GetPhase())+32, 32, 32};
+        enemy.SetPosition(Vector2Lerp(jumpStart, *rangedSpot, 1.f - rangedTimer / 60.f));
         --rangedTimer;
     }
     return shared_from_this();

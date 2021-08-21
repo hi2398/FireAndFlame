@@ -33,7 +33,6 @@ private:
     static float constexpr aggressionMultiplier{1.2f};
     static const float* multiplier; //Don't change declaration order->initialization order matters
     Rectangle meleeRange{-16, 0, 64, 32};
-    Texture2D texture;
     int phase{0};
     std::shared_ptr<EState> state;
 
