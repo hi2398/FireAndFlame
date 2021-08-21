@@ -1,13 +1,13 @@
 #pragma once
 
 
-#include "../../Core/State.h"
+#include "../../Core/EState.h"
 
-class IBMelee : public State {
+class IBMelee : public EState {
 public:
-    IBMelee();
-    std::shared_ptr <State> Update(Actor &actor) override;
-    void Draw(Actor &actor) override;
+    IBMelee(Enemy &enemy);
+    std::shared_ptr <EState> Update(Enemy &enemy) override;
+    void Draw(Enemy &enemy) override;
     ~IBMelee() override = default;
 
 protected:

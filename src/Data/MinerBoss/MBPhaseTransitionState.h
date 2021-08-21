@@ -8,7 +8,7 @@ enum class TransitionStep{MoveToStart, Jump, MoveToEnd};
 class MBPhaseTransitionState : public EState {
 public:
     explicit MBPhaseTransitionState(Enemy &enemy);
-    std::shared_ptr <EState> Update(Enemy &actor) override;
+    std::shared_ptr <EState> Update(Enemy &enemy) override;
     void Draw(Enemy &actor) override;
     ~MBPhaseTransitionState() override = default;
 

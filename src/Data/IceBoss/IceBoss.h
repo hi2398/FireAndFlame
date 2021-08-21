@@ -2,7 +2,7 @@
 #include <random>
 
 #include "../../Core/Enemy.h"
-#include "../../Core/State.h"
+#include "../../Core/EState.h"
 
 struct Part {
     Vector2 offset;
@@ -20,12 +20,11 @@ public:
     void ReceiveDamage(int damage) override;
     ~IceBoss() override = default;
 
+    int GetPhase();
     static bool Decide();
     static float SpeedMultiplier();
     Rectangle GetMeleeRange();
-    static float GetRangedMinDistance();
     static float GetMovementSpeed();
-    Texture2D GetMovingTexture();
 protected:
 
 
@@ -35,8 +34,8 @@ private:
     static const float* multiplier; //Don't change declaration order->initialization order matters
     Rectangle meleeRange{-16, 0, 64, 32};
     Texture2D texture;
-    std::vector<Part> parts;
-    std::shared_ptr<State> state;
+    int phase{0};
+    std::shared_ptr<EState> state;
 
     static constexpr float rangedMinDistance{128.f};
     static constexpr float movementSpeed{4.f};

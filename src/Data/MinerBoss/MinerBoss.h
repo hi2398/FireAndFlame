@@ -16,6 +16,7 @@ public:
     [[nodiscard]] int GetMaxHealth() const;
     [[nodiscard]] MinerBossPhase GetMinerBossPhase() const;
     void SetMinerBossPhase(MinerBossPhase bossPhase);
+    void EnableDebris();
 
 protected:
 
@@ -28,10 +29,12 @@ private:
     MinerBossPhase bossPhase{MinerBossPhase::First};
 
     //falling debris
+    bool enableDebris{false};
     Texture2D debrisTexture;
     int debrisTimer{100};
     const Vector2 debrisStartLoc{57*32, 80*32};
     const Vector2 debrisEndLoc{57*32, 90*32};
+    Vector2 debrisDrawLoc{};
 };
 
 

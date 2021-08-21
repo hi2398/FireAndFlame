@@ -6,17 +6,21 @@
 #include "../../Global.h"
 #include "IceZone.h"
 
-IBRanged::IBRanged(Vector2 startLocation){
+IBRanged::IBRanged(Vector2 startLocation, Enemy &enemy) : EState(enemy) {
     this->startLocation=startLocation;
     barrel= LoadTexture("assets/Bosses/IceBoss/Barrel.png");
     barrelPos=startLocation;
+    targetLocation=playerCharacter->GetPosition();
+    texRec={0, 0, 32, 32};
 }
 
-std::shared_ptr<State> IBRanged::Update(Actor &actor) {
-    if (jumpTimer==0) return std::make_shared<IBSeek>();
+std::shared_ptr<EState> IBRanged::Update(Enemy &enemy) {
+    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
+    if (jumpTimer==0) return std::make_shared<IBSeek>(enemy);
     if (jumpStarted) { //jump
+        texRec={static_cast<float>(32*iceBoss->GetPhase()), static_cast<float>(32*iceBoss->GetPhase()), 32, 32};
 
-        actor.SetPosition(Vector2Lerp(startLocation, jumpEnd, 1.f-jumpTimer/60.f));
+        enemy.SetPosition(Vector2Lerp(startLocation, jumpEnd, 1.f-jumpTimer/60.f));
         --jumpTimer;
     }
     if (animTimer==0) {
@@ -32,8 +36,8 @@ std::shared_ptr<State> IBRanged::Update(Actor &actor) {
     return shared_from_this();
 }
 
-void IBRanged::Draw(Actor &actor) {
-    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
-    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
+void IBRanged::Draw(Enemy &enemy) {
+    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
+    iceBoss->DrawDirectional(iceBoss->GetPosition(), iceBoss->GetTexture(), texRec);
     if(0 < animTimer && animTimer < 90)DrawTextureV(barrel, barrelPos, WHITE);
 }

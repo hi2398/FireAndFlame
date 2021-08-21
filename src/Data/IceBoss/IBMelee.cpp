@@ -4,16 +4,16 @@
 #include "IceBoss.h"
 #include "../../Global.h"
 
-IBMelee::IBMelee() {
+IBMelee::IBMelee(Enemy& enemy) : EState(enemy) {
 
 }
 
-std::shared_ptr<State> IBMelee::Update(Actor &actor) {
+std::shared_ptr<EState> IBMelee::Update(Enemy &enemy) {
 
-    if (meleeTimer==0) return std::make_shared<IBSeek>();
+    if (meleeTimer==0) return std::make_shared<IBSeek>(enemy);
     //TODO: melee
     --meleeTimer;
-    Vector2 attackCenter= {actor.GetPosition().x+16*actor.GetDirection(), actor.GetPosition().y+16};
+    Vector2 attackCenter= {enemy.GetPosition().x + 16 * enemy.GetDirection(), enemy.GetPosition().y + 16};
     if (CheckCollisionCircleRec(attackCenter, attackCollisionRad, playerCharacter->playerHitbox) && !playerHit) {
         playerCharacter->SetHealth(playerCharacter->GetHealth()-meleeDamage);
         playerHit=true;
@@ -22,7 +22,7 @@ std::shared_ptr<State> IBMelee::Update(Actor &actor) {
     return shared_from_this();
 }
 
-void IBMelee::Draw(Actor &actor) {
-    auto& iceBoss=dynamic_cast<IceBoss&>(actor);
-    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetMovingTexture());
+void IBMelee::Draw(Enemy &enemy) {
+    auto& iceBoss=dynamic_cast<IceBoss&>(enemy);
+    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetTexture());
 }

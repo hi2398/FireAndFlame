@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../../Core/State.h"
+#include "../../Core/EState.h"
 
-class IBRanged : public State{
+class IBRanged : public EState{
 public:
-    explicit IBRanged(Vector2 startLocation);
-    std::shared_ptr <State> Update(Actor &actor) override;
+    explicit IBRanged(Vector2 startLocation, Enemy &enemy);
+    std::shared_ptr <EState> Update(Enemy &enemy) override;
 
-    void Draw(Actor &actor) override;
+    void Draw(Enemy &enemy) override;
 
     ~IBRanged() override = default;
 
@@ -16,14 +16,14 @@ protected:
 
 private:
     int animTimer{90};
-    Vector2 targetLocation{29*32, 36*32};
+    Vector2 targetLocation;
     Vector2 startLocation{};
     Vector2 barrelPos;
     Texture2D barrel;
     bool jumpStarted{false};
     int jumpTimer{60};
     const Vector2 jumpEnd{29*32, 36*32};
-
+    Rectangle texRec;
 };
 
 
