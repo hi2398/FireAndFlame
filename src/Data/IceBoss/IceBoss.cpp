@@ -6,6 +6,7 @@
 const float* IceBoss::multiplier;
 
 IceBoss::IceBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
+    health=maxHealth;
     SetPosition(location);
     texture=LoadTexture("assets/Bosses/IceBoss/IceBoss.png");
     state = std::make_unique<IBSeek>(*this);
@@ -41,9 +42,17 @@ void IceBoss::Draw() {
 }
 
 void IceBoss::ReceiveDamage(int damage) {
-    //TODO: handle boss dmg
-    //TODO: when two parts are broken, switch multiplier to aggressive
     health-=damage;
+    if(health<=7) {
+        phase=3;
+        multiplier=&aggressionMultiplier;
+    } else if (health<=14) {
+        phase=2;
+        multiplier=&aggressionMultiplier;
+    } else if (health<=21) {
+        phase=1;
+    }
+    if (health<=0) markedDestroy=true;
 }
 
 bool IceBoss::Decide() {

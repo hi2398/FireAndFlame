@@ -42,7 +42,7 @@ void IBRanged::Draw(Enemy &enemy) {
 }
 
 void IBRanged::ThrowBarrel(IceBoss* iceBoss) {
-    texRec={static_cast<float>(96*iceBoss->GetPhase()), static_cast<float>(96*iceBoss->GetPhase()), 32, 32};
+    texRec={static_cast<float>(96*iceBoss->GetPhase()), 0, 32, 32};
     barrelPos= Vector2Lerp(startLocation, targetLocation, 1.f-animTimer/90.f);
     //TODO: play animation
     --animTimer;
@@ -55,7 +55,7 @@ void IBRanged::ThrowBarrel(IceBoss* iceBoss) {
 }
 
 void IBRanged::JumpDown(IceBoss *iceBoss) {
-    texRec={static_cast<float>(96*iceBoss->GetPhase()+32), static_cast<float>(96*iceBoss->GetPhase()+32), 32, 32};
+    texRec={static_cast<float>(96*iceBoss->GetPhase()+32), 32, 32, 32};
 
     iceBoss->SetPosition(Vector2Lerp(startLocation, jumpEnd, 1.f-jumpTimer/60.f));
     --jumpTimer;
@@ -65,11 +65,12 @@ void IBRanged::JumpDown(IceBoss *iceBoss) {
 void IBRanged::WindUp(IceBoss *iceBoss) {
 
     --windUpTimer;
-
-    if (windUpTimer<=30){
-        texRec={static_cast<float>(96*iceBoss->GetPhase())+64, static_cast<float>(96*iceBoss->GetPhase())+96, 32, 32};
+    if (windUpTimer<=40){
+        texRec={static_cast<float>(96*iceBoss->GetPhase())+64, 64, 32, 32};
+    } else if (windUpTimer<=20){
+        texRec={static_cast<float>(96*iceBoss->GetPhase())+64, 96, 32, 32};
     } else {
-        texRec={static_cast<float>(96*iceBoss->GetPhase())+64, static_cast<float>(96*iceBoss->GetPhase())+64, 32, 32};
+        texRec={static_cast<float>(96*iceBoss->GetPhase())+64, 128, 32, 32};
     }
 
     if (windUpTimer==0) {

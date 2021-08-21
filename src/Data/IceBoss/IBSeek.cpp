@@ -8,7 +8,10 @@
 #include <stdexcept>
 
 IBSeek::IBSeek(Enemy &enemy) : EState(enemy) {
+    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
 
+    //set rec to avoid buggy frame if returning to IBMinions instantly
+    texRec={static_cast<float>(96*iceBoss->GetPhase()), 0, 32, 32};
 }
 
 std::shared_ptr<EState> IBSeek::Update(Enemy &enemy) {
@@ -57,6 +60,10 @@ void IBSeek::Draw(Enemy &enemy) {
 }
 
 std::shared_ptr<EState> IBSeek::MeleeApproach(Enemy& enemy) {
+    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
+
+    //TODO: add proper walk, missing frames
+    texRec={static_cast<float>(96*iceBoss->GetPhase())+64, 32, 32, 32};
 
     //to avoid weird chases, if player is above boss, decide new
     if (enemy.GetPosition().y-playerCharacter->GetPosition().y>10 && abs(enemy.GetPosition().x-playerCharacter->GetPosition().x) <64) {
@@ -64,7 +71,6 @@ std::shared_ptr<EState> IBSeek::MeleeApproach(Enemy& enemy) {
         return shared_from_this();
     }
 
-    auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
     //first, check in which direction the player is
     CalcWalkingDirection(enemy, playerCharacter->GetPosition());
     //if player is in range, attack him
@@ -80,6 +86,11 @@ std::shared_ptr<EState> IBSeek::MeleeApproach(Enemy& enemy) {
 std::shared_ptr<EState> IBSeek::RangedMove(Enemy &enemy) {
     auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
 
+    //TODO: add proper walk, missing frames
+    texRec={static_cast<float>(96*iceBoss->GetPhase())+64, 32, 32, 32};
+
+
+
     //if the jump is finished, execute the ranged attack
     if (rangedTimer==0) return std::make_shared<IBRanged>(enemy.GetPosition(), enemy);
 
@@ -94,7 +105,7 @@ std::shared_ptr<EState> IBSeek::RangedMove(Enemy &enemy) {
         enemy.SetPosition({nextPosX, enemy.GetPosition().y});
     }
     if (jumpStarted) { //jump
-        texRec={static_cast<float>(96*iceBoss->GetPhase()), static_cast<float>(96*iceBoss->GetPhase())+32, 32, 32};
+        texRec={static_cast<float>(96*iceBoss->GetPhase()), 32, 32, 32};
         enemy.SetPosition(Vector2Lerp(jumpStart, *rangedSpot, 1.f - rangedTimer / 60.f));
         --rangedTimer;
     }
