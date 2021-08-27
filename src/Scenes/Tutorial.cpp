@@ -46,10 +46,10 @@ Tutorial::Tutorial() {
     door3[0] = {40*32,76*32};
     door3[1] = {40*32,75*32};
 
-    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
-    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
-    textureBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
-    textureUpperBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
 
     foregroundPos = { 0, - 90 };
     backgroundPos = { 0,0 };

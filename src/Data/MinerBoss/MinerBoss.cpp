@@ -11,11 +11,12 @@ MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     health = maxHealth;
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
     texture = LoadTexture("assets/Bosses/MinerBoss/Miner.png");
-    state = std::make_unique<MBDecisionState>(*this);
     hitbox = {0, 0, 32, 32};
     hitbox.x = position.x;
     hitbox.y = position.y;
     movementSpeed = 3.f;
+
+    state = std::make_unique<MBDecisionState>(*this);
 }
 
 void MinerBoss::Update() {
