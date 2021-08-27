@@ -157,3 +157,7 @@ void SceneManager::RemoveAllInteractables() {
     activeScene->RemoveInteractables();
 }
 
+std::shared_ptr<Scene> SceneManager::GetActiveScene() {
+    return activeScene;
+}
+
