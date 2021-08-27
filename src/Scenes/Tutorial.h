@@ -3,7 +3,7 @@
 
 class Tutorial : public Scene {
 public:
-    Tutorial();
+    Tutorial(SceneEnums lastScene);
 
     void Update() override;
 

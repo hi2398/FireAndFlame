@@ -8,8 +8,6 @@ DialogueManager &Scene::GetDialogueManager() {
     return dialogueMananger;
 }
 
-
-
 const std::unique_ptr<Tilemap>& Scene::GetTilemap() {
     return tilemap;
 }
@@ -21,8 +19,6 @@ const std::list<std::unique_ptr<Interactable>> &Scene::GetInteractables() const 
 const std::list<std::unique_ptr<Enemy>> &Scene::GetEnemies() const {
     return enemies;
 }
-
-
 
 void Scene::RemoveMarkedDelete() {
 
@@ -44,6 +40,11 @@ void Scene::RemoveMarkedDelete() {
 
 }
 
+Scene::Scene(SceneEnums sceneType)
+{
+    sceneName = sceneType;
+}
+
 void Scene::Update() {
     if (skipFrame > 0) {
         UpdateBackground();
@@ -53,6 +54,8 @@ void Scene::Update() {
         UpdateScreenShake();
     }
     skipFrame++;
+ 
+   
 }
 
 void Scene::UpdateBackground()
@@ -63,6 +66,7 @@ void Scene::UpdateBackground()
 
     foregroundPos = Vector2Add(foregroundPos, Vector2Multiply(scrollDirection, { 0.6f, 0.2f }));
     backgroundPos = Vector2Add(backgroundPos, Vector2Multiply(scrollDirection, { 1.0f, 0.9f }));
+    std::cout << foregroundPos.x << "\t" << foregroundPos.y << "\t\t" << backgroundPos.x << "\t" << backgroundPos.y << "\n";
 }
 
 void Scene::UpdateSceneEffect()
@@ -117,7 +121,7 @@ void Scene::DrawBackground() const {
     for (int y = 0; y < foregroundLoopY; y++) {
         for (int x = 0; x < foregroundLoopX; x++) {
             if (y == foregroundException) {
-                DrawTextureEx(textureForegroundException, { (float)foregroundPos.x + x * textureForegroundException.width, (float)foregroundPos.y + y * textureForegroundException.height }, 0.0, 1.0, WHITE);
+                DrawTextureEx(textureForegroundException, { (float)foregroundPos.x + x * textureForegroundMain.width, (float)foregroundPos.y + y * textureForegroundMain.height }, 0.0, 1.0, WHITE);
             }
             else DrawTextureEx(textureForegroundMain, { (float)foregroundPos.x + x * textureForegroundMain.width, (float)foregroundPos.y + y * textureForegroundMain.height }, 0.0, 1.0, WHITE);
         }
@@ -161,4 +165,9 @@ void Scene::ActivateScreenShake(int duration)
     playerCharacter->ChangeCameraControl();
     screenShakeActivated = true;
     this->duration = duration;
+}
+
+SceneEnums Scene::GetSceneName() const
+{
+    return sceneName;
 }

@@ -1,11 +1,12 @@
 
 #include "AreaThree.h"
 
-AreaThree::AreaThree(){
+AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Three_Tilemap.json");
     Vector2 tempVec= {80*25,24*26};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::FinalBoss));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::FinalBoss, sceneName));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaThree/Upper_Foreground.png");

@@ -3,14 +3,15 @@
 #include "NeutralArea.h"
 #include "../Global.h"
 
-DeathScreen::DeathScreen() {
+DeathScreen::DeathScreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
+    this->lastScene = lastScene;
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
 }
 
 void DeathScreen::Update() {
     if(IsKeyPressed(KEY_F) || IsGamepadButtonDown(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)){
-        sceneManager->SetNextScene(std::make_unique<NeutralArea>());
+        sceneManager->SetNextScene(std::make_unique<NeutralArea>(sceneName));
     }
 }
 

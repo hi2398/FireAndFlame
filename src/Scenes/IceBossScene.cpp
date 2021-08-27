@@ -1,8 +1,10 @@
 #include "IceBossScene.h"
 #include "../Global.h"
+#include "../Data/SceneChangerObject.h"
 #include "../Data/IceBoss/IceZone.h"
 
-IceBossScene::IceBossScene() {
+IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
+    this->lastScene = lastScene;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
     playerCharacter->SetHealth(100);
@@ -10,6 +12,8 @@ IceBossScene::IceBossScene() {
     tilemap->AddCollisionTile(tempVec);
     tempVec = {19*32, 47*32};
     tilemap->AddCollisionTile(tempVec);
+    tempVec = { 38 * 32, 35 * 32 };
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
 }
 
 
