@@ -35,6 +35,7 @@ private:
     const Vector2 debrisStartLoc{57*32, 80*32};
     const Vector2 debrisEndLoc{57*32, 90*32};
     Vector2 debrisDrawLoc{};
+    bool phase2debrisEnabled{false};
 };
 
 

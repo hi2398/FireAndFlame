@@ -35,6 +35,8 @@ public:
 
     void ScreenShake(int durationInSeconds);
 
+    [[nodiscard]] std::shared_ptr<Scene> GetActiveScene();
+
 protected:
 
 private:

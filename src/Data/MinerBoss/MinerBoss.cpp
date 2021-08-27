@@ -2,6 +2,7 @@
 #include "MBPhaseTransitionState.h"
 #include "../../Global.h"
 #include "../SceneChangerObject.h"
+#include "../../Scenes/MinerBossScene.h"
 #include "MBDecisionState.h"
 #include "raymath.h"
 
@@ -37,7 +38,19 @@ void MinerBoss::Update() {
 
             if (debrisTimer==0){
                 sceneManager->GetTilemap()->AddCollisionTile(debrisEndLoc);
+                std::shared_ptr <MinerBossScene> scene= std::dynamic_pointer_cast<MinerBossScene>(sceneManager->GetActiveScene());
+                scene->EnableDebrisLower();
+                enableDebris = false;
             }
+        }
+    }
+
+    if (bossPhase==MinerBossPhase::Second && !phase2debrisEnabled) {
+        if (playerCharacter->GetPosition().y<=(59*32)){
+            std::shared_ptr <MinerBossScene> scene= std::dynamic_pointer_cast<MinerBossScene>(sceneManager->GetActiveScene());
+            std::cout << "Enable Debris Upper";
+            scene->EnableDebrisUpper();
+            phase2debrisEnabled= true;
         }
     }
 }
@@ -50,6 +63,9 @@ void MinerBoss::Draw() {
 }
 
 void MinerBoss::ReceiveDamage(int damage) {
+    if  (bossPhase==MinerBossPhase::Transition){
+        return;
+    }
     health -= damage;
     invulnerable = true;
     invulnerableCounter=15;
