@@ -4,7 +4,7 @@
 
 class MinerBossScene : public Scene {
 public:
-    MinerBossScene();
+    MinerBossScene(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
     ~MinerBossScene() override = default;

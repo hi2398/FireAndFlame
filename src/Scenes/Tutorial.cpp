@@ -5,7 +5,8 @@
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Coal.h"
 
-Tutorial::Tutorial() {
+Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(90);
@@ -19,7 +20,7 @@ Tutorial::Tutorial() {
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText5.json",npc5Pos,npc1Tex));
 
     Vector2 tempVec = {86*32,36*32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));
 
     tempVec =  {39 * 32, 97 * 32 };
     interactables.emplace_back(std::make_unique<Coal>(tempVec));

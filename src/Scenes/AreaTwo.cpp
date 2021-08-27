@@ -1,11 +1,12 @@
 
 #include "AreaTwo.h"
 
-AreaTwo::AreaTwo(){
+AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Two_Tilemap.json");
     Vector2 tempVec= {96*32,46*32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::TraitorBoss));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::TraitorBoss, sceneName));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/Lower_Foreground.png");

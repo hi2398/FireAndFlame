@@ -1,5 +1,6 @@
 #pragma once
 #include "DialogueManager.h"
+#include "../Scenes/SceneEnums.h"
 #include <memory>
 #include <list>
 #include "Tilemap.h"
@@ -9,6 +10,7 @@
 
 class Scene {
 public:
+    Scene(SceneEnums sceneType);
     virtual void Update();
     void UpdateBackground();
     void UpdateSceneEffect();
@@ -32,7 +34,11 @@ public:
 
     void ActivateScreenShake(int durationInSeconds);
 
+    SceneEnums GetSceneName() const;
+
 protected:
+    SceneEnums sceneName{SceneEnums::Default};
+    SceneEnums lastScene{SceneEnums::Default};
     DialogueManager dialogueMananger;
     std::unique_ptr<Tilemap> tilemap;
     std::list<std::unique_ptr<Interactable>> interactables;
