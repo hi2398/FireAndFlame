@@ -53,7 +53,7 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN
