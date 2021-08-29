@@ -10,7 +10,7 @@ MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     SetPosition(location);
     health = maxHealth;
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
-    texture = LoadTexture("assets/Bosses/MinerBoss/Miner.png");
+    texture = LoadTexture("assets/Bosses/MinerBoss/Miner_Boss_Spritesheet.png");
     state = std::make_unique<MBDecisionState>(*this);
     hitbox = {0, 0, 32, 32};
     hitbox.x = position.x;

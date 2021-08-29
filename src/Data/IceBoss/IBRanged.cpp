@@ -11,6 +11,7 @@ IBRanged::IBRanged(Vector2 startLocation, Enemy &enemy) : EState(enemy) {
     barrel= LoadTexture("assets/Bosses/IceBoss/Barrel.png");
     barrelPos=startLocation;
     targetLocation=playerCharacter->GetPosition();
+    targetLocation.y=36*32;
     texRec={0, 0, 32, 32};
 }
 
