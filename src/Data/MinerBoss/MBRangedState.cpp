@@ -23,11 +23,50 @@ MBRangedState::MBRangedState(Enemy &enemy) : EState(enemy) {
     attackEnd.y+=16;
 
     timer=startTimer;
+    textureRec={};
+    currentAttackTimer=attackTimer;
 }
 
 std::shared_ptr<EState> MBRangedState::Update(Enemy &enemy) {
+    if (windup){
+        return Windup(enemy);
+    } else {
+        return Attack(enemy);
+    }
+}
+
+void MBRangedState::Draw(Enemy &actor) {
+    auto minerBoss=dynamic_cast<MinerBoss&>(actor);
+    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture(), textureRec);
+    if (!windup){
+        minerBoss.DrawDirectional({currentAttackCenter.x-16, currentAttackCenter.y-16}, minerBoss.GetTexture(), throwRec);
+    }
+}
+
+std::shared_ptr<EState> MBRangedState::Attack(Enemy& enemy) {
     --timer;
     currentAttackCenter = Vector2Lerp(attackStart, attackEnd, 1.f-timer/startTimer);
+    if (returning){
+        if (timer<=10){
+            throwRec={192, 64,32, 32};
+        }else if (timer<=20){
+            throwRec={224, 64,32, 32};
+        } else if (timer<=30){
+        throwRec={256, 64,32, 32};
+        }else {
+            throwRec={288, 64,32, 32};
+        }
+    } else {
+        if (timer<=10){
+            throwRec={288, 64,32, 32};
+        }else if (timer<=20){
+            throwRec={256, 64,32, 32};
+        } else if (timer<=30){
+            throwRec={224, 64,32, 32};
+        }else {
+            throwRec={192, 64,32, 32};
+        }
+    }
 
     if (!playerHit){
         if (CheckCollisionCircleRec(currentAttackCenter, dmgRadius, playerCharacter->playerHitbox)){
@@ -50,8 +89,18 @@ std::shared_ptr<EState> MBRangedState::Update(Enemy &enemy) {
     return shared_from_this();
 }
 
-void MBRangedState::Draw(Enemy &actor) {
-    auto minerBoss=dynamic_cast<MinerBoss&>(actor);
-    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture());
-    DrawCircleV(currentAttackCenter, dmgRadius, RED);
+std::shared_ptr<EState> MBRangedState::Windup(Enemy &enemy) {
+    --currentAttackTimer;
+    if (currentAttackTimer<=15){
+        textureRec={160, 64,32, 32};
+    }else if (currentAttackTimer<=30){
+        textureRec={128, 64,32, 32};
+    } else {
+        textureRec={96, 64,32, 32};
+    }
+    if (currentAttackTimer==0){
+        throwRec={192, 64,32, 32};
+        windup=false;
+    }
+    return shared_from_this();
 }

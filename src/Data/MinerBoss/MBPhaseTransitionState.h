@@ -29,6 +29,8 @@ private:
     void Jump(Enemy& enemy);
     void MoveToEnd(Enemy& enemy);
 
+    Rectangle textureRec{};
+
     //end movement
     bool correctZ{false};
     int endJumpStep{0};

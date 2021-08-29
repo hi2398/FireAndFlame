@@ -8,7 +8,7 @@ const float* IceBoss::multiplier;
 IceBoss::IceBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     health=maxHealth;
     SetPosition(location);
-    texture=LoadTexture("assets/Bosses/IceBoss/IceBoss.png");
+    texture=LoadTexture("assets/Bosses/IceBoss/Ice_Boss_Spritesheet.png");
     state = std::make_unique<IBSeek>(*this);
     IceBoss::multiplier=&normalMultiplier; //set multiplier to point to the normal multiplier until boss goes into aggressive mode
     meleeRange.x=position.x-16;
