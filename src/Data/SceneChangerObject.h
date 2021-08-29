@@ -5,7 +5,7 @@
 
 class SceneChangerObject : public Interactable {
 public:
-    SceneChangerObject(Vector2 location={0,0}, SceneEnums sceneEnum = SceneEnums::NeutralArea);
+    SceneChangerObject(Vector2 location={0,0}, SceneEnums destination = SceneEnums::NeutralArea, SceneEnums start = SceneEnums::Default );
     void Interact(Actor& actor)override;
     void Update() override;
     void Draw() override;
@@ -13,5 +13,6 @@ public:
 private:
     Vector2 position;
     SceneEnums chosenScene;
+    SceneEnums comingFromThisScene;
 protected:
 };

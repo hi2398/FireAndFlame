@@ -5,7 +5,7 @@
 
 class TraitorBossScene : public Scene {
 public:
-    TraitorBossScene();
+    TraitorBossScene(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
     ~TraitorBossScene() override = default;

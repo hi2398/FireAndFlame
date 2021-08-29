@@ -10,8 +10,8 @@
 #include "raymath.h"
 
 
-NeutralArea::NeutralArea(){
-    playerCharacter->SetPosition(playerStart);
+NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
+    this->lastScene = lastScene;
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Neutral_Area_Tilemap.json");
@@ -19,16 +19,12 @@ NeutralArea::NeutralArea(){
 
 
     Vector2 tempVec= {106*32,86*32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne, sceneName));
     tempVec= {15*32,77*32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo, sceneName));
     tempVec= {69*32,65*32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaThree));
-    Vector2 vec2{playerStart.x + 32, playerStart.y};
-    Vector2 vec3{playerStart.x + 10 * 32, playerStart.y};
-    interactables.emplace_back(std::make_unique<Coal>(vec3));
-  
-    Vector2 vec4{ 54 * 32, 91 * 32 };
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaThree, sceneName));
+   
     /* TODO Add Statue and Schilder after receiving dialogue files
     Statue 67,92
     Schild 58, 92
@@ -36,60 +32,38 @@ NeutralArea::NeutralArea(){
     Schild 57,88
      */
     
-    switch (6)
-    {
-    case 0:
-        enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::Low));
-        enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::Medium));
-        enemies.emplace_back(std::make_unique<Miner>(vec2, EnemyLevel::High));
-        break;
-    case 1:
-        enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Low));
-        /*enemies.emplace_back(std::make_unique<SpiderBot>(vec2, EnemyLevel::Medium));*/
-        break;
-    case 2:
-        enemies.emplace_back(std::make_unique<Howler>(vec2, EnemyLevel::Low));
-        enemies.emplace_back(std::make_unique<Howler>(vec2, EnemyLevel::Medium));
-        break;
-    case 3:
-        enemies.emplace_back(std::make_unique<ToastCat>(vec2));
-        break;
-    case 4:
-        for (int i = 0; i < 3; i++) {
-			enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::Low));
-			enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::Medium));
-			enemies.emplace_back(std::make_unique<Fly>(vec2, EnemyLevel::High));
-        }
-        break;
-    case 5:
-        for (int i = 0; i < 30; i++) {
-            enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Low));
-            enemies.emplace_back(std::make_unique<SpringHog>(vec2, EnemyLevel::Medium));
-        }
-        break;
-    case 6:
-        enemies.emplace_back(std::make_unique<Saugi>(vec2));
-        break;
-    default:
-        break;
-    }
 
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");
     textureForegroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/Upper_Foreground.png");
     textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
     textureBackgroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
 
-    foregroundPos = {0,100};
-    backgroundPos = { 0,0};
-
+    switch (lastScene)
+    {
+    case SceneEnums::MinerBoss:
+        playerCharacter->SetPosition({ 104 * 32, 89 * 32 });
+        foregroundPos = { 863.4 , -40.8 };
+        backgroundPos = { 1439, -633.6 };
+        break;
+    case SceneEnums::TraitorBoss:
+        playerCharacter->SetPosition({ 20 * 32,80 * 32 });
+        foregroundPos = { -750, -98.4 };
+        backgroundPos = {-1250, -924.8 };
+        break;
+    default:
+        playerCharacter->SetPosition(playerStart);
+		foregroundPos = { 0,100 };
+		backgroundPos = { 0,0 };
+        break;
+    }
     //fill background loop vector
-    backgroundLoopX = 8;
-    backgroundLoopY = 20;
-    backgroundException = 0;
+		backgroundLoopX = 8;
+		backgroundLoopY = 20;
+		backgroundException = 0;
 
-    foregroundLoopX = 4;
-    foregroundLoopY = 10;
-    foregroundException = 7;
+		foregroundLoopX = 4;
+		foregroundLoopY = 8;
+		foregroundException = 7;
 }
 
 

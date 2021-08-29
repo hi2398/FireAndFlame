@@ -13,7 +13,7 @@ void HUD::UpdateHUD() {
     
     if(isEndscreenActive){
         if(endscreenCounter <= 0){
-            sceneManager->SetNextScene(std::make_unique<Endscreen>());
+            sceneManager->SetNextScene(std::make_unique<Endscreen>(SceneEnums::Default));
             isEndscreenActive = false;
         }
         --endscreenCounter;

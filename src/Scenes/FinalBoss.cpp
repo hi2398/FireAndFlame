@@ -9,7 +9,8 @@
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
 
 
-FinalBoss::FinalBoss() {
+FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);

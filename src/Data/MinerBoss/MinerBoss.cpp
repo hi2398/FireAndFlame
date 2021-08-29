@@ -76,8 +76,7 @@ void MinerBoss::ReceiveDamage(int damage) {
 }
 
 void MinerBoss::OnDeath() {
-    std::cout << "Miner Boss Death\n";
-    sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit));
+    sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit, SceneEnums::NeutralArea ,SceneEnums::MinerBoss));
 }
 
 int MinerBoss::GetMaxHealth() const {

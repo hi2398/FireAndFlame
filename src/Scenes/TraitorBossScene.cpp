@@ -1,13 +1,14 @@
 #include "TraitorBossScene.h"
 
 #include "TraitorBossScene.h"
+#include "../Data/SceneChangerObject.h"
 #include "../Global.h"
 #include "../Data/TraitorBoss/TraitorBoss.h"
 #include "../Data/Coal.h"
 
 
-TraitorBossScene::TraitorBossScene() {
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Verrater_Boss_neu.json");
+TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json", "assets/Tilemaps/Verrater_Boss.json");
     playerCharacter->SetPosition(playerStart);
 
     playerCharacter->SetHealth(100);
@@ -18,13 +19,9 @@ TraitorBossScene::TraitorBossScene() {
     door2[0] = { 68 * 32, 87 * 32 };
     door2[1] = { 68 * 32, 88 * 32 };
 
-
-    Vector2 tmp1 = { 51 * 32, 88 * 32 };
-    Vector2 tmp2 = { 65 * 32, 88 * 32 };
-    Vector2 tmp3 = { 52 * 32, 88 * 32 };
-    interactables.emplace_back(std::make_unique<Coal>(tmp1));
-    interactables.emplace_back(std::make_unique<Coal>(tmp2));
-    interactables.emplace_back(std::make_unique<Coal>(tmp3));
+    Vector2 tempVec = {88 * 32, 64 * 32};
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
+    
 
     doorSFX = LoadSound("assets/audio/sfx/Shutting_Doors.wav");
 }
@@ -66,6 +63,7 @@ void TraitorBossScene::CheckBossDeath()
             return;
         }
     }
+    PlaySound(doorSFX);
     sceneManager->ScreenShake(20);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

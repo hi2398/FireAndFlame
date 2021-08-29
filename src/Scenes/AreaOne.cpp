@@ -4,11 +4,12 @@
 
 #include "AreaOne.h"
 
-AreaOne::AreaOne(){
+AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition({19*32, 107 * 32});
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_One_Tilemap.json");
     Vector2 tempVec= {47*25,29*26};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::MinerBoss));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::MinerBoss, sceneName));
 
 
     //background initialization
@@ -28,6 +29,7 @@ AreaOne::AreaOne(){
     foregroundLoopX = 4;
     foregroundLoopY = 9;
     foregroundException = 8;
+    /*playerCharacter->SetLastPosition({ 19 * 32, 107 * 32 });*/
 }
 
 void AreaOne::Update() {

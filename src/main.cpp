@@ -53,7 +53,7 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN

@@ -7,7 +7,8 @@
 #include "MainMenu.h"
 #include <iostream>
 
-Endscreen::Endscreen() {
+Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
+    this->lastScene = lastScene;
     endscreenCounter= 0.0f;
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
@@ -34,7 +35,7 @@ Endscreen::Endscreen() {
 void Endscreen::Update() {
     endscreenCounter = endscreenCounter + 0.4f;
     if(endscreenCounter >= 1650){
-        sceneManager->SetNextScene(std::make_unique<MainMenu>());
+        sceneManager->SetNextScene(std::make_unique<MainMenu>(sceneName));
     }
 }
 
