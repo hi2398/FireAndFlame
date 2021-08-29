@@ -18,7 +18,8 @@ std::shared_ptr<EState> IBMelee::Update(Enemy &enemy) {
     --meleeTimer;
     if (meleeTimer<=20){
         texRec={static_cast<float>(96*iceBoss->GetPhase()), 128, 64, 32};
-        Vector2 attackCenter= {enemy.GetPosition().x + 32+16*enemy.GetDirection(), enemy.GetPosition().y + 16};
+        Vector2 attackCenter= {enemy.GetPosition().x + 16+32*enemy.GetDirection(), enemy.GetPosition().y + 16};
+        DrawCircleV(attackCenter, attackCollisionRad, RED);
         if (CheckCollisionCircleRec(attackCenter, attackCollisionRad, playerCharacter->playerHitbox) && !playerHit) {
             playerCharacter->SetHealth(playerCharacter->GetHealth()-meleeDamage);
             playerHit=true;
@@ -36,5 +37,10 @@ std::shared_ptr<EState> IBMelee::Update(Enemy &enemy) {
 
 void IBMelee::Draw(Enemy &enemy) {
     auto& iceBoss=dynamic_cast<IceBoss&>(enemy);
-    iceBoss.DrawDirectional(iceBoss.GetPosition(), iceBoss.GetTexture(), texRec);
+    Vector2 loc=iceBoss.GetPosition();
+    if(iceBoss.GetDirection()==LEFT){
+        loc.x-=32;
+    }
+
+    iceBoss.DrawDirectional(loc, iceBoss.GetTexture(), texRec);
 }
