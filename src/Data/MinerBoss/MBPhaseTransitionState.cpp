@@ -5,6 +5,7 @@
 #include "raymath.h"
 
 MBPhaseTransitionState::MBPhaseTransitionState(Enemy &enemy) : EState(enemy) {
+    enemy.SetInvulnerable(true);
     //bullshit bug fix pointer cast
     auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
     minerBossPt->EnableDebris();
@@ -30,6 +31,7 @@ std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &enemy) {
 
     if (done) {
         //bullshit bug fix pointer cast
+        enemy.SetInvulnerable(false);
         auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
         minerBossPt->SetMinerBossPhase(MinerBossPhase::Second);
         return std::make_shared<MBDecisionState>(enemy);
@@ -43,7 +45,7 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
      if (Vector2Distance({newX, enemy.GetPosition().y}, jumpStart) <= 3.f){
         currentStep=TransitionStep::Jump;
         enemy.SetPosition(jumpStart);
-        enemy.SetDirection(LEFT);
+
         jumpStartLoc=enemy.GetPosition();
     } else enemy.SetPosition({newX, enemy.GetPosition().y});
 
@@ -68,11 +70,11 @@ void MBPhaseTransitionState::Jump(Enemy &enemy) {
         jumpStartLoc=enemy.GetPosition();
         if (enemy.GetDirection()==LEFT){
             enemy.SetDirection(RIGHT);
-            nextJumpLoc.x=jumpStartLoc.x-64;
+            nextJumpLoc.x=jumpStartLoc.x+64;
             nextJumpLoc.y=jumpStartLoc.y-64;
         } else {
             enemy.SetDirection(LEFT);
-            nextJumpLoc.x=jumpStartLoc.x+64;
+            nextJumpLoc.x=jumpStartLoc.x-64;
             nextJumpLoc.y=jumpStartLoc.y-64;
         }
     } else {
@@ -134,3 +136,5 @@ void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
 
     }
 }
+
+

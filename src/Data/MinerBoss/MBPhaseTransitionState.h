@@ -16,11 +16,12 @@ protected:
 
 
 private:
+
     TransitionStep currentStep{TransitionStep::MoveToStart};
     bool done{false};
     const Vector2 jumpStart{64 * 32, 90 * 32};
-    Direction nextJump{Direction::LEFT};
-    Vector2 nextJumpLoc{62 * 32, 88 * 32};
+    Direction nextJump{Direction::RIGHT};
+    Vector2 nextJumpLoc{64 * 32, 90 * 32};
     Vector2 jumpStartLoc{};
     float lerpAlpha{0.f};
     int jumpsLeft{19};

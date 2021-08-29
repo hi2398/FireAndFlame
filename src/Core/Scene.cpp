@@ -66,7 +66,6 @@ void Scene::UpdateBackground()
 
     foregroundPos = Vector2Add(foregroundPos, Vector2Multiply(scrollDirection, { 0.6f, 0.2f }));
     backgroundPos = Vector2Add(backgroundPos, Vector2Multiply(scrollDirection, { 1.0f, 0.9f }));
-    std::cout << foregroundPos.x << "\t" << foregroundPos.y << "\t\t" << backgroundPos.x << "\t" << backgroundPos.y << "\n";
 }
 
 void Scene::UpdateSceneEffect()

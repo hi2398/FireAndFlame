@@ -2,6 +2,8 @@
 #include "IBMinions.h"
 #include "IBSeek.h"
 #include "IceBoss.h"
+#include "../../Global.h"
+#include "../Enemies/Saugi.h"
 
 IBMinions::IBMinions(Enemy& enemy) : EState(enemy) {
 
