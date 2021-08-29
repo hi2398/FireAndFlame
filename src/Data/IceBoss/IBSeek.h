@@ -29,6 +29,11 @@ private:
     bool jumpStarted{false};
     int rangedTimer{60};
     Rectangle texRec;
+    int delay{20};
+    int currentFrameTimer{};
+    const int frameTimer{20};
+    int activeFrame{};
+    void AnimateWalk(IceBoss* iceBoss);
 };
 
 
