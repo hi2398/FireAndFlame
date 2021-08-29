@@ -15,6 +15,7 @@
 #include "Scenes/AreaThree.h"
 #include "Scenes/MinerBossScene.h"
 #include "Scenes/AreaOne.h"
+#include "Scenes/AreaTwo.h"
 #include "Scenes/TraitorBossScene.h"
 
 
@@ -52,7 +53,7 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>());
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>());
 
 
 #ifdef GAME_START_FULLSCREEN

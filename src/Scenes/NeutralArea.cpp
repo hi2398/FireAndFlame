@@ -30,7 +30,7 @@ NeutralArea::NeutralArea(){
   
     Vector2 vec4{ 54 * 32, 91 * 32 };
     /* TODO Add Statue and Schilder after receiving dialogue files
-     Statue 67,92
+    Statue 67,92
     Schild 58, 92
     Schild 72,92
     Schild 57,88
@@ -74,20 +74,20 @@ NeutralArea::NeutralArea(){
         break;
     }
 
-    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");
-    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/NeutralArea/Upper_Foreground.png");
-    textureBackground = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
-    textureUpperBackground = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/Upper_Foreground.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
 
-    foregroundPos = {0,0};
+    foregroundPos = {0,100};
     backgroundPos = { 0,0};
 
     //fill background loop vector
-    backgroundLoopX = 12;
+    backgroundLoopX = 8;
     backgroundLoopY = 20;
     backgroundException = 0;
 
-    foregroundLoopX = 6;
+    foregroundLoopX = 4;
     foregroundLoopY = 10;
     foregroundException = 7;
 }

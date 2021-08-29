@@ -10,9 +10,12 @@
 class Scene {
 public:
     virtual void Update();
+    void UpdateBackground();
+    void UpdateSceneEffect();
     void UpdateScreenShake();
     virtual void Draw();
     void DrawBackground() const;
+    void DrawForeground() const;
     virtual ~Scene() = default;
 
     [[nodiscard]] DialogueManager &GetDialogueManager();
@@ -35,10 +38,11 @@ protected:
     std::list<std::unique_ptr<Interactable>> interactables;
     std::list<std::unique_ptr<Enemy>> enemies;
 
-    Texture2D textureForegroundBottom;
-    Texture2D textureForegroundSide;
-    Texture2D textureBackground;
-    Texture2D textureUpperBackground;
+    //background
+    Texture2D textureForegroundException;
+    Texture2D textureForegroundMain;
+    Texture2D textureBackgroundMain;
+    Texture2D textureBackgroundException;
 
     int skipFrame = 0;
 
@@ -56,6 +60,17 @@ protected:
     int foregroundLoopX = 0;
     int foregroundLoopY = 0;
 
+    //foreground, i.e. weather effects
+    Texture2D sceneEffect;
+    Vector2 effectPos1{};
+    Vector2 effectPos2{};
+    Vector2 effectPos1Start{};
+    Vector2 effectPos2Start{};
+    Vector2 effectDirection{-5.0f, 3.0f};
+    bool sceneEffectActivated{ false };
+
+
+    //screen shake variables
     bool screenShakeActivated{ false };
     int duration = -1;
     int shakeFrameCounter = 0;
