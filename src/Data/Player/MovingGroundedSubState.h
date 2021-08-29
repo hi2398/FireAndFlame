@@ -15,6 +15,9 @@ protected:
 
 private:
     int frameCounterDash = 0;
+    Sound footstep;
+    bool stepped{ false };
+    int stepCounter = 0;
 };
 
 

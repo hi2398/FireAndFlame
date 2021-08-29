@@ -21,4 +21,6 @@ private:
 	Rectangle fireballRec{};
 
 	Rectangle tileRec{0,0,32,32};
+
+	Sound fireballSFX;
 };

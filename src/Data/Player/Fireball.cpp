@@ -6,6 +6,8 @@ Fireball::Fireball(Vector2 initialPosition, Vector2 direction, ObjectTypes user)
     this->direction = direction;
     this->user = user;
 	fireball = LoadTexture("assets/graphics/projectiles/Firebolt_Sheet.png");
+    fireballSFX = LoadSound("assets/audio/sfx/fireball.wav");
+    PlaySound(fireballSFX);
 }
 
 void Fireball::Update()

@@ -12,4 +12,5 @@ public:
 private:
     int waitCounter = 180;
 protected:
+    Sound bossSpeech;
 };
