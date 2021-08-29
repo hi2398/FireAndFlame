@@ -8,6 +8,7 @@ MBPhaseTransitionState::MBPhaseTransitionState(Enemy &enemy) : EState(enemy) {
     //bullshit bug fix pointer cast
     auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
     minerBossPt->EnableDebris();
+    textureRec={32, 64 ,32, 32};
 
 }
 
@@ -42,6 +43,7 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
      if (Vector2Distance({newX, enemy.GetPosition().y}, jumpStart) <= 3.f){
         currentStep=TransitionStep::Jump;
         enemy.SetPosition(jumpStart);
+        enemy.SetDirection(LEFT);
         jumpStartLoc=enemy.GetPosition();
     } else enemy.SetPosition({newX, enemy.GetPosition().y});
 
@@ -50,7 +52,7 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
 
 void MBPhaseTransitionState::Draw(Enemy &actor) {
     auto minerBoss=dynamic_cast<MinerBoss&>(actor);
-    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture());
+    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture(), textureRec);
 }
 
 void MBPhaseTransitionState::Jump(Enemy &enemy) {
