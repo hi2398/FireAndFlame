@@ -102,7 +102,6 @@ private:
     Rectangle backButtonRec;
     int backButtonIndex = 0;
 
-    //soundtrack
-    Music soundtrack;
+    
 
 };

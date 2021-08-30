@@ -26,6 +26,7 @@ std::shared_ptr<State> MovementState::Update(Actor& player) {
         player.SetFallingSpeed(0.0f);
         groundedSubState=groundedSubState->Update(player); //IdleGroundedSubState or MovingGroundedSubState
     } else {
+        groundedSubState = std::make_shared<IdleGroundedSubState>(player);
         aerialSubState=aerialSubState->Update(player); //FallingSubState or JumpingSubState
     }
 

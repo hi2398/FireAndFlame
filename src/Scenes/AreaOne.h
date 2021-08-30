@@ -13,7 +13,7 @@ public:
     AreaOne(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~AreaOne() override= default;
+    ~AreaOne() override = default;
 private:
 protected:
 };

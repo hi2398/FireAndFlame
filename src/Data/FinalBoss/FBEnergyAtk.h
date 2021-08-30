@@ -15,5 +15,4 @@ protected:
 
 private:
     int attackCounter = 200;
-    Sound bossSpeech;
 };

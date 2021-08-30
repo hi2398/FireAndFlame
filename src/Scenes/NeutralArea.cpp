@@ -73,15 +73,6 @@ void NeutralArea::Update() {
 
 void NeutralArea::Draw() {
     Scene::Draw();
-
-
-	if constexpr (DEBUG_BUILD) {
-		for (const auto x : tilemap->GetTileColliders()) {
-			DrawRectangleLines(x.x, x.y, 32, 32, RED);
-		}
-
-	}
-
     if constexpr (DEBUG_BUILD) {
         if (playerCharacter->GetCanDoubleJump()) {
 			DrawText(TextFormat("DoubleJump ENABLED", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);

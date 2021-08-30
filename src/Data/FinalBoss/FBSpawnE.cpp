@@ -17,8 +17,7 @@ FBSpawnE::FBSpawnE() {
     tempVec = {101*32,60*32};
     sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
 
-    bossSpeech = LoadSound("assets/audio/sfx/maraap_speech2.wav");
-    PlaySound(bossSpeech);
+    soundManager->PlaySfx(SFX::FB_SPEECH2);
 }
 
 std::shared_ptr<State> FBSpawnE::Update(Actor &actor) {

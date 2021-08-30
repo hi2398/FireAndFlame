@@ -85,11 +85,11 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     fullscreenRec = {600,340,50,50};
 
     //load soundtrack
-    soundtrack = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
-    PlayMusicStream(soundtrack);
+    soundManager->PlayTrack(TRACK::MENU_TRACK);
 }
 
 void MainMenu::Update() {
+    soundManager->UpdateTrack(TRACK::MENU_TRACK);
     vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
 
     switch (menuScreenStates) {
@@ -338,12 +338,7 @@ void MainMenu::Update() {
         }
     }
 
-    //update music
-    UpdateMusicStream(soundtrack);
-    if (GetMusicTimePlayed(soundtrack) / GetMusicTimeLength(soundtrack) >= 1) {
-        StopMusicStream(soundtrack);
-        PlayMusicStream(soundtrack);
-    }
+  
 }
 
 void MainMenu::Draw() {
@@ -420,7 +415,7 @@ void MainMenu::Draw() {
 
 MainMenu::~MainMenu()
 {
-    StopMusicStream(soundtrack);
+    
 }
 
 int MainMenu::GetMusicVolume() {

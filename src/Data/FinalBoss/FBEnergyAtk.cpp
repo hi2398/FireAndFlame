@@ -8,8 +8,7 @@
 #include "FBIdleFly.h"
 
 FBEnergyAtk::FBEnergyAtk() {
-    bossSpeech = LoadSound("assets/audio/sfx/maraap_speech1.wav");
-    PlaySound(bossSpeech);
+    soundManager->PlaySfx(SFX::FB_SPEECH1);
 }
 
 std::shared_ptr<State> FBEnergyAtk::Update(Actor &actor) {

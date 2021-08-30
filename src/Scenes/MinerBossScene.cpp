@@ -10,6 +10,24 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
     playerCharacter->SetPosition(playerStart);
     playerCharacter->SetHealth(100);
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
+
+    //background initialization
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaOne/Lower_Foreground.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/AreaOne/Upper_Foreground.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/AreaOne/background.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/AreaOne/background.png");
+
+    foregroundPos = { 0,-100 };
+    backgroundPos = { 0,0 };
+
+    //fill background loop vector
+    backgroundLoopX = 8;
+    backgroundLoopY = 20;
+    backgroundException = 0;
+
+    foregroundLoopX = 4;
+    foregroundLoopY = 9;
+    foregroundException = 8;
 }
 
 void MinerBossScene::Update() {

@@ -11,23 +11,20 @@ MovingGroundedSubState::MovingGroundedSubState(Actor& player) : PlayerStates(pla
 	else {
 		activeFrame.y = 32;
 	}
-	footstep = LoadSound("assets/audio/sfx/footstep.wav");
+	stepInit = playerCharacter->GetCurrentFrame();
 }
 
 std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
 
-
-
 	if constexpr (DEBUG_PLAYER_STATES) {
 		std::cout << "New State: Moving Grounded\n";
 	}
-
-
+	
 	switch (player.GetNextMovement())
 	{
 	case MOVEMENT::MOVE_LEFT:
-		if (playerCharacter->GetCurrentFrame() % 3 == 0 && !stepped) {
-			PlaySound(footstep);
+		if ((playerCharacter->GetCurrentFrame()) % 3 == 0 && !stepped) {
+			soundManager->PlaySfx(SFX::PLAYER_STEP);
 			stepped = true;
 		}
 		if (player.GetIsRunning()) {
@@ -39,8 +36,8 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
 		activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32, -32, 32 };
 		break;
 	case MOVEMENT::MOVE_RIGHT:
-		if (playerCharacter->GetCurrentFrame() % 3 == 0 && !stepped) {
-			PlaySound(footstep);
+		if ((playerCharacter->GetCurrentFrame())  % 3 == 0 && !stepped) {
+			soundManager->PlaySfx(SFX::PLAYER_STEP);
 			stepped = true;
 		}
 		if (player.GetIsRunning()) {
@@ -65,7 +62,7 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
 		break;
 	}
 	if (stepped) {
-		if (stepCounter >= 15) {
+		if (stepCounter >= 30) {
 			stepCounter = 0;
 			stepped = false;
 		}

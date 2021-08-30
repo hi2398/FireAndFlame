@@ -23,6 +23,7 @@ std::shared_ptr<PlayerCharacter> playerCharacter;
 std::shared_ptr<PlayerController> playerController;
 std::shared_ptr<HUD> hud;
 std::shared_ptr<SceneManager> sceneManager;
+std::shared_ptr<SoundManager> soundManager;
 
 
 int main() {
@@ -50,9 +51,9 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-
+    soundManager = std::make_shared<SoundManager>();
      
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN
@@ -97,7 +98,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-
+    soundManager->StopCurrentTrack();
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

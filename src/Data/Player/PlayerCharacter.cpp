@@ -40,7 +40,7 @@ void PlayerCharacter::Update() {
 
 	//animation frame counter
 	playerFrameCounter++;
-	if (playerFrameCounter >= 15) {
+	if (playerFrameCounter >= 10) {
 		currentFrame++;
 		playerFrameCounter = 0;
 	}
@@ -64,6 +64,7 @@ void PlayerCharacter::Update() {
 	}
 
 	//world collision
+	groundedLastFrame = IsGrounded();
 	CollisionLeft(sceneManager->GetTilemap(), GetType());
 	CollisionRight(sceneManager->GetTilemap(), GetType());
 	CollisionGround(sceneManager->GetTilemap(), GetType());
@@ -106,7 +107,7 @@ void PlayerCharacter::Update() {
 			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemies->GetDamageValue());
 		}
 	}
-
+	
 	nextMovement = MOVEMENT::IDLE;
 
 	if constexpr (DEBUG_PLAYER_POSITION) 	std::cout << position.x / 32 << "\t" << position.y / 32 << "\n";
@@ -183,6 +184,11 @@ bool PlayerCharacter::DashReady() const
 void PlayerCharacter::SetDashIsReady(bool ready)
 {
 	this->dashIsReady = ready;
+}
+
+bool PlayerCharacter::GetLastTickGroundedState() const
+{
+	return groundedLastFrame;
 }
 
 int PlayerCharacter::GetFrame() {

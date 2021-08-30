@@ -23,7 +23,23 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
     
 
-    doorSFX = LoadSound("assets/audio/sfx/Shutting_Doors.wav");
+    //background initialization
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/Lower_Foreground.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/AreaTwo/Upper_Foreground.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/AreaTwo/background.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/background.png");
+
+    foregroundPos = { 0,0 };
+    backgroundPos = { 0,0 };
+
+    //fill background loop vector
+    backgroundLoopX = 10;
+    backgroundLoopY = 20;
+    backgroundException = 0;
+
+    foregroundLoopX = 5;
+    foregroundLoopY = 9;
+    foregroundException = 8;
 }
 
 void TraitorBossScene::Update() {
@@ -32,7 +48,7 @@ void TraitorBossScene::Update() {
 
     if (playerCharacter->GetPosition().x >= 50 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !doorActive) {
         sceneManager->ScreenShake(20);
-        PlaySound(doorSFX);
+        soundManager->PlaySfx(SFX::DOORS);
         doorActive = true;
 		tilemap->AddCollisionTile({ door1[0] });
 		tilemap->AddCollisionTile({ door1[1] });
@@ -63,7 +79,7 @@ void TraitorBossScene::CheckBossDeath()
             return;
         }
     }
-    PlaySound(doorSFX);
+    soundManager->PlaySfx(SFX::DOORS);
     sceneManager->ScreenShake(20);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

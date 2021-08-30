@@ -47,7 +47,7 @@ std::shared_ptr<EState> TBAfterFightState::Update(Enemy& enemy)
 	
 
 	stateFrameCounter++;
-	if (stateFrameCounter >= 15) {
+	if (stateFrameCounter >= 20) {
 		stateFrameCounter = 0;
 		thisFrame++;
 		thisFrame2++;
