@@ -31,7 +31,9 @@ private:
     void Summon(Enemy& enemy);
     void ReturnToGround(Enemy& enemy);
 
-
+    Rectangle textureRec{};
+    const int animTimer{60};
+    int currentAnimTimer{};
     //spawn points for enemies
     const Vector2 spawn{58*32, 85*32};
     const Vector2 spawn2{46*32, 85*32};
