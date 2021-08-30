@@ -1,13 +1,14 @@
 #include "TraitorBossScene.h"
 
 #include "TraitorBossScene.h"
+#include "../Data/SceneChangerObject.h"
 #include "../Global.h"
 #include "../Data/TraitorBoss/TraitorBoss.h"
 #include "../Data/Coal.h"
 
 
-TraitorBossScene::TraitorBossScene() {
-    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Verrater_Boss_neu.json");
+TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
+    tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json", "assets/Tilemaps/Verrater_Boss.json");
     playerCharacter->SetPosition(playerStart);
 
     playerCharacter->SetHealth(100);
@@ -18,15 +19,27 @@ TraitorBossScene::TraitorBossScene() {
     door2[0] = { 68 * 32, 87 * 32 };
     door2[1] = { 68 * 32, 88 * 32 };
 
+    Vector2 tempVec = {88 * 32, 64 * 32};
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
+    
 
-    Vector2 tmp1 = { 51 * 32, 88 * 32 };
-    Vector2 tmp2 = { 65 * 32, 88 * 32 };
-    Vector2 tmp3 = { 52 * 32, 88 * 32 };
-    interactables.emplace_back(std::make_unique<Coal>(tmp1));
-    interactables.emplace_back(std::make_unique<Coal>(tmp2));
-    interactables.emplace_back(std::make_unique<Coal>(tmp3));
+    //background initialization
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/Lower_Foreground.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/AreaTwo/Upper_Foreground.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/AreaTwo/background.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/background.png");
 
-    doorSFX = LoadSound("assets/audio/sfx/Shutting_Doors.wav");
+    foregroundPos = { 0,0 };
+    backgroundPos = { 0,0 };
+
+    //fill background loop vector
+    backgroundLoopX = 10;
+    backgroundLoopY = 20;
+    backgroundException = 0;
+
+    foregroundLoopX = 5;
+    foregroundLoopY = 9;
+    foregroundException = 8;
 }
 
 void TraitorBossScene::Update() {
@@ -35,7 +48,7 @@ void TraitorBossScene::Update() {
 
     if (playerCharacter->GetPosition().x >= 50 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !doorActive) {
         sceneManager->ScreenShake(20);
-        PlaySound(doorSFX);
+        soundManager->PlaySfx(SFX::DOORS);
         doorActive = true;
 		tilemap->AddCollisionTile({ door1[0] });
 		tilemap->AddCollisionTile({ door1[1] });
@@ -66,6 +79,7 @@ void TraitorBossScene::CheckBossDeath()
             return;
         }
     }
+    soundManager->PlaySfx(SFX::DOORS);
     sceneManager->ScreenShake(20);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

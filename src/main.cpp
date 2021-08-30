@@ -15,6 +15,7 @@
 #include "Scenes/AreaThree.h"
 #include "Scenes/MinerBossScene.h"
 #include "Scenes/AreaOne.h"
+#include "Scenes/AreaTwo.h"
 #include "Scenes/TraitorBossScene.h"
 
 
@@ -22,6 +23,7 @@ std::shared_ptr<PlayerCharacter> playerCharacter;
 std::shared_ptr<PlayerController> playerController;
 std::shared_ptr<HUD> hud;
 std::shared_ptr<SceneManager> sceneManager;
+std::shared_ptr<SoundManager> soundManager;
 
 
 int main() {
@@ -49,9 +51,9 @@ if  constexpr(DEBUG_BUILD){
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
-
-
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>());
+ 	soundManager = std::make_shared<SoundManager>();
+     
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 
 
@@ -97,7 +99,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-
+    soundManager->StopCurrentTrack();
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

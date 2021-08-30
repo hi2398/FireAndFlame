@@ -5,7 +5,8 @@
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Coal.h"
 
-Tutorial::Tutorial() {
+Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(90);
@@ -19,7 +20,7 @@ Tutorial::Tutorial() {
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText5.json",npc5Pos,npc1Tex));
 
     Vector2 tempVec = {86*32,36*32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));
 
     tempVec =  {39 * 32, 97 * 32 };
     interactables.emplace_back(std::make_unique<Coal>(tempVec));
@@ -46,10 +47,10 @@ Tutorial::Tutorial() {
     door3[0] = {40*32,76*32};
     door3[1] = {40*32,75*32};
 
-    textureForegroundBottom = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
-    textureForegroundSide = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
-    textureBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
-    textureUpperBackground = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
 
     foregroundPos = { 0, - 90 };
     backgroundPos = { 0,0 };

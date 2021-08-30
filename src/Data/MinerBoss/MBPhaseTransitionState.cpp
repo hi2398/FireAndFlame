@@ -5,30 +5,36 @@
 #include "raymath.h"
 
 MBPhaseTransitionState::MBPhaseTransitionState(Enemy &enemy) : EState(enemy) {
+    enemy.SetInvulnerable(true);
+    //bullshit bug fix pointer cast
+    auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
+    minerBossPt->EnableDebris();
+    textureRec={32, 64 ,32, 32};
 
 }
 
-std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &actor) {
-    auto minerBoss=dynamic_cast<MinerBoss&>(actor);
+std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &enemy) {
+    auto minerBoss=dynamic_cast<MinerBoss&>(enemy);
     switch (currentStep) {
 
         case TransitionStep::MoveToStart:
-            MoveToStart(actor);
+            MoveToStart(enemy);
             break;
         case TransitionStep::Jump:
-            Jump(actor);
+            Jump(enemy);
             break;
         case TransitionStep::MoveToEnd:
-            MoveToEnd(actor);
+            MoveToEnd(enemy);
             break;
     }
 
 
     if (done) {
         //bullshit bug fix pointer cast
-        auto minerBossPt=dynamic_cast<MinerBoss*>(&actor);
+        enemy.SetInvulnerable(false);
+        auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
         minerBossPt->SetMinerBossPhase(MinerBossPhase::Second);
-        return std::make_shared<MBDecisionState>(actor);
+        return std::make_shared<MBDecisionState>(enemy);
     } else return shared_from_this();
 }
 
@@ -39,6 +45,7 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
      if (Vector2Distance({newX, enemy.GetPosition().y}, jumpStart) <= 3.f){
         currentStep=TransitionStep::Jump;
         enemy.SetPosition(jumpStart);
+
         jumpStartLoc=enemy.GetPosition();
     } else enemy.SetPosition({newX, enemy.GetPosition().y});
 
@@ -47,7 +54,7 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
 
 void MBPhaseTransitionState::Draw(Enemy &actor) {
     auto minerBoss=dynamic_cast<MinerBoss&>(actor);
-    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture());
+    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture(), textureRec);
 }
 
 void MBPhaseTransitionState::Jump(Enemy &enemy) {
@@ -63,11 +70,11 @@ void MBPhaseTransitionState::Jump(Enemy &enemy) {
         jumpStartLoc=enemy.GetPosition();
         if (enemy.GetDirection()==LEFT){
             enemy.SetDirection(RIGHT);
-            nextJumpLoc.x=jumpStartLoc.x-64;
+            nextJumpLoc.x=jumpStartLoc.x+64;
             nextJumpLoc.y=jumpStartLoc.y-64;
         } else {
             enemy.SetDirection(LEFT);
-            nextJumpLoc.x=jumpStartLoc.x+64;
+            nextJumpLoc.x=jumpStartLoc.x-64;
             nextJumpLoc.y=jumpStartLoc.y-64;
         }
     } else {
@@ -129,3 +136,5 @@ void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
 
     }
 }
+
+

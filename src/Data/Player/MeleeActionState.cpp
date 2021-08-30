@@ -11,46 +11,7 @@ MeleeActionState::MeleeActionState(Actor& player) : PlayerStates(player) {
 
 std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 	if (player.GetActionBlocked() || player.GetIsDashing()) return std::make_shared<IdleActionState>(player);
-	// set spear rotation before attacking
-	if (!player.GetIsSwiping()) {
-		switch (player.GetAttackDirection())
-		{
-		case ATT_LEFT:
-			switch (playerCharacter->attackState)
-			{
-			case 0:
-				spearRotation = 240;
-				break;
-			case 1:
-				spearRotation = 130;
-				break;
-			case 2:
-				spearRotation = 0;
-				break;
-			default:
-				break;
-			}
-			break;
-		case ATT_RIGHT:
-			switch (playerCharacter->attackState)
-			{
-			case 0:
-				spearRotation = 300;
-				break;
-			case 1:
-				spearRotation = 410;
-				break;
-			case 2:
-				spearRotation = 0;
-				break;
-			default:
-				break;
-			}
-			break;
-		default:
-			break;
-		}
-	}
+	
 
 	switch (playerCharacter->GetNextAction()) {
 
@@ -71,7 +32,7 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 	case ACTION::MELEE_ATTACK:
 
 		//update attack function
-		if (!player.GetIsSwiping()) player.SetIsSwiping(true), playerCharacter->resetAttack = 0;
+		if (!player.GetIsSwiping()) player.SetIsSwiping(true), playerCharacter->resetAttack = 0, soundManager->PlaySfx(SFX::PLAYER_MELEE);
 
 		stateFrameCounter++;
 		if (stateFrameCounter >= 5) {
@@ -115,8 +76,6 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 			collisionRec = { player.GetPosition().x + 16.0f + 9.0f, player.GetPosition().y, 35, 30 };
 		}
 		break;
-
-		break;
 	}
 
 
@@ -137,7 +96,8 @@ std::shared_ptr<State> MeleeActionState::Update(Actor& player) {
 				break;
 			}
 			enemies->SetInvulnerable(true);
-			std::cout << "HIT\n";
+			Vector2 tmp = { enemies->GetPosition().x + GetRandomValue(0, 16), enemies->GetPosition().y + GetRandomValue(0,16) };
+			sceneManager->AddInteractable(std::make_unique<HitMarker>(tmp));
 		}
 	}
 

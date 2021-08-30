@@ -12,7 +12,7 @@ struct Blockade {
 class IceBossScene : public Scene {
 public:
 
-    IceBossScene();
+    IceBossScene(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
     ~IceBossScene() override = default;

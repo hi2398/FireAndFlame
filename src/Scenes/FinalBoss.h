@@ -8,7 +8,7 @@
 
 class FinalBoss : public Scene{
 public:
-    FinalBoss();
+    FinalBoss(SceneEnums lastScene);
 
     void Update() override;
 

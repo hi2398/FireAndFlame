@@ -30,10 +30,11 @@ void MBDecisionState::Draw(Enemy &actor) {
     minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture());
 }
 
-std::shared_ptr<EState> MBDecisionState::DecideByChance(Enemy& actor) {
+std::shared_ptr<EState> MBDecisionState::DecideByChance(Enemy& enemy) {
+    auto minerBossPt=dynamic_cast<MinerBoss*>(&enemy);
     int switcher = GetRandomValue(1, 10);
-    if (switcher<=4) return std::make_shared<MBRangedState>(actor);
-    if (switcher<=8) return std::make_shared<MBMeleeAttackState>(actor);
-    else return std::make_shared<MBSummonState>(actor);
+    if (switcher>=9 && minerBossPt->GetMinerBossPhase()==MinerBossPhase::First) return std::make_shared<MBSummonState>(enemy);
+    if (switcher>=5) return std::make_shared<MBMeleeAttackState>(enemy);
+    else return std::make_shared<MBRangedState>(enemy);
 
 }

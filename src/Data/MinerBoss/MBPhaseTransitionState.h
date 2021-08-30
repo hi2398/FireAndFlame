@@ -8,7 +8,7 @@ enum class TransitionStep{MoveToStart, Jump, MoveToEnd};
 class MBPhaseTransitionState : public EState {
 public:
     explicit MBPhaseTransitionState(Enemy &enemy);
-    std::shared_ptr <EState> Update(Enemy &actor) override;
+    std::shared_ptr <EState> Update(Enemy &enemy) override;
     void Draw(Enemy &actor) override;
     ~MBPhaseTransitionState() override = default;
 
@@ -16,11 +16,12 @@ protected:
 
 
 private:
+
     TransitionStep currentStep{TransitionStep::MoveToStart};
     bool done{false};
     const Vector2 jumpStart{64 * 32, 90 * 32};
-    Direction nextJump{Direction::LEFT};
-    Vector2 nextJumpLoc{62 * 32, 88 * 32};
+    Direction nextJump{Direction::RIGHT};
+    Vector2 nextJumpLoc{64 * 32, 90 * 32};
     Vector2 jumpStartLoc{};
     float lerpAlpha{0.f};
     int jumpsLeft{19};
@@ -28,6 +29,8 @@ private:
     void MoveToStart(Enemy& enemy);
     void Jump(Enemy& enemy);
     void MoveToEnd(Enemy& enemy);
+
+    Rectangle textureRec{};
 
     //end movement
     bool correctZ{false};

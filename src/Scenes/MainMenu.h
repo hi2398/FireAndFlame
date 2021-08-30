@@ -9,10 +9,10 @@ enum class ControllerCommands {MOVERIGHT,MOVELEFT,MOVEUP,MOVEDOWN};
 
 class MainMenu : public Scene{
 public:
-    MainMenu();
+    MainMenu(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~MainMenu() override = default;
+    ~MainMenu() override;
 
     int GetMusicVolume();
     int GetSoundVolume();
@@ -101,5 +101,7 @@ private:
     Texture2D backButton[3];
     Rectangle backButtonRec;
     int backButtonIndex = 0;
+
+    
 
 };
