@@ -32,6 +32,12 @@ std::shared_ptr<EState> TBBeforeFightState::Update(Enemy& enemy)
 	activeFrame = { (float)32 * thisFrame, 0, (float)32 * enemy.GetDirection(), 32 };
 	activeFrame2 = { (float)32 * thisFrame2, 0, (float)32 * enemy.GetDirection(), 32 };
 
+	if (!enemy.IsGrounded()) {
+		enemy.SetPosition({enemy.GetPosition().x, enemy.GetPosition().y + 5.0f});
+		activeFrame.y = (float)32 * 5;
+		activeFrame2.y = (float)32 * 2;
+	}
+
 	return shared_from_this();
 }
 

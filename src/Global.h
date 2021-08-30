@@ -1,13 +1,15 @@
 #pragma once
 #include "Core/SceneManager.h"
+#include "Core/SoundManager.h"
 
 extern std::shared_ptr<PlayerCharacter> playerCharacter;
 extern std::shared_ptr<PlayerController> playerController;
 extern std::shared_ptr<HUD> hud;
 extern std::shared_ptr<SceneManager> sceneManager;
+extern std::shared_ptr<SoundManager> soundManager;
 
 constexpr bool DEBUG_BUILD = true;
-constexpr bool DEBUG_PLAYER_STATES = false;
+constexpr bool DEBUG_PLAYER_STATES = true;
 constexpr bool DEBUG_ENEMY_STATES = false;
 constexpr bool DEBUG_PLAYER_POSITION = false;
 

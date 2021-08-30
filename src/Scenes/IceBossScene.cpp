@@ -14,11 +14,28 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     tilemap->AddCollisionTile(tempVec);
     tempVec = { 38 * 32, 35 * 32 };
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
+
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+
+    foregroundPos = { -32*8, -90 };
+    backgroundPos = { -32*8,0 };
+
+    //fill background loop vector
+    backgroundLoopX = 8;
+    backgroundLoopY = 16;
+    backgroundException = 0;
+
+    foregroundLoopX = 4;
+    foregroundLoopY = 8;
+    foregroundException = 7;
 }
 
 
 void IceBossScene::Update() {
-
+    Scene::Update();
     if (!bossActivated) {
         //When player enters boss Arena, close entrance and exit and spawn Boss
         if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {

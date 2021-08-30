@@ -79,10 +79,10 @@ void TraitorBoss::Update()
 		}
 	}
 
-	CollisionGround(sceneManager->GetTilemap(), GetType());
-	CollisionHead(sceneManager->GetTilemap(), GetType());
-	CollisionLeft(sceneManager->GetTilemap(), GetType());
-	CollisionRight(sceneManager->GetTilemap(), GetType());
+	CollisionGround(sceneManager->GetTilemap(), ObjectTypes::Player);
+	CollisionHead(sceneManager->GetTilemap(), ObjectTypes::Player);
+	CollisionLeft(sceneManager->GetTilemap(), ObjectTypes::Player);
+	CollisionRight(sceneManager->GetTilemap(), ObjectTypes::Player);
 
 	
 }

@@ -8,6 +8,10 @@
 
 IdleState::IdleState(Enemy& enemy) : EState(enemy)
 {
+	if (CheckCollisionRecs(enemy.GetCollider(), playerCharacter->visibleScreen)) {
+		soundManager->PlaySfx(SFX::ROBOT_SPEECH1);
+	}
+
 	switch (enemy.GetEnemyType())
 	{
 	case EnemyTypes::SpiderBot:

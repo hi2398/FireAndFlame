@@ -42,6 +42,8 @@ public:
     bool DashReady() const;
     void SetDashIsReady(bool ready);
 
+    bool GetLastTickGroundedState() const;
+
 	//2Dcam
 	Camera2D camera = { 0 };
     bool followCam{ true };
@@ -91,7 +93,7 @@ private:
     int currentFrame = 0;
 
     bool invulnerableVisualized{ false };
-
+    bool groundedLastFrame{ true };
    
 
     //attack

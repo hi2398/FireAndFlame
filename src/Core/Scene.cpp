@@ -74,8 +74,8 @@ void Scene::UpdateSceneEffect()
         effectPos1 = Vector2Add(effectPos1, effectDirection);
         effectPos2 = Vector2Add(effectPos2, effectDirection);
 
-        if (effectPos1.y >= 420 * 3) effectPos1 = effectPos2Start;
-        if (effectPos2.y >= 420 * 3) effectPos2 = effectPos2Start;
+        if (effectPos1.y >= effectPos1Start.y + 400 * 3) effectPos1 = effectPos2Start;
+        if (effectPos2.y >= effectPos1Start.y + 400 * 3) effectPos2 = effectPos2Start;
     }
 }
 
@@ -110,9 +110,9 @@ void Scene::DrawBackground() const {
     for (int y = 0; y < backgroundLoopY; y++) {
         for (int x = 0; x < backgroundLoopX; x++) {
             if (y == backgroundException) {
-                DrawTextureEx(textureBackgroundException, { (float)backgroundPos.x + x * textureBackgroundMain.width / 2, (float)backgroundPos.y + y * textureBackgroundMain.height / 2 }, 0.0, 0.5, WHITE);
+                DrawTextureEx(textureBackgroundException, { (float)backgroundPos.x + x * textureBackgroundMain.width * backgroundMultiplier, (float)backgroundPos.y + y * textureBackgroundMain.height * backgroundMultiplier }, 0.0, backgroundMultiplier, WHITE);
             }
-            else DrawTextureEx(textureBackgroundMain, { (float)backgroundPos.x + x * textureBackgroundMain.width/2, (float)backgroundPos.y + y * textureBackgroundMain.height/2 }, 0.0, 0.5, WHITE);
+            else DrawTextureEx(textureBackgroundMain, { (float)backgroundPos.x + x * textureBackgroundMain.width * backgroundMultiplier, (float)backgroundPos.y + y * textureBackgroundMain.height * backgroundMultiplier }, 0.0, backgroundMultiplier, WHITE);
         }
     }
 

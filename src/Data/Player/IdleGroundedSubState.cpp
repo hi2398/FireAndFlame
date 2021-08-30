@@ -11,6 +11,7 @@ IdleGroundedSubState::IdleGroundedSubState(Actor& player) : PlayerStates(player)
 }
 
 std::shared_ptr<State> IdleGroundedSubState::Update(Actor& player) {
+    if (!playerCharacter->GetLastTickGroundedState()) soundManager->PlaySfx(SFX::PLAYER_LANDING);
     if constexpr (DEBUG_PLAYER_STATES) {
         std::cout << "Idle Grounded\n";
     }

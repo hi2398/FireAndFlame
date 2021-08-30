@@ -15,5 +15,4 @@ private:
     Vector2 moveTowardsPosition;
     int magnitude = 50;
 protected:
-
 };

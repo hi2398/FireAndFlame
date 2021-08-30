@@ -26,13 +26,6 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     foregroundLoopY = 9;
     foregroundException = 0;
 
-    //example for weathereffect
-    sceneEffectActivated = true;
-    sceneEffect = LoadTexture("assets/graphics/backgrounds/AreaThree/ash.png");
-    effectPos1Start = { 0,0 };
-    effectPos2Start = {0, -400 * 3};
-    effectPos1 = effectPos1Start;
-    effectPos2 = effectPos2Start;
 }
 
 void AreaThree::Update() {

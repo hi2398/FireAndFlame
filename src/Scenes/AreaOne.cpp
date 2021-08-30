@@ -1,7 +1,7 @@
 //
 // Created by Ashty on 06.07.2021.
 //
-
+#include "../Global.h"
 #include "AreaOne.h"
 
 AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
@@ -29,10 +29,12 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     foregroundLoopX = 4;
     foregroundLoopY = 9;
     foregroundException = 8;
-    /*playerCharacter->SetLastPosition({ 19 * 32, 107 * 32 });*/
+
+    soundManager->PlayTrack(TRACK::AREA_ONE);
 }
 
 void AreaOne::Update() {
+    soundManager->UpdateTrack(TRACK::AREA_ONE);
     Scene::Update();
 }
 

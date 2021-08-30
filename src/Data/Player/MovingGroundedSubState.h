@@ -15,6 +15,9 @@ protected:
 
 private:
     int frameCounterDash = 0;
+    bool stepped{ false };
+    int stepCounter = 0;
+    int stepInit = 0;
 };
 
 

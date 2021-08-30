@@ -66,6 +66,8 @@ protected:
     int foregroundLoopX = 0;
     int foregroundLoopY = 0;
 
+    float backgroundMultiplier = 0.5f;
+
     //foreground, i.e. weather effects
     Texture2D sceneEffect;
     Vector2 effectPos1{};
