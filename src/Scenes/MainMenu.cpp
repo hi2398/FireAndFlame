@@ -3,7 +3,8 @@
 #include <iostream>
 #include "Tutorial.h"
 
-MainMenu::MainMenu() {
+MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
+    this->lastScene = lastScene;
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
 
@@ -82,9 +83,13 @@ MainMenu::MainMenu() {
     }
     UpdateMusicAndSoundVolume();
     fullscreenRec = {600,340,50,50};
+
+    //load soundtrack
+    soundManager->PlayTrack(TRACK::MENU_TRACK);
 }
 
 void MainMenu::Update() {
+    soundManager->UpdateTrack(TRACK::MENU_TRACK);
     vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
 
     switch (menuScreenStates) {
@@ -191,7 +196,7 @@ void MainMenu::Update() {
                     loadSave1ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>());
+                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
                 }
             }else{
                 loadSave1ButtonIndex = 0;
@@ -203,7 +208,7 @@ void MainMenu::Update() {
                     loadSave2ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>());
+                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
                 }
             }else{
                 loadSave2ButtonIndex = 0;
@@ -215,7 +220,7 @@ void MainMenu::Update() {
                     loadSave3ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>());
+                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
                 }
             }else{
                 loadSave3ButtonIndex = 0;
@@ -332,6 +337,8 @@ void MainMenu::Update() {
             UpdateByController(ControllerCommands::MOVELEFT);
         }
     }
+
+  
 }
 
 void MainMenu::Draw() {
@@ -404,6 +411,11 @@ void MainMenu::Draw() {
     if(!controllerActive) {
         DrawText("Press Gamepad B to activate Gamepad in Main Menu.",720,680,20,WHITE);
     }else DrawText("Press Gamepad A to select and Gamepad B to Return.",700,680,20,WHITE);
+}
+
+MainMenu::~MainMenu()
+{
+    
 }
 
 int MainMenu::GetMusicVolume() {

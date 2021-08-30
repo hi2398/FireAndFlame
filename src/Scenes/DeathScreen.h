@@ -3,7 +3,7 @@
 
 class DeathScreen : public Scene {
 public:
-    DeathScreen();
+    DeathScreen(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
     ~DeathScreen() override = default;

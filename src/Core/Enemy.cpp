@@ -91,10 +91,10 @@ void Enemy::UpdateAttackHitbox()
 	switch (GetDirection())
 	{
 	case LEFT:
-		attackHitbox = { position.x - 20, position.y + 8, 1, 16 };
+		attackHitbox = { position.x - 20, position.y + 8, 1, 10 };
 		break;
 	case RIGHT:
-		attackHitbox = { position.x + 32, position.y + 8, 1, 16 };
+		attackHitbox = { position.x + 32, position.y + 8, 1, 10 };
 		break;
 	default:
 		break;

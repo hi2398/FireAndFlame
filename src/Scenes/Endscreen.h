@@ -3,7 +3,7 @@
 
 class Endscreen : public Scene{
 public:
-    Endscreen();
+    Endscreen(SceneEnums lastScene);
 
     void Update() override;
 

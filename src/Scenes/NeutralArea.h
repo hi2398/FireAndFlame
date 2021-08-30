@@ -13,7 +13,7 @@
 
 class NeutralArea : public Scene {
 public:
-    NeutralArea();
+    NeutralArea(SceneEnums lastScene);
  
     void Update() override;
     void Draw() override;

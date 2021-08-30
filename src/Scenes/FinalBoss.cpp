@@ -9,7 +9,8 @@
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
 
 
-FinalBoss::FinalBoss() {
+FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
+    this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);
@@ -47,6 +48,33 @@ FinalBoss::FinalBoss() {
     for(int i = 0; i<18; i++){
         bossFightBorder[i] = {(float)(86*32)+(32*i),57*32, 32, 32};
     }
+
+    //background initialization
+    textureForegroundException = LoadTexture("assets/graphics/backgrounds/Surface/surface_fore_ex.png");
+    textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Surface/surface_fore.png");
+    textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/Surface/surface_back.png");
+    textureBackgroundException = LoadTexture("assets/graphics/backgrounds/Surface/surface_back_ex.png");
+
+    foregroundPos = { 0,2230 };
+    backgroundPos = { 0,2350 };
+    backgroundMultiplier = 1.3f;
+
+    //fill background loop vector
+    backgroundLoopX = 10;
+    backgroundLoopY = 2;
+    backgroundException = 1;
+
+    foregroundLoopX = 5;
+    foregroundLoopY = 2;
+    foregroundException = 1;
+
+    //example for weathereffect
+    sceneEffectActivated = true;
+    sceneEffect = LoadTexture("assets/graphics/backgrounds/AreaThree/ash.png");
+    effectPos1Start = { 0,2000 };
+    effectPos2Start = { 500,2000 - 400 * 3 };
+    effectPos1 = effectPos1Start;
+    effectPos2 = effectPos2Start;
 }
 
 void FinalBoss::Update() {

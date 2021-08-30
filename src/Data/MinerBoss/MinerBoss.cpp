@@ -2,13 +2,15 @@
 #include "MBPhaseTransitionState.h"
 #include "../../Global.h"
 #include "../SceneChangerObject.h"
+#include "../../Scenes/MinerBossScene.h"
 #include "MBDecisionState.h"
+#include "raymath.h"
 
 MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     SetPosition(location);
     health = maxHealth;
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
-    texture = LoadTexture("assets/Bosses/MinerBoss/Miner.png");
+    texture = LoadTexture("assets/Bosses/MinerBoss/Miner_Boss_Spritesheet.png");
     state = std::make_unique<MBDecisionState>(*this);
     hitbox = {0, 0, 32, 32};
     hitbox.x = position.x;
@@ -26,13 +28,43 @@ void MinerBoss::Update() {
         invulnerable=false;
         invulnerableCounter=15;
     }
+
+
+    if (enableDebris){
+        if (debrisTimer>0){
+            --debrisTimer;
+            debrisDrawLoc=Vector2Lerp(debrisStartLoc, debrisEndLoc, 1.f-debrisTimer/100.f);
+
+            if (debrisTimer==0){
+                sceneManager->GetTilemap()->AddCollisionTile(debrisEndLoc);
+                std::shared_ptr <MinerBossScene> scene= std::dynamic_pointer_cast<MinerBossScene>(sceneManager->GetActiveScene());
+                scene->EnableDebrisLower();
+                enableDebris = false;
+            }
+        }
+    }
+
+    if (bossPhase==MinerBossPhase::Second && !phase2debrisEnabled) {
+        if (playerCharacter->GetPosition().y<=(59*32)){
+            std::shared_ptr <MinerBossScene> scene= std::dynamic_pointer_cast<MinerBossScene>(sceneManager->GetActiveScene());
+            std::cout << "Enable Debris Upper";
+            scene->EnableDebrisUpper();
+            phase2debrisEnabled= true;
+        }
+    }
 }
 
 void MinerBoss::Draw() {
     state->Draw(*this);
+    if (enableDebris){
+        DrawTextureV(debrisTexture, debrisDrawLoc, WHITE);
+    }
 }
 
 void MinerBoss::ReceiveDamage(int damage) {
+    if  (bossPhase==MinerBossPhase::Transition){
+        return;
+    }
     health -= damage;
     invulnerable = true;
     invulnerableCounter=15;
@@ -44,8 +76,7 @@ void MinerBoss::ReceiveDamage(int damage) {
 }
 
 void MinerBoss::OnDeath() {
-    std::cout << "Miner Boss Death\n";
-    sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit));
+    sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit, SceneEnums::NeutralArea ,SceneEnums::MinerBoss));
 }
 
 int MinerBoss::GetMaxHealth() const {
@@ -58,4 +89,8 @@ MinerBossPhase MinerBoss::GetMinerBossPhase() const {
 
 void MinerBoss::SetMinerBossPhase(MinerBossPhase bossPhase) {
     this->bossPhase=bossPhase;
+}
+
+void MinerBoss::EnableDebris() {
+    enableDebris=true;
 }

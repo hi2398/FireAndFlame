@@ -1,5 +1,6 @@
 #pragma once
-
+#include "../HitMarker.h"
+#include "../Coal.h"
 #include "../../Core/PlayerStates.h"
 
 class MeleeActionState : public PlayerStates {
@@ -23,6 +24,7 @@ private:
     int chargingCounter = 0;
     int resetAttack = 0;
     Rectangle collisionRec;
+
 };
 
 

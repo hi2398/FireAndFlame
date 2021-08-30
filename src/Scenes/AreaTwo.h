@@ -10,7 +10,7 @@
 
 class AreaTwo : public Scene {
 public:
-    AreaTwo();
+    AreaTwo(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
     ~AreaTwo() override= default;

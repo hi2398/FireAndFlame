@@ -16,6 +16,8 @@ FBSpawnE::FBSpawnE() {
     sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {101*32,60*32};
     sceneManager->AddEnemy(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
+
+    soundManager->PlaySfx(SFX::FB_SPEECH2);
 }
 
 std::shared_ptr<State> FBSpawnE::Update(Actor &actor) {

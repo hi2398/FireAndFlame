@@ -3,7 +3,6 @@
 #include "../Data/Player/PlayerCharacter.h"
 #include "PlayerController.h"
 #include "../Data/HUD.h"
-#include "BackgroundManager.h"
 #include "Tilemap.h"
 #include "Scene.h"
 
@@ -35,13 +34,15 @@ public:
 
     void ScreenShake(int durationInSeconds);
 
+    [[nodiscard]] std::shared_ptr<Scene> GetActiveScene();
+
 protected:
 
 private:
     Vector2 virtualMousePosition;
     std::shared_ptr<Scene> activeScene;
     std::shared_ptr<Scene> nextScene;
-    std::shared_ptr<BackgroundManager> background = std::make_shared<BackgroundManager>();
+
 
 };
 
