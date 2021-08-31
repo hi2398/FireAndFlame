@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../Data/Spawner.h"
 #include "../Core/Scene.h"
 
 
@@ -24,5 +24,5 @@ private:
     Vector2 door2[2];
     bool doorActive{ false };
 
-
+    std::vector<std::unique_ptr<Spawner>> spawner;
 };
