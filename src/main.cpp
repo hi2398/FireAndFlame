@@ -50,8 +50,8 @@ if  constexpr(DEBUG_BUILD){
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
-  hud = std::make_shared<HUD>();
-  soundManager = std::make_shared<SoundManager>();
+    hud = std::make_shared<HUD>();
+    soundManager = std::make_shared<SoundManager>();
 	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 #ifdef GAME_START_FULLSCREEN

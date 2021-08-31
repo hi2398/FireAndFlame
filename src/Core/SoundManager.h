@@ -18,5 +18,5 @@ private:
 	Music music[2];
 
 	float soundVolume = 1.0;
-	float trackVolume = 0.0;
+	float trackVolume = 1.0;
 };
