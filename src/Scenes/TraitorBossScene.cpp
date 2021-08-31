@@ -2,6 +2,7 @@
 
 #include "TraitorBossScene.h"
 #include "../Data/SceneChangerObject.h"
+#include "../Data/Spawner.h"
 #include "../Global.h"
 #include "../Data/TraitorBoss/TraitorBoss.h"
 #include "../Data/Coal.h"
@@ -21,7 +22,10 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
 
     Vector2 tempVec = {88 * 32, 64 * 32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
-    
+    tempVec = {51 * 32, 74 * 32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+    tempVec = { 65 * 32, 74 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/Lower_Foreground.png");
@@ -59,6 +63,13 @@ void TraitorBossScene::Update() {
         bossActivated = true;
         enemies.emplace_back(std::make_unique<TraitorBoss>(bossSpawn));
     }
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+    }
 }
 
 void TraitorBossScene::Draw() {
@@ -69,6 +80,9 @@ void TraitorBossScene::Draw() {
         DrawRectangle(door2[0].x, door2[0].y, 32, 64, RED);
     }
     
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }
 
 void TraitorBossScene::CheckBossDeath()

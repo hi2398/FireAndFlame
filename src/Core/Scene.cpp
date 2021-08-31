@@ -74,8 +74,8 @@ void Scene::UpdateSceneEffect()
         effectPos1 = Vector2Add(effectPos1, effectDirection);
         effectPos2 = Vector2Add(effectPos2, effectDirection);
 
-        if (effectPos1.y >= effectPos1Start.y + 400 * 3) effectPos1 = effectPos2Start;
-        if (effectPos2.y >= effectPos1Start.y + 400 * 3) effectPos2 = effectPos2Start;
+        if (effectPos1.y >= effectPos1Start.y + 400 * 4) effectPos1 = effectPos2Start;
+        if (effectPos2.y >= effectPos1Start.y + 400 * 4) effectPos2 = effectPos2Start;
     }
 }
 
@@ -131,12 +131,12 @@ void Scene::DrawBackground() const {
 void Scene::DrawForeground() const
 {
     if (sceneEffectActivated) {
-		for (int y = 0; y < 6; y++) {
+		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 20; x++) {
 				DrawTextureEx(sceneEffect, { effectPos1.x + x * sceneEffect.width / 2, effectPos1.y + y * sceneEffect.height / 2 }, 0.0, 0.5f, WHITE);
 			}
 		}
-		for (int y = 0; y < 6; y++) {
+		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 20; x++) {
 				DrawTextureEx(sceneEffect, { effectPos2.x + x * sceneEffect.width / 2, effectPos2.y + y * sceneEffect.height / 2 }, 0.0, 0.5f, WHITE);
 			}

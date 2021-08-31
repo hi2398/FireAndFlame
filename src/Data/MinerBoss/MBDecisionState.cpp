@@ -11,12 +11,12 @@ MBDecisionState::MBDecisionState(Enemy &enemy) : EState(enemy) {
 }
 
 std::shared_ptr<EState> MBDecisionState::Update(Enemy &actor) {
-    auto minerBoss = dynamic_cast<MinerBoss&>(actor);
+    auto* minerBoss = dynamic_cast<MinerBoss*>(&actor);
     --delay;
 
     //check if boss should transition to second phase
-    if ((minerBoss.GetHealth() <= minerBoss.GetMaxHealth()/2) && (minerBoss.GetMinerBossPhase()==MinerBossPhase::First)) {
-        minerBoss.SetMinerBossPhase(MinerBossPhase::Transition);
+    if ((minerBoss->GetHealth() <= minerBoss->GetMaxHealth()/2) && (minerBoss->GetMinerBossPhase()==MinerBossPhase::First)) {
+        minerBoss->SetMinerBossPhase(MinerBossPhase::Transition);
         return std::make_shared<MBPhaseTransitionState>(actor);
     }
 

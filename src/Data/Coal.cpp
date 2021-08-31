@@ -59,11 +59,21 @@ void Coal::Update()
         
 	}
 
+    existenceCounter++;
+    if (existenceCounter >= 900 && existenceCounter < 1080) {
+        if (existenceCounter % 10 == 0) {
+            despawningVisual = !despawningVisual;
+        }
+    }
+    else if (existenceCounter >= 1080) {
+        MarkToDestroy();
+    }
+
 }
 
 void Coal::Draw()
 {
-	DrawTexture(texture, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
+	if (despawningVisual) DrawTexture(texture, static_cast<int>(position.x), static_cast<int>(position.y), WHITE);
 }
 
 Coal::~Coal()
