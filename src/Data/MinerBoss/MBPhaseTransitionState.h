@@ -25,6 +25,7 @@ private:
     Vector2 jumpStartLoc{};
     float lerpAlpha{0.f};
     int jumpsLeft{19};
+    int animTimer{45};
 
     void MoveToStart(Enemy& enemy);
     void Jump(Enemy& enemy);
