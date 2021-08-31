@@ -1,4 +1,5 @@
 #include "SoundManager.h"
+#include <iostream>
 
 SoundManager::SoundManager()
 {
@@ -21,56 +22,65 @@ SoundManager::SoundManager()
 
 void SoundManager::PlaySfx(SFX sfx)
 {
+	int selectedSound;
 	switch (sfx)
 	{
 	case SFX::PLAYER_STEP:
-		PlaySound(sound[0]);
+		selectedSound = 0;
 		break;
 	case SFX::FIREBALL:
-		PlaySound(sound[1]);
+		selectedSound = 1;
 		break;
 	case SFX::FB_SPEECH1:
-		PlaySound(sound[2]);
+		selectedSound = 2;
 		break;
 	case SFX::FB_SPEECH2:
-		PlaySound(sound[3]);
+		selectedSound = 3;
 		break;
 	case SFX::FB_SPEECH3:
-		PlaySound(sound[4]);
+		selectedSound = 4;
 		break;
 	case SFX::ROBOT_SPEECH1:
-		PlaySound(sound[5]);
+		selectedSound = 5;
 		break;
 	case SFX::DOORS:
-		PlaySound(sound[6]);
+		selectedSound = 6;
 		break;
 	case SFX::PLAYER_MELEE:
-		PlaySound(sound[7]);
+		selectedSound = 7;
 		break;
 	case SFX::PLAYER_LANDING:
-		PlaySound(sound[8]);
+		selectedSound = 8;
 		break;
 	case SFX::MELEE_HIT:
-		PlaySound(sound[9]);
+		selectedSound = 9;
 		break;
 	default:
 		break;
 	}
+
+	SetSoundVolume(sound[selectedSound], soundVolume);
+	PlaySound(sound[selectedSound]);
+	
 }
 
 void SoundManager::PlayTrack(TRACK track)
 {
+	int selectedTrack;
 	switch (track)
 	{
 	case TRACK::MENU_TRACK:
-		PlayMusicStream(music[0]);
+		selectedTrack = 0;
 		break;
 	case TRACK::AREA_ONE:
-		PlayMusicStream(music[1]);
+		selectedTrack = 1;
 		break;
 	default:
 		break;
 	}
+
+	
+	PlayMusicStream(music[selectedTrack]);
 }
 
 void SoundManager::UpdateTrack(TRACK track)
@@ -88,6 +98,7 @@ void SoundManager::UpdateTrack(TRACK track)
 		return;
 		break;
 	}
+	SetMusicVolume(music[selectTrack], trackVolume);
 	UpdateMusicStream(music[selectTrack]);
 	if (GetMusicTimePlayed(music[selectTrack]) == GetMusicTimeLength(music[selectTrack])) {
 		StopMusicStream(music[selectTrack]);
@@ -103,6 +114,18 @@ void SoundManager::StopCurrentTrack()
 	}
 }
 
+void SoundManager::SetSfxVolume(float volume)
+{
+	soundVolume = volume;
+}
+
+void SoundManager::SetTrackVolume(float volume)
+{
+	trackVolume = volume;
+	
+}
+
 SoundManager::~SoundManager()
 {
+	
 }

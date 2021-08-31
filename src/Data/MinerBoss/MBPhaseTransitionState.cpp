@@ -39,6 +39,19 @@ std::shared_ptr<EState> MBPhaseTransitionState::Update(Enemy &enemy) {
 }
 
 void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
+    --animTimer;
+    textureRec={0, 32, 32, 32};
+    if (animTimer<=30){
+        textureRec={32, 32, 32, 32};
+    }
+    if (animTimer<=15){
+        textureRec={64, 32, 32, 32};
+    }
+    if (animTimer<=0){
+        textureRec={0, 32, 32, 32};
+        animTimer=45;
+
+    }
     enemy.SetDirection(RIGHT);
     float newX = enemy.GetPosition().x + enemy.GetEnemyMovementSpeed();
 
@@ -53,16 +66,18 @@ void MBPhaseTransitionState::MoveToStart(Enemy &enemy) {
 }
 
 void MBPhaseTransitionState::Draw(Enemy &actor) {
-    auto minerBoss=dynamic_cast<MinerBoss&>(actor);
-    minerBoss.DrawDirectional(minerBoss.GetPosition(), minerBoss.GetTexture(), textureRec);
+    auto* minerBoss =dynamic_cast<MinerBoss*>(&actor);
+    minerBoss->DrawDirectional(minerBoss->GetPosition(), minerBoss->GetTexture(), textureRec);
 }
 
 void MBPhaseTransitionState::Jump(Enemy &enemy) {
+
 
     if (Vector2Distance(enemy.GetPosition(), nextJumpLoc) <=3.f){
         enemy.SetPosition(nextJumpLoc);
         lerpAlpha=0.f;
         --jumpsLeft;
+        textureRec={64, 64 ,32, 32};
         if (jumpsLeft==0) {
             currentStep=TransitionStep::MoveToEnd;
             targetFloorLocStart=enemy.GetPosition();
@@ -80,12 +95,14 @@ void MBPhaseTransitionState::Jump(Enemy &enemy) {
     } else {
         enemy.SetPosition(Vector2Lerp(jumpStartLoc, nextJumpLoc, lerpAlpha));
         lerpAlpha+=0.03f;
+        textureRec={32, 64 ,32, 32};
     }
 
 }
 
 void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
     if (!correctZ){
+        textureRec={64, 64 ,32, 32};
         enemy.SetDirection(LEFT);
         if (Vector2Distance(enemy.GetPosition(), targetFloorLoc)<=3.f){
             enemy.SetPosition(targetFloorLoc);
@@ -101,6 +118,19 @@ void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
     switch (endJumpStep) {
         case 0:
             //move two tiles left
+            --animTimer;
+            textureRec={0, 32, 32, 32};
+            if (animTimer<=30){
+                textureRec={32, 32, 32, 32};
+            }
+            if (animTimer<=15){
+                textureRec={64, 32, 32, 32};
+            }
+            if (animTimer<=0){
+                textureRec={0, 32, 32, 32};
+                animTimer=45;
+
+            }
             if (Vector2Distance(enemy.GetPosition(), moveTwoLeftEnd) <=3.f){
                 enemy.SetPosition(moveTwoLeftEnd);
                 lerpAlpha=0.f;
@@ -112,6 +142,7 @@ void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
             break;
         case 1:
             //little jump up
+            textureRec={32, 64, 32, 32};
             if (Vector2Distance(enemy.GetPosition(), jumpHighestPoint) <=3.f){
                 enemy.SetPosition(jumpHighestPoint);
                 lerpAlpha=0.f;
@@ -123,6 +154,7 @@ void MBPhaseTransitionState::MoveToEnd(Enemy &enemy) {
             break;
         case 2:
             //fall down
+            textureRec={64, 64, 32, 32};
             if (Vector2Distance(enemy.GetPosition(), jumpDown) <=3.f){
                 enemy.SetPosition(jumpDown);
                 lerpAlpha=0.f;

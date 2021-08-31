@@ -554,4 +554,7 @@ void MainMenu::UpdateMusicAndSoundVolume() {
         }else isSoundVolumeRecActive[i] = false;
         soundVolumeRecs[i] = {(float)(600+(60*i)),200,50,50};
     }
+
+    soundManager->SetSfxVolume(0.2*soundVolume);
+    soundManager->SetTrackVolume(0.2*musicVolume);
 }

@@ -30,18 +30,18 @@ private:
     bool tutorial1 = false;
     int attackCounter = 0;
     int attackTicker = 123;
-    Rectangle tutorial1Trigger = {67*32,75*32,32,64};
+    Rectangle tutorial1Trigger = {66*32,75*32,32,64};
 
     Vector2 door2[2];
     bool door2Active = true;
     bool tutorial2 = false;
     int heavyAttackTicker = 0;
-    Rectangle tutorial2Trigger = {58*32,75*32,32,64};
+    Rectangle tutorial2Trigger = {57*32,75*32,32,64};
 
     Vector2 door3[2];
     bool door3Active = true;
     bool tutorial3 = false;
-    Rectangle tutorial3Trigger = {49*32,75*32,32,64};
+    Rectangle tutorial3Trigger = {48*32,75*32,32,64};
 
 protected:
 };

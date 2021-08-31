@@ -71,8 +71,8 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     //example for weathereffect
     sceneEffectActivated = true;
     sceneEffect = LoadTexture("assets/graphics/backgrounds/AreaThree/ash.png");
-    effectPos1Start = { 0,2000 };
-    effectPos2Start = { 500,2000 - 400 * 3 };
+    effectPos1Start = { 0,1100 };
+    effectPos2Start = { 500,1100 - 400 * 4 };
     effectPos1 = effectPos1Start;
     effectPos2 = effectPos2Start;
 }
