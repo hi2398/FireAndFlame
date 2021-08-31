@@ -37,23 +37,24 @@ private:
 
     //General MenuScreen Background
     Texture2D mainMenuBackground;
+    Texture2D secondaryBackground;
 
     //Title Screen GUI Elements
-    Texture2D playButton[3];
+    Texture2D playButton;
     Rectangle playButtonRec;
-    int playButtonIndex = 0;
+    Color playButtonColor;
 
-    Texture2D settingsButton[3];
+    Texture2D settingsButton;
     Rectangle settingsButtonRec;
-    int settingsButtonIndex = 0;
+    Color settingsColor;
 
-    Texture2D creditsButton[3];
+    Texture2D creditsButton;
     Rectangle creditsButtonRec;
-    int creditsButtonIndex = 0;
+    Color creditsColor;
 
-    Texture2D quitButton[3];
+    Texture2D quitButton;
     Rectangle quitButtonRec;
-    int quitButtonIndex = 0;
+    Color quitColor;
 
     Texture2D gameTitlePicture;
 
@@ -62,17 +63,17 @@ private:
     Texture2D savegameTex2;
     Texture2D savegameTex3;
 
-    Texture2D loadSave1Button[3];
+    Texture2D loadSave1Button;
     Rectangle loadSave1ButtonRec;
-    int loadSave1ButtonIndex = 0;
+    Color loadSave1Color;
 
-    Texture2D loadSave2Button[3];
+    Texture2D loadSave2Button;
     Rectangle loadSave2ButtonRec;
-    int loadSave2ButtonIndex = 0;
+    Color loadSave2Color;
 
-    Texture2D loadSave3Button[3];
+    Texture2D loadSave3Button;
     Rectangle loadSave3ButtonRec;
-    int loadSave3ButtonIndex = 0;
+    Color loadSave3Color;
 
     Texture2D deleteSave1Button[3];
     Rectangle deleteSave1ButtonRec;
@@ -89,6 +90,14 @@ private:
 
     //Settings Screen
     Rectangle musicVolumeRecs[10];
+    Texture2D emptyHearth;
+    Texture2D redHearth;
+    Texture2D orangeHearth;
+
+    Texture2D musicText;
+    Texture2D soundText;
+    Texture2D displayText;
+
     bool isMusicVolumeRecActive[10];
     int musicVolume = 5;
     Rectangle soundVolumeRecs[10];
@@ -98,10 +107,7 @@ private:
     bool isFullScreenActive = false;
 
     //Back Button
-    Texture2D backButton[3];
+    Texture2D backButton;
+    Color backButtonColor = {255,255,255,255};
     Rectangle backButtonRec;
-    int backButtonIndex = 0;
-
-    
-
 };
