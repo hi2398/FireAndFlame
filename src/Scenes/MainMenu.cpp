@@ -9,6 +9,7 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     playerCharacter->active = false; // Disables Player
 
     mainMenuBackground = LoadTexture("assets/graphics/GUI/fireAndFlame.png");
+    secondaryBackground = LoadTexture("assets/graphics/GUI/secondaryBackground.png");
     gameTitlePicture = LoadTexture("assets/graphics/GUI/fireAndFlameLogo.png");// The Title of our Game as a PNG Image, instead of Font only
 
     // Button Rectangle and Textures from Start Button in Title Screen
@@ -68,13 +69,15 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     redHearth = LoadTexture("assets/graphics/GUI/redHearth.png");
 
     musicText = LoadTexture("assets/graphics/GUI/musicText.png");
+    soundText = LoadTexture("assets/graphics/GUI/soundText.png");
+    displayText = LoadTexture("assets/graphics/GUI/displayText.png");
 
     for(int i = 0; i<10;i++){ // Activating the Sound and Music Rectangles TODO(temp only rework after save and load is finished)
-        musicVolumeRecs[i] = {(float)(600+(60*i)),60,50,50};
-        soundVolumeRecs[i] = {(float)(600+(60*i)),200,50,50};
+        musicVolumeRecs[i] = {(float)(400+(60*i)),60,50,50};
+        soundVolumeRecs[i] = {(float)(400+(60*i)),200,50,50};
     }
     UpdateMusicAndSoundVolume();
-    fullscreenRec = {600,340,50,50};
+    fullscreenRec = {460,360,50,50};
 
     //load soundtrack
     soundManager->PlayTrack(TRACK::MENU_TRACK);
@@ -347,6 +350,7 @@ void MainMenu::Draw() {
 
         case MenuScreenStates::LoadGameScreen:
 
+            DrawTexture(secondaryBackground,0,0,WHITE);
             DrawTexture(loadSave1Button,loadSave1ButtonRec.x,loadSave1ButtonRec.y,loadSave1Color);
             DrawTexture(loadSave2Button,loadSave2ButtonRec.x,loadSave2ButtonRec.y,loadSave2Color);
             DrawTexture(loadSave3Button,loadSave3ButtonRec.x,loadSave3ButtonRec.y,loadSave3Color);
@@ -364,12 +368,18 @@ void MainMenu::Draw() {
 
         case MenuScreenStates::SettingsScreen:
 
+            DrawTexture(secondaryBackground,0,0,WHITE);
             if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeMusic){DrawRectangle(26,56,355,110,ORANGE);}
             DrawTexture(musicText,30,60,WHITE);
             if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeSound){DrawRectangle(26,196,355,110,ORANGE);}
             DrawTexture(soundText,30,200,WHITE);
             if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeFullscreen){DrawRectangle(26,336,355,110,ORANGE);}
             DrawTexture(displayText,30,340,WHITE);
+            DrawText("0%",musicVolumeRecs[0].x+10,musicVolumeRecs[0].y+70,26,WHITE);
+            DrawText("100%",musicVolumeRecs[9].x,musicVolumeRecs[9].y+70,26,WHITE);
+            DrawText("0%",soundVolumeRecs[0].x+10,soundVolumeRecs[0].y+70,26,WHITE);
+            DrawText("100%",soundVolumeRecs[9].x,soundVolumeRecs[9].y+70,26,WHITE);
+            DrawText("Fullscreen",fullscreenRec.x+100,fullscreenRec.y+10,36,WHITE);
 
             for(int i = 0; i<10;i++){ // Drawing Sound and Music Recs in Settings
                 if(isMusicVolumeRecActive[i]){
@@ -395,14 +405,15 @@ void MainMenu::Draw() {
 
         case MenuScreenStates::CreditsScreen: // Drawings Credits
 
+            DrawTexture(secondaryBackground,0,0,WHITE);
             DrawText("Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Programmer - UML-Diagrams \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Animation",200,140,40,WHITE); // I am sorry
             DrawTexture(backButton, (float)backButtonRec.x, (float)backButtonRec.y, backButtonColor);
 
             break;
     }
     if(!controllerActive) {
-        DrawText("Press Gamepad B to activate Gamepad in Main Menu.",720,680,20,WHITE);
-    }else DrawText("Press Gamepad A to select and Gamepad B to Return.",700,680,20,WHITE);
+        DrawText("Press Gamepad B to activate Gamepad in Main Menu.",540,660,26,WHITE);
+    }else DrawText("Press Gamepad A to select and Gamepad B to Return.",520,660,26,WHITE);
 }
 
 MainMenu::~MainMenu()
@@ -544,15 +555,15 @@ void MainMenu::UpdateByController(ControllerCommands controllerCommmand) {
 }
 
 void MainMenu::UpdateMusicAndSoundVolume() {
-    for(int i = 0; i<10;i++){ // Activating the Sound and Music Rectangles TODO(temp only rework after save and load is finished)
-        musicVolumeRecs[i] = {(float)(600+(60*i)),60,50,50};
+    for(int i = 0; i<10;i++){ // Activating the Sound and Music Rectangles
+        musicVolumeRecs[i] = {(float)(460+(75*i)),80,50,50};
         if(musicVolume>=i){
             isMusicVolumeRecActive[i] = true;
         }else isMusicVolumeRecActive[i] = false;
         if(soundVolume>=i){
             isSoundVolumeRecActive[i] = true;
         }else isSoundVolumeRecActive[i] = false;
-        soundVolumeRecs[i] = {(float)(600+(60*i)),200,50,50};
+        soundVolumeRecs[i] = {(float)(460+(75*i)),220,50,50};
     }
 
     soundManager->SetSfxVolume(0.2*soundVolume);

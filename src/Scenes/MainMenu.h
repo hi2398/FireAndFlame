@@ -37,6 +37,7 @@ private:
 
     //General MenuScreen Background
     Texture2D mainMenuBackground;
+    Texture2D secondaryBackground;
 
     //Title Screen GUI Elements
     Texture2D playButton;
