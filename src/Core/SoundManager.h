@@ -10,8 +10,13 @@ public:
 	void PlayTrack(TRACK track);
 	void UpdateTrack(TRACK track);
 	void StopCurrentTrack();
+	void SetSfxVolume(float volume);
+	void SetTrackVolume(float volume);
 	~SoundManager();
 private:
 	Sound sound[10];
 	Music music[2];
+
+	float soundVolume = 1.0;
+	float trackVolume = 0.0;
 };
