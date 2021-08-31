@@ -52,15 +52,13 @@ if  constexpr(DEBUG_BUILD){
 	playerController = std::make_shared<PlayerController>();
 	hud = std::make_shared<HUD>();
  	soundManager = std::make_shared<SoundManager>();
-     
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
-
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>(SceneEnums::Default));
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
-    
+
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key

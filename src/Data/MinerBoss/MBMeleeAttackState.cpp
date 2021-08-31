@@ -88,19 +88,19 @@ std::shared_ptr<EState> MBMeleeAttackState::Approach(Enemy &enemy) {
     }
 
     if (timer==30){
-        textureRec={0, 0, 32, 32};
+        textureRec={0, 32, 32, 32};
     }
     --timer;
 
     if (timer==20){
-        textureRec={0, 32, 32, 32};
+        textureRec={32, 32, 32, 32};
     }
     if (timer==10) {
-        textureRec={0, 64, 32, 32};
+        textureRec={64, 32, 32, 32};
     }
     if (timer==0){
         timer=30;
-        textureRec={0, 0, 32, 32};
+        textureRec={0, 32, 32, 32};
     }
 
     enemy.SetPosition({enemy.GetPosition().x+enemy.GetEnemyMovementSpeed()*enemy.GetDirection(), enemy.GetPosition().y});
