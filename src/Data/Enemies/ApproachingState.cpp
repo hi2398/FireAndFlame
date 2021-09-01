@@ -138,10 +138,14 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		}
 		break;
 	case EnemyTypes::SpiderBot:
+		aggroCooldown++;
+		if (aggroCooldown >= 290) {
+			return std::make_shared<AttackingState>(enemy);
+		}
 		if (thisFrame >= 2) thisFrame = 0;
 		activeFrame = { (float)32 * thisFrame, 32 * 4 ,(float)-32 * enemy.GetDirection(), 32 };
 
-		approachingSpeed = enemy.GetEnemyMovementSpeed() * 4;
+		approachingSpeed = enemy.GetEnemyMovementSpeed() * 1;
 
 		//handle enemy direction
 		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 32 * 4)) {
@@ -150,13 +154,31 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		else {
 			playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
 			movingToPlayer = Vector2Normalize(playerReference);
-			if (playerReference.x > 0) {
+			if (playerReference.y >= 0) {
+				if (spiderBotRotation == 270) {
+					enemy.SetDirection(RIGHT);
+				}
+				else if (spiderBotRotation == 90) {
+					enemy.SetDirection(LEFT);
+				}
+				else if (spiderBotRotation == 180) {
+					if (playerReference.x > 5) {
+						enemy.SetDirection(LEFT);
 
-				enemy.SetDirection(LEFT);
-			}
-			else {
+					}
+					else if (playerReference.x < -5) {
+						enemy.SetDirection(RIGHT);
 
-				enemy.SetDirection(RIGHT);
+					}
+				}
+				else if (playerReference.x > approachingSpeed*2) {
+					enemy.SetDirection(LEFT);
+
+				}
+				else if (playerReference.x < -approachingSpeed*2) {
+					enemy.SetDirection(RIGHT);
+
+				}
 			}
 		}
 		//normal walking
@@ -165,7 +187,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
 		}
 		//walk on ceiling
-		else if (enemy.GetHeadCollision()) {
+		if (enemy.GetHeadCollision()) {
 			spiderBotRotation = 180;
 			enemy.SetPosition({ enemy.GetPosition().x - approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
 		}
@@ -201,7 +223,11 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
 		}
 
-		
+		if (enemy.GetHeadCollision() && enemy.IsGrounded()) {
+			spiderBotRotation = 0;
+			enemy.SetPosition({ enemy.GetPosition().x + approachingSpeed * enemy.GetDirection(), enemy.GetPosition().y });
+		}
+
 		break;
 	case EnemyTypes::Flyer:
 		//enter attack after some time or when in range
