@@ -285,7 +285,7 @@ void Actor::CollisionLeft(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes o
 			LeftSide = {newPos.x + 7, newPos.y + 8, 1, 16 };
 		}
 		else {
-			LeftSide = { (float)(newPos.x - 0.5), newPos.y + 6, 0.5, 20 };
+			LeftSide = { (float)(newPos.x - 0.5), newPos.y + 2, 0.5, 28 };
 		}
 
 		if (CheckCollisionRecs(tileRec, LeftSide)) {
@@ -321,7 +321,7 @@ void Actor::CollisionRight(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes 
 			RightSide = { newPos.x + 24, newPos.y + 6, 1, 16 };
 		}
 		else {
-			RightSide = { newPos.x + 32, newPos.y + 6, 0.5, 20 };
+			RightSide = { newPos.x + 32, newPos.y + 2, 0.5, 28 };
 		}
 		
 
@@ -360,7 +360,7 @@ void Actor::CollisionHead(const std::unique_ptr<Tilemap>& tilemap, ObjectTypes o
 			UpperSide = { newPos.x + 8, newPos.y - 1, 16, 1 };
 		}
 		else {
-			UpperSide = { newPos.x , (float)(newPos.y - 0.5), 32, 0.5 };
+			UpperSide = { newPos.x , (float)(newPos.y - 2), 32, 0.5 };
 		}
 
 

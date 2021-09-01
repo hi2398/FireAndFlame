@@ -38,11 +38,11 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     tempVec = {81*32,89*32};
     enemies.emplace_back(std::make_unique<Saugi>(tempVec));
     tempVec = {73*32,90*32};
-    enemies.emplace_back(std::make_unique<SpiderBot>(tempVec,EnemyLevel::High));
+    enemies.emplace_back(std::make_unique<SpiderBot>(tempVec,EnemyLevel::Medium));
     tempVec = {64*32,71*32};
-    enemies.emplace_back(std::make_unique<SpiderBot>(tempVec,EnemyLevel::High));
+    enemies.emplace_back(std::make_unique<SpiderBot>(tempVec,EnemyLevel::Medium));
     tempVec = {43*32,68*32};
-    enemies.emplace_back(std::make_unique<SpringHog>(tempVec,EnemyLevel::High));
+    enemies.emplace_back(std::make_unique<SpringHog>(tempVec,EnemyLevel::Medium));
     tempVec = {91*32,89*32};
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
     tempVec = {52*32,68*32};
