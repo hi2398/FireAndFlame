@@ -75,17 +75,17 @@ private:
     Rectangle loadSave3ButtonRec;
     Color loadSave3Color;
 
-    Texture2D deleteSave1Button[3];
+    Texture2D deleteSave1Button;
     Rectangle deleteSave1ButtonRec;
-    int deleteSave1ButtonIndex = 0;
+    Color deleteSave1Color;
 
-    Texture2D deleteSave2Button[3];
+    Texture2D deleteSave2Button;
     Rectangle deleteSave2ButtonRec;
-    int deleteSave2ButtonIndex = 0;
+    Color deleteSave2Color;
 
-    Texture2D deleteSave3Button[3];
+    Texture2D deleteSave3Button;
     Rectangle deleteSave3ButtonRec;
-    int deleteSave3ButtonIndex = 0;
+    Color deleteSave3Color;
 
 
     //Settings Screen

@@ -43,20 +43,14 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     loadSave3Button = LoadTexture("assets/graphics/GUI/loadsave.png");
     loadSave3ButtonRec = {870,480,(float)loadSave3Button.width,(float)loadSave3Button.height};
 
-    deleteSave1Button[0] = LoadTexture("assets/graphics/GUI/resetgame1.png");
-    deleteSave1Button[1] = LoadTexture("assets/graphics/GUI/resetgame2.png");
-    deleteSave1Button[2] = LoadTexture("assets/graphics/GUI/resetgame3.png");
-    deleteSave1ButtonRec = {87.5,40,275,75};
+    deleteSave1Button = LoadTexture("assets/graphics/GUI/resetButton.png");
+    deleteSave1ButtonRec = {76.5,40,275,75};
 
-    deleteSave2Button[0] = LoadTexture("assets/graphics/GUI/resetgame1.png");
-    deleteSave2Button[1] = LoadTexture("assets/graphics/GUI/resetgame2.png");
-    deleteSave2Button[2] = LoadTexture("assets/graphics/GUI/resetgame3.png");
-    deleteSave2ButtonRec = {496,40,275,75};
+    deleteSave2Button = LoadTexture("assets/graphics/GUI/resetButton.png");
+    deleteSave2ButtonRec = {485,40,275,75};
 
-    deleteSave3Button[0] = LoadTexture("assets/graphics/GUI/resetgame1.png");
-    deleteSave3Button[1] = LoadTexture("assets/graphics/GUI/resetgame2.png");
-    deleteSave3Button[2] = LoadTexture("assets/graphics/GUI/resetgame3.png");
-    deleteSave3ButtonRec = {905.5,40,275,75};
+    deleteSave3Button = LoadTexture("assets/graphics/GUI/resetButton.png");
+    deleteSave3ButtonRec = {894.5,40,275,75};
 
 
     // Button Rectangle and Textures from Back Button in Settings and Credits Screen
@@ -150,39 +144,39 @@ void MainMenu::Update() {
         case MenuScreenStates::LoadGameScreen:
 
             if(CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame1){
-                deleteSave1ButtonIndex = 1;
+                deleteSave1Color = {200,200,200,255};
                 if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
-                    deleteSave1ButtonIndex = 2;
+                    deleteSave1Color = {100,100,100,255};
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
                     // delete save 1
                 }
             }else{
-                deleteSave1ButtonIndex = 0;
+                deleteSave1Color = {255,255,255,255};
             }
 
             if(CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame2){
-                deleteSave2ButtonIndex = 1;
+                deleteSave2Color = {200,200,200,255};
                 if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
-                    deleteSave2ButtonIndex = 2;
+                    deleteSave2Color = {100,100,100,255};
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
                     // delete save 2
                 }
             }else{
-                deleteSave2ButtonIndex = 0;
+                deleteSave2Color = {255,255,255,255};
             }
 
             if(CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame3){
-                deleteSave3ButtonIndex = 1;
+                deleteSave3Color = {200,200,200,255};
                 if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
-                    deleteSave3ButtonIndex = 2;
+                    deleteSave3Color = {100,100,100,255};
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
                     // delete save 3
                 }
             }else{
-                deleteSave3ButtonIndex = 0;
+                deleteSave3Color = {255,255,255,255};
             }
 
             if(CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec)|| (controllerStates == ControllerMainMenuStates::LoadGame1 && controllerActive)){
@@ -359,9 +353,9 @@ void MainMenu::Draw() {
             DrawTexture(savegameTex2,485,150,WHITE);
             DrawTexture(savegameTex3,895,150,WHITE);
 
-            DrawTexture(deleteSave1Button[deleteSave1ButtonIndex],deleteSave1ButtonRec.x,deleteSave1ButtonRec.y,WHITE);
-            DrawTexture(deleteSave2Button[deleteSave2ButtonIndex],deleteSave2ButtonRec.x,deleteSave2ButtonRec.y,WHITE);
-            DrawTexture(deleteSave3Button[deleteSave3ButtonIndex],deleteSave3ButtonRec.x,deleteSave3ButtonRec.y,WHITE);
+            DrawTexture(deleteSave1Button,deleteSave1ButtonRec.x,deleteSave1ButtonRec.y,deleteSave1Color);
+            DrawTexture(deleteSave2Button,deleteSave2ButtonRec.x,deleteSave2ButtonRec.y,deleteSave2Color);
+            DrawTexture(deleteSave3Button,deleteSave3ButtonRec.x,deleteSave3ButtonRec.y,deleteSave3Color);
 
             DrawTexture(backButton, (float)backButtonRec.x, (float)backButtonRec.y, backButtonColor);
             break;
