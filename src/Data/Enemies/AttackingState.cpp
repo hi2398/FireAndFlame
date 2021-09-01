@@ -75,6 +75,45 @@ AttackingState::AttackingState(Enemy& enemy) : EState(enemy)
 		if (enemy.GetWallCollisionRight() && enemy.IsGrounded() && enemy.GetDirection() == LEFT) {
 			spiderBotRotation = 0;
 		}
+
+		Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
+		Vector2 movingToPlayer = Vector2Normalize(playerReference);
+		if (playerReference.y >= 0) {
+			if (spiderBotRotation == 270) {
+				enemy.SetDirection(LEFT);
+			}
+			else if (spiderBotRotation == 90) {
+				enemy.SetDirection(RIGHT);
+			}
+			else if (spiderBotRotation == 180) {
+			if (playerReference.x > 0) {
+				enemy.SetDirection(LEFT);
+
+			}
+			else if (playerReference.x <= 0) {
+				enemy.SetDirection(RIGHT);
+
+			}
+			}
+			else if (playerReference.x > 0) {
+				enemy.SetDirection(RIGHT);
+
+			}
+			else if (playerReference.x <= 0) {
+				enemy.SetDirection(LEFT);
+
+			}
+		}
+		else if (playerReference.y < 0) {
+			if (playerReference.x > 0) {
+				enemy.SetDirection(RIGHT);
+
+			}
+			else if (playerReference.x < 0) {
+				enemy.SetDirection(LEFT);
+
+			}
+		}
 		break;
 	case EnemyTypes::Flyer:
 		activeFrame = { (float)32 * thisFrame, 32 * 5, (float)-32 * enemy.GetDirection(), 32 };
@@ -157,18 +196,30 @@ std::shared_ptr<EState> AttackingState::Update(Enemy& enemy) {
 		if (CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 32 * 2)) {
 			return std::make_shared<ApproachingState>(enemy);
 		}
-		else {
+		/*else {
 			Vector2 playerReference = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
 			Vector2 movingToPlayer = Vector2Normalize(playerReference);
-			if (playerReference.x > 0) {
+			if (playerReference.y >= 0) {
+				if (playerReference.x > 0) {
+					enemy.SetDirection(RIGHT);
 
-				enemy.SetDirection(RIGHT);
-			}
-			else {
+				}
+				else if (playerReference.x <= 0) {
+					enemy.SetDirection(LEFT);
 
-				enemy.SetDirection(LEFT);
+				}
 			}
-		}
+			else if (playerReference.y < 0) {
+				if (playerReference.x > 0) {
+					enemy.SetDirection(RIGHT);
+
+				}
+				else if (playerReference.x < 0) {
+					enemy.SetDirection(LEFT);
+
+				}
+			}
+		}*/
 
 		//exit when too far away
 		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16 }, 32 * 6)) {
