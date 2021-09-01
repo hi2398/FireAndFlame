@@ -13,28 +13,28 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
     //TODO Rework
-    endText[0] = "FÜR FORTNITE schrie Magmos, als er den Technomancer besiegte";
-    endText[1] = "Alle bösen Roboter wurden zerstört, außer die Saugies <3";
-    endText[2] = "Und weiterer cooler Story Text!";
-    endText[3] = "Habt ihr euch schon das neue Roblox update angeguckt?";
-    endText[4] = "THE END?";
-    endText[5] = "";
-    endText[6] = "Technical Direction: Adrian Pfaff";
-    endText[7] = "Programming: Adrian Pfaff";
-    endText[8] = "Programming: Amar Civic";
-    endText[9] = "Programming: Pascal Hirt";
-    endText[10] = "Art Direction: Mizu";
-    endText[11] = "Art: Mizu";
-    endText[12] = "Art: Robin Günther";
-    endText[13] = "Story and Design: Aykan Akgül";
-    endText[14] = "Sound and Music: Pascal Hirt";
-    endText[15] = "Management: Adrian Pfaff";
-    endText[16] = "Marketing: Amar Civic";
+    endText[0] = "After Magmos defeated the Technomancer Maraap";
+    endText[1] = "and his Minions he vowed to Rebuild Cremos.";
+    endText[2] = "But he wouldn´t be alone on his";
+    endText[3] = "Quest of rebuilding his Home.";
+    endText[4] = "He got help from the little Roombros";
+    endText[5] = "from the Technomancer that were roaming around";
+    endText[6] = "without a Task. Now they are helping";
+    endText[7] = "to clean up the Planet, while";
+    endText[8] = "Magmos is searching for Survivors";
+    endText[9] = "to bring back Order to Cremos.";
+    endText[10] = "";
+    endText[11] = "Design: Aykan Akgül";
+    endText[12] = "Art: Andrea Preussner";
+    endText[13] = "Art: Robin Günther";
+    endText[14] = "Programming: Adrian Pfaff";
+    endText[15] = "Programming: Amar Civic";
+    endText[16] = "Programming: Pascal Hirt";
 }
 
 void Endscreen::Update() {
     endscreenCounter = endscreenCounter + 0.4f;
-    if(endscreenCounter >= 1650){
+    if(endscreenCounter >= 1350){
         sceneManager->SetNextScene(std::make_unique<MainMenu>(sceneName));
     }
 }
@@ -42,6 +42,6 @@ void Endscreen::Update() {
 void Endscreen::Draw() {
     for(int i = 0; i <17;i++){
         const char * c = endText[i].c_str();
-        DrawText(c,50,750+(i*50)-endscreenCounter,30,WHITE);
+        DrawText(c,150,750+(i*60)-endscreenCounter,38,WHITE);
     }
 }

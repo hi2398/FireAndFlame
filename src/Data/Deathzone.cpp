@@ -17,7 +17,7 @@ void Deathzone::Update() {
 }
 
 void Deathzone::Draw() {
-    DrawRectangleRec(interactionZone,GREEN);
+    //DrawRectangleRec(interactionZone,GREEN);
 }
 
 Deathzone::~Deathzone() {
