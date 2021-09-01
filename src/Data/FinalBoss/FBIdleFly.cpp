@@ -13,11 +13,27 @@
 #include "FinalBossEnemy.h"
 
 FBIdleFly::FBIdleFly() {
+    activeFrame = {0,0,64,64};
+    bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
 }
 
 std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
     actor.SetPosition({94*32,73*32});
     FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    if(counter == 0){
+        counter = 40;
+        switch ((int)activeFrame.x) {
+            case 0: activeFrame = {64,0,64,64};
+                break;
+            case 32: activeFrame = {128,0,64,64};
+                break;
+            case 64: activeFrame = {0,0,64,64};
+                break;
+            default:
+                break;
+
+        }
+    }else {counter--;}
     if(boss.GetHealth()<= 2){
         return std::make_shared<FBIdleDown>();
     }
@@ -39,5 +55,5 @@ std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
 
 
 void FBIdleFly::Draw(Actor &actor) {
-
+    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
 }
