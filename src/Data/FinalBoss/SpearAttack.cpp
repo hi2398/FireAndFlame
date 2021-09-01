@@ -46,6 +46,5 @@ void SpearAttack::Update() {
 }
 
 void SpearAttack::Draw() {
-    DrawRectangleRec(interactionZone, RED);
     DrawTexturePro(texture, { 0,0,(float)texture.width, (float)texture.height }, {spearPosition.x+ (float)texture.width/2, spearPosition.y + (float)texture.height / 2 ,(float)texture.width, (float)texture.height }, rotationPoint, spearRotation, WHITE);
 }
