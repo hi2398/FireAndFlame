@@ -71,9 +71,12 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     foregroundLoopX = 5;
     foregroundLoopY = 9;
     foregroundException = 8;
+
+    soundManager->PlayTrack(TRACK::AREA_TWO);
 }
 
 void AreaTwo::Update() {
+    soundManager->UpdateTrack(TRACK::AREA_TWO);
     Scene::Update();
 }
 

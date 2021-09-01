@@ -1,5 +1,6 @@
 #pragma once
 #include "../Core/Scene.h"
+#include "../Data/Spawner.h"
 
 class Tutorial : public Scene {
 public:
@@ -42,6 +43,8 @@ private:
     bool door3Active = true;
     bool tutorial3 = false;
     Rectangle tutorial3Trigger = {48*32,75*32,32,64};
+
+    std::vector<std::unique_ptr<Spawner>> spawner;
 
 protected:
 };

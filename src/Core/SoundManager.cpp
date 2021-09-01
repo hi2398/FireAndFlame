@@ -18,6 +18,7 @@ SoundManager::SoundManager()
 	//music initialization
 	music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
 	music[1] = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
+	music[2] = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
 }
 
 void SoundManager::PlaySfx(SFX sfx)
@@ -75,6 +76,9 @@ void SoundManager::PlayTrack(TRACK track)
 	case TRACK::AREA_ONE:
 		selectedTrack = 1;
 		break;
+	case TRACK::AREA_TWO:
+		selectedTrack = 2;
+		break;
 	default:
 		break;
 	}
@@ -93,6 +97,9 @@ void SoundManager::UpdateTrack(TRACK track)
 		break;
 	case TRACK::AREA_ONE:
 		selectTrack = 1;
+		break;
+	case TRACK::AREA_TWO:
+		selectTrack = 2;
 		break;
 	default:
 		return;

@@ -22,8 +22,7 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     Vector2 tempVec = {86*32,36*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));
 
-    tempVec =  {39 * 32, 97 * 32 };
-    interactables.emplace_back(std::make_unique<Coal>(tempVec));
+
 
 
     tempVec = {87*32,39*32};
@@ -37,6 +36,9 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
     tempVec = {86*32,39*32};
     enemies.emplace_back(std::make_unique<Miner>(tempVec, EnemyLevel::Low));
+
+    tempVec = { 53 * 32,77 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up ,SpawnerType::Coal));
 
     door1[0] = {58*32,76*32};
     door1[1] = {58*32,75*32};
@@ -131,6 +133,13 @@ void Tutorial::Update() {
             tilemap->RemoveCollisionTile();
         }
     }
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+    }
 }
 
 void Tutorial::Draw() {
@@ -143,4 +152,8 @@ void Tutorial::Draw() {
         DrawRectangle(door3[0].x,door3[0].y-32,32,64,RED);
     }
 
+
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }
