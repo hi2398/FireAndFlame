@@ -7,12 +7,13 @@
 
 class DialogueManager {
 public:
+    DialogueManager();
     void UpdateDialogue(std::string filePath);
     void DrawDialogue();
 protected:
 private:
     std::queue<std::string> sentences;
-    Rectangle dialogueBox = {200,490,900,150};
+    Texture2D dialogueBox;
     int fontSizeForDialogue = 30;
     std::string nextSent = "-";
     bool dialogueActive = {false};

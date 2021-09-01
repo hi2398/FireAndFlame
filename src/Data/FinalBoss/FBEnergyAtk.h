@@ -15,4 +15,6 @@ protected:
 
 private:
     int attackCounter = 200;
+    Texture2D bossMap;
+    int counter = 40;
 };
