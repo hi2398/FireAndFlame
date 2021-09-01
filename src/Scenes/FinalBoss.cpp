@@ -138,11 +138,11 @@ void FinalBoss::Draw() {
 
 void FinalBoss::UpdatePlatformSequence() {
     ++timerForSpearRespawn;
-    if(timerForSpearRespawn == 60){
+    if(timerForSpearRespawn == 30){
         Vector2 tempVec = {playerCharacter->GetPosition().x + GetRandomValue(-128,128),playerCharacter->GetPosition().y + GetRandomValue(128,190)};
         interactables.emplace_back(std::make_unique<SpearAttack>(tempVec));
     }
-    if(timerForSpearRespawn >= 120){
+    if(timerForSpearRespawn >= 60){
         timerForSpearRespawn = 0;
         Vector2 tempVec = {playerCharacter->GetPosition().x + GetRandomValue(-128,128),playerCharacter->GetPosition().y - GetRandomValue(96,120)};
         interactables.emplace_back(std::make_unique<SpearAttack>(tempVec));
