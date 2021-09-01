@@ -14,4 +14,6 @@ protected:
 
 private:
     int decideCounter = 280;
+    Texture2D bossMap;
+    int counter = 40;
 };

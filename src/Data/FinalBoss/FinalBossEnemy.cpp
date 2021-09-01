@@ -10,7 +10,7 @@
 FinalBossEnemy::FinalBossEnemy(Vector2 location) : Enemy(EnemyTypes::Boss){
     texture = LoadTexture("assets/Bosses/FinalBoss/TEMP/EndbossIdle1.png");
     state = std::make_unique<FBIdleFly>();
-    position = {94*32,73*32};
+    position = {96*32,73*32};
     bossPosition = location;
 
     sword = std::make_unique<BossSword>(location);
@@ -32,11 +32,11 @@ void FinalBossEnemy::Update() {
     if(swordCounter <= 0) {
         sword->ChangeTarget(position);
     }else --swordCounter;
-    hitbox = {bossPosition.x,bossPosition.y,(float)texture.width,(float)texture.height};
+    hitbox = {bossPosition.x,bossPosition.y,32,32};
 }
 
 void FinalBossEnemy::Draw() {
-    DrawTexture(texture,bossPosition.x,bossPosition.y,WHITE);
+    //DrawTexture(texture,bossPosition.x,bossPosition.y,WHITE);
     state->Draw(*this);
     sword->Draw();
 }

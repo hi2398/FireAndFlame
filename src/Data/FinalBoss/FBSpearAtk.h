@@ -14,5 +14,7 @@ protected:
 
 private:
     int attackCounter = 120;
+    Texture2D bossMap;
+    int counter = 40;
     bool secondAttack = false;
 };
