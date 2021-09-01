@@ -3,6 +3,7 @@
 #include "../Global.h"
 #include "NeutralArea.h"
 #include "../Data/MinerBoss/MinerBoss.h"
+#include "../Data/Deathzone.h"
 
 MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBoss) {
     this->lastScene = lastScene;
@@ -28,6 +29,9 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
     foregroundLoopX = 4;
     foregroundLoopY = 9;
     foregroundException = 8;
+
+    Vector2 tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 }
 
 void MinerBossScene::Update() {

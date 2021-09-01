@@ -7,6 +7,7 @@
 #include "../Data/Enemies/SpringHog.h"
 #include "../Data/Enemies/ToastCat.h"
 #include "../Data/Enemies/Howler.h"
+#include "../Data/Deathzone.h"
 
 AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     this->lastScene = lastScene;
@@ -53,6 +54,9 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
     tempVec = {51*32,90*32};
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
+
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/Lower_Foreground.png");

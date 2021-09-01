@@ -1,7 +1,7 @@
 #include "Deathzone.h"
 
 Deathzone::Deathzone(Vector2 location) : Interactable(InteractableType::Other){
-    interactionZone = {location.x,location.y,3200,200};
+    interactionZone = {location.x,location.y,6400,200};
 }
 
 void Deathzone::Interact(Actor &actor) {
@@ -17,7 +17,7 @@ void Deathzone::Update() {
 }
 
 void Deathzone::Draw() {
-
+    //DrawRectangleRec(interactionZone,GREEN);
 }
 
 Deathzone::~Deathzone() {

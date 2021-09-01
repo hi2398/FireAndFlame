@@ -11,7 +11,8 @@
 #include "FBBossDying.h"
 
 FBIdleDown::FBIdleDown() {
-
+    activeFrame = {320,192,64,64};
+    bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
 }
 
 std::shared_ptr<State> FBIdleDown::Update(Actor &actor) {
@@ -41,10 +42,12 @@ std::shared_ptr<State> FBIdleDown::Update(Actor &actor) {
         else sceneManager->AddInteractable(std::make_unique<BossRangedAttack>(actor.GetPosition()));
         attackCounter = 120;
     }else attackCounter--;
+
     --decideCounter;
     return shared_from_this();;
 }
 
 void FBIdleDown::Draw(Actor &actor) {
-
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

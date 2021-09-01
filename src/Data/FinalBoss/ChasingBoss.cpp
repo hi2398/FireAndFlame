@@ -5,16 +5,31 @@
 ChasingBoss::ChasingBoss(Vector2 position) : Object(ObjectTypes::other){
     currentPosition=position;
     targetPosition=position;
-    texture = LoadTexture("assets/Bosses/FinalBoss/TEMP/EndbossIdle1.png");
+    activeFrame = {0,0,64,64};
+    texture = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
 }
 
 void ChasingBoss::Update() {
     Vector2 moveTowardsPosition = {currentPosition.x - targetPosition.x,currentPosition.y - targetPosition.y};
     currentPosition = {currentPosition.x-(moveTowardsPosition.x/magnitude),currentPosition.y-(moveTowardsPosition.y/magnitude)};
+    if(counter == 0){
+        counter = 40;
+        switch ((int)activeFrame.x) {
+            case 0: activeFrame = {64,0,64,64};
+                break;
+            case 32: activeFrame = {128,0,64,64};
+                break;
+            case 64: activeFrame = {0,0,64,64};
+                break;
+            default:
+                break;
+
+        }
+    }else {counter--;}
 }
 
 void ChasingBoss::Draw() {
-    DrawTexture(texture,(float)currentPosition.x,(float)currentPosition.y,WHITE);
+    DrawTextureRec(texture,activeFrame,currentPosition,WHITE);
 }
 
 void ChasingBoss::MovePosition(Vector2 newPosition) {

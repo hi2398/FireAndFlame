@@ -7,6 +7,7 @@
 #include "../Data/Enemies/SpringHog.h"
 #include "../Data/Enemies/ToastCat.h"
 #include "../Data/Enemies/Howler.h"
+#include "../Data/Deathzone.h"
 
 AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     this->lastScene = lastScene;
@@ -47,6 +48,9 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
     tempVec = {52*32,68*32};
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
+
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaThree/Upper_Foreground.png");

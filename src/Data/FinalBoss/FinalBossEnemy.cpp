@@ -8,13 +8,12 @@
 #include "../../Global.h"
 
 FinalBossEnemy::FinalBossEnemy(Vector2 location) : Enemy(EnemyTypes::Boss){
-    texture = LoadTexture("assets/Bosses/FinalBoss/TEMP/EndbossIdle1.png");
     state = std::make_unique<FBIdleFly>();
     position = {96*32,73*32};
     bossPosition = location;
 
     sword = std::make_unique<BossSword>(location);
-    health = 3;
+    health = 40;
 }
 
 void FinalBossEnemy::Update() {
@@ -60,4 +59,9 @@ int FinalBossEnemy::GetHealth() {
 void FinalBossEnemy::ChangeSwordPosition(Vector2 newPos) {
     swordCounter = 90;
     sword->ChangeTarget(newPos);
+}
+
+Vector2 FinalBossEnemy::GetPositionFix() {
+    Vector2 bossPos = {hitbox.x, hitbox.y};
+    return bossPos;
 }
