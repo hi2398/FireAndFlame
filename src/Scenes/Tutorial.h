@@ -16,6 +16,9 @@ private:
 
     Texture2D npc1Tex;
     Texture2D npc2Tex;
+    Texture2D npc3Tex;
+    Texture2D npc4Tex;
+    Texture2D npc5Tex;
     Vector2 npc1Pos = {35*32,99*32};
     Vector2 npc2Pos = {81*32,76*32};
     Vector2 npc3Pos = {65*32,76*32};
@@ -35,7 +38,6 @@ private:
     Vector2 door2[2];
     bool door2Active = true;
     bool tutorial2 = false;
-    int heavyAttackTicker = 0;
     Rectangle tutorial2Trigger = {57*32,75*32,32,64};
 
     Vector2 door3[2];
