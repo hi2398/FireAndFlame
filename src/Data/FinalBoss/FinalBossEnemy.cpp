@@ -31,7 +31,7 @@ void FinalBossEnemy::Update() {
     if(swordCounter <= 0) {
         sword->ChangeTarget(position);
     }else --swordCounter;
-    hitbox = {bossPosition.x,bossPosition.y,32,32};
+    hitbox = {bossPosition.x,bossPosition.y,64,64};
 }
 
 void FinalBossEnemy::Draw() {

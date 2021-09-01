@@ -16,6 +16,10 @@ private:
     Vector2 spearPosition;
     Vector2 attackPoint;
     Vector2 moveTowardsPosition;
+    Vector2 rotationPoint{};
+    Vector2 spearMiddle{};
+    Vector2 spearTip{};
+    Vector2* pseudoPointer;
 
     float spearRotation = 0;
     bool damageActive = false;
