@@ -16,5 +16,7 @@ protected:
 
 private:
     NextAction nextAction{NextAction::None};
+    Texture2D bossMap;
+    int counter = 40;
     int decideCounter = 200;
 };

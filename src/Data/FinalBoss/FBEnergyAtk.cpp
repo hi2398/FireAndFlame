@@ -9,11 +9,27 @@
 
 FBEnergyAtk::FBEnergyAtk() {
     soundManager->PlaySfx(SFX::FB_SPEECH1);
+    activeFrame = {0,0,64,64};
+    bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
 }
 
 std::shared_ptr<State> FBEnergyAtk::Update(Actor &actor) {
     --attackCounter;
     Vector2 tempVec;
+    if(counter == 0){
+        counter = 40;
+        switch ((int)activeFrame.x) {
+            case 0: activeFrame = {64,0,64,64};
+                break;
+            case 32: activeFrame = {128,0,64,64};
+                break;
+            case 64: activeFrame = {0,0,64,64};
+                break;
+            default:
+                break;
+
+        }
+    }else {counter--;}
     if(attackCounter == 150){
         Vector2 tempVec = {89*32,73*32};
         sceneManager->AddInteractable(std::make_unique<EnergyAttack>(tempVec));
@@ -45,5 +61,5 @@ std::shared_ptr<State> FBEnergyAtk::Update(Actor &actor) {
 }
 
 void FBEnergyAtk::Draw(Actor &actor) {
-
+    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
 }
