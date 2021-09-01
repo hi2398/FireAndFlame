@@ -12,5 +12,7 @@ private:
     Vector2 currentPosition;
     Vector2 targetPosition;
     Texture2D texture;
+    int counter = 40;
+    Rectangle activeFrame;
 protected:
 };

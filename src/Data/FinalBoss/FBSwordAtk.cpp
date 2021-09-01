@@ -6,6 +6,7 @@
 #include "FBIdleFly.h"
 #include "../../Global.h"
 #include "BossEnergySwordAttack.h"
+#include "FinalBossEnemy.h"
 
 FBSwordAtk::FBSwordAtk() {
     Vector2 tempVec = {104*32,74*32};
@@ -39,5 +40,6 @@ std::shared_ptr<State> FBSwordAtk::Update(Actor &actor) {
 }
 
 void FBSwordAtk::Draw(Actor &actor) {
-    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

@@ -6,6 +6,7 @@
 #include "../../Global.h"
 #include "EnergyAttack.h"
 #include "FBIdleFly.h"
+#include "FinalBossEnemy.h"
 
 FBEnergyAtk::FBEnergyAtk() {
     soundManager->PlaySfx(SFX::FB_SPEECH1);
@@ -61,5 +62,6 @@ std::shared_ptr<State> FBEnergyAtk::Update(Actor &actor) {
 }
 
 void FBEnergyAtk::Draw(Actor &actor) {
-    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

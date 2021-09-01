@@ -6,6 +6,7 @@
 #include "../../Global.h"
 #include "SpearAttack.h"
 #include "FBIdleFly.h"
+#include "FinalBossEnemy.h"
 
 std::shared_ptr<State> FBSpearAtk::Update(Actor &actor) {
     --attackCounter;
@@ -41,7 +42,8 @@ std::shared_ptr<State> FBSpearAtk::Update(Actor &actor) {
 }
 
 void FBSpearAtk::Draw(Actor &actor) {
-    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }
 
 FBSpearAtk::FBSpearAtk() {

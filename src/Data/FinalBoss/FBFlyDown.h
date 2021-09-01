@@ -14,5 +14,7 @@ public:
 protected:
 
 private:
+    Texture2D bossMap;
+    int counter = 40;
     int waitCounter = 60;
 };
