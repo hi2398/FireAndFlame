@@ -12,5 +12,6 @@ protected:
 
 
 private:
+    Texture2D bossMap;
     int waitCounter = 180;
 };

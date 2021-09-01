@@ -5,7 +5,8 @@
 #include "FBSpawnE.h"
 #include "FBIdleFly.h"
 #include "../../Global.h"
-#include "../../Data/Enemies/Miner.h" // TODO replace with saugi
+#include "FinalBossEnemy.h"
+#include "../../Data/Enemies/Miner.h"
 
 FBSpawnE::FBSpawnE() {
     Vector2 tempVec = {89*32,60*32};
@@ -46,5 +47,6 @@ std::shared_ptr<State> FBSpawnE::Update(Actor &actor) {
 }
 
 void FBSpawnE::Draw(Actor &actor) {
-    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

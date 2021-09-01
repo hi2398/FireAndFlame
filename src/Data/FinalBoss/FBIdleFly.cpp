@@ -7,10 +7,10 @@
 #include "FBSwordAtk.h"
 #include "FBEnergyAtk.h"
 #include "FBFlyDown.h"
-#include "FBIdleDown.h"
 #include <iostream>
 #include "../../Global.h"
 #include "FinalBossEnemy.h"
+#include "FBChangeStates.h"
 
 FBIdleFly::FBIdleFly() {
     activeFrame = {0,0,64,64};
@@ -34,8 +34,8 @@ std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
 
         }
     }else {counter--;}
-    if(boss.GetHealth()<= 2){
-        return std::make_shared<FBIdleDown>();
+    if(boss.GetHealth()<= 20){
+        return std::make_shared<FBChangeStates>();
     }
     if(decideCounter <= 0){
         if(playerCharacter->GetHealth() <= 25){
@@ -55,5 +55,6 @@ std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
 
 
 void FBIdleFly::Draw(Actor &actor) {
-    DrawTextureRec(bossMap,activeFrame,actor.GetPosition(),WHITE);
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

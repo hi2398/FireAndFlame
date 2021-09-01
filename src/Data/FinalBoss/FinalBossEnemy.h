@@ -12,6 +12,7 @@ public:
     void ChangeTargetPosition(Vector2 newPos);
     void ChangeSwordPosition(Vector2 newPos);
     void ReceiveDamage(int damage) override;
+    Vector2 GetPositionFix();
     int GetHealth();
     ~FinalBossEnemy() override = default;
 protected:

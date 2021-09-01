@@ -9,6 +9,7 @@
 #include "../Data/Enemies/SpiderBot.h"
 #include "../Data/Enemies/SpringHog.h"
 #include "../Data/Enemies/ToastCat.h"
+#include "../Data/Deathzone.h"
 
 AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     this->lastScene = lastScene;
@@ -71,6 +72,9 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
     tempVec = {74*32,38*32};
     enemies.emplace_back(std::make_unique<ToastCat>(tempVec));
+
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
 
     //background initialization

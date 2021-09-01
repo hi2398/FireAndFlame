@@ -14,5 +14,6 @@ protected:
 
 
 private:
-
+    Texture2D bossMap;
+    int counter = 0;
 };
