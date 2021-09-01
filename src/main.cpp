@@ -52,7 +52,9 @@ if  constexpr(DEBUG_BUILD){
 	playerController = std::make_shared<PlayerController>();
     hud = std::make_shared<HUD>();
     soundManager = std::make_shared<SoundManager>();
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
+
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<Tutorial>(SceneEnums::Default));
+
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
