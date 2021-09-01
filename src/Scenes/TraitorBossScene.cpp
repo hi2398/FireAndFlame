@@ -6,6 +6,7 @@
 #include "../Global.h"
 #include "../Data/TraitorBoss/TraitorBoss.h"
 #include "../Data/Coal.h"
+#include "../Data/Deathzone.h"
 
 
 TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
@@ -44,6 +45,9 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     foregroundLoopX = 5;
     foregroundLoopY = 9;
     foregroundException = 8;
+
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 }
 
 void TraitorBossScene::Update() {

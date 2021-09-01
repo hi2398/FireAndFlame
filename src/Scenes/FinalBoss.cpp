@@ -7,6 +7,7 @@
 #include "../Data/Coal.h"
 #include "../Data/FinalBoss/FinalBossEnemy.h"
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
+#include "../Data/Deathzone.h"
 
 
 FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
@@ -44,6 +45,9 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     chasingBoss = std::make_unique<ChasingBoss>(tempVec);
     tempVec = {playerCharacter->GetPosition().x-16,playerCharacter->GetPosition().y-550};
     sword = std::make_unique<BossSword>(tempVec);
+
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     for(int i = 0; i<18; i++){
         bossFightBorder[i] = {(float)(86*32)+(32*i),57*32, 32, 32};

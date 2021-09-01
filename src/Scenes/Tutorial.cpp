@@ -4,6 +4,7 @@
 #include "../Data/SceneChangerObject.h"
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Coal.h"
+#include "../Data/Deathzone.h"
 
 Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     this->lastScene = lastScene;
@@ -13,13 +14,16 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     npc1Tex = LoadTexture("assets/graphics/PLAYER.png"); // TODO change NPC Texture
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Tutorial_Tilemap.json");
 
+    Vector2 tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
+
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText1.json",npc1Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText2.json",npc2Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText3.json",npc3Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText4.json",npc4Pos,npc1Tex));
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText5.json",npc5Pos,npc1Tex));
 
-    Vector2 tempVec = {86*32,36*32};
+    tempVec = {86*32,36*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));
 
     tempVec =  {39 * 32, 97 * 32 };

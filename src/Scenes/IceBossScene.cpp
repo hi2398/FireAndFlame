@@ -2,6 +2,7 @@
 #include "../Global.h"
 #include "../Data/SceneChangerObject.h"
 #include "../Data/IceBoss/IceZone.h"
+#include "../Data/Deathzone.h"
 
 IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     this->lastScene = lastScene;
@@ -14,6 +15,8 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     tilemap->AddCollisionTile(tempVec);
     tempVec = { 38 * 32, 35 * 32 };
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
     textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
