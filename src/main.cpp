@@ -55,7 +55,7 @@ if  constexpr(DEBUG_BUILD){
     hud = std::make_shared<HUD>();
     soundManager = std::make_shared<SoundManager>();
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN
@@ -100,7 +100,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-    soundManager->StopCurrentTrack();
+    soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

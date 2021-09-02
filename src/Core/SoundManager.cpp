@@ -1,4 +1,5 @@
 #include "SoundManager.h"
+#include "../Global.h"
 #include <iostream>
 
 SoundManager::SoundManager()
@@ -19,6 +20,9 @@ SoundManager::SoundManager()
 	music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
 	music[1] = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
 	music[2] = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
+	music[3] = LoadMusicStream("assets/audio/tracks/FinalBossIntro.mp3");
+	music[4] = LoadMusicStream("assets/audio/tracks/FinalBossLoop1.mp3");
+	music[5] = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
 }
 
 void SoundManager::PlaySfx(SFX sfx)
@@ -67,7 +71,7 @@ void SoundManager::PlaySfx(SFX sfx)
 
 void SoundManager::PlayTrack(TRACK track)
 {
-	int selectedTrack;
+	selectedTrack;
 	switch (track)
 	{
 	case TRACK::MENU_TRACK:
@@ -79,6 +83,15 @@ void SoundManager::PlayTrack(TRACK track)
 	case TRACK::AREA_TWO:
 		selectedTrack = 2;
 		break;
+	case TRACK::FB_INTRO:
+		selectedTrack = 3;
+		break;
+	case TRACK::FB_LOOP1:
+		selectedTrack = 4;
+		break;
+	case TRACK::AREA_THREE:
+		selectedTrack = 5;
+		break;
 	default:
 		break;
 	}
@@ -89,36 +102,49 @@ void SoundManager::PlayTrack(TRACK track)
 
 void SoundManager::UpdateTrack(TRACK track)
 {
-	int selectTrack;
+	selectedTrack;
 	switch (track)
 	{
 	case TRACK::MENU_TRACK:
-		selectTrack = 0;
+		selectedTrack = 0;
 		break;
 	case TRACK::AREA_ONE:
-		selectTrack = 1;
+		selectedTrack = 1;
 		break;
 	case TRACK::AREA_TWO:
-		selectTrack = 2;
+		selectedTrack = 2;
+		break;
+	case TRACK::FB_INTRO:
+		selectedTrack = 3;
+		break;
+	case TRACK::FB_LOOP1:
+		selectedTrack = 4;
+		break;
+	case TRACK::AREA_THREE:
+		selectedTrack = 5;
 		break;
 	default:
 		return;
 		break;
 	}
-	SetMusicVolume(music[selectTrack], trackVolume);
-	UpdateMusicStream(music[selectTrack]);
-	if (GetMusicTimePlayed(music[selectTrack]) == GetMusicTimeLength(music[selectTrack])) {
-		StopMusicStream(music[selectTrack]);
-		PlayMusicStream(music[selectTrack]);
-	}
+	if (playerCharacter->GetHealth() <= 20)SetMusicPitch(music[selectedTrack], 1.1);
+	else SetMusicPitch(music[selectedTrack], 1.0);
+	SetMusicVolume(music[selectedTrack], trackVolume);
+	UpdateMusicStream(music[selectedTrack]);
 	return;
 }
 
-void SoundManager::StopCurrentTrack()
+
+void SoundManager::StopCurrentTrack(int selectedTrack)
 {
-	for (const auto& track : music) {
-		if (IsMusicStreamPlaying(track)) StopMusicStream(track);
-	}
+
+	if (IsMusicStreamPlaying(music[selectedTrack])) StopMusicStream(music[selectedTrack]), std::cout << "stop\n";
+	
+}
+
+int SoundManager::GetCurrentTrack() const
+{
+	return selectedTrack;
 }
 
 void SoundManager::SetSfxVolume(float volume)

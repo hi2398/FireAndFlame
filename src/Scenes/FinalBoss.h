@@ -4,6 +4,7 @@
 #include "../Data/FinalBoss/EnergyAttack.h"
 #include "../Data/FinalBoss/ChasingBoss.h"
 #include "../Data/FinalBoss/BossSword.h"
+#include "../Data/Spawner.h"
 #include "vector"
 
 class FinalBoss : public Scene{
@@ -37,6 +38,12 @@ private:
     bool isPlatformSequenceActive = false;
     int timerForSpearRespawn = 0;
     bool isBossFightSequenceActive = false;
+
+    int introCounter = 0;
+    bool introPlaying = false;
+    bool loopPlaying = false;
+
+    std::vector<std::unique_ptr<Spawner>> spawner;
 protected:
 
 };
