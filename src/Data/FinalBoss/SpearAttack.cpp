@@ -32,7 +32,7 @@ void SpearAttack::Update() {
         attackPoint = {attackPoint.x-(moveTowardsPosition.x/magnitude), attackPoint.y-(moveTowardsPosition.y/magnitude)};
     }
     --prepareCounter;
-    if(prepareCounter <= 30 && !fixAttack){
+    if(prepareCounter <= 45 && !fixAttack){
         attackPoint = {playerCharacter->GetPosition().x + 16,playerCharacter->GetPosition().y+ 16};
         fixAttack = true;
     }
