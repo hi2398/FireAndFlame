@@ -34,12 +34,12 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     playerCollidersForBossMovement[4] = {60*32,66*32, 32,256};
     playerCollidersForBossMovement[5] = {67*32,56*32, 32,256};
 
-    tempVec = {31*32,60*32};
-    interactables.emplace_back(std::make_unique<Coal>(tempVec));
-    tempVec = {50*32,50*32};
-    interactables.emplace_back(std::make_unique<Coal>(tempVec));
-    tempVec = {70*32,50*32};
-    interactables.emplace_back(std::make_unique<Coal>(tempVec));
+    tempVec = {31*32,74*32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up, SpawnerType::Coal));
+    tempVec = {54*32,51*32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+    tempVec = {70*32,54*32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
 
     tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-550};
     chasingBoss = std::make_unique<ChasingBoss>(tempVec);
@@ -79,12 +79,19 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     effectPos2Start = { 500,1100 - 400 * 4 };
     effectPos1 = effectPos1Start;
     effectPos2 = effectPos2Start;
+
 }
 
 void FinalBoss::Update() {
     Scene::Update();
     chasingBoss->Update();
     sword->Update();
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+    }
     if(CheckCollisionRecs(platformerSequenceCollider,playerCharacter->playerHitbox)&&!isPlatformSequenceActive){
         isPlatformSequenceActive = true;
         sceneManager->ScreenShake(20);
@@ -127,6 +134,20 @@ void FinalBoss::Update() {
     }
     if(isPlatformSequenceActive) {
         UpdatePlatformSequence();
+
+        if (!introPlaying)soundManager->PlayTrack(TRACK::FB_INTRO), introPlaying = true;
+        if (introPlaying && !loopPlaying) {
+			soundManager->UpdateTrack(TRACK::FB_INTRO);
+			introCounter++;
+        }
+        if (introCounter >= 1690 && !loopPlaying) {
+            soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+            soundManager->PlayTrack(TRACK::FB_LOOP1);
+            loopPlaying = true;
+        }
+        if (loopPlaying) {
+            soundManager->UpdateTrack(TRACK::FB_LOOP1);
+        }
     }
 }
 
@@ -134,15 +155,18 @@ void FinalBoss::Draw() {
     Scene::Draw();
     chasingBoss->Draw();
     sword->Draw();
+    for (const auto& spawnCoal : spawner) {
+        spawnCoal->Draw();
+    }
 }
 
 void FinalBoss::UpdatePlatformSequence() {
     ++timerForSpearRespawn;
-    if(timerForSpearRespawn == 60){
+    if(timerForSpearRespawn == 25){
         Vector2 tempVec = {playerCharacter->GetPosition().x + GetRandomValue(-128,128),playerCharacter->GetPosition().y + GetRandomValue(128,190)};
         interactables.emplace_back(std::make_unique<SpearAttack>(tempVec));
     }
-    if(timerForSpearRespawn >= 120){
+    if(timerForSpearRespawn >= 50){
         timerForSpearRespawn = 0;
         Vector2 tempVec = {playerCharacter->GetPosition().x + GetRandomValue(-128,128),playerCharacter->GetPosition().y - GetRandomValue(96,120)};
         interactables.emplace_back(std::make_unique<SpearAttack>(tempVec));

@@ -70,10 +70,12 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     foregroundLoopY = 9;
     foregroundException = 0;
 
+    soundManager->PlayTrack(TRACK::AREA_THREE);
 }
 
 void AreaThree::Update() {
     Scene::Update();
+    soundManager->UpdateTrack(TRACK::AREA_THREE);
 }
 
 void AreaThree::Draw() {
