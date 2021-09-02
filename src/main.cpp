@@ -35,7 +35,7 @@ if  constexpr(DEBUG_BUILD){
 
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
-Image windowIcon= LoadImage("assets/graphics/flame.png");
+    Image windowIcon= LoadImage("assets/graphics/flame.png");
     SetWindowIcon(windowIcon);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
     SetWindowMinSize(Game::ScreenWidth / 2, Game::ScreenHeight / 2);
