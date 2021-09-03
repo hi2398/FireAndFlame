@@ -34,7 +34,7 @@ public:
 
     void ActivateScreenShake(int durationInSeconds);
 
-    SceneEnums GetSceneName() const;
+    [[nodiscard]] SceneEnums GetSceneName() const;
 
 protected:
     SceneEnums sceneName{SceneEnums::Default};
