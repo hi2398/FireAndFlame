@@ -11,9 +11,17 @@ Spawner::Spawner(Vector2 initialPos, SpawnerDirection direction, SpawnerType typ
 	switch (direction)
 	{
 	case SpawnerDirection::Up:
-		startFrame = 0;
-		thisFrame = startFrame;
-		spwnVec = {position.x + 5, position.y - 32};
+		if (type == SpawnerType::Enemy) {
+			startFrame = 0;
+			thisFrame = startFrame;
+			spwnVec = { position.x, position.y };
+		}
+		else {
+			startFrame = 0;
+			thisFrame = startFrame;
+			spwnVec = { position.x + 5, position.y - 32 };
+		}
+		
 		break;
 	case SpawnerDirection::Down:
 		if (type == SpawnerType::Enemy) {
@@ -28,18 +36,34 @@ Spawner::Spawner(Vector2 initialPos, SpawnerDirection direction, SpawnerType typ
 		spwnVec = { position.x + 5, position.y + 32 };
 		break;
 	case SpawnerDirection::Left:
-		startFrame = 3;
-		thisFrame = startFrame;
-		spwnVec = { position.x - 32, position.y };
+		if (type == SpawnerType::Enemy) {
+			startFrame = 0;
+			thisFrame = startFrame;
+			spwnVec = { position.x, position.y };
+		}
+		else {
+			startFrame = 3;
+			thisFrame = startFrame;
+			spwnVec = { position.x - 32, position.y };
+		}
+		
 		break;
 	case SpawnerDirection::Right:
-		startFrame = 3;
-		thisFrame = startFrame;
+		if (type == SpawnerType::Enemy) {
+			startFrame = 0;
+			thisFrame = startFrame;
+		}
+		else {
+			startFrame = 3;
+			thisFrame = startFrame;
+		}
 		spwnVec = { position.x + 32, position.y };
 		break;
 	default:
 		break;
 	}
+
+	if (type == SpawnerType::Enemy) spawnRate = 600;
 }
 
 void Spawner::Update()
@@ -53,7 +77,13 @@ void Spawner::Update()
 	}
 	if (thisFrame == startFrame + 3) thisFrame = startFrame, activated = false;
 
-	activeFrame.x = (float)32 * thisFrame;
+	if (type == SpawnerType::Enemy) {
+		activeFrame.x = (float)64 * thisFrame;
+	}
+	else {
+		activeFrame.x = (float)32 * thisFrame;
+	}
+	
 
 
 	switch (type)
@@ -98,40 +128,44 @@ void Spawner::Update()
 		break;
 	}
 
+	for (const auto& enemy : sceneManager->GetEnemies()) {
+		enemyCounter++;
+	}
+	if (enemyCounter <= enemyCap / 2 && type == SpawnerType::Enemy) spawnRate = 300;
+	else if (enemyCounter > enemyCap / 2 && type == SpawnerType::Enemy)spawnRate = 600;
 }
 
 void Spawner::SpawnEnemy(EnemyTypes enemy, EnemyLevel level)
 {
-	for (const auto& enemies : sceneManager->GetEnemies()) {
-		enemyCounter++;
-	}
-	if (enemyCounter < enemyCap) {
+	spawnCounter++;
+	if (spawnCounter >= spawnRate) {
 		activated = true; //activate frame handling when spawning entity
 		skipFrame++;
 		if (skipFrame >= 25) {
 			skipFrame = 0;
+			spawnCounter = 0;
 
-
-
+			
 			switch (enemy)
 			{
 			case EnemyTypes::ToastCat:
 				sceneManager->AddEnemy(std::make_unique<ToastCat>(spwnVec));
 				break;
 			case EnemyTypes::Miner:
-				sceneManager->AddEnemy(std::make_unique<Miner>(spwnVec, EnemyLevel::Low));
+				sceneManager->AddEnemy(std::make_unique<Miner>(spwnVec, level));
 				break;
 			case EnemyTypes::SpiderBot:
-				sceneManager->AddEnemy(std::make_unique<SpiderBot>(spwnVec, EnemyLevel::Low));
+				sceneManager->AddEnemy(std::make_unique<SpiderBot>(spwnVec, level));
+				std::cout << "check\n";
 				break;
 			case EnemyTypes::Flyer:
-				sceneManager->AddEnemy(std::make_unique<Fly>(spwnVec, EnemyLevel::Low));
+				sceneManager->AddEnemy(std::make_unique<Fly>(spwnVec, level));
 				break;
 			case EnemyTypes::SpringHog:
-				sceneManager->AddEnemy(std::make_unique<Howler>(spwnVec, EnemyLevel::Low));
+				sceneManager->AddEnemy(std::make_unique<Howler>(spwnVec, level));
 				break;
 			case EnemyTypes::Howler:
-				sceneManager->AddEnemy(std::make_unique<SpringHog>(spwnVec, EnemyLevel::Low));
+				sceneManager->AddEnemy(std::make_unique<SpringHog>(spwnVec, level));
 				break;
 			case EnemyTypes::Saugi:
 				sceneManager->AddEnemy(std::make_unique<Saugi>(spwnVec));
@@ -141,7 +175,6 @@ void Spawner::SpawnEnemy(EnemyTypes enemy, EnemyLevel level)
 			}
 		}
 	}
-	enemyCounter = 0;
 }
 
 void Spawner::SpawnCoal()

@@ -14,6 +14,7 @@
 #include "Scenes/FinalBoss.h"
 #include "Scenes/AreaThree.h"
 #include "Scenes/TraitorBossScene.h"
+#include "Scenes/IceBossScene.h"
 #include "Scenes/AreaOne.h"
 #include "Scenes/AreaTwo.h"
 #include "Scenes/MinerBossScene.h"
@@ -56,7 +57,7 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<AreaThree>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN

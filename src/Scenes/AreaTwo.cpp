@@ -76,14 +76,53 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     foregroundLoopY = 9;
     foregroundException = 8;
 
+
+    tempVec = { 91 * 32, 97 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Left, SpawnerType::Enemy));
+
+    tempVec = { 71 * 32, 77 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    tempVec = { 46 * 32, 62 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up, SpawnerType::Coal));
+
     soundManager->PlayTrack(TRACK::AREA_TWO);
 }
 
 void AreaTwo::Update() {
     soundManager->UpdateTrack(TRACK::AREA_TWO);
     Scene::Update();
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+        if (spawn->GetType() == SpawnerType::Enemy) {
+            switch (GetRandomValue(0, 4))
+            {
+            case 0:
+                spawn->SpawnEnemy(EnemyTypes::Flyer, EnemyLevel::Low);
+                break;
+            case 1:
+                spawn->SpawnEnemy(EnemyTypes::Howler, EnemyLevel::Low);
+                break;
+            case 2:
+                spawn->SpawnEnemy(EnemyTypes::SpiderBot, EnemyLevel::Low);
+                break;
+            case 3:
+                spawn->SpawnEnemy(EnemyTypes::Miner, EnemyLevel::Low);
+                break;
+            case 4:
+                spawn->SpawnEnemy(EnemyTypes::SpringHog, EnemyLevel::Low);
+                break;
+            }
+        }
+    }
 }
 
 void AreaTwo::Draw() {
-
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }

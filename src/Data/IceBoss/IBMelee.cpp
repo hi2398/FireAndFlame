@@ -8,7 +8,7 @@ IBMelee::IBMelee(Enemy& enemy) : EState(enemy) {
     auto* iceBoss=dynamic_cast<IceBoss*>(&enemy);
 
     //set rec to avoid buggy frame
-    texRec={static_cast<float>(96*iceBoss->GetPhase()), 0, 32, 32};
+    texRec = { static_cast<float>(96 * iceBoss->GetPhase()), 64, 64, 32 };
 }
 
 std::shared_ptr<EState> IBMelee::Update(Enemy &enemy) {

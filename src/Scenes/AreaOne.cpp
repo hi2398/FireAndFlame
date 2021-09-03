@@ -95,14 +95,31 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     foregroundLoopY = 9;
     foregroundException = 8;
 
+    tempVec = {85 * 32, 108 * 32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Left, SpawnerType::Coal));
+    tempVec = {52 * 32, 86 * 32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Right, SpawnerType::Coal));
+    tempVec = { 70 * 32, 33 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
     soundManager->PlayTrack(TRACK::AREA_ONE);
 }
 
 void AreaOne::Update() {
     soundManager->UpdateTrack(TRACK::AREA_ONE);
     Scene::Update();
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+    }
+
 }
 
 void AreaOne::Draw() {
-    
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }

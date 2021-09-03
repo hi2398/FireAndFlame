@@ -213,6 +213,16 @@ void PlayerCharacter::SetWallJumpUnlocked(bool wjUnlocked)
 	this->wjUnlocked = wjUnlocked;
 }
 
+bool PlayerCharacter::CanMove() const
+{
+	return canMove;
+}
+
+void PlayerCharacter::SetCanMove(bool canMove)
+{
+	this->canMove = canMove;
+}
+
 int PlayerCharacter::GetFrame() const {
 	return playerFrameCounter;
 }

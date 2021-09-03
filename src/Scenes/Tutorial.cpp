@@ -6,7 +6,7 @@
 #include "../Data/Coal.h"
 #include "../Data/Deathzone.h"
 
-Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
+Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;

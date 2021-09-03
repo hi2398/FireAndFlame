@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Core/Scene.h"
+#include "../Data/Spawner.h"
 
 class MinerBossScene : public Scene {
 public:
@@ -30,7 +31,7 @@ private:
     Vector2 upperDebrisLocC{53*32, 60*32};
     Vector2 upperDebrisLocD{54*32, 60*32};
     Vector2 upperDebrisLocE{55*32, 60*32};
-
+    std::vector<std::unique_ptr<Spawner>> spawner;
 };
 
 

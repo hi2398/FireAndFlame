@@ -34,6 +34,11 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     foregroundLoopX = 4;
     foregroundLoopY = 8;
     foregroundException = 7;
+
+    tempVec = { 26 * 32, 27 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+    tempVec = { 31 * 32, 27 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
 }
 
 
@@ -54,7 +59,12 @@ void IceBossScene::Update() {
         BossDeath(); //evaluates if boss is alive, auto cleanups if dead (removes blockades etc)
     }
 
-
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+    }
 
 }
 
@@ -62,6 +72,9 @@ void IceBossScene::Draw() {
     if (bossActivated && !bossDefeated) {
         DrawTextureEx(entrance.texture, entrance.location, entrance.rotation, 1, WHITE);
         DrawTextureEx(exit.texture, exit.location, exit.rotation, 1, WHITE);
+    }
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
     }
 }
 

@@ -11,30 +11,36 @@ void PlayerController::HandleInput() {
 
 
         //player dashing
-        if (playerCharacter->DashReady() && playerCharacter->IsDashUnlocked()) {
-			if ((IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash() ||
-				((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
-				playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == RIGHT)) Notify(EVENT::DASH_RIGHT);
+        if (playerCharacter->CanMove()) {
+			if (playerCharacter->DashReady() && playerCharacter->IsDashUnlocked()) {
+				if ((IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash() ||
+					((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
+					playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == RIGHT)) Notify(EVENT::DASH_RIGHT);
 
-			if ((IsKeyDown(KEY_A) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash() ||
-				((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
-				playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == LEFT)) Notify(EVENT::DASH_LEFT);
+				if ((IsKeyDown(KEY_A) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash() ||
+					((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
+					playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == LEFT)) Notify(EVENT::DASH_LEFT);
+			}
         }
+        
 
        
 
 
 
         //player jumping
-        if (playerCharacter->GetWallCollisionLeft() && !playerCharacter->IsGrounded() ||
-            playerCharacter->GetWallCollisionRight() && !playerCharacter->IsGrounded()) {
-            if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::WALL_JUMP);
+        if (playerCharacter->CanMove()) { //for Iceboss Fight
+			if (playerCharacter->GetWallCollisionLeft() && !playerCharacter->IsGrounded() ||
+				playerCharacter->GetWallCollisionRight() && !playerCharacter->IsGrounded()) {
+				if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::WALL_JUMP);
+			}
+			else if ((!playerCharacter->GetHeadCollision() && playerCharacter->IsGrounded()) ||
+				(!playerCharacter->GetHeadCollision() && playerCharacter->GetCanDoubleJump() && playerCharacter->GetTimesJumped() < 2)
+				) {
+				if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::JUMP);
+			}
         }
-        else if ((!playerCharacter->GetHeadCollision() && playerCharacter->IsGrounded()) ||
-            (!playerCharacter->GetHeadCollision() && playerCharacter->GetCanDoubleJump() && playerCharacter->GetTimesJumped() < 2)
-            ) {
-            if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::JUMP);
-        }
+        
 
 
 

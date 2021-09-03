@@ -51,6 +51,9 @@ public:
     bool IsWalljumpUnlocked() const;
     void SetWallJumpUnlocked(bool wjUnlocked);
 
+    bool CanMove() const;
+    void SetCanMove(bool canMove);
+
 	//2Dcam
 	Camera2D camera = { 0 };
     bool followCam{ true };
@@ -109,6 +112,8 @@ private:
    
     bool dashUnlocked{ false };
     bool wjUnlocked{false};
+
+    bool canMove{true};
 
     //attack
     ACTION nextAction{ACTION::NONE};
