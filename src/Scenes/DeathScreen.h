@@ -10,6 +10,7 @@ public:
 
 private:
 
+    Texture2D background;
 protected:
 
 };

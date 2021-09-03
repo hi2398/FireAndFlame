@@ -13,6 +13,7 @@ protected:
 
 
 private:
+    Texture2D bossMap;
     int attackCounter = 120;
     bool secondAttack = false;
 };

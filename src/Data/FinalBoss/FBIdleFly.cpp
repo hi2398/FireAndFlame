@@ -7,19 +7,35 @@
 #include "FBSwordAtk.h"
 #include "FBEnergyAtk.h"
 #include "FBFlyDown.h"
-#include "FBIdleDown.h"
 #include <iostream>
 #include "../../Global.h"
 #include "FinalBossEnemy.h"
+#include "FBChangeStates.h"
 
 FBIdleFly::FBIdleFly() {
+    activeFrame = {0,0,64,64};
+    bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
 }
 
 std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
     actor.SetPosition({94*32,73*32});
     FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
-    if(boss.GetHealth()<= 2){
-        return std::make_shared<FBIdleDown>();
+    if(counter == 0){
+        counter = 40;
+        switch ((int)activeFrame.x) {
+            case 0: activeFrame = {64,0,64,64};
+                break;
+            case 32: activeFrame = {128,0,64,64};
+                break;
+            case 64: activeFrame = {0,0,64,64};
+                break;
+            default:
+                break;
+
+        }
+    }else {counter--;}
+    if(boss.GetHealth()<= 20){
+        return std::make_shared<FBChangeStates>();
     }
     if(decideCounter <= 0){
         if(playerCharacter->GetHealth() <= 25){
@@ -39,5 +55,6 @@ std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
 
 
 void FBIdleFly::Draw(Actor &actor) {
-
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

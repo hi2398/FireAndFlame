@@ -31,11 +31,15 @@ void DialogueManager::UpdateDialogue(std::string filePath) {
 void DialogueManager::DrawDialogue() {
     const char *nextSentenceInQueue = nextSent.c_str();
     if(dialogueActive) {
-        DrawRectangleRec(dialogueBox, RED);
+        DrawTexture(dialogueBox,200,490,WHITE);
         if(nextSent.length()>60){
-            fontSizeForDialogue = 23;
-        }else fontSizeForDialogue = 30;
-        DrawText(nextSentenceInQueue, 220, 535, fontSizeForDialogue, BLUE);
-        DrawText("PRESS E OR GAMEPAD Y TO CONTINUE", 800, 610, 15, BLUE);
+            fontSizeForDialogue = 22;
+        }else fontSizeForDialogue = 28;
+        DrawText(nextSentenceInQueue, 220, 550, fontSizeForDialogue, WHITE);
+        DrawText("PRESS E OR GAMEPAD Y TO CONTINUE", 700, 610, 15, WHITE);
     }
+}
+
+DialogueManager::DialogueManager() {
+    dialogueBox = LoadTexture("assets/graphics/GUI/DialogBox.png");
 }

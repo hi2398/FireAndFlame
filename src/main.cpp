@@ -7,16 +7,16 @@
 #include "Global.h"
 #include "config.h"
 #include "helper.h"
-#include "Scenes/IceBossScene.h"
+#include "Scenes/Endscreen.h"
 #include "Scenes/Tutorial.h"
 #include "Scenes/MainMenu.h"
 #include "Scenes/NeutralArea.h"
 #include "Scenes/FinalBoss.h"
 #include "Scenes/AreaThree.h"
-#include "Scenes/MinerBossScene.h"
+#include "Scenes/TraitorBossScene.h"
 #include "Scenes/AreaOne.h"
 #include "Scenes/AreaTwo.h"
-#include "Scenes/TraitorBossScene.h"
+#include "Scenes/MinerBossScene.h"
 
 
 std::shared_ptr<PlayerCharacter> playerCharacter;
@@ -52,10 +52,12 @@ if  constexpr(DEBUG_BUILD){
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
-	hud = std::make_shared<HUD>();
- 	soundManager = std::make_shared<SoundManager>();
+    hud = std::make_shared<HUD>();
+    soundManager = std::make_shared<SoundManager>();
+
 
 	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
+
 
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
@@ -99,7 +101,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-    soundManager->StopCurrentTrack();
+    soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

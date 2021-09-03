@@ -13,6 +13,7 @@ protected:
 
 
 private:
+    Texture2D bossMap;
     int decideCounter = 260;
     int attackCounter = 250;
 };

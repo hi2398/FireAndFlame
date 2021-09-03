@@ -1,13 +1,8 @@
 #include "NeutralArea.h"
 #include "raylib.h"
-#include "../Data/Enemies/Miner.h"
-#include "../Data/Enemies/ToastCat.h"
-#include "../Data/Enemies/Fly.h"
-#include "../Data/Enemies/Howler.h"
-#include "../Data/Enemies/SpiderBot.h"
-#include "../Data/Enemies/SpringHog.h"
-#include "../Data/Enemies/Saugi.h"
+#include "../Core/EnemyList.h"
 #include "raymath.h"
+#include "../Data/Deathzone.h"
 
 
 NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
@@ -18,12 +13,16 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     interactables.emplace_back(std::make_unique<Coal>(playerCharacter->GetPosition()));
 
 
+
     Vector2 tempVec= {106*32,86*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne, sceneName));
     tempVec= {15*32,77*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo, sceneName));
     tempVec= {69*32,65*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaThree, sceneName));
+
+    tempVec = {-200, 130*32};
+    interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
    
     /* TODO Add Statue and Schilder after receiving dialogue files
     Statue 67,92

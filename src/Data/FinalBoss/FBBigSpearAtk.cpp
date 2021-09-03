@@ -7,6 +7,7 @@
 #include "SpearAttack.h"
 #include "FBIdleDown.h"
 #include "EnergyAttack.h"
+#include "FinalBossEnemy.h"
 
 FBBigSpearAtk::FBBigSpearAtk() {
     Vector2 tempVec = {89*32,73*32};
@@ -21,6 +22,8 @@ FBBigSpearAtk::FBBigSpearAtk() {
     sceneManager->AddInteractable(std::make_unique<EnergyAttack>(tempVec));
     tempVec = {100*32,76*32};
     sceneManager->AddInteractable(std::make_unique<EnergyAttack>(tempVec));
+    activeFrame = {320,192,64,64};
+    bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
 }
 
 std::shared_ptr<State> FBBigSpearAtk::Update(Actor &actor) {
@@ -43,5 +46,6 @@ std::shared_ptr<State> FBBigSpearAtk::Update(Actor &actor) {
 }
 
 void FBBigSpearAtk::Draw(Actor &actor) {
-
+    FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
+    DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }

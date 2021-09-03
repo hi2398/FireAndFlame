@@ -76,7 +76,7 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 			switch (enemy.GetDirection())
 			{
 			case LEFT:
-				enemySight = { enemy.GetPosition().x + 16 - 6 * 32, enemy.GetPosition().y + 16, 6 * 32, 5 };
+				enemySight = { enemy.GetPosition().x + 16 - 8 * 32, enemy.GetPosition().y + 16, 16 * 32, 5 };
 
 				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
 					//enter approaching state on coal sight left
@@ -84,7 +84,7 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 				}
 				break;
 			case RIGHT:
-				enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
+				enemySight = { enemy.GetPosition().x + 16 - 8 * 32, enemy.GetPosition().y + 16, 16*32, 5 };
 				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
 					//enter approaching state on player sight right
 					return std::make_shared<ApproachingState>(enemy);

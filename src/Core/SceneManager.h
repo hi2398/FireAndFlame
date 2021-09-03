@@ -32,7 +32,7 @@ public:
     void SaveGame(std::string saveFolder, int slot);
     void LoadGame(std::string saveFolder, int slot);
 
-    void ScreenShake(int durationInSeconds);
+    void ScreenShake(int durationInFrames);
 
     [[nodiscard]] std::shared_ptr<Scene> GetActiveScene();
 
