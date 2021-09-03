@@ -580,7 +580,7 @@ void MainMenu::ResetSave(int slot) {
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
     std::string saveScreen=saveFolder + "save" + "_" + std::to_string(slot) + ".png";
     std::filesystem::copy("./assets/save_reset.json", saveSlot, std::filesystem::copy_options::overwrite_existing);
-    std::filesystem::copy("assets/graphics/flame.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy("./assets/graphics/savegame/zero.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
     switch (slot) {
         case 1:
         savegameTex1= LoadTexture(saveScreen.c_str());
