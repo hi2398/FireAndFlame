@@ -11,6 +11,7 @@
 
 AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     this->lastScene = lastScene;
+    playerCharacter->SetHealth(100);
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Three_Tilemap.json");
     Vector2 tempVec= {80*25,24*26};
