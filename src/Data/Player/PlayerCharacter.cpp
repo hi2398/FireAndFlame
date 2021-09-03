@@ -28,6 +28,10 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	observer = std::make_shared<PlayerObserver>(*this);
 	movementState = std::make_shared<MovementState>(*this);
 	actionState = std::make_shared<IdleActionState>(*this);
+
+    if constexpr (DEBUG_BUILD){
+        abilitiesUnlocked=AbilitiesUnlocked::Doublejump;
+    }
 }
 
 
@@ -165,7 +169,7 @@ void PlayerCharacter::BlockPlayerControls(bool blockThis) {
 	controlsBlocked = blockThis;
 }
 
-bool PlayerCharacter::ConrolsDisabled() const
+bool PlayerCharacter::InputDisabled() const
 {
 	return controlsBlocked;
 }
@@ -191,10 +195,19 @@ bool PlayerCharacter::GetLastTickGroundedState() const
 	return groundedLastFrame;
 }
 
-int PlayerCharacter::GetFrame() {
+int PlayerCharacter::GetFrame() const {
 	return playerFrameCounter;
 }
 
-int PlayerCharacter::GetCurrentFrame() {
+int PlayerCharacter::GetCurrentFrame() const {
 	return currentFrame;
+}
+
+AbilitiesUnlocked PlayerCharacter::GetUnlockedAbilities() const {
+    return abilitiesUnlocked;
+}
+
+void PlayerCharacter::SetUnlockedAbilityLevel(AbilitiesUnlocked abilitiesUnlocked) {
+    this->abilitiesUnlocked=abilitiesUnlocked;
+
 }
