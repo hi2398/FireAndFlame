@@ -40,14 +40,14 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     switch (lastScene)
     {
     case SceneEnums::MinerBoss:
-        playerCharacter->SetPosition({ 104 * 32, 89 * 32 });
-        foregroundPos = { 863.4 , -40.8 };
-        backgroundPos = { 1439, -633.6 };
+        playerCharacter->SetPosition({ 86 * 32, 90 * 32 });
+        foregroundPos = { 522 , -34.4 };
+        backgroundPos = { 871, -604.8 };
         break;
     case SceneEnums::TraitorBoss:
-        playerCharacter->SetPosition({ 20 * 32,80 * 32 });
-        foregroundPos = { -750, -98.4 };
-        backgroundPos = {-1250, -924.8 };
+        playerCharacter->SetPosition({ 37 * 32,73 * 32 });
+        foregroundPos = { -422.4, -143.2 };
+        backgroundPos = {-704, -1094.4 };
         break;
     default:
         playerCharacter->SetPosition(playerStart);

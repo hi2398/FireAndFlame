@@ -11,7 +11,7 @@ void PlayerController::HandleInput() {
 
 
         //player dashing
-        if (playerCharacter->DashReady()) {
+        if (playerCharacter->DashReady() && playerCharacter->IsDashUnlocked()) {
 			if ((IsKeyDown(KEY_D) && IsKeyPressed(KEY_LEFT_CONTROL) && playerCharacter->GetCanDash() ||
 				((int)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0 && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_2)) && playerCharacter->GetCanDash() ||
 				playerCharacter->GetIsDashing() && playerCharacter->GetDirection() == RIGHT)) Notify(EVENT::DASH_RIGHT);

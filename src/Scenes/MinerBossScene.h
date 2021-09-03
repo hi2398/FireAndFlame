@@ -11,6 +11,7 @@ public:
 
     void EnableDebrisLower();
     void EnableDebrisUpper();
+    void OnBossDeath();
 
 protected:
 
@@ -21,6 +22,7 @@ private:
     bool bossActivated{false};
     bool lowerDebrisEnabled{false};
     bool upperDebrisEnabled{false};
+    bool bossDefeated{false};
     Texture2D debrisTexture;
     Vector2 lowerDebrisLoc{57*32, 90*32};
     Vector2 upperDebrisLocA{51*32, 60*32};

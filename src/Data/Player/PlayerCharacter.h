@@ -45,6 +45,12 @@ public:
 
     bool GetLastTickGroundedState() const;
 
+    bool IsDashUnlocked() const;
+    void SetDashUnlocked(bool dashUnlocked);
+
+    bool IsWalljumpUnlocked() const;
+    void SetWallJumpUnlocked(bool wjUnlocked);
+
 	//2Dcam
 	Camera2D camera = { 0 };
     bool followCam{ true };
@@ -80,6 +86,7 @@ public:
 protected:
 
 private:
+    void CheckUnlockedAbilities();
     AbilitiesUnlocked abilitiesUnlocked{AbilitiesUnlocked::None};
     const float playerWidth = 20.0f;
     const float playerHeight = 32.0f;
@@ -100,6 +107,8 @@ private:
     bool invulnerableVisualized{ false };
     bool groundedLastFrame{ true };
    
+    bool dashUnlocked{ false };
+    bool wjUnlocked{false};
 
     //attack
     ACTION nextAction{ACTION::NONE};

@@ -1,4 +1,5 @@
 #include "MinerBossScene.h"
+#include "MinerBossScene.h"
 #include "raymath.h"
 #include "../Global.h"
 #include "NeutralArea.h"
@@ -43,6 +44,7 @@ void MinerBossScene::Update() {
         }
     }
 
+    if (!bossDefeated) OnBossDeath();
 }
 
 void MinerBossScene::Draw() {
@@ -70,6 +72,20 @@ void MinerBossScene::EnableDebrisUpper() {
     sceneManager->GetTilemap()->AddCollisionTile(upperDebrisLocC);
     sceneManager->GetTilemap()->AddCollisionTile(upperDebrisLocD);
     sceneManager->GetTilemap()->AddCollisionTile(upperDebrisLocE);
+}
+
+void MinerBossScene::OnBossDeath()
+{
+    if (bossActivated) {
+        for (const auto& enemy : sceneManager->GetEnemies()) {
+            if (enemy->GetEnemyType() == EnemyTypes::Boss) return;
+        }
+    }
+
+    //functions on boss death
+    bossDefeated = true;
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
+    return;
 }
 
 

@@ -72,6 +72,7 @@ bool IceBossScene::BossDeath() {
         if (enemy->GetEnemyType() == EnemyTypes::Boss) return true;
     }
     //if not found, he is not alive, remove the blockades and set bool to true
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Dash);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

@@ -140,7 +140,8 @@ void FinalBoss::Update() {
 			soundManager->UpdateTrack(TRACK::FB_INTRO);
 			introCounter++;
         }
-        if (introCounter >= 1690 && !loopPlaying) {
+               
+        if ((introCounter >= 1690 && !loopPlaying) || (playerCharacter->GetHealth() <= 20 && introCounter >= 1680 && !loopPlaying)) {
             soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
             soundManager->PlayTrack(TRACK::FB_LOOP1);
             loopPlaying = true;
