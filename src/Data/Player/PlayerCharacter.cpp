@@ -28,6 +28,10 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	observer = std::make_shared<PlayerObserver>(*this);
 	movementState = std::make_shared<MovementState>(*this);
 	actionState = std::make_shared<IdleActionState>(*this);
+
+    if constexpr (DEBUG_BUILD){
+        abilitiesUnlocked=AbilitiesUnlocked::Doublejump; //unlock all abilites if in debug mode
+    }
 }
 
 
@@ -55,7 +59,7 @@ void PlayerCharacter::Update() {
     }
 
 	//dash cooldown
-	if (dashIsReady == false) {
+	if (!dashIsReady) {
 		dashCounter++;
 		if (dashCounter >= DASH_COOLDOWN) {
 			dashCounter = 0;
@@ -79,8 +83,7 @@ void PlayerCharacter::Update() {
 		invulnerableCounter++;
 
 		if (invulnerableCounter % 4) {
-			if (invulnerableVisualized == true) invulnerableVisualized = false;
-			else invulnerableVisualized = true;
+			invulnerableVisualized=!invulnerableVisualized;
 		}
 
 		if (invulnerableCounter >= 60) {
@@ -147,7 +150,7 @@ void PlayerCharacter::SetNextAction(ACTION action) {
 	nextAction = action;
 }
 
-bool PlayerCharacter::IsInvulnerable()
+bool PlayerCharacter::IsInvulnerable() const
 {
 	return invulnerable;
 }
@@ -165,15 +168,14 @@ void PlayerCharacter::BlockPlayerControls(bool blockThis) {
 	controlsBlocked = blockThis;
 }
 
-bool PlayerCharacter::ConrolsDisabled() const
+bool PlayerCharacter::InputDisabled() const
 {
 	return controlsBlocked;
 }
 
 void PlayerCharacter::ChangeCameraControl()
 {
-	if (followCam == true) followCam = false;
-	else if (followCam == false) followCam = true;
+    followCam=!followCam;
 }
 
 bool PlayerCharacter::DashReady() const
@@ -191,10 +193,19 @@ bool PlayerCharacter::GetLastTickGroundedState() const
 	return groundedLastFrame;
 }
 
-int PlayerCharacter::GetFrame() {
+int PlayerCharacter::GetFrame() const {
 	return playerFrameCounter;
 }
 
-int PlayerCharacter::GetCurrentFrame() {
+int PlayerCharacter::GetCurrentFrame() const {
 	return currentFrame;
+}
+
+AbilitiesUnlocked PlayerCharacter::GetUnlockedAbilities() const {
+    return abilitiesUnlocked;
+}
+
+void PlayerCharacter::SetUnlockedAbilityLevel(AbilitiesUnlocked abilitiesUnlocked) {
+    this->abilitiesUnlocked=abilitiesUnlocked;
+
 }

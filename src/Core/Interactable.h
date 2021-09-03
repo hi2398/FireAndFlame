@@ -2,7 +2,7 @@
 #include "Object.h"
 #include "Actor.h"
 
-enum class InteractableType{Coal,SceneChangeCollider,DialogObj, IceZone, FinalBossAttack, Toast, Foam, Fireball, TmpDialogObj, Other};
+enum class InteractableType{Coal,SceneChangeCollider,DialogObj, IceZone, FinalBossAttack, Toast, Foam, Fireball, TmpDialogObj, Other, Save};
 
 class Interactable : public Object {
 public:

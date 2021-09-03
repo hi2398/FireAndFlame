@@ -36,6 +36,8 @@ if  constexpr(DEBUG_BUILD){
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
+    Image windowIcon= LoadImage("assets/graphics/flame.png");
+    SetWindowIcon(windowIcon);
     SetWindowMinSize(Game::ScreenWidth / 2, Game::ScreenHeight / 2);
     // Set game to run at 60 frames-per-second
     SetTargetFPS(60);
@@ -53,7 +55,8 @@ if  constexpr(DEBUG_BUILD){
     hud = std::make_shared<HUD>();
     soundManager = std::make_shared<SoundManager>();
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>(SceneEnums::Default));
+
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN
