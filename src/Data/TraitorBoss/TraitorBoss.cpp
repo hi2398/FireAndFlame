@@ -44,7 +44,7 @@ void TraitorBoss::Update()
 		}
 		else if (!GetJumpCommand() && !IsGrounded()) {
 			position.y += GetFallingSpeed();
-			SetFallingSpeed(GetFallingSpeed() + 0.1 * GetGravityMultiplier());
+			SetFallingSpeed(GetFallingSpeed() + 0.1f * GetGravityMultiplier());
 		}
 		UpdateCollider(0, 0, 32, 32);
 	}

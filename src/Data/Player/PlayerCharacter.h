@@ -7,6 +7,7 @@
 
 
 enum class ACTION {MELEE_ATTACK, RANGED_ATTACK, NONE};
+enum class AbilitiesUnlocked {None = 0, Dash = 1, Walljump = 2 , Doublejump = 3};
 
 
 class PlayerCharacter : public Actor {
@@ -25,7 +26,7 @@ public:
     ACTION GetNextAction();
     void SetNextAction(ACTION action);
 
-    bool IsInvulnerable();
+    bool IsInvulnerable() const;
     void SetInvulnerable(bool invulnerable);
 
     bool disablePlayerMovement = false;
@@ -35,7 +36,7 @@ public:
         isHealthDecreasing = isDecreasing;
     }
 
-    bool ConrolsDisabled() const;
+    bool InputDisabled() const;
 
     void ChangeCameraControl();
 
@@ -65,17 +66,21 @@ public:
 	int resetAttack = 0;
 	int attackState = 0;
 
-    int GetFrame();
-    int GetCurrentFrame();
+    int GetFrame() const;
+    int GetCurrentFrame() const;
 
     Texture2D upperBody;
     Texture2D lowerBody;
     Texture2D attackSprite;
     Texture2D spriteSheetMagmos;
 
+    AbilitiesUnlocked GetUnlockedAbilities() const;
+    void SetUnlockedAbilityLevel(AbilitiesUnlocked abilitiesUnlocked);
+
 protected:
 
 private:
+    AbilitiesUnlocked abilitiesUnlocked{AbilitiesUnlocked::None};
     const float playerWidth = 20.0f;
     const float playerHeight = 32.0f;
     static constexpr int max_health{100};

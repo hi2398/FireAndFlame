@@ -4,7 +4,7 @@
 
 
 void PlayerController::HandleInput() {
-    if (!playerCharacter->ConrolsDisabled()) {
+    if (!playerCharacter->InputDisabled()) {
         //player walking
         if (IsKeyDown(KEY_D) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0) Notify(EVENT::MOVE_RIGHT);
         if (IsKeyDown(KEY_A) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0) Notify(EVENT::MOVE_LEFT);
@@ -31,7 +31,7 @@ void PlayerController::HandleInput() {
             if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::WALL_JUMP);
         }
         else if ((!playerCharacter->GetHeadCollision() && playerCharacter->IsGrounded()) ||
-            (!playerCharacter->GetHeadCollision() && playerCharacter->GetCanDoubleJump() == true && playerCharacter->GetTimesJumped() < 2)
+            (!playerCharacter->GetHeadCollision() && playerCharacter->GetCanDoubleJump() && playerCharacter->GetTimesJumped() < 2)
             ) {
             if (IsKeyPressed(KEY_SPACE) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) Notify(EVENT::JUMP);
         }
@@ -49,10 +49,10 @@ void PlayerController::HandleInput() {
             if (IsKeyDown(KEY_DOWN)) playerCharacter->camera.zoom -= 0.1f;
 
             //toggle Double Jump
-            if (playerCharacter->GetCanDoubleJump() == true) {
+            if (playerCharacter->GetCanDoubleJump()) {
                 if (IsKeyReleased(KEY_J)) playerCharacter->SetCanDoubleJump(false);
             }
-            else if (playerCharacter->GetCanDoubleJump() == false) {
+            else if (!playerCharacter->GetCanDoubleJump()) {
                 if (IsKeyReleased(KEY_J)) playerCharacter->SetCanDoubleJump(true);
             }
 
