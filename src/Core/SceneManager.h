@@ -36,12 +36,16 @@ public:
 
     [[nodiscard]] std::shared_ptr<Scene> GetActiveScene();
 
+    void SetActiveSaveSlot(int slot);
+    [[nodiscard]] int GetSaveSlot() const;
+
 protected:
 
 private:
     Vector2 virtualMousePosition;
     std::shared_ptr<Scene> activeScene;
     std::shared_ptr<Scene> nextScene;
+    int saveSlot{0};
 
 
 };

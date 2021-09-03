@@ -168,3 +168,11 @@ std::shared_ptr<Scene> SceneManager::GetActiveScene() {
     return activeScene;
 }
 
+void SceneManager::SetActiveSaveSlot(int slot) {
+    saveSlot=slot;
+}
+
+int SceneManager::GetSaveSlot() const{
+    return saveSlot;
+}
+
