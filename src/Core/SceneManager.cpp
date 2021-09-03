@@ -37,6 +37,7 @@ void SceneManager::UpdateDialogInScene(std::string filepath) {
 void SceneManager::SaveGame(std::string saveFolder, int slot) {
     int playerHealth =playerCharacter->GetHealth();
     Vector2 playerLocation = playerCharacter->GetPosition();
+    int unlockedAbilities = static_cast<int>(playerCharacter->GetUnlockedAbilities());
 
 
     json saveDataStruct = {
@@ -44,17 +45,20 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
                     {
                             {"health", playerHealth},
                             {"locationX", playerLocation.x},
-                            {"locationY", playerLocation.y}
+                            {"locationY", playerLocation.y},
+                            {"unlockedAbilities", unlockedAbilities}
                     }
             } //END PLAYER
     };
 
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
+    std::string screenshot=saveFolder + "save" + "_" + std::to_string(slot) + ".png";
 
     //TODO: Copy old save over to prevent corruption
     std::ofstream saveFile{saveSlot};
     saveFile << std::setw(4) << saveDataStruct;
     saveFile.close();
+    TakeScreenshot(screenshot.c_str());
 }
 
 void SceneManager::LoadGame(std::string saveFolder, int slot) {
@@ -79,6 +83,7 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
         location.x = category["locationX"];
         location.y = category["locationY"];
         playerCharacter->SetPosition(location);
+        playerCharacter->SetUnlockedAbilityLevel(static_cast<AbilitiesUnlocked>(category["unlockedAbilities"]));
     }
 
 
