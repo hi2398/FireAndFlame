@@ -30,7 +30,7 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	actionState = std::make_shared<IdleActionState>(*this);
 
     if constexpr (DEBUG_BUILD){
-        abilitiesUnlocked=AbilitiesUnlocked::Doublejump;
+        abilitiesUnlocked=AbilitiesUnlocked::Doublejump; //unlock all abilites if in debug mode
     }
 }
 
@@ -59,7 +59,7 @@ void PlayerCharacter::Update() {
     }
 
 	//dash cooldown
-	if (dashIsReady == false) {
+	if (!dashIsReady) {
 		dashCounter++;
 		if (dashCounter >= DASH_COOLDOWN) {
 			dashCounter = 0;
@@ -83,8 +83,7 @@ void PlayerCharacter::Update() {
 		invulnerableCounter++;
 
 		if (invulnerableCounter % 4) {
-			if (invulnerableVisualized == true) invulnerableVisualized = false;
-			else invulnerableVisualized = true;
+			invulnerableVisualized=!invulnerableVisualized;
 		}
 
 		if (invulnerableCounter >= 60) {
@@ -151,7 +150,7 @@ void PlayerCharacter::SetNextAction(ACTION action) {
 	nextAction = action;
 }
 
-bool PlayerCharacter::IsInvulnerable()
+bool PlayerCharacter::IsInvulnerable() const
 {
 	return invulnerable;
 }
@@ -176,8 +175,7 @@ bool PlayerCharacter::InputDisabled() const
 
 void PlayerCharacter::ChangeCameraControl()
 {
-	if (followCam == true) followCam = false;
-	else if (followCam == false) followCam = true;
+    followCam=!followCam;
 }
 
 bool PlayerCharacter::DashReady() const

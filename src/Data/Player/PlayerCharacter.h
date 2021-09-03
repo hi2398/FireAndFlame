@@ -26,7 +26,7 @@ public:
     ACTION GetNextAction();
     void SetNextAction(ACTION action);
 
-    bool IsInvulnerable();
+    bool IsInvulnerable() const;
     void SetInvulnerable(bool invulnerable);
 
     bool disablePlayerMovement = false;
