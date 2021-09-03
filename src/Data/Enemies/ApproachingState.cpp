@@ -266,8 +266,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		edgeSeekerRight = { enemy.GetPosition().x + 32, enemy.GetPosition().y + 32, 1, 1 };
 		
 		movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
-		if (movingToPlayer.x > 0 && !enemy.GetJumpCommand()) movingDistance = enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(RIGHT);
-		else if (movingToPlayer.x < 0 && !enemy.GetJumpCommand()) movingDistance = -enemy.GetEnemyMovementSpeed() * 1.5, enemy.SetDirection(LEFT);
+		if (movingToPlayer.x > 0 && !enemy.GetJumpCommand()) movingDistance = enemy.GetEnemyMovementSpeed() * 1.5f, enemy.SetDirection(RIGHT);
+		else if (movingToPlayer.x < 0 && !enemy.GetJumpCommand()) movingDistance = -enemy.GetEnemyMovementSpeed() * 1.5f, enemy.SetDirection(LEFT);
 			
 		for (const auto& collTile : sceneManager->GetTilemap()->GetTileColliders())
 		{
@@ -364,8 +364,8 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			tileRec.y = collTile.y;
 
 			movingToPlayer = Vector2Subtract(playerCharacter->GetPosition(), enemy.GetPosition());
-			if (movingToPlayer.x > 0) movingDistance = enemy.GetEnemyMovementSpeed()*1.5, enemy.SetDirection(RIGHT);
-			else if (movingToPlayer.x < 0) movingDistance = -enemy.GetEnemyMovementSpeed()*1.5, enemy.SetDirection(LEFT);
+			if (movingToPlayer.x > 0) movingDistance = enemy.GetEnemyMovementSpeed()*1.5f, enemy.SetDirection(RIGHT);
+			else if (movingToPlayer.x < 0) movingDistance = -enemy.GetEnemyMovementSpeed()*1.5f, enemy.SetDirection(LEFT);
 
 			//stop follow player over ledge
 			if ((CheckCollisionRecs(edgeSeekerLeft, tileRec) && enemy.GetDirection() == LEFT) || (CheckCollisionRecs(edgeSeekerRight, tileRec) && enemy.GetDirection() == RIGHT)) {

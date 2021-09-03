@@ -47,6 +47,9 @@ private:
     std::shared_ptr<Scene> nextScene;
     int saveSlot{0};
 
+    bool setPlayerPos{false};
+    Vector2 playerPosToSet{};
+
 
 };
 

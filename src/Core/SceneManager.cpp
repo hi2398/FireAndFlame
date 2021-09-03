@@ -93,7 +93,8 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
         Vector2 location{0, 0};
         location.x = category["locationX"];
         location.y = category["locationY"];
-        playerCharacter->SetPosition(location);
+        playerPosToSet=location;
+        setPlayerPos= true;
         playerCharacter->SetUnlockedAbilityLevel(static_cast<AbilitiesUnlocked>(category["unlockedAbilities"]));
 
         SceneEnums sceneToLoad=category["currentLevel"];
@@ -143,6 +144,12 @@ void SceneManager::ScreenShake(int durationInFrames)
 
 void SceneManager::Update(Vector2 virtualMousePosition) {
     activeScene = nextScene;
+
+    if (setPlayerPos){
+        playerCharacter->SetPosition(playerPosToSet);
+        setPlayerPos= false;
+    }
+
     this->virtualMousePosition = virtualMousePosition;
 
     if constexpr (DEBUG_BUILD) {
