@@ -12,6 +12,7 @@
 
 AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     this->lastScene = lastScene;
+    playerCharacter->SetHealth(100);
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Three_Tilemap.json");
     Vector2 tempVec= {80*25,24*26};
@@ -75,14 +76,49 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     foregroundLoopY = 9;
     foregroundException = 0;
 
+    tempVec = { 89 * 32, 96 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Left, SpawnerType::Enemy));
+
+    tempVec = { 44 * 32, 74 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Right, SpawnerType::Enemy));
+
+    tempVec = { 48 * 32, 51 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Enemy));
+
     soundManager->PlayTrack(TRACK::AREA_THREE);
 }
 
 void AreaThree::Update() {
     Scene::Update();
     soundManager->UpdateTrack(TRACK::AREA_THREE);
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Enemy) {
+            switch (GetRandomValue(0, 4))
+            {
+            case 0:
+                spawn->SpawnEnemy(EnemyTypes::Flyer, EnemyLevel::Low);
+                break;
+            case 1:
+                spawn->SpawnEnemy(EnemyTypes::Howler, EnemyLevel::Low);
+                break;
+            case 2:
+                spawn->SpawnEnemy(EnemyTypes::SpiderBot, EnemyLevel::Low);
+                break;
+            case 3:
+                spawn->SpawnEnemy(EnemyTypes::Miner, EnemyLevel::Low);
+                break;
+            case 4:
+                spawn->SpawnEnemy(EnemyTypes::SpringHog, EnemyLevel::Low);
+                break;
+            }
+        }
+    }
 }
 
 void AreaThree::Draw() {
-
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }

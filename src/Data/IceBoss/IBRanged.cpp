@@ -31,7 +31,6 @@ std::shared_ptr<EState> IBRanged::Update(Enemy &enemy) {
     }
 
 
-
     if (jumpTimer==0) return std::make_shared<IBSeek>(enemy);
     return shared_from_this();
 }

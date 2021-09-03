@@ -99,6 +99,7 @@ void TraitorBossScene::CheckBossDeath()
     }
     soundManager->PlaySfx(SFX::DOORS);
     sceneManager->ScreenShake(20);
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

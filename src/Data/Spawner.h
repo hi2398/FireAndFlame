@@ -9,7 +9,7 @@ enum class SpawnerType { Coal, Enemy };
 enum class SpawnerDirection{Up, Down, Left, Right};
 class Spawner : public Object{
 public:
-	Spawner(Vector2 initialPos, SpawnerDirection direction, SpawnerType type, int spawnRate = 1200, int enemyCap = 10);
+	Spawner(Vector2 initialPos, SpawnerDirection direction, SpawnerType type, int spawnRate = 1200, int enemyCap = 20);
 	void Update() override;
 	void SpawnEnemy(EnemyTypes enemy, EnemyLevel level);
 	void SpawnCoal();

@@ -11,7 +11,7 @@ IBMinions::IBMinions(Enemy& enemy) : EState(enemy) {
 
 std::shared_ptr<EState> IBMinions::Update(Enemy &enemy) {
 
-    std::cout << "IBMinions\n";
+
 
     //return to seek once phase is done
     return std::make_shared<IBSeek>(enemy);

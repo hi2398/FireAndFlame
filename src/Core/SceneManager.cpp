@@ -206,10 +206,10 @@ void SceneManager::Draw() {
     for (const auto& enemy : activeScene->GetEnemies()){
         enemy->Draw();
     }
+    if (playerCharacter->active) playerCharacter->Draw();
     for (const auto& interactable : activeScene->GetInteractables()) {
         interactable->Draw();
     }
-    if (playerCharacter->active) playerCharacter->Draw();
     activeScene->DrawForeground();
     EndMode2D();
 

@@ -23,15 +23,15 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 
 	gravityMultiplier = 2.0;
 	health = max_health;
-	canDoubleJump = true;
 
 	observer = std::make_shared<PlayerObserver>(*this);
 	movementState = std::make_shared<MovementState>(*this);
 	actionState = std::make_shared<IdleActionState>(*this);
 
-    if constexpr (DEBUG_BUILD){
-        abilitiesUnlocked=AbilitiesUnlocked::Doublejump; //unlock all abilites if in debug mode
-    }
+    //if constexpr (DEBUG_BUILD){
+    //    abilitiesUnlocked=AbilitiesUnlocked::Doublejump; //unlock all abilites if in debug mode
+    //}
+
 }
 
 
@@ -193,6 +193,36 @@ bool PlayerCharacter::GetLastTickGroundedState() const
 	return groundedLastFrame;
 }
 
+bool PlayerCharacter::IsDashUnlocked() const
+{
+	return dashUnlocked;
+}
+
+void PlayerCharacter::SetDashUnlocked(bool dashUnlocked)
+{
+	this->dashUnlocked = dashUnlocked;
+}
+
+bool PlayerCharacter::IsWalljumpUnlocked() const
+{
+	return wjUnlocked;
+}
+
+void PlayerCharacter::SetWallJumpUnlocked(bool wjUnlocked)
+{
+	this->wjUnlocked = wjUnlocked;
+}
+
+bool PlayerCharacter::CanMove() const
+{
+	return canMove;
+}
+
+void PlayerCharacter::SetCanMove(bool canMove)
+{
+	this->canMove = canMove;
+}
+
 int PlayerCharacter::GetFrame() const {
 	return playerFrameCounter;
 }
@@ -207,5 +237,34 @@ AbilitiesUnlocked PlayerCharacter::GetUnlockedAbilities() const {
 
 void PlayerCharacter::SetUnlockedAbilityLevel(AbilitiesUnlocked abilitiesUnlocked) {
     this->abilitiesUnlocked=abilitiesUnlocked;
+	CheckUnlockedAbilities();
+}
 
+void PlayerCharacter::CheckUnlockedAbilities()
+{
+	switch (this->abilitiesUnlocked)
+	{
+	case AbilitiesUnlocked::None:
+		SetDashUnlocked(false);
+		SetCanDoubleJump(false);
+		SetWallJumpUnlocked(false);
+		break;
+	case AbilitiesUnlocked::Dash:
+		SetDashUnlocked(true);
+		SetCanDoubleJump(false);
+		SetWallJumpUnlocked(false);
+		break;
+	case AbilitiesUnlocked::Walljump:
+		SetDashUnlocked(true);
+		SetCanDoubleJump(false);
+		SetWallJumpUnlocked(true);
+		break;
+	case AbilitiesUnlocked::Doublejump:
+		SetDashUnlocked(true);
+		SetCanDoubleJump(true);
+		SetWallJumpUnlocked(true);
+		break;
+	default:
+		break;
+	}
 }

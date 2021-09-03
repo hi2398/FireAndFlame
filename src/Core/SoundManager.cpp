@@ -102,7 +102,7 @@ void SoundManager::PlayTrack(TRACK track)
 
 void SoundManager::UpdateTrack(TRACK track)
 {
-	selectedTrack;
+
 	switch (track)
 	{
 	case TRACK::MENU_TRACK:
@@ -137,8 +137,7 @@ void SoundManager::UpdateTrack(TRACK track)
 
 void SoundManager::StopCurrentTrack(int selectedTrack)
 {
-
-	if (IsMusicStreamPlaying(music[selectedTrack])) StopMusicStream(music[selectedTrack]), std::cout << "stop\n";
+	if (IsMusicStreamPlaying(music[selectedTrack])) StopMusicStream(music[selectedTrack]);
 	
 }
 

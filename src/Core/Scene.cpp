@@ -43,6 +43,13 @@ void Scene::RemoveMarkedDelete() {
 Scene::Scene(SceneEnums sceneType)
 {
     sceneName = sceneType;
+
+    if constexpr (DEBUG_BUILD) {
+        playerCharacter->SetDashUnlocked(true);
+        playerCharacter->SetCanDoubleJump(true);
+        playerCharacter->SetWallJumpUnlocked(true);
+    }
+
 }
 
 void Scene::Update() {

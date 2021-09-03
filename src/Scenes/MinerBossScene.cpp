@@ -1,4 +1,5 @@
 #include "MinerBossScene.h"
+#include "MinerBossScene.h"
 #include "raymath.h"
 #include "../Global.h"
 #include "NeutralArea.h"
@@ -32,6 +33,18 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
 
     Vector2 tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
+
+    tempVec = { 47 * 32, 82 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    tempVec = { 59 * 32, 82 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    tempVec = { 48 * 32, 51 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    tempVec = { 57 * 32, 51 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
 }
 
 void MinerBossScene::Update() {
@@ -43,6 +56,14 @@ void MinerBossScene::Update() {
         }
     }
 
+    if (!bossDefeated) OnBossDeath();
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        if (spawn->GetType() == SpawnerType::Coal) {
+            spawn->SpawnCoal();
+        }
+    }
 }
 
 void MinerBossScene::Draw() {
@@ -57,6 +78,9 @@ void MinerBossScene::Draw() {
         DrawTextureV(debrisTexture, upperDebrisLocD, WHITE);
         DrawTextureV(debrisTexture, upperDebrisLocE, WHITE);
     }
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }
 
 void MinerBossScene::EnableDebrisLower() {
@@ -70,6 +94,20 @@ void MinerBossScene::EnableDebrisUpper() {
     sceneManager->GetTilemap()->AddCollisionTile(upperDebrisLocC);
     sceneManager->GetTilemap()->AddCollisionTile(upperDebrisLocD);
     sceneManager->GetTilemap()->AddCollisionTile(upperDebrisLocE);
+}
+
+void MinerBossScene::OnBossDeath()
+{
+    if (bossActivated) {
+        for (const auto& enemy : sceneManager->GetEnemies()) {
+            if (enemy->GetEnemyType() == EnemyTypes::Boss) return;
+        }
+    }
+
+    //functions on boss death
+    bossDefeated = true;
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
+    return;
 }
 
 
