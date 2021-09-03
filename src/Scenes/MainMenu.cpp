@@ -196,6 +196,7 @@ void MainMenu::Update() {
                     loadSave1ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
+                    sceneManager->SetActiveSaveSlot(1);
                     sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
                 }
             }else{
@@ -208,6 +209,7 @@ void MainMenu::Update() {
                     loadSave2ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
+                    sceneManager->SetActiveSaveSlot(2);
                     sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
                 }
             }else{
@@ -220,6 +222,7 @@ void MainMenu::Update() {
                     loadSave3ButtonIndex = 2;
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
+                    sceneManager->SetActiveSaveSlot(3);
                     sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
                 }
             }else{
