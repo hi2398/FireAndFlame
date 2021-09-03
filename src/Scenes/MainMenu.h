@@ -42,19 +42,23 @@ private:
     Texture2D secondaryBackground;
 
     //Title Screen GUI Elements
-    Texture2D playButton;
+    Texture2D playButton[2];
+    int playButtonIndex = 0;
     Rectangle playButtonRec;
     Color playButtonColor;
 
-    Texture2D settingsButton;
+    Texture2D settingsButton[2];
+    int settingsIndex = 0;
     Rectangle settingsButtonRec;
     Color settingsColor;
 
-    Texture2D creditsButton;
+    Texture2D creditsButton[2];
+    int creditsIndex = 0;
     Rectangle creditsButtonRec;
     Color creditsColor;
 
-    Texture2D quitButton;
+    Texture2D quitButton[2];
+    int quitIndex = 0;
     Rectangle quitButtonRec;
     Color quitColor;
 
@@ -65,27 +69,33 @@ private:
     Texture2D savegameTex2;
     Texture2D savegameTex3;
 
-    Texture2D loadSave1Button;
+    Texture2D loadSave1Button[2];
+    int loadSave1Index = 0;
     Rectangle loadSave1ButtonRec;
     Color loadSave1Color;
 
-    Texture2D loadSave2Button;
+    Texture2D loadSave2Button[2];
+    int loadSave2Index = 0;
     Rectangle loadSave2ButtonRec;
     Color loadSave2Color;
 
-    Texture2D loadSave3Button;
+    Texture2D loadSave3Button[2];
+    int loadSave3Index = 0;
     Rectangle loadSave3ButtonRec;
     Color loadSave3Color;
 
-    Texture2D deleteSave1Button;
+    Texture2D deleteSave1Button[2];
+    int deleteSave1Index = 0;
     Rectangle deleteSave1ButtonRec;
     Color deleteSave1Color;
 
-    Texture2D deleteSave2Button;
+    Texture2D deleteSave2Button[2];
+    int deleteSave2Index = 0;
     Rectangle deleteSave2ButtonRec;
     Color deleteSave2Color;
 
-    Texture2D deleteSave3Button;
+    Texture2D deleteSave3Button[2];
+    int deleteSave3Index = 0;
     Rectangle deleteSave3ButtonRec;
     Color deleteSave3Color;
 
@@ -109,7 +119,8 @@ private:
     bool isFullScreenActive = false;
 
     //Back Button
-    Texture2D backButton;
+    Texture2D backButton[2];
+    int backButtonIndex = 0;
     Color backButtonColor = {255,255,255,255};
     Rectangle backButtonRec;
 };

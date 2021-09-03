@@ -56,7 +56,7 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<Tutorial>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN
