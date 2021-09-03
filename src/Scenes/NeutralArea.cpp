@@ -3,6 +3,7 @@
 #include "../Core/EnemyList.h"
 #include "raymath.h"
 #include "../Data/Deathzone.h"
+#include "../Data/SaveInteractable.h"
 
 
 NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
@@ -23,13 +24,14 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
 
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
-   
+
     /* TODO Add Statue and Schilder after receiving dialogue files
     Statue 67,92
     Schild 58, 92
     Schild 72,92
     Schild 57,88
      */
+
     
 
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");

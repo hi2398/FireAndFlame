@@ -194,7 +194,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
                     sceneManager->SetActiveSaveSlot(1);
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
+                    sceneManager->LoadGame("./Saves/", 1);
                 }
             }else{
                 loadSave1Color = {255,255,255,255};
@@ -207,7 +207,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
                     sceneManager->SetActiveSaveSlot(2);
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
+                    sceneManager->LoadGame("./Saves/", 2);
                 }
             }else{
                 loadSave2Color = {255,255,255,255};
@@ -220,7 +220,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
                     sceneManager->SetActiveSaveSlot(3);
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
+                    sceneManager->LoadGame("./Saves/", 3);
                 }
             }else{
                 loadSave3Color = {255,255,255,255};

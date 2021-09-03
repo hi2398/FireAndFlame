@@ -18,11 +18,17 @@ void SaveInteractable::Draw() {
 }
 
 void SaveInteractable::Interact(Actor &actor) {
-    if (saveCooldown==0){ //only save every 2 mins at most
-        sceneManager->SaveGame("./Saves/", sceneManager->GetSaveSlot());
-        saveCooldown=cooldown;
-    }
 
+    PlayerCharacter* player=dynamic_cast<PlayerCharacter*>(&actor);
+    if (player){
+        if (saveCooldown==0){ //only save every 2 mins at most
+            if (DEBUG_BUILD){
+                std::cout << "Saving" << std::endl;
+            }
+            sceneManager->SaveGame("./Saves/", sceneManager->GetSaveSlot());
+            saveCooldown=cooldown;
+        }
+    }
 }
 
 SaveInteractable::SaveInteractable(Vector2 pos) : Interactable(InteractableType::Save){
