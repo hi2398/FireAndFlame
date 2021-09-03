@@ -4,6 +4,15 @@
 #include <iomanip>
 #include "../json.hpp"
 #include "../Global.h"
+#include "../Scenes/NeutralArea.h"
+#include "../Scenes/Tutorial.h"
+#include "../Scenes/AreaOne.h"
+#include "../Scenes/IceBossScene.h"
+#include "../Scenes/AreaTwo.h"
+#include "../Scenes/AreaThree.h"
+#include "../Scenes/TraitorBossScene.h"
+#include "../Scenes/FinalBoss.h"
+#include "../Scenes/MinerBossScene.h"
 
 using nlohmann::json;
 
@@ -37,6 +46,8 @@ void SceneManager::UpdateDialogInScene(std::string filepath) {
 void SceneManager::SaveGame(std::string saveFolder, int slot) {
     int playerHealth =playerCharacter->GetHealth();
     Vector2 playerLocation = playerCharacter->GetPosition();
+    int unlockedAbilities = static_cast<int>(playerCharacter->GetUnlockedAbilities());
+    int currentLevel = static_cast<int>(activeScene->GetSceneName());
 
 
     json saveDataStruct = {
@@ -44,17 +55,21 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
                     {
                             {"health", playerHealth},
                             {"locationX", playerLocation.x},
-                            {"locationY", playerLocation.y}
+                            {"locationY", playerLocation.y},
+                            {"unlockedAbilities", unlockedAbilities},
+                            {"currentLevel", currentLevel}
                     }
             } //END PLAYER
     };
 
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
+    std::string screenshot=saveFolder + "save" + "_" + std::to_string(slot) + ".png";
 
     //TODO: Copy old save over to prevent corruption
     std::ofstream saveFile{saveSlot};
     saveFile << std::setw(4) << saveDataStruct;
     saveFile.close();
+    TakeScreenshot(screenshot.c_str());
 }
 
 void SceneManager::LoadGame(std::string saveFolder, int slot) {
@@ -78,7 +93,44 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
         Vector2 location{0, 0};
         location.x = category["locationX"];
         location.y = category["locationY"];
-        playerCharacter->SetPosition(location);
+        playerPosToSet=location;
+        setPlayerPos= true;
+        playerCharacter->SetUnlockedAbilityLevel(static_cast<AbilitiesUnlocked>(category["unlockedAbilities"]));
+
+        SceneEnums sceneToLoad=category["currentLevel"];
+        switch (sceneToLoad) {
+
+
+            case SceneEnums::NeutralArea:
+                SetNextScene(std::make_unique<NeutralArea>(SceneEnums::Default));
+                break;
+            case SceneEnums::AreaOne:
+                SetNextScene(std::make_unique<AreaOne>(SceneEnums::Default));
+                break;
+            case SceneEnums::Tutorial:
+                SetNextScene(std::make_unique<Tutorial>(SceneEnums::Default));
+                break;
+            case SceneEnums::IceBoss:
+                SetNextScene(std::make_unique<IceBossScene>(SceneEnums::Default));
+                break;
+            case SceneEnums::AreaTwo:
+                SetNextScene(std::make_unique<AreaTwo>(SceneEnums::Default));
+                break;
+            case SceneEnums::AreaThree:
+                SetNextScene(std::make_unique<AreaThree>(SceneEnums::Default));
+                break;
+            case SceneEnums::TraitorBoss:
+                SetNextScene(std::make_unique<TraitorBossScene>(SceneEnums::Default));
+                break;
+            case SceneEnums::FinalBoss:
+                SetNextScene(std::make_unique<FinalBoss>(SceneEnums::Default));
+                break;
+            case SceneEnums::MinerBoss:
+                SetNextScene(std::make_unique<MinerBossScene>(SceneEnums::Default));
+                break;
+            case SceneEnums::Default:
+                break;
+        }
     }
 
 
@@ -92,6 +144,12 @@ void SceneManager::ScreenShake(int durationInFrames)
 
 void SceneManager::Update(Vector2 virtualMousePosition) {
     activeScene = nextScene;
+
+    if (setPlayerPos){
+        playerCharacter->SetPosition(playerPosToSet);
+        setPlayerPos= false;
+    }
+
     this->virtualMousePosition = virtualMousePosition;
 
     if constexpr (DEBUG_BUILD) {
@@ -161,5 +219,13 @@ void SceneManager::RemoveAllInteractables() {
 
 std::shared_ptr<Scene> SceneManager::GetActiveScene() {
     return activeScene;
+}
+
+void SceneManager::SetActiveSaveSlot(int slot) {
+    saveSlot=slot;
+}
+
+int SceneManager::GetSaveSlot() const{
+    return saveSlot;
 }
 
