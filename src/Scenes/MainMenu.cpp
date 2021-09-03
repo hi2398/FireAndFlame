@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "../Global.h"
 #include <iostream>
+#include <filesystem>
 #include "Tutorial.h"
 
 MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
@@ -36,9 +37,13 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 
 
     // Buttons for Save and Load
-    savegameTex1 = LoadTexture("assets/graphics/GUI/pic1.png");
-    savegameTex2 = LoadTexture("assets/graphics/GUI/pic1.png");
-    savegameTex3 = LoadTexture("assets/graphics/GUI/pic1.png");
+    std::string saveFolder="./Saves/";
+    std::string saveScreen=saveFolder + "save" + "_" + "1" + ".png";
+    savegameTex1 = LoadTexture(saveScreen.c_str());
+    saveScreen=saveFolder + "save" + "_" + "2" + ".png";
+    savegameTex2 = LoadTexture(saveScreen.c_str());
+    saveScreen=saveFolder + "save" + "_" + "3" + ".png";
+    savegameTex3 = LoadTexture(saveScreen.c_str());
 
     loadSave1Button[0] = LoadTexture("assets/graphics/GUI/loadsave11.png");
     loadSave1Button[1] = LoadTexture("assets/graphics/GUI/loadsave12.png");
@@ -161,6 +166,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
                     // delete save 1
+                    ResetSave(1);
                 }
             }else{
                 deleteSave1ButtonIndex = 0;
@@ -173,6 +179,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
                     // delete save 2
+                    ResetSave(2);
                 }
             }else{
                 deleteSave2ButtonIndex = 0;
@@ -185,6 +192,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
                     // delete save 3
+                    ResetSave(3);
                 }
             }else{
                 deleteSave3ButtonIndex = 0;
@@ -565,4 +573,27 @@ void MainMenu::UpdateMusicAndSoundVolume() {
         }else isSoundVolumeRecActive[i] = false;
         soundVolumeRecs[i] = {(float)(600+(60*i)),200,50,50};
     }
+}
+
+void MainMenu::ResetSave(int slot) {
+    std::string saveFolder="./Saves/";
+    std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
+    std::string saveScreen=saveFolder + "save" + "_" + std::to_string(slot) + ".png";
+    std::filesystem::copy("./assets/save_reset.json", saveSlot, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy("assets/graphics/flame.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+    switch (slot) {
+        case 1:
+        savegameTex1= LoadTexture(saveScreen.c_str());
+            break;
+        case 2:
+            savegameTex2= LoadTexture(saveScreen.c_str());
+            break;
+        case 3:
+            savegameTex3= LoadTexture(saveScreen.c_str());
+            break;
+        default:
+            break;
+
+    }
+
 }

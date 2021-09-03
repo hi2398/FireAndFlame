@@ -21,6 +21,8 @@ public:
     void SetSoundVolume(int volume);
     void SetFullscreenActive(bool active);
 
+    void ResetSave(int slot);
+
 
 protected:
 
