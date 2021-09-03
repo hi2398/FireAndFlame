@@ -28,7 +28,7 @@ void HUD::DrawHUD() {
     if (healthBar.width > 0) {
 		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
     }
-    if(isInteractable){
+    if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
         DrawText("PRESS E",600,500,30,WHITE);
         isInteractable = false;
     }

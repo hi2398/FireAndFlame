@@ -8,6 +8,7 @@
 class DialogueManager {
 public:
     DialogueManager();
+    bool GetDialogueActive();
     void UpdateDialogue(std::string filePath);
     void DrawDialogue();
 protected:

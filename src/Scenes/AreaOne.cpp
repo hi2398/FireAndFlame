@@ -10,6 +10,7 @@
 #include "../Data/Enemies/SpringHog.h"
 #include "../Data/Enemies/ToastCat.h"
 #include "../Data/Deathzone.h"
+#include "../Data/DialogueObject.h"
 
 AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     this->lastScene = lastScene;
@@ -76,6 +77,9 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
+    tempVec = {25*32,107*32};
+    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Neutrale_Ebene_Level_12.json",tempVec,statueTex));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaOne/Lower_Foreground.png");

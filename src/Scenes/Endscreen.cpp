@@ -12,7 +12,7 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     endscreenCounter= 0.0f;
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
-    //TODO Rework
+
     endText[0] = "After Magmos defeated the Technomancer Maraap";
     endText[1] = "and his Minions he vowed to Rebuild Cremos.";
     endText[2] = "But he wouldn´t be alone on his";
