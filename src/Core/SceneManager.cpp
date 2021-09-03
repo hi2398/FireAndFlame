@@ -45,6 +45,9 @@ void SceneManager::UpdateDialogInScene(std::string filepath) {
 }
 
 void SceneManager::SaveGame(std::string saveFolder, int slot) {
+    if constexpr (DEBUG_BUILD){
+        std::cout << "Saving to Slot " << slot << std::endl;
+    }
     int playerHealth =playerCharacter->GetHealth();
     Vector2 playerLocation = playerCharacter->GetPosition();
     int unlockedAbilities = static_cast<int>(playerCharacter->GetUnlockedAbilities());
@@ -91,6 +94,11 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
 }
 
 void SceneManager::LoadGame(std::string saveFolder, int slot) {
+
+    if constexpr (DEBUG_BUILD){
+        std::cout << "Loading from Slot " << slot << std::endl;
+    }
+
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
     std::ifstream saveFile{saveSlot};
     if (!saveFile) {
@@ -170,10 +178,6 @@ void SceneManager::Update(Vector2 virtualMousePosition) {
 
     this->virtualMousePosition = virtualMousePosition;
 
-    if constexpr (DEBUG_BUILD) {
-        if (IsKeyPressed(KEY_F8)) SaveGame("./", 69);
-        if (IsKeyPressed(KEY_F9)) LoadGame("./", 69);
-    }
 
     activeScene->RemoveMarkedDelete(); //delete all enemies and interactables that have been marked for deletion
 
