@@ -5,8 +5,9 @@
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Coal.h"
 #include "../Data/Deathzone.h"
+#include "../Data/SaveInteractable.h"
 
-Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
+Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
@@ -75,6 +76,9 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     foregroundLoopX = 4;
     foregroundLoopY = 8;
     foregroundException = 7;
+
+    tempVec={39*32, 48*32};
+    interactables.emplace_back(std::make_unique<SaveInteractable>(tempVec));
 }
 
 void Tutorial::Update() {

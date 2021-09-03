@@ -3,6 +3,7 @@
 #include "../Core/EnemyList.h"
 #include "raymath.h"
 #include "../Data/Deathzone.h"
+#include "../Data/SaveInteractable.h"
 
 
 NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
@@ -31,6 +32,7 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     tempVec = {69*32,102*32+3};
     statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Neutrale_Ebene_Level_12.json",tempVec,statueTex));
+
     
 
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");

@@ -212,7 +212,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
                     sceneManager->SetActiveSaveSlot(1);
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
+                    sceneManager->LoadGame("./Saves/", 1);
                 }
             }else{
                 loadSave1Index = 0;
@@ -226,7 +226,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
                     sceneManager->SetActiveSaveSlot(2);
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
+                    sceneManager->LoadGame("./Saves/", 2);
                 }
             }else{
                 loadSave2Index = 0;
@@ -240,7 +240,7 @@ void MainMenu::Update() {
                 }
                 if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
                     sceneManager->SetActiveSaveSlot(3);
-                    sceneManager->SetNextScene(std::make_unique<Tutorial>(sceneName));
+                    sceneManager->LoadGame("./Saves/", 3);
                 }
             }else{
                 loadSave3Index = 0;
@@ -604,7 +604,7 @@ void MainMenu::ResetSave(int slot) {
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
     std::string saveScreen=saveFolder + "save" + "_" + std::to_string(slot) + ".png";
     std::filesystem::copy("./assets/save_reset.json", saveSlot, std::filesystem::copy_options::overwrite_existing);
-    std::filesystem::copy("assets/graphics/flame.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy("./assets/graphics/savegame/zero.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
     switch (slot) {
         case 1:
         savegameTex1= LoadTexture(saveScreen.c_str());
