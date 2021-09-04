@@ -106,7 +106,10 @@ void FinalBoss::Update() {
     }
     if(CheckCollisionRecs(bossFightSequenceCollider,playerCharacter->playerHitbox)&&!isBossFightSequenceActive){
         isBossFightSequenceActive = true;
+        sceneManager->ScreenShake(30);
         ActivateBorder();
+        soundManager->PlayTrack(TRACK::FB_FIGHT1);
+        finalTrackPlaying = true;
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[0],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[1].x,chasingBossPositions[1].y});
@@ -134,21 +137,35 @@ void FinalBoss::Update() {
     }
     if(isPlatformSequenceActive) {
         UpdatePlatformSequence();
-
-        if (!introPlaying)soundManager->PlayTrack(TRACK::FB_INTRO), introPlaying = true;
-        if (introPlaying && !loopPlaying) {
-			soundManager->UpdateTrack(TRACK::FB_INTRO);
-			introCounter++;
+		if (!introPlaying)soundManager->PlayTrack(TRACK::FB_INTRO), introPlaying = true;
+        
+    }
+	if (introPlaying && !loopPlaying) {
+		soundManager->UpdateTrack(TRACK::FB_INTRO);
+		introCounter++;
+	}
+	if ((introCounter >= 1690 && !loopPlaying) || (playerCharacter->GetHealth() <= 20 && introCounter >= 1680 && !loopPlaying)) {
+		soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+		soundManager->PlayTrack(TRACK::FB_LOOP1);
+		loopPlaying = true;
+	}
+    if (loopPlaying) {
+        soundManager->UpdateTrack(TRACK::FB_LOOP1);
+    }
+    if (isBossFightSequenceActive) {
+        soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+    }
+    if (finalTrackPlaying) {
+        if (soundManager->GetTrackTimePlayed() > 53.16 && !secondLoopPlaying) {
+            skipFrame++;
         }
-               
-        if ((introCounter >= 1690 && !loopPlaying) || (playerCharacter->GetHealth() <= 20 && introCounter >= 1680 && !loopPlaying)) {
+        if (skipFrame == 2) {
+            secondLoopPlaying = true;
             soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
-            soundManager->PlayTrack(TRACK::FB_LOOP1);
-            loopPlaying = true;
+            soundManager->PlayTrack(TRACK::FB_FIGHT2);
         }
-        if (loopPlaying) {
-            soundManager->UpdateTrack(TRACK::FB_LOOP1);
-        }
+        if (!secondLoopPlaying)soundManager->UpdateTrack(TRACK::FB_FIGHT1);
+        else soundManager->UpdateTrack(TRACK::FB_FIGHT2);
     }
 }
 

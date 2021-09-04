@@ -89,7 +89,7 @@ void AreaThree::Update() {
 
     for (const auto& spawn : spawner) {
         spawn->Update();
-        if (spawn->GetType() == SpawnerType::Enemy) {
+        if (spawn->GetType() == SpawnerType::Enemy && sceneManager->GetEnemies().size() < 25) {
             switch (GetRandomValue(0, 4))
             {
             case 0:

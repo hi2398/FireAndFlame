@@ -106,7 +106,7 @@ void MinerBossScene::OnBossDeath()
 
     //functions on boss death
     bossDefeated = true;
-    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Walljump);
     return;
 }
 
