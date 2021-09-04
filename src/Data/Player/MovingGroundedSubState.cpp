@@ -8,6 +8,9 @@ MovingGroundedSubState::MovingGroundedSubState(Actor& player) : PlayerStates(pla
 	if (player.GetIsDashing()) {
 		activeFrame.y = 32 * 2;
 	}
+	else if (!playerCharacter->CanMove()) {
+		activeFrame.y = 0;
+	}
 	else {
 		activeFrame.y = 32;
 	}
@@ -23,31 +26,37 @@ std::shared_ptr<State> MovingGroundedSubState::Update(Actor& player) {
 	switch (player.GetNextMovement())
 	{
 	case MOVEMENT::MOVE_LEFT:
-		if ((playerCharacter->GetCurrentFrame()) % 3 == 0 && !stepped) {
-			soundManager->PlaySfx(SFX::PLAYER_STEP);
-			stepped = true;
+		if (playerCharacter->CanMove()) {
+			if ((playerCharacter->GetCurrentFrame()) % 3 == 0 && !stepped) {
+				soundManager->PlaySfx(SFX::PLAYER_STEP);
+				stepped = true;
+			}
+			if (player.GetIsRunning()) {
+				player.SetPosition({ player.GetPosition().x - 5.0f, player.GetPosition().y });
+			}
+			else {
+				player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
+			}
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32, -32, 32 };
+			break;
 		}
-		if (player.GetIsRunning()) {
-			player.SetPosition({ player.GetPosition().x - 5.0f, player.GetPosition().y });
-		}
-		else {
-			player.SetPosition({ player.GetPosition().x - 3.0f, player.GetPosition().y });
-		}
-		activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(), 32, -32, 32 };
-		break;
+		
 	case MOVEMENT::MOVE_RIGHT:
-		if ((playerCharacter->GetCurrentFrame())  % 3 == 0 && !stepped) {
-			soundManager->PlaySfx(SFX::PLAYER_STEP);
-			stepped = true;
+		if (playerCharacter->CanMove()) {
+			if ((playerCharacter->GetCurrentFrame()) % 3 == 0 && !stepped) {
+				soundManager->PlaySfx(SFX::PLAYER_STEP);
+				stepped = true;
+			}
+			if (player.GetIsRunning()) {
+				player.SetPosition({ player.GetPosition().x + 5.0f, player.GetPosition().y });
+			}
+			else {
+				player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
+			}
+			activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(),32, 32, 32 };
+			break;
 		}
-		if (player.GetIsRunning()) {
-			player.SetPosition({ player.GetPosition().x + 5.0f, player.GetPosition().y });
-		}
-		else {
-			player.SetPosition({ player.GetPosition().x + 3.0f, player.GetPosition().y });
-		}
-		activeFrame = { (float)32 * playerCharacter->GetCurrentFrame(),32, 32, 32 };
-		break;
+		
 	case MOVEMENT::IDLE:
 		return std::make_shared<IdleGroundedSubState>(player);
 	case MOVEMENT::DASH_LEFT:

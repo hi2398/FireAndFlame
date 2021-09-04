@@ -19,7 +19,6 @@ std::shared_ptr<EState> IBSeek::Update(Enemy &enemy) {
     enemy.LookAtPlayer(); //while seeking, always look at player
     if (delay==0){
         if (nextAction==NextSeekAction::Decide){
-            std::cout << "Deciding";
             //if player health is under 50%, spawn minions with a chance, instantly switch state cause spawn point is fixed
             if (playerCharacter->GetHealth() < playerCharacter->GetMaxHealth()/2){
                 if (IceBoss::Decide()) return std::make_shared<IBMinions>(enemy);
@@ -94,7 +93,6 @@ std::shared_ptr<EState> IBSeek::RangedMove(Enemy &enemy) {
 
     //check if boss is at the jump spot
     if (Vector2Distance(enemy.GetPosition(), jumpStart) <= 20 && !jumpStarted){
-        std::cout << jumpStarted;
         jumpStarted = true;
     } else {
         //if not, check which direction to walk in and move there

@@ -7,6 +7,7 @@
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"
 #include "../Data/SceneChangerObject.h"
+#include "../Data/Spawner.h"
 
 class AreaThree : public Scene {
 public:
@@ -16,5 +17,6 @@ public:
     ~AreaThree() override= default;
 private:
     const Vector2 playerStart = {23*32,112*32};
+    std::vector<std::unique_ptr<Spawner>> spawner;
 protected:
 };

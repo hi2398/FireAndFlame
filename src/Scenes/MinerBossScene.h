@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Core/Scene.h"
+#include "../Data/Spawner.h"
 
 class MinerBossScene : public Scene {
 public:
@@ -11,6 +12,7 @@ public:
 
     void EnableDebrisLower();
     void EnableDebrisUpper();
+    void OnBossDeath();
 
 protected:
 
@@ -21,6 +23,7 @@ private:
     bool bossActivated{false};
     bool lowerDebrisEnabled{false};
     bool upperDebrisEnabled{false};
+    bool bossDefeated{false};
     Texture2D debrisTexture;
     Vector2 lowerDebrisLoc{57*32, 90*32};
     Vector2 upperDebrisLocA{51*32, 60*32};
@@ -28,7 +31,7 @@ private:
     Vector2 upperDebrisLocC{53*32, 60*32};
     Vector2 upperDebrisLocD{54*32, 60*32};
     Vector2 upperDebrisLocE{55*32, 60*32};
-
+    std::vector<std::unique_ptr<Spawner>> spawner;
 };
 
 

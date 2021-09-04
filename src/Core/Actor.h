@@ -107,7 +107,7 @@ protected:
     float dashDistance = 96.0f;
     int dashCounter = 0;
     bool isDashing{ false };
-    bool canDash{ true };
+    bool canDash{ false };
     AttackDirection attackDirection{ ATT_RIGHT };
     bool isSwiping{ false };
     bool actionBlocked{ false };

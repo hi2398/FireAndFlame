@@ -17,7 +17,7 @@ public:
 private:
 	Sound sound[10];
 	Music music[6];
-	int selectedTrack;
+	int selectedTrack{ 0 };
 
 	float soundVolume = 1.0;
 	float trackVolume = 1.0;
