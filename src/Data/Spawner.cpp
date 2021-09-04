@@ -156,7 +156,6 @@ void Spawner::SpawnEnemy(EnemyTypes enemy, EnemyLevel level)
 				break;
 			case EnemyTypes::SpiderBot:
 				sceneManager->AddEnemy(std::make_unique<SpiderBot>(spwnVec, level));
-				std::cout << "check\n";
 				break;
 			case EnemyTypes::Flyer:
 				sceneManager->AddEnemy(std::make_unique<Fly>(spwnVec, level));

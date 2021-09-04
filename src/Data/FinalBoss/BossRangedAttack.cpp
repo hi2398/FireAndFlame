@@ -22,7 +22,6 @@ void BossRangedAttack::Update() {
     position = {position.x-(moveTowardsPosition.x/magnitude),position.y-(moveTowardsPosition.y/magnitude)};
     attackPoint = {attackPoint.x-(moveTowardsPosition.x/magnitude), attackPoint.y-(moveTowardsPosition.y/magnitude)};
     interactionZone = {position.x,position.y,(float)texture.width,(float)texture.height};
-    std::cout << position.x << " " << position.y << "\n";
 }
 
 void BossRangedAttack::Draw() {
