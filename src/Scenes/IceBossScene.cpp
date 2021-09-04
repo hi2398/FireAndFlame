@@ -3,6 +3,7 @@
 #include "../Data/SceneChangerObject.h"
 #include "../Data/IceBoss/IceZone.h"
 #include "../Data/Deathzone.h"
+#include "../Data/PowerUp.h"
 
 IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     this->lastScene = lastScene;
@@ -11,9 +12,9 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     playerCharacter->SetHealth(100);
     Vector2 tempVec = {19*32, 48*32};
     tilemap->AddCollisionTile(tempVec);
-    tempVec = {19*32, 47*32};
+    tempVec = {19*32, 45*32};
     tilemap->AddCollisionTile(tempVec);
-    tempVec = { 38 * 32, 35 * 32 };
+    tempVec = { 41 * 32, 35 * 32 };
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
@@ -85,7 +86,8 @@ bool IceBossScene::BossDeath() {
         if (enemy->GetEnemyType() == EnemyTypes::Boss) return true;
     }
     //if not found, he is not alive, remove the blockades and set bool to true
-    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Dash);
+    Vector2 tempVec = { 39 * 32, (37 * 32)-16 };
+    interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::dash));
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

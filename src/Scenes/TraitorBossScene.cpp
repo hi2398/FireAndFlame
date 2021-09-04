@@ -7,6 +7,7 @@
 #include "../Data/TraitorBoss/TraitorBoss.h"
 #include "../Data/Coal.h"
 #include "../Data/Deathzone.h"
+#include "../Data/PowerUp.h"
 
 
 TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
@@ -97,9 +98,10 @@ void TraitorBossScene::CheckBossDeath()
             return;
         }
     }
+    Vector2 tempVec = { 70 * 32, 89 * 32-16 };
+    interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::doubleJump));
     soundManager->PlaySfx(SFX::DOORS);
     sceneManager->ScreenShake(20);
-    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
