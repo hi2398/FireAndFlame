@@ -42,6 +42,10 @@ private:
     int introCounter = 0;
     bool introPlaying = false;
     bool loopPlaying = false;
+    bool finalTrackPlaying = false;
+    bool secondLoopPlaying = false;
+    float secondTimer = 0.0;
+    int skipFrame = 0;
 
     std::vector<std::unique_ptr<Spawner>> spawner;
 protected:
