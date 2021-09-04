@@ -12,5 +12,5 @@ private:
 
     Texture2D background;
 protected:
-
+    Color FADEOUT = {0,0,0,255};
 };

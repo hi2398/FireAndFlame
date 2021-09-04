@@ -15,6 +15,7 @@ SoundManager::SoundManager()
 	sound[7] = LoadSound("assets/audio/sfx/player_melee.wav");
 	sound[8] = LoadSound("assets/audio/sfx/player_landing.wav");
 	sound[9] = LoadSound("assets/audio/sfx/melee_hit.wav");
+	sound[10] = LoadSound("assets/audio/sfx/dead.wav");
 
 	//music initialization
 	music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
@@ -23,6 +24,8 @@ SoundManager::SoundManager()
 	music[3] = LoadMusicStream("assets/audio/tracks/FinalBossIntro.mp3");
 	music[4] = LoadMusicStream("assets/audio/tracks/FinalBossLoop1.mp3");
 	music[5] = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
+	music[6] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
+	music[7] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
 }
 
 void SoundManager::PlaySfx(SFX sfx)
@@ -60,6 +63,9 @@ void SoundManager::PlaySfx(SFX sfx)
 	case SFX::MELEE_HIT:
 		selectedSound = 9;
 		break;
+	case SFX::DEATHSCREEN:
+		selectedSound = 10;
+		break;
 	default:
 		break;
 	}
@@ -92,6 +98,12 @@ void SoundManager::PlayTrack(TRACK track)
 	case TRACK::AREA_THREE:
 		selectedTrack = 5;
 		break;
+	case TRACK::FB_FIGHT1:
+		selectedTrack = 6;
+		break;
+	case TRACK::FB_FIGHT2:
+		selectedTrack = 7;
+		break;
 	default:
 		break;
 	}
@@ -123,27 +135,39 @@ void SoundManager::UpdateTrack(TRACK track)
 	case TRACK::AREA_THREE:
 		selectedTrack = 5;
 		break;
+	case TRACK::FB_FIGHT1:
+		selectedTrack = 6;
+		break;
+	case TRACK::FB_FIGHT2:
+		selectedTrack = 7;
+		break;
 	default:
 		return;
 		break;
 	}
-	if (playerCharacter->GetHealth() <= 20)SetMusicPitch(music[selectedTrack], 1.1);
+	if (playerCharacter->GetHealth() <= 20 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss)SetMusicPitch(music[selectedTrack], 1.1);
 	else SetMusicPitch(music[selectedTrack], 1.0);
 	SetMusicVolume(music[selectedTrack], trackVolume);
 	UpdateMusicStream(music[selectedTrack]);
+	if (selectedTrack == 6) fbTimePlayed = GetMusicTimePlayed(music[selectedTrack]);
 	return;
 }
 
 
 void SoundManager::StopCurrentTrack(int selectedTrack)
 {
-	if (IsMusicStreamPlaying(music[selectedTrack])) StopMusicStream(music[selectedTrack]);
+	if (IsMusicStreamPlaying(music[selectedTrack])) StopMusicStream(music[selectedTrack]), fbTimePlayed = 0.0;
 	
 }
 
 int SoundManager::GetCurrentTrack() const
 {
 	return selectedTrack;
+}
+
+float SoundManager::GetTrackTimePlayed() const
+{
+	return fbTimePlayed;
 }
 
 void SoundManager::SetSfxVolume(float volume)
