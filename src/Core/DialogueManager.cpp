@@ -43,3 +43,7 @@ void DialogueManager::DrawDialogue() {
 DialogueManager::DialogueManager() {
     dialogueBox = LoadTexture("assets/graphics/GUI/DialogBox.png");
 }
+
+bool DialogueManager::GetDialogueActive() {
+    return dialogueActive;
+}

@@ -8,6 +8,7 @@
 #include "../Data/FinalBoss/FinalBossEnemy.h"
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
 #include "../Data/Deathzone.h"
+#include "../Data/DialogueObject.h"
 
 
 FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
@@ -52,6 +53,10 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     for(int i = 0; i<18; i++){
         bossFightBorder[i] = {(float)(86*32)+(32*i),57*32, 32, 32};
     }
+
+    tempVec = {18*32,84*32+3};
+    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Final_BossSign.json",tempVec,statueTex));
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/Surface/surface_fore_ex.png");

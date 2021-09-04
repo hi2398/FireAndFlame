@@ -5,6 +5,7 @@
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Coal.h"
 #include "../Data/Deathzone.h"
+#include "../Data/SaveInteractable.h"
 
 Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     this->lastScene = lastScene;
@@ -46,6 +47,10 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     tempVec = { 53 * 32,77 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up ,SpawnerType::Coal));
 
+    tempVec = {80*32,99*32+3};
+    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/TutorialSign.json",tempVec,statueTex));
+
     door1[0] = {58*32,76*32};
     door1[1] = {58*32,75*32};
 
@@ -71,6 +76,9 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     foregroundLoopX = 4;
     foregroundLoopY = 8;
     foregroundException = 7;
+
+    tempVec={39*32, 48*32};
+    interactables.emplace_back(std::make_unique<SaveInteractable>(tempVec));
 }
 
 void Tutorial::Update() {
