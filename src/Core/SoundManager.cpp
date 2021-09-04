@@ -15,6 +15,7 @@ SoundManager::SoundManager()
 	sound[7] = LoadSound("assets/audio/sfx/player_melee.wav");
 	sound[8] = LoadSound("assets/audio/sfx/player_landing.wav");
 	sound[9] = LoadSound("assets/audio/sfx/melee_hit.wav");
+	sound[10] = LoadSound("assets/audio/sfx/dead.wav");
 
 	//music initialization
 	music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
@@ -61,6 +62,9 @@ void SoundManager::PlaySfx(SFX sfx)
 		break;
 	case SFX::MELEE_HIT:
 		selectedSound = 9;
+		break;
+	case SFX::DEATHSCREEN:
+		selectedSound = 10;
 		break;
 	default:
 		break;
