@@ -5,6 +5,7 @@
 #include "NeutralArea.h"
 #include "../Data/MinerBoss/MinerBoss.h"
 #include "../Data/Deathzone.h"
+#include "../Data/PowerUp.h"
 
 MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBoss) {
     this->lastScene = lastScene;
@@ -56,7 +57,7 @@ void MinerBossScene::Update() {
         }
     }
 
-    if (!bossDefeated) OnBossDeath();
+    if (!bossDefeated && bossActivated) OnBossDeath();
 
     for (const auto& spawn : spawner) {
         spawn->Update();
@@ -105,8 +106,9 @@ void MinerBossScene::OnBossDeath()
     }
 
     //functions on boss death
+    Vector2 tempVec = { 45*32, 60*32-16 };
+    interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::wallJump));
     bossDefeated = true;
-    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Walljump);
     return;
 }
 
