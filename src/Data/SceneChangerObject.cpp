@@ -17,7 +17,7 @@ SceneChangerObject::SceneChangerObject(Vector2 location, SceneEnums nextScene, S
 }
 
 void SceneChangerObject::Interact(Actor &actor) {
-    soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+    soundManager->StopCurrentTrack();
     switch(chosenScene){
         case SceneEnums::NeutralArea :
             sceneManager->SetNextScene(std::make_unique<NeutralArea>(comingFromThisScene));

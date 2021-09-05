@@ -109,7 +109,7 @@ void Spawner::Update()
 			activeFrame.height = 64;
 			break;
 		case SpawnerDirection::Down:
-			activeFrame.y = 32 * 2;
+			activeFrame.y = 32 * 3;
 			activeFrame.height = 64;
 			break;
 		case SpawnerDirection::Left:

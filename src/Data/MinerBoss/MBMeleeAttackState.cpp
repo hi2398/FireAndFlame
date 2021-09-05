@@ -66,9 +66,9 @@ std::shared_ptr<EState> MBMeleeAttackState::Attack(Enemy &enemy) {
     hitCenter.x+=16;
     hitCenter.y+=16;
     hitCenter.x+= enemy.GetDirection() * 32.f;
-    if (!playerHit && CheckCollisionCircleRec(hitCenter, dmgRadius, playerCharacter->playerHitbox)){
+    if (!playerCharacter->IsInvulnerable() && CheckCollisionCircleRec(hitCenter, dmgRadius, playerCharacter->playerHitbox)){
         playerCharacter->SetHealth(playerCharacter->GetHealth()-meleeDamage);
-        playerHit=true;
+        playerCharacter->SetInvulnerable(true);
     }
     return shared_from_this();
 }

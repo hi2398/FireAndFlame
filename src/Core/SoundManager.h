@@ -9,7 +9,7 @@ public:
 	void PlaySfx(SFX sfx);
 	void PlayTrack(TRACK track);
 	void UpdateTrack(TRACK track);
-	void StopCurrentTrack(int selectedTrack);
+	void StopCurrentTrack();
 	int GetCurrentTrack() const;
 	float GetTrackTimePlayed() const;
 	void SetSfxVolume(float volume);
@@ -18,7 +18,7 @@ public:
 private:
 	Sound sound[11];
 	Music music[8];
-	int selectedTrack{ 0 };
+	int selectedTrack = 0;
 
 	float soundVolume = 1.0;
 	float trackVolume = 1.0;
