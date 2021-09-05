@@ -162,7 +162,7 @@ void FinalBoss::Update() {
         soundManager->UpdateTrack(TRACK::FB_LOOP1);
     }
     if (isBossFightSequenceActive) {
-        if (soundManager->GetTrackTimePlayed() > 53.16 && !secondLoopPlaying) {
+        if (soundManager->GetTrackTimePlayed() > 53.11 && !secondLoopPlaying) {
             skipFrame++;
         }
         if (skipFrame == 2 && !secondLoopPlaying) {
