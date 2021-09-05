@@ -102,7 +102,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-    soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+    soundManager->StopCurrentTrack();
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture
