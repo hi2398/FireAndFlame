@@ -19,8 +19,7 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
 
     sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
     sceneChangerVec = { 96 * 32,44 * 32 };
-    
-    playerCharacter->SetPosition({ 98 * 32,50 * 32 });
+
     tempVec = {66*32,102*32};
     enemies.emplace_back(std::make_unique<Fly>(tempVec,EnemyLevel::Medium));
     tempVec = {57*32,102*32};
