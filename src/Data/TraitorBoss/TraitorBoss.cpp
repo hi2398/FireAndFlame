@@ -65,7 +65,7 @@ void TraitorBoss::Update()
 
 	if (invulnerable) {
 		invulnerableCounter++;
-		if (invulnerableCounter >= 60) {
+		if (invulnerableCounter >= 30) {
 			invulnerableCounter = 0;
 			invulnerable = false;
 		}

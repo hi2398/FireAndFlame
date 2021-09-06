@@ -77,7 +77,7 @@ void Spawner::Update()
 	}
 	if (thisFrame == startFrame + 3) thisFrame = startFrame, activated = false;
 
-	if (type == SpawnerType::Enemy) {
+	if (type == SpawnerType::Enemy && (direction == SpawnerDirection::Left|| direction == SpawnerDirection::Right)) {
 		activeFrame.x = (float)64 * thisFrame;
 	}
 	else {
@@ -109,7 +109,7 @@ void Spawner::Update()
 			activeFrame.height = 64;
 			break;
 		case SpawnerDirection::Down:
-			activeFrame.y = 32 * 3;
+			activeFrame.y = 32 * 2;
 			activeFrame.height = 64;
 			break;
 		case SpawnerDirection::Left:

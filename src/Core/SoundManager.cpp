@@ -26,6 +26,7 @@ SoundManager::SoundManager()
 	music[5] = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
 	music[6] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
 	music[7] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
+	music[8] = LoadMusicStream("assets/audio/tracks/Outro.mp3");
 }
 
 void SoundManager::PlaySfx(SFX sfx)
@@ -104,6 +105,9 @@ void SoundManager::PlayTrack(TRACK track)
 	case TRACK::FB_FIGHT2:
 		selectedTrack = 7;
 		break;
+	case TRACK::OUTRO:
+		selectedTrack = 8;
+		break;
 	default:
 		break;
 	}
@@ -140,6 +144,9 @@ void SoundManager::UpdateTrack(TRACK track)
 		break;
 	case TRACK::FB_FIGHT2:
 		selectedTrack = 7;
+		break;
+	case TRACK::OUTRO:
+		selectedTrack = 8;
 		break;
 	default:
 		return;
