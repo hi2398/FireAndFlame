@@ -73,25 +73,10 @@ std::shared_ptr<EState> RoamingState::Update(Enemy& enemy)
 	case EnemyTypes::Saugi:
 		for (const auto& coal : sceneManager->GetInteractables()) {
 			//check line of sight in idle
-			switch (enemy.GetDirection())
-			{
-			case LEFT:
-				enemySight = { enemy.GetPosition().x + 16 - 8 * 32, enemy.GetPosition().y + 16, 16 * 32, 5 };
-
-				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
-					//enter approaching state on coal sight left
-					return std::make_shared<ApproachingState>(enemy);
-				}
-				break;
-			case RIGHT:
-				enemySight = { enemy.GetPosition().x + 16 - 8 * 32, enemy.GetPosition().y + 16, 16*32, 5 };
-				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
-					//enter approaching state on player sight right
-					return std::make_shared<ApproachingState>(enemy);
-				}
-				break;
-			default:
-				break;
+			enemySight = { enemy.GetPosition().x + 16 - 16 * 32, enemy.GetPosition().y + 16, 32 * 32, 5 };
+			if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+				//enter approaching state on player sight right
+				return std::make_shared<ApproachingState>(enemy);
 			}
 		}
 		break;

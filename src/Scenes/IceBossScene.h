@@ -34,6 +34,9 @@ private:
     std::vector<Vector2> blockadeColliders {{20*32, 37*32}, {21*32,37*32}, {38*32, 35*32}, {38*32, 36*32}};
 
     std::vector<std::unique_ptr<Spawner>> spawner;
+
+    Texture2D sceneChanger;
+    Vector2 sceneChangerVec;
 };
 
 

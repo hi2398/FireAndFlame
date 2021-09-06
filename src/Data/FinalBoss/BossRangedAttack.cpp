@@ -9,10 +9,14 @@ BossRangedAttack::BossRangedAttack(Vector2 pos) : Interactable(InteractableType:
     position = pos;
     texture = LoadTexture("assets/Bosses/FinalBoss/TEMP/rangedAttackFinalBoss.png");
     attackPoint = playerCharacter->GetPosition();
+    interactionZone = { position.x,position.y,(float)texture.width,(float)texture.height };
 }
 
 void BossRangedAttack::Interact(Actor &actor) {
-    playerCharacter->SetHealth(playerCharacter->GetHealth()-10);
+    if (!playerCharacter->IsInvulnerable()) {
+		playerCharacter->SetHealth(playerCharacter->GetHealth() - 10);
+        playerCharacter->SetInvulnerable(true);
+    }
     markedDestroy = true;
 }
 

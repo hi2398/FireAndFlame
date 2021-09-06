@@ -14,9 +14,12 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Two_Tilemap.json");
-    Vector2 tempVec= {96*32,46*32};
+    Vector2 tempVec= {96*32,42*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::TraitorBoss, sceneName));
 
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+    sceneChangerVec = { 96 * 32,44 * 32 };
+    
     tempVec = {66*32,102*32};
     enemies.emplace_back(std::make_unique<Fly>(tempVec,EnemyLevel::Medium));
     tempVec = {57*32,102*32};
@@ -130,4 +133,5 @@ void AreaTwo::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+    DrawTextureRec(sceneChanger, { 32, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
 }

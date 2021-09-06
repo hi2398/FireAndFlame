@@ -17,9 +17,9 @@ BossEnergySwordAttack::BossEnergySwordAttack(Vector2 position, bool attackDirect
 }
 
 void BossEnergySwordAttack::Interact(Actor &actor) {
-    if(!hasDamagedPlayer) {
+    if(!playerCharacter->IsInvulnerable()) {
         playerCharacter->SetHealth(playerCharacter->GetHealth() - 10);
-        hasDamagedPlayer = true;
+        playerCharacter->SetInvulnerable(true);
     }
 }
 

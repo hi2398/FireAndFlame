@@ -18,6 +18,8 @@ public:
 private:
     const Vector2 playerStart = {115*32,114*32};
     std::vector<std::unique_ptr<Spawner>> spawner;
+    Texture2D sceneChanger;
+    Vector2 sceneChangerVec;
 protected:
 };
 

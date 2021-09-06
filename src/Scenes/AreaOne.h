@@ -18,6 +18,8 @@ public:
     ~AreaOne() override = default;
 private:
     std::vector<std::unique_ptr<Spawner>> spawner;
+    Texture2D sceneChanger;
+    Vector2 sceneChangerVec;
 protected:
 };
 
