@@ -64,4 +64,5 @@ void SceneChangerObject::Update() {
 }
 
 void SceneChangerObject::Draw() {
+	DrawRectangleRec(interactionZone, GREEN);
 }
