@@ -77,7 +77,7 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
-    tempVec = {25*32,107*32};
+    tempVec = {25*32,107*32 + 3};
     Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Neutrale_Ebene_Level_12.json",tempVec,statueTex));
 

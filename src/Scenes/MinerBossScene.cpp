@@ -20,6 +20,8 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
     textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/AreaOne/background.png");
     textureBackgroundException = LoadTexture("assets/graphics/backgrounds/AreaOne/background.png");
 
+    bridge = LoadTexture("assets/graphics/OtherObjects/environment.png");
+
     foregroundPos = { 0,-100 };
     backgroundPos = { 0,0 };
 
@@ -46,6 +48,9 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
 
     tempVec = { 57 * 32, 51 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    sceneChangerVec = { 58 * 32 - 64, 43 * 32 - 96 };
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
 }
 
 void MinerBossScene::Update() {
@@ -65,6 +70,8 @@ void MinerBossScene::Update() {
             spawn->SpawnCoal();
         }
     }
+
+    
 }
 
 void MinerBossScene::Draw() {
@@ -72,16 +79,12 @@ void MinerBossScene::Draw() {
     if (lowerDebrisEnabled){
         DrawTextureV(debrisTexture, lowerDebrisLoc, WHITE);
     }
-    if (upperDebrisEnabled){
-        DrawTextureV(debrisTexture, upperDebrisLocA, WHITE);
-        DrawTextureV(debrisTexture, upperDebrisLocB, WHITE);
-        DrawTextureV(debrisTexture, upperDebrisLocC, WHITE);
-        DrawTextureV(debrisTexture, upperDebrisLocD, WHITE);
-        DrawTextureV(debrisTexture, upperDebrisLocE, WHITE);
-    }
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+    DrawTextureRec(bridge, bridgeRec, upperDebrisLocA, WHITE);
+
+    DrawTextureRec(sceneChanger, { 32, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
 }
 
 void MinerBossScene::EnableDebrisLower() {

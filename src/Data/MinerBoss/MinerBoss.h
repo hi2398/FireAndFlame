@@ -22,7 +22,7 @@ protected:
 
 
 private:
-    const Vector2 levelExit{58*32-96, 43*32-96};
+    const Vector2 levelExit{58*32, 43*32-96};
     const int maxHealth{40};
     std::shared_ptr<EState> state;
     void OnDeath();

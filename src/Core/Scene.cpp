@@ -59,10 +59,12 @@ void Scene::Update() {
         UpdateSceneEffect();
 
         UpdateScreenShake();
+
+        if (FADEOUT.a > 0)FADEOUT.a -= 3;
+        if (FADEOUT.a < 0) FADEOUT.a = 0;
+
     }
     skipFrame++;
- 
-   
 }
 
 void Scene::UpdateBackground()
@@ -110,6 +112,9 @@ void Scene::UpdateScreenShake()
 }
 
 void Scene::Draw() {
+    if (skipFrame == 1) {
+        ClearBackground(BLACK);
+    }
 }
 
 void Scene::DrawBackground() const {
@@ -150,6 +155,7 @@ void Scene::DrawForeground() const
 		}
     }
    
+    DrawRectangle(-100, -100, 10000, 10000, FADEOUT);
 }
 
 void Scene::AddEnemy(std::unique_ptr<Enemy> enemy) {
@@ -171,6 +177,11 @@ void Scene::ActivateScreenShake(int duration)
     playerCharacter->ChangeCameraControl();
     screenShakeActivated = true;
     this->duration = duration;
+}
+
+void Scene::FadeOutOfScene(unsigned int alpha)
+{
+    FADEOUT.a = static_cast<unsigned char>(alpha);
 }
 
 SceneEnums Scene::GetSceneName() const

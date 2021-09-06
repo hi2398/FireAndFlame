@@ -14,5 +14,8 @@ private:
     Vector2 position;
     SceneEnums chosenScene;
     SceneEnums comingFromThisScene;
+    bool sceneIsChanging{ false };
+    unsigned int fadeOutCounter = 0;
+    bool fadeOutcomplete = false;
 protected:
 };

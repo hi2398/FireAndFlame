@@ -13,6 +13,7 @@
 TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json", "assets/Tilemaps/Verrater_Boss.json");
     playerCharacter->SetPosition(playerStart);
+    playerCharacter->SetPosition({ 90 * 32, 64 * 32 });
 
     playerCharacter->SetHealth(100);
     
@@ -22,12 +23,15 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     door2[0] = { 68 * 32, 87 * 32 };
     door2[1] = { 68 * 32, 88 * 32 };
 
-    Vector2 tempVec = {88 * 32, 64 * 32};
+    Vector2 tempVec = {93 * 32, 64 * 32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
     tempVec = {51 * 32, 74 * 32};
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
     tempVec = { 65 * 32, 74 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+    sceneChangerVec = { 91 * 32, 64 * 32 };
 
     //background initialization
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/AreaTwo/Lower_Foreground.png");
@@ -75,6 +79,7 @@ void TraitorBossScene::Update() {
             spawn->SpawnCoal();
         }
     }
+
 }
 
 void TraitorBossScene::Draw() {
@@ -88,6 +93,8 @@ void TraitorBossScene::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+
+    DrawTextureRec(sceneChanger, { 32 * 1, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
 }
 
 void TraitorBossScene::CheckBossDeath()
