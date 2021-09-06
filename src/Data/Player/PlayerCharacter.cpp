@@ -105,6 +105,7 @@ void PlayerCharacter::Update() {
 		}
 	}
 
+	if (IsHoldInPlace()) position = holdThisPosition;
 	for (const auto& enemies : sceneManager->GetEnemies()) {
 		if (CheckCollisionRecs(playerHitbox, enemies->GetCollider()) && enemies->GetEnemyType() != EnemyTypes::Saugi) {
 			if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - enemies->GetDamageValue());
@@ -112,7 +113,7 @@ void PlayerCharacter::Update() {
 	}
 	
 	nextMovement = MOVEMENT::IDLE;
-
+	
 	if constexpr (DEBUG_PLAYER_POSITION) 	std::cout << position.x / 32 << "\t" << position.y / 32 << "\n";
 }
 
@@ -221,6 +222,17 @@ bool PlayerCharacter::CanMove() const
 void PlayerCharacter::SetCanMove(bool canMove)
 {
 	this->canMove = canMove;
+}
+
+void PlayerCharacter::HoldInPlace(bool hold, Vector2 thisPos)
+{
+	this->isHoldInPlace = hold;
+	this->holdThisPosition = thisPos;
+}
+
+bool PlayerCharacter::IsHoldInPlace() const
+{
+	return isHoldInPlace;
 }
 
 int PlayerCharacter::GetFrame() const {
