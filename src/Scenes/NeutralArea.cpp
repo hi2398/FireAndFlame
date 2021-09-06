@@ -80,6 +80,13 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
 
 void NeutralArea::Update() {
     Scene::Update();
+    if (!activateShake) {
+		if (lastScene == SceneEnums::MinerBoss || lastScene == SceneEnums::TraitorBoss) {
+			sceneManager->ScreenShake(60);
+            soundManager->PlaySfx(SFX::DOORS);
+            activateShake = true;
+		}
+    }
 }
 
 void NeutralArea::Draw() {

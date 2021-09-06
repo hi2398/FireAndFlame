@@ -13,7 +13,6 @@
 TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json", "assets/Tilemaps/Verrater_Boss.json");
     playerCharacter->SetPosition(playerStart);
-    playerCharacter->SetPosition({ 90 * 32, 64 * 32 });
 
     playerCharacter->SetHealth(100);
     

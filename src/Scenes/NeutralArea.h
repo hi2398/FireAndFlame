@@ -30,5 +30,5 @@ private:
     Vector2 sceneChangerVec2;
     Rectangle sceneChangerFrame1;
     Rectangle sceneChangerFrame2;
-
+    bool activateShake = false;
 };

@@ -28,7 +28,7 @@ void Fireball::Update()
             if (CheckCollisionRecs(enemies->GetCollider(), interactionZone) && !enemies->IsInvulnerable()) {
                 enemies->ReceiveDamage(10);
                 enemies->SetInvulnerable(true);
-                Vector2 tmp = { enemies->GetPosition().x + 8, enemies->GetPosition().y + 8 };
+                Vector2 tmp = { enemies->GetPosition().x + 8, enemies->GetPosition().y + 5 };
                 sceneManager->AddInteractable(std::make_unique<HitMarker>(tmp));
                 MarkToDestroy();
             }

@@ -16,8 +16,11 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     this->lastScene = lastScene;
     playerCharacter->SetPosition({19*32, 107 * 32});
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_One_Tilemap.json");
-    Vector2 tempVec= {47*25,29*26};
+    Vector2 tempVec= {29 * 32,23 * 32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::MinerBoss, sceneName));
+
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+    sceneChangerVec = { 31 * 32,23 * 32 };
 
     tempVec = {64*32,103*32};
     enemies.emplace_back(std::make_unique<Fly>(tempVec,EnemyLevel::Low));
@@ -126,4 +129,6 @@ void AreaOne::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+
+    DrawTextureRec(sceneChanger, {32, 0, -32*4, 32 *4}, sceneChangerVec, WHITE);
 }
