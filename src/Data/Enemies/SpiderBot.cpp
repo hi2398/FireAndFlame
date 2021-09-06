@@ -10,11 +10,11 @@ SpiderBot::SpiderBot(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTyp
 	{
 	case EnemyLevel::Low:
 		texture = LoadTexture("assets/graphics/Enemies/SpiderBot_01_Spritesheet.png");
-		health = 3;
+		health = 2;
 		break;
 	case EnemyLevel::Medium:
 		texture = LoadTexture("assets/graphics/Enemies/SpiderBot_02_Spritesheet.png");
-		health = 10;
+		health = 4;
 		break;
 	default:
 		break;
