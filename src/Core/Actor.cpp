@@ -93,7 +93,6 @@ bool Actor::GetCanDoubleJump() const
 void Actor::SetCanDoubleJump(bool canDoubleJump)
 {
     this->canDoubleJump = canDoubleJump;
-	std::cout << canDoubleJump << "\n";
 }
 
 bool Actor::GetIsRunning() const

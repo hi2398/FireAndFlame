@@ -28,12 +28,16 @@ void Fireball::Update()
             if (CheckCollisionRecs(enemies->GetCollider(), interactionZone) && !enemies->IsInvulnerable()) {
                 enemies->ReceiveDamage(10);
                 enemies->SetInvulnerable(true);
+                Vector2 tmp = { enemies->GetPosition().x + 8, enemies->GetPosition().y + 5 };
+                sceneManager->AddInteractable(std::make_unique<HitMarker>(tmp));
+                MarkToDestroy();
             }
         }
     }
     else if (user == ObjectTypes::Enemy) {
         if (CheckCollisionRecs(playerCharacter->playerHitbox, interactionZone)) {
             if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - 10);
+            MarkToDestroy();
         }
     }
 

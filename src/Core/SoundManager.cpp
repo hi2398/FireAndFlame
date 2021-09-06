@@ -30,7 +30,7 @@ SoundManager::SoundManager()
 
 void SoundManager::PlaySfx(SFX sfx)
 {
-	int selectedSound;
+	int selectedSound = 0;
 	switch (sfx)
 	{
 	case SFX::PLAYER_STEP:
@@ -145,19 +145,24 @@ void SoundManager::UpdateTrack(TRACK track)
 		return;
 		break;
 	}
-	if (playerCharacter->GetHealth() <= 20 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss)SetMusicPitch(music[selectedTrack], 1.1);
+	if (playerCharacter->GetHealth() <= 10 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss) SetMusicPitch(music[selectedTrack], 1.1);
 	else SetMusicPitch(music[selectedTrack], 1.0);
+
 	SetMusicVolume(music[selectedTrack], trackVolume);
+
 	UpdateMusicStream(music[selectedTrack]);
 	if (selectedTrack == 6) fbTimePlayed = GetMusicTimePlayed(music[selectedTrack]);
 	return;
 }
 
 
-void SoundManager::StopCurrentTrack(int selectedTrack)
+void SoundManager::StopCurrentTrack()
 {
-	if (IsMusicStreamPlaying(music[selectedTrack])) StopMusicStream(music[selectedTrack]), fbTimePlayed = 0.0;
-	
+	for (const auto& track : music) {
+		if (IsMusicStreamPlaying(track)) StopMusicStream(track);
+	}
+
+	fbTimePlayed = 0.0;
 }
 
 int SoundManager::GetCurrentTrack() const

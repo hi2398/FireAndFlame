@@ -34,6 +34,8 @@ public:
 
     void ActivateScreenShake(int durationInSeconds);
 
+    void FadeOutOfScene(unsigned int alpha);
+
     [[nodiscard]] SceneEnums GetSceneName() const;
 
 protected:
@@ -83,8 +85,9 @@ protected:
     int duration = -1;
     int shakeFrameCounter = 0;
     float xOffset = 0.0;
-
+	Color FADEOUT = { 0,0,0,255 };
 private:
+    
 };
 
 

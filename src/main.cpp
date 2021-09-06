@@ -57,7 +57,7 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<TraitorBossScene>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 
 #ifdef GAME_START_FULLSCREEN
@@ -102,7 +102,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-    soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+    soundManager->StopCurrentTrack();
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

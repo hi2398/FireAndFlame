@@ -94,6 +94,7 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 }
 
 void MainMenu::Update() {
+    Scene::Update();
     soundManager->UpdateTrack(TRACK::MENU_TRACK);
     vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
 
@@ -366,6 +367,7 @@ void MainMenu::Update() {
 }
 
 void MainMenu::Draw() {
+    Scene::Draw();
     switch (menuScreenStates) {
         case MenuScreenStates::TitleScreen:
             DrawTexture(mainMenuBackground,0,0,WHITE);

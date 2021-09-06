@@ -25,7 +25,7 @@ private:
     Vector2 currentAttackCenter{};
     Vector2 attackStart{};
     Vector2 attackEnd{};
-    const int dmg{3};
+    const int dmg{10};
     const float dmgRadius{16.f};
     const float reach{4.f*32.f};
     Rectangle textureRec{};
