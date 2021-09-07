@@ -87,24 +87,17 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		heart->UpdatePos(enemy.GetPosition());
 		for (const auto& coal : sceneManager->GetInteractables()) {
 			//check line of sight in idle
-			switch (enemy.GetDirection())
-			{
-			case LEFT:
-				enemySight = { enemy.GetPosition().x + 16 - 6 * 32, enemy.GetPosition().y + 16, 6 * 32, 5 };
-
-				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
-					enemy.SetPosition({enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 5 * enemy.GetDirection(), enemy.GetPosition().y});
-				}
-				break;
-			case RIGHT:
-				enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 160, 5 };
-				if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
-					enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * 5 * enemy.GetDirection(), enemy.GetPosition().y });
-				}
-				break;
-			default:
-				break;
+			enemySight = { enemy.GetPosition().x + 16 - 16 * 32, enemy.GetPosition().y + 16, 16 * 32, 5 };;
+			if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+				enemy.SetDirection(LEFT);
 			}
+
+			enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 16 * 32, 5 };;
+			if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+				enemy.SetDirection(RIGHT);
+			}
+			
+			enemy.SetPosition({ enemy.GetPosition().x + enemy.GetEnemyMovementSpeed() * enemy.GetDirection(), enemy.GetPosition().y });
 
 			if (CheckCollisionRecs(coal->GetInteractionZone(), enemy.GetCollider()) && coal->GetInteractableType() == InteractableType::Coal) {
 				coal->Interact(enemy);
@@ -112,9 +105,13 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			}
 
 			if (CheckCollisionRecs(coal->GetInteractionZone(), playerCharacter->playerHitbox) && coal->GetInteractableType() == InteractableType::Coal) {
-				coal->Interact(enemy);
 				return std::make_shared<StunnedState>(enemy);
 			}
+		}
+		aggroCooldown++;
+
+		if (aggroCooldown >= 240) {
+			return std::make_shared<StunnedState>(enemy);
 		}
 		break;
 	case EnemyTypes::SpringHog:
@@ -411,7 +408,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		break;
 	}
 	//enter idle when losing aggro after 5 secs
-	if (aggroCooldown >= 300) {
+	if (aggroCooldown >= 300 && enemy.GetEnemyType() != EnemyTypes::Saugi) {
 		if (enemy.GetEnemyType() == EnemyTypes::Howler) {
 			if (enemy.IsGrounded()) return std::make_shared<RoamingState>(enemy);
 		}

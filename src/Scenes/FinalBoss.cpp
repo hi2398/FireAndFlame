@@ -41,6 +41,10 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
     tempVec = {70*32,54*32};
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+    tempVec = {104*32, 71*32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Left, SpawnerType::Coal));
+    tempVec = { 85 * 32, 71 * 32 };
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Right, SpawnerType::Coal));
 
     tempVec = {playerCharacter->GetPosition().x,playerCharacter->GetPosition().y-550};
     chasingBoss = std::make_unique<ChasingBoss>(tempVec);
@@ -110,11 +114,11 @@ void FinalBoss::Update() {
         playerCharacter->SetHealth(100);
     }
     if(CheckCollisionRecs(bossFightSequenceCollider,playerCharacter->playerHitbox)&&!isBossFightSequenceActive){
+        soundManager->StopCurrentTrack();
         isBossFightSequenceActive = true;
         sceneManager->ScreenShake(30);
         ActivateBorder();
         soundManager->PlayTrack(TRACK::FB_FIGHT1);
-        finalTrackPlaying = true;
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[0],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[1].x,chasingBossPositions[1].y});
@@ -145,28 +149,25 @@ void FinalBoss::Update() {
 		if (!introPlaying)soundManager->PlayTrack(TRACK::FB_INTRO), introPlaying = true;
         
     }
-	if (introPlaying && !loopPlaying) {
+	if (introPlaying && !loopPlaying && !isBossFightSequenceActive) {
 		soundManager->UpdateTrack(TRACK::FB_INTRO);
 		introCounter++;
 	}
 	if ((introCounter >= 1690 && !loopPlaying) || (playerCharacter->GetHealth() <= 20 && introCounter >= 1680 && !loopPlaying)) {
-		soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+		soundManager->StopCurrentTrack();
 		soundManager->PlayTrack(TRACK::FB_LOOP1);
 		loopPlaying = true;
 	}
-    if (loopPlaying) {
+    if (loopPlaying && !secondLoopPlaying) {
         soundManager->UpdateTrack(TRACK::FB_LOOP1);
     }
     if (isBossFightSequenceActive) {
-        soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
-    }
-    if (finalTrackPlaying) {
-        if (soundManager->GetTrackTimePlayed() > 53.16 && !secondLoopPlaying) {
+        if (soundManager->GetTrackTimePlayed() > 53.11 && !secondLoopPlaying) {
             skipFrame++;
         }
-        if (skipFrame == 2) {
+        if (skipFrame == 3 && !secondLoopPlaying) {
             secondLoopPlaying = true;
-            soundManager->StopCurrentTrack(soundManager->GetCurrentTrack());
+            soundManager->StopCurrentTrack();
             soundManager->PlayTrack(TRACK::FB_FIGHT2);
         }
         if (!secondLoopPlaying)soundManager->UpdateTrack(TRACK::FB_FIGHT1);

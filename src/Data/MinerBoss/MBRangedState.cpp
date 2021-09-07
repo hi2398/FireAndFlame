@@ -68,10 +68,10 @@ std::shared_ptr<EState> MBRangedState::Attack(Enemy& enemy) {
         }
     }
 
-    if (!playerHit){
+    if (!playerCharacter->IsInvulnerable()){
         if (CheckCollisionCircleRec(currentAttackCenter, dmgRadius, playerCharacter->playerHitbox)){
             playerCharacter->SetHealth(playerCharacter->GetHealth()-dmg);
-            playerHit = true;
+            playerCharacter->SetInvulnerable(true);
         }
     }
 

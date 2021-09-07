@@ -25,6 +25,10 @@ protected:
 private:
     Rectangle exp = { 0 };
     static constexpr Vector2 playerStart{ 59 * 32, 111 * 32 };
-
-
+    Texture2D sceneChanger;
+    Vector2 sceneChangerVec1;
+    Vector2 sceneChangerVec2;
+    Rectangle sceneChangerFrame1;
+    Rectangle sceneChangerFrame2;
+    bool activateShake = false;
 };

@@ -10,15 +10,15 @@ Fly::Fly(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::Flyer)
 	{
 	case EnemyLevel::Low:
 		texture = LoadTexture("assets/graphics/Enemies/Fliege_01_Spritesheet.png");
-		health = 3;
+		health = 2;
 		break;
 	case EnemyLevel::Medium:
 		texture = LoadTexture("assets/graphics/Enemies/Fliege_02_Spritesheet.png");
-		health = 5;
+		health = 3;
 		break;
 	case EnemyLevel::High:
 		texture = LoadTexture("assets/graphics/Enemies/Fliege_03_Spritesheet.png");
-		health = 10;
+		health = 4;
 		break;
 	default:
 		break;
@@ -41,7 +41,7 @@ void Fly::Update()
 
 	if (invulnerable) {
 		invulnerableCounter++;
-		if (invulnerableCounter >= 60) {
+		if (invulnerableCounter >= 45) {
 			invulnerableCounter = 0;
 			invulnerable = false;
 		}

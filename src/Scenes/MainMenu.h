@@ -28,6 +28,13 @@ protected:
 
 private:
 
+    bool isIntroDone = false;
+    Rectangle introRec = {0,0,1280,720};
+    Color introFade = {0,0,0,0};
+    Texture2D introRaylib;
+    Texture2D introIgnite;
+    int introCounter = 400;
+
     MenuScreenStates menuScreenStates = {MenuScreenStates::TitleScreen};
     ControllerMainMenuStates controllerStates = {ControllerMainMenuStates::PlayGameButton};
 

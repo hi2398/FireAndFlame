@@ -25,4 +25,7 @@ private:
     bool doorActive{ false };
 
     std::vector<std::unique_ptr<Spawner>> spawner;
+
+    Texture2D sceneChanger;
+    Vector2 sceneChangerVec;
 };

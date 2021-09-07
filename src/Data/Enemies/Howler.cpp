@@ -10,11 +10,11 @@ Howler::Howler(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTypes::Ho
 	{
 	case EnemyLevel::Low:
 		texture = LoadTexture("assets/graphics/Enemies/Doggo_01_Spritesheet.png");
-		health = 10;
+		health = 5;
 		break;
 	case EnemyLevel::Medium:
 		texture = LoadTexture("assets/graphics/Enemies/Doggo_02_Spritesheet.png");
-		health = 15;
+		health = 7;
 		break;
 	default:
 		break;
@@ -38,7 +38,7 @@ void Howler::Update()
 
 	if (invulnerable) {
 		invulnerableCounter++;
-		if (invulnerableCounter >= 60) {
+		if (invulnerableCounter >= 45) {
 			invulnerableCounter = 0;
 			invulnerable = false;
 		}

@@ -12,7 +12,7 @@ private:
     Texture2D texture;
     int existCounter = 120;
     Vector2 attackPoint;
-    Vector2 moveTowardsPosition;
+    Vector2 moveTowardsPosition{};
     int magnitude = 50;
 protected:
 };

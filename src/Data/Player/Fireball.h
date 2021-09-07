@@ -2,6 +2,7 @@
 
 #include "../../Core/Interactable.h"
 #include "../../Global.h"
+#include "../HitMarker.h"
 
 class Fireball : public Interactable {
 public:

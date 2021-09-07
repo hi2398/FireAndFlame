@@ -20,9 +20,8 @@ std::shared_ptr<EState> IBMelee::Update(Enemy &enemy) {
         texRec={static_cast<float>(96*iceBoss->GetPhase()), 128, 64, 32};
         Vector2 attackCenter= {enemy.GetPosition().x + 16+32*enemy.GetDirection(), enemy.GetPosition().y + 16};
         DrawCircleV(attackCenter, attackCollisionRad, RED);
-        if (CheckCollisionCircleRec(attackCenter, attackCollisionRad, playerCharacter->playerHitbox) && !playerHit) {
-            playerCharacter->SetHealth(playerCharacter->GetHealth()-meleeDamage);
-            playerHit=true;
+        if (CheckCollisionCircleRec(attackCenter, attackCollisionRad, playerCharacter->playerHitbox) && !playerCharacter->IsInvulnerable()) {
+            playerCharacter->SetHealth(playerCharacter->GetHealth()-meleeDamage), playerCharacter->SetInvulnerable(true);
         }
     } else if (meleeTimer<=40){
         texRec={static_cast<float>(96*iceBoss->GetPhase()), 96, 64, 32};

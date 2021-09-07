@@ -32,6 +32,10 @@ private:
     Vector2 upperDebrisLocD{54*32, 60*32};
     Vector2 upperDebrisLocE{55*32, 60*32};
     std::vector<std::unique_ptr<Spawner>> spawner;
+    Texture2D bridge;
+    Rectangle bridgeRec = {0,32 * 4, 32 * 5, 32};
+    Texture2D sceneChanger;
+    Vector2 sceneChangerVec;
 };
 
 

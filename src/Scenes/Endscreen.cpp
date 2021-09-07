@@ -30,16 +30,22 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     endText[14] = "Programming: Adrian Pfaff";
     endText[15] = "Programming: Amar Civic";
     endText[16] = "Programming: Pascal Hirt";
+
+    soundManager->PlayTrack(TRACK::OUTRO);
 }
 
 void Endscreen::Update() {
+    Scene::Update();
     endscreenCounter = endscreenCounter + 0.4f;
-    if(endscreenCounter >= 1350){
+    soundManager->UpdateTrack(TRACK::OUTRO);
+    if(endscreenCounter >= 1390){
+        soundManager->StopCurrentTrack();
         sceneManager->SetNextScene(std::make_unique<MainMenu>(sceneName));
     }
 }
 
 void Endscreen::Draw() {
+    Scene::Draw();
     for(int i = 0; i <17;i++){
         const char * c = endText[i].c_str();
         DrawText(c,150,750+(i*60)-endscreenCounter,38,WHITE);

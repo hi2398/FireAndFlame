@@ -9,6 +9,9 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     tilemap=std::make_unique<Tilemap>();
     playerCharacter->active = false; // Disables Player
 
+    introRaylib = LoadTexture("assets/graphics/GUI/MadeWithRaylib.png");
+    introIgnite = LoadTexture("assets/graphics/GUI/TeamIgnite.png");
+
     mainMenuBackground = LoadTexture("assets/graphics/GUI/fireAndFlame.png");
     secondaryBackground = LoadTexture("assets/graphics/GUI/secondaryBackground.png");
     gameTitlePicture = LoadTexture("assets/graphics/GUI/fireAndFlameLogo.png");// The Title of our Game as a PNG Image, instead of Font only
@@ -94,355 +97,439 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 }
 
 void MainMenu::Update() {
-    soundManager->UpdateTrack(TRACK::MENU_TRACK);
-    vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
+    Scene::Update();
+    if(isIntroDone) {
+        soundManager->UpdateTrack(TRACK::MENU_TRACK);
+        vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
 
-    switch (menuScreenStates) {
+        if(introFade.a != 0){
+            introFade.a -=3;
+        }
 
-        case MenuScreenStates::TitleScreen:
+        switch (menuScreenStates) {
 
-            if(CheckCollisionPointRec(vMousePosition,playButtonRec) || (controllerStates == ControllerMainMenuStates::PlayGameButton && controllerActive)){ // Handles the Button State of Play
-                playButtonIndex = 1;
-                if(IsMouseButtonDown(0)|| (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerActive)&& controllerStates == ControllerMainMenuStates::PlayGameButton){
-                    playButtonColor = {100,100,100,255};
+            case MenuScreenStates::TitleScreen:
+
+                if (CheckCollisionPointRec(vMousePosition, playButtonRec) ||
+                    (controllerStates == ControllerMainMenuStates::PlayGameButton &&
+                     controllerActive)) { // Handles the Button State of Play
+                    playButtonIndex = 1;
+                    if (IsMouseButtonDown(0) ||
+                        (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerActive) &&
+                        controllerStates == ControllerMainMenuStates::PlayGameButton) {
+                        playButtonColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) ||
+                        (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerActive) &&
+                        controllerStates == ControllerMainMenuStates::PlayGameButton) {
+                        controllerStates = ControllerMainMenuStates::LoadGame1;
+                        menuScreenStates = MenuScreenStates::LoadGameScreen;
+                    }
+                } else {
+                    playButtonIndex = 0;
+                    playButtonColor = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerActive)&& controllerStates == ControllerMainMenuStates::PlayGameButton){
-                    controllerStates = ControllerMainMenuStates::LoadGame1;
-                    menuScreenStates = MenuScreenStates::LoadGameScreen;
-                }
-            }else{
-                playButtonIndex = 0;
-                playButtonColor = {255,255,255,255};
-            }
-
-
-            if(CheckCollisionPointRec(vMousePosition,settingsButtonRec) || controllerStates == ControllerMainMenuStates::SettingsButton){ // Handles the Button State of Settings
-                settingsIndex = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::SettingsButton)){
-                    settingsColor = {100,100,100,255};
-                }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::SettingsButton)){
-                    controllerStates = ControllerMainMenuStates::ChangeMusic;
-                    menuScreenStates = MenuScreenStates::SettingsScreen;
-                }
-            }else{
-                settingsIndex = 0;
-                settingsColor = {255,255,255,255};
-            }
 
 
-            if(CheckCollisionPointRec(vMousePosition,creditsButtonRec) || controllerStates == ControllerMainMenuStates::CreditsButton){ // Handles the Button State of Credits
-                creditsIndex = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::CreditsButton)){
-                    creditsColor = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, settingsButtonRec) || controllerStates ==
+                                                                                 ControllerMainMenuStates::SettingsButton) { // Handles the Button State of Settings
+                    settingsIndex = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::SettingsButton)) {
+                        settingsColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::SettingsButton)) {
+                        controllerStates = ControllerMainMenuStates::ChangeMusic;
+                        menuScreenStates = MenuScreenStates::SettingsScreen;
+                    }
+                } else {
+                    settingsIndex = 0;
+                    settingsColor = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::CreditsButton)){
-                    menuScreenStates = MenuScreenStates::CreditsScreen;
-                }
-            }else{
-                creditsIndex = 0;
-                creditsColor = {255,255,255,255};
-            }
 
 
-            if(CheckCollisionPointRec(vMousePosition,quitButtonRec) || controllerStates == ControllerMainMenuStates::QuitButton){ // Handles the Button State of Quit
-                quitIndex = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::QuitButton)){
-                    quitColor = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, creditsButtonRec) || controllerStates ==
+                                                                                ControllerMainMenuStates::CreditsButton) { // Handles the Button State of Credits
+                    creditsIndex = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::CreditsButton)) {
+                        creditsColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::CreditsButton)) {
+                        menuScreenStates = MenuScreenStates::CreditsScreen;
+                    }
+                } else {
+                    creditsIndex = 0;
+                    creditsColor = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::QuitButton)){
-                    CloseWindow();
-                }
-            }else{
-                quitIndex = 0;
-                quitColor = {255,255,255,255};
-            }
 
-            break;
+
+                if (CheckCollisionPointRec(vMousePosition, quitButtonRec) ||
+                    controllerStates == ControllerMainMenuStates::QuitButton) { // Handles the Button State of Quit
+                    quitIndex = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::QuitButton)) {
+                        quitColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::QuitButton)) {
+                        CloseWindow();
+                    }
+                } else {
+                    quitIndex = 0;
+                    quitColor = {255, 255, 255, 255};
+                }
+
+                break;
 
 
-        case MenuScreenStates::LoadGameScreen:
+            case MenuScreenStates::LoadGameScreen:
 
-            if(CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame1){
-                deleteSave1Index = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
-                    deleteSave1Color = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec) ||
+                    controllerStates == ControllerMainMenuStates::DeleteGame1) {
+                    deleteSave1Index = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::DeleteGame1)) {
+                        deleteSave1Color = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::DeleteGame1)) {
+                        // delete save 1
+                        ResetSave(1);
+                    }
+                } else {
+                    deleteSave1Index = 0;
+                    deleteSave1Color = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame1)){
-                    // delete save 1
-                    ResetSave(1);
-                }
-            }else{
-                deleteSave1Index = 0;
-                deleteSave1Color = {255,255,255,255};
-            }
 
-            if(CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame2){
-                deleteSave2Index = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
-                    deleteSave2Color = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec) ||
+                    controllerStates == ControllerMainMenuStates::DeleteGame2) {
+                    deleteSave2Index = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::DeleteGame2)) {
+                        deleteSave2Color = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::DeleteGame2)) {
+                        // delete save 2
+                        ResetSave(2);
+                    }
+                } else {
+                    deleteSave2Index = 0;
+                    deleteSave2Color = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame2)){
-                    // delete save 2
-                    ResetSave(2);
-                }
-            }else{
-                deleteSave2Index = 0;
-                deleteSave2Color = {255,255,255,255};
-            }
 
-            if(CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec)|| controllerStates == ControllerMainMenuStates::DeleteGame3){
-                deleteSave3Index = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
-                    deleteSave3Color = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec) ||
+                    controllerStates == ControllerMainMenuStates::DeleteGame3) {
+                    deleteSave3Index = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::DeleteGame3)) {
+                        deleteSave3Color = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::DeleteGame3)) {
+                        // delete save 3
+                        ResetSave(3);
+                    }
+                } else {
+                    deleteSave3Index = 0;
+                    deleteSave3Color = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::DeleteGame3)){
-                    // delete save 3
-                    ResetSave(3);
-                }
-            }else{
-                deleteSave3Index = 0;
-                deleteSave3Color = {255,255,255,255};
-            }
 
-            if(CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec)|| (controllerStates == ControllerMainMenuStates::LoadGame1 && controllerActive)){
-                loadSave1Index = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
-                    loadSave1Color = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec) ||
+                    (controllerStates == ControllerMainMenuStates::LoadGame1 && controllerActive)) {
+                    loadSave1Index = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::LoadGame1)) {
+                        loadSave1Color = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::LoadGame1)) {
+                        sceneManager->SetActiveSaveSlot(1);
+                        sceneManager->LoadGame("./Saves/", 1);
+                    }
+                } else {
+                    loadSave1Index = 0;
+                    loadSave1Color = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame1)){
-                    sceneManager->SetActiveSaveSlot(1);
-                    sceneManager->LoadGame("./Saves/", 1);
-                }
-            }else{
-                loadSave1Index = 0;
-                loadSave1Color = {255,255,255,255};
-            }
 
-            if(CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec) || controllerStates == ControllerMainMenuStates::LoadGame2){
-                loadSave2Index = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
-                    loadSave2Color = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec) ||
+                    controllerStates == ControllerMainMenuStates::LoadGame2) {
+                    loadSave2Index = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::LoadGame2)) {
+                        loadSave2Color = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::LoadGame2)) {
+                        sceneManager->SetActiveSaveSlot(2);
+                        sceneManager->LoadGame("./Saves/", 2);
+                    }
+                } else {
+                    loadSave2Index = 0;
+                    loadSave2Color = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)&& controllerStates == ControllerMainMenuStates::LoadGame2)){
-                    sceneManager->SetActiveSaveSlot(2);
-                    sceneManager->LoadGame("./Saves/", 2);
-                }
-            }else{
-                loadSave2Index = 0;
-                loadSave2Color = {255,255,255,255};
-            }
 
-            if(CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec) || controllerStates == ControllerMainMenuStates::LoadGame3){
-                loadSave3Index = 1;
-                if(IsMouseButtonDown(0) || (IsGamepadButtonPressed(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
-                    loadSave3Color = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec) ||
+                    controllerStates == ControllerMainMenuStates::LoadGame3) {
+                    loadSave3Index = 1;
+                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                 controllerStates == ControllerMainMenuStates::LoadGame3)) {
+                        loadSave3Color = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::LoadGame3)) {
+                        sceneManager->SetActiveSaveSlot(3);
+                        sceneManager->LoadGame("./Saves/", 3);
+                    }
+                } else {
+                    loadSave3Index = 0;
+                    loadSave3Color = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::LoadGame3)){
-                    sceneManager->SetActiveSaveSlot(3);
-                    sceneManager->LoadGame("./Saves/", 3);
-                }
-            }else{
-                loadSave3Index = 0;
-                loadSave3Color = {255,255,255,255};
-            }
 
-            if(CheckCollisionPointRec(vMousePosition, backButtonRec)){
-                backButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
-                    backButtonColor = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, backButtonRec)) {
+                    backButtonIndex = 1;
+                    if (IsMouseButtonDown(0)) {
+                        backButtonColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0)) {
+                        controllerStates = ControllerMainMenuStates::PlayGameButton;
+                        menuScreenStates = MenuScreenStates::TitleScreen;
+                    }
+                } else {
+                    backButtonColor = {255, 255, 255, 255};
+                    backButtonIndex = 0;
                 }
-                if(IsMouseButtonReleased(0)){
+                if (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
                     controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
-            }else{
-                backButtonColor = {255,255,255,255};
-                backButtonIndex = 0;
-            }
-            if(IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
-                controllerStates = ControllerMainMenuStates::PlayGameButton;
-                menuScreenStates = MenuScreenStates::TitleScreen;
-            }
-            break;
-        case MenuScreenStates::SettingsScreen:
+                break;
+            case MenuScreenStates::SettingsScreen:
 
-            for(int i=0;i<10;i++) { // Changing Sound and Music Volume
-                if (CheckCollisionPointRec(vMousePosition, musicVolumeRecs[i])) {
-                    if(IsMouseButtonReleased(0)) {
-                        musicVolume = i;
-                        UpdateMusicAndSoundVolume();
-                        break;
+                for (int i = 0; i < 10; i++) { // Changing Sound and Music Volume
+                    if (CheckCollisionPointRec(vMousePosition, musicVolumeRecs[i])) {
+                        if (IsMouseButtonReleased(0)) {
+                            musicVolume = i;
+                            UpdateMusicAndSoundVolume();
+                            break;
+                        }
                     }
-                }
-                if (CheckCollisionPointRec(vMousePosition, soundVolumeRecs[i])) {
-                    if(IsMouseButtonReleased(0)) {
-                        soundVolume = i;
-                        UpdateMusicAndSoundVolume();
-                        break;
+                    if (CheckCollisionPointRec(vMousePosition, soundVolumeRecs[i])) {
+                        if (IsMouseButtonReleased(0)) {
+                            soundVolume = i;
+                            UpdateMusicAndSoundVolume();
+                            break;
+                        }
                     }
+
                 }
 
-            }
 
-
-            if(CheckCollisionPointRec(vMousePosition,fullscreenRec) || controllerStates == ControllerMainMenuStates::ChangeFullscreen){
-                if(IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN) && controllerStates == ControllerMainMenuStates::ChangeFullscreen)){
-                    isFullScreenActive = !isFullScreenActive;
-                    if(isFullScreenActive && !IsWindowFullscreen()){
-                        ToggleFullscreen();
-                    }
-                    if(!isFullScreenActive && IsWindowFullscreen()){
-                        ToggleFullscreen();
+                if (CheckCollisionPointRec(vMousePosition, fullscreenRec) ||
+                    controllerStates == ControllerMainMenuStates::ChangeFullscreen) {
+                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                                                     controllerStates == ControllerMainMenuStates::ChangeFullscreen)) {
+                        isFullScreenActive = !isFullScreenActive;
+                        if (isFullScreenActive && !IsWindowFullscreen()) {
+                            ToggleFullscreen();
+                        }
+                        if (!isFullScreenActive && IsWindowFullscreen()) {
+                            ToggleFullscreen();
+                        }
                     }
                 }
-            }
 
 
-            if(CheckCollisionPointRec(vMousePosition, backButtonRec)){
-                backButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
-                    backButtonColor = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, backButtonRec)) {
+                    backButtonIndex = 1;
+                    if (IsMouseButtonDown(0)) {
+                        backButtonColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0)) {
+                        controllerStates = ControllerMainMenuStates::PlayGameButton;
+                        menuScreenStates = MenuScreenStates::TitleScreen;
+                    }
+                } else {
+                    backButtonIndex = 0;
+                    backButtonColor = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0)){
+
+                if (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
                     controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
-            }else{
-                backButtonIndex = 0;
-                backButtonColor = {255,255,255,255};
-            }
 
-            if(IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
-                controllerStates = ControllerMainMenuStates::PlayGameButton;
-                menuScreenStates = MenuScreenStates::TitleScreen;
-            }
+                break;
+            case MenuScreenStates::CreditsScreen:
 
-            break;
-        case MenuScreenStates::CreditsScreen:
-
-            if(CheckCollisionPointRec(vMousePosition, backButtonRec)){
-                backButtonIndex = 1;
-                if(IsMouseButtonDown(0)){
-                    backButtonColor = {100,100,100,255};
+                if (CheckCollisionPointRec(vMousePosition, backButtonRec)) {
+                    backButtonIndex = 1;
+                    if (IsMouseButtonDown(0)) {
+                        backButtonColor = {100, 100, 100, 255};
+                    }
+                    if (IsMouseButtonReleased(0)) {
+                        controllerStates = ControllerMainMenuStates::PlayGameButton;
+                        menuScreenStates = MenuScreenStates::TitleScreen;
+                    }
+                } else {
+                    backButtonIndex = 0;
+                    backButtonColor = {255, 255, 255, 255};
                 }
-                if(IsMouseButtonReleased(0)){
+
+                if (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
                     controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
-            }else{
-                backButtonIndex = 0;
-                backButtonColor = {255,255,255,255};
+
+                break;
+        }
+
+        if (IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT) &&
+            !controllerActive) { // Activate Controller by pressing A
+            controllerActive = true;
+        }
+
+        if (controllerActive) { // Navigating with Controller in Main Menu
+            if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_UP)) {
+                UpdateByController(ControllerCommands::MOVEUP);
             }
-
-            if(IsGamepadButtonReleased(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
-                controllerStates = ControllerMainMenuStates::PlayGameButton;
-                menuScreenStates = MenuScreenStates::TitleScreen;
+            if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
+                UpdateByController(ControllerCommands::MOVERIGHT);
             }
-
-            break;
+            if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_DOWN)) {
+                UpdateByController(ControllerCommands::MOVEDOWN);
+            }
+            if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
+                UpdateByController(ControllerCommands::MOVELEFT);
+            }
+        }
+    }else{
+        --introCounter;
+        if(introCounter < 300 && introCounter > 215){
+            introFade.a = introFade.a+3;
+        }
+        if(introCounter < 215 && introCounter >130){
+            introFade.a = introFade.a-3;
+        }
+        if(introCounter < 85){
+            introFade.a = introFade.a+3;
+        }
+        if(introCounter <= 0){
+            isIntroDone = true;
+        }
     }
-
-    if(IsGamepadButtonDown(0,GAMEPAD_BUTTON_RIGHT_FACE_RIGHT) && !controllerActive){ // Activate Controller by pressing A
-        controllerActive = true;
-    }
-
-    if(controllerActive){ // Navigating with Controller in Main Menu
-        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_UP)){
-            UpdateByController(ControllerCommands::MOVEUP);
-        }
-        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_RIGHT)){
-            UpdateByController(ControllerCommands::MOVERIGHT);
-        }
-        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_DOWN)){
-            UpdateByController(ControllerCommands::MOVEDOWN);
-        }
-        if(IsGamepadButtonPressed(0,GAMEPAD_BUTTON_LEFT_FACE_LEFT)){
-            UpdateByController(ControllerCommands::MOVELEFT);
-        }
-    }
-
   
 }
 
 void MainMenu::Draw() {
-    switch (menuScreenStates) {
-        case MenuScreenStates::TitleScreen:
-            DrawTexture(mainMenuBackground,0,0,WHITE);
-            DrawTexture(gameTitlePicture,450,60,WHITE);
-            DrawTexture(playButton[playButtonIndex],(float)playButtonRec.x,(float)playButtonRec.y,playButtonColor);
-            DrawTexture(settingsButton[settingsIndex],(float)settingsButtonRec.x,(float)settingsButtonRec.y,settingsColor);
-            DrawTexture(creditsButton[creditsIndex],(float)creditsButtonRec.x,(float)creditsButtonRec.y,creditsColor);
-            DrawTexture(quitButton[quitIndex],(float)quitButtonRec.x,(float)quitButtonRec.y,quitColor);
+    Scene::Draw();
+    if(isIntroDone) {
+        Scene::Draw();
+        switch (menuScreenStates) {
+            case MenuScreenStates::TitleScreen:
+                DrawTexture(mainMenuBackground, 0, 0, WHITE);
+                DrawTexture(gameTitlePicture, 450, 60, WHITE);
+                DrawTexture(playButton[playButtonIndex], (float) playButtonRec.x, (float) playButtonRec.y,
+                            playButtonColor);
+                DrawTexture(settingsButton[settingsIndex], (float) settingsButtonRec.x, (float) settingsButtonRec.y,
+                            settingsColor);
+                DrawTexture(creditsButton[creditsIndex], (float) creditsButtonRec.x, (float) creditsButtonRec.y,
+                            creditsColor);
+                DrawTexture(quitButton[quitIndex], (float) quitButtonRec.x, (float) quitButtonRec.y, quitColor);
 
-            break;
+                break;
 
-        case MenuScreenStates::LoadGameScreen:
+            case MenuScreenStates::LoadGameScreen:
 
-            DrawTexture(secondaryBackground,0,0,WHITE);
-            DrawTexture(loadSave1Button[loadSave1Index],loadSave1ButtonRec.x,loadSave1ButtonRec.y,loadSave1Color);
-            DrawTexture(loadSave2Button[loadSave2Index],loadSave2ButtonRec.x,loadSave2ButtonRec.y,loadSave2Color);
-            DrawTexture(loadSave3Button[loadSave3Index],loadSave3ButtonRec.x,loadSave3ButtonRec.y,loadSave3Color);
+                DrawTexture(secondaryBackground, 0, 0, WHITE);
+                DrawTexture(loadSave1Button[loadSave1Index], loadSave1ButtonRec.x, loadSave1ButtonRec.y,
+                            loadSave1Color);
+                DrawTexture(loadSave2Button[loadSave2Index], loadSave2ButtonRec.x, loadSave2ButtonRec.y,
+                            loadSave2Color);
+                DrawTexture(loadSave3Button[loadSave3Index], loadSave3ButtonRec.x, loadSave3ButtonRec.y,
+                            loadSave3Color);
 
-            DrawTexture(savegameTex1,75,150,WHITE);
-            DrawTexture(savegameTex2,485,150,WHITE);
-            DrawTexture(savegameTex3,895,150,WHITE);
+                DrawTexture(savegameTex1, 75, 150, WHITE);
+                DrawTexture(savegameTex2, 485, 150, WHITE);
+                DrawTexture(savegameTex3, 895, 150, WHITE);
 
-            DrawTexture(deleteSave1Button[deleteSave1Index],deleteSave1ButtonRec.x,deleteSave1ButtonRec.y,deleteSave1Color);
-            DrawTexture(deleteSave2Button[deleteSave2Index],deleteSave2ButtonRec.x,deleteSave2ButtonRec.y,deleteSave2Color);
-            DrawTexture(deleteSave3Button[deleteSave3Index],deleteSave3ButtonRec.x,deleteSave3ButtonRec.y,deleteSave3Color);
+                DrawTexture(deleteSave1Button[deleteSave1Index], deleteSave1ButtonRec.x, deleteSave1ButtonRec.y,
+                            deleteSave1Color);
+                DrawTexture(deleteSave2Button[deleteSave2Index], deleteSave2ButtonRec.x, deleteSave2ButtonRec.y,
+                            deleteSave2Color);
+                DrawTexture(deleteSave3Button[deleteSave3Index], deleteSave3ButtonRec.x, deleteSave3ButtonRec.y,
+                            deleteSave3Color);
 
-            DrawTexture(backButton[backButtonIndex], (float)backButtonRec.x, (float)backButtonRec.y, backButtonColor);
-            break;
+                DrawTexture(backButton[backButtonIndex], (float) backButtonRec.x, (float) backButtonRec.y,
+                            backButtonColor);
+                break;
 
-        case MenuScreenStates::SettingsScreen:
+            case MenuScreenStates::SettingsScreen:
 
-            DrawTexture(secondaryBackground,0,0,WHITE);
-            if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeMusic){DrawRectangle(26,56,355,110,ORANGE);}
-            DrawTexture(musicText,30,60,WHITE);
-            if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeSound){DrawRectangle(26,196,355,110,ORANGE);}
-            DrawTexture(soundText,30,200,WHITE);
-            if(controllerActive && controllerStates==ControllerMainMenuStates::ChangeFullscreen){DrawRectangle(26,336,355,110,ORANGE);}
-            DrawTexture(displayText,30,340,WHITE);
-            DrawText("0%",musicVolumeRecs[0].x+10,musicVolumeRecs[0].y+70,26,WHITE);
-            DrawText("100%",musicVolumeRecs[9].x,musicVolumeRecs[9].y+70,26,WHITE);
-            DrawText("0%",soundVolumeRecs[0].x+10,soundVolumeRecs[0].y+70,26,WHITE);
-            DrawText("100%",soundVolumeRecs[9].x,soundVolumeRecs[9].y+70,26,WHITE);
-            DrawText("Fullscreen",fullscreenRec.x+100,fullscreenRec.y+10,36,WHITE);
+                DrawTexture(secondaryBackground, 0, 0, WHITE);
+                if (controllerActive && controllerStates == ControllerMainMenuStates::ChangeMusic) {
+                    DrawRectangle(26, 56, 355, 110, ORANGE);
+                }
+                DrawTexture(musicText, 30, 60, WHITE);
+                if (controllerActive && controllerStates == ControllerMainMenuStates::ChangeSound) {
+                    DrawRectangle(26, 196, 355, 110, ORANGE);
+                }
+                DrawTexture(soundText, 30, 200, WHITE);
+                if (controllerActive && controllerStates == ControllerMainMenuStates::ChangeFullscreen) {
+                    DrawRectangle(26, 336, 355, 110, ORANGE);
+                }
+                DrawTexture(displayText, 30, 340, WHITE);
+                DrawText("0%", musicVolumeRecs[0].x + 10, musicVolumeRecs[0].y + 70, 26, WHITE);
+                DrawText("100%", musicVolumeRecs[9].x, musicVolumeRecs[9].y + 70, 26, WHITE);
+                DrawText("0%", soundVolumeRecs[0].x + 10, soundVolumeRecs[0].y + 70, 26, WHITE);
+                DrawText("100%", soundVolumeRecs[9].x, soundVolumeRecs[9].y + 70, 26, WHITE);
+                DrawText("Fullscreen", fullscreenRec.x + 100, fullscreenRec.y + 10, 36, WHITE);
 
-            for(int i = 0; i<10;i++){ // Drawing Sound and Music Recs in Settings
-                if(isMusicVolumeRecActive[i]){
-                    if(musicVolume == 0 && i == 0){
-                        DrawTexture(redHearth,musicVolumeRecs[i].x,musicVolumeRecs[i].y,WHITE);
-                    }
-                    else DrawTexture(orangeHearth,musicVolumeRecs[i].x,musicVolumeRecs[i].y,WHITE);
-                }else DrawTexture(emptyHearth,musicVolumeRecs[i].x,musicVolumeRecs[i].y,WHITE);
-                if(isSoundVolumeRecActive[i]){
-                    if(soundVolume == 0 && i == 0){
-                        DrawTexture(redHearth,soundVolumeRecs[i].x,soundVolumeRecs[i].y,WHITE);
-                    } else DrawTexture(orangeHearth,soundVolumeRecs[i].x,soundVolumeRecs[i].y,WHITE);
-                }else DrawTexture(emptyHearth,soundVolumeRecs[i].x,soundVolumeRecs[i].y,WHITE);
-            }
+                for (int i = 0; i < 10; i++) { // Drawing Sound and Music Recs in Settings
+                    if (isMusicVolumeRecActive[i]) {
+                        if (musicVolume == 0 && i == 0) {
+                            DrawTexture(redHearth, musicVolumeRecs[i].x, musicVolumeRecs[i].y, WHITE);
+                        } else DrawTexture(orangeHearth, musicVolumeRecs[i].x, musicVolumeRecs[i].y, WHITE);
+                    } else DrawTexture(emptyHearth, musicVolumeRecs[i].x, musicVolumeRecs[i].y, WHITE);
+                    if (isSoundVolumeRecActive[i]) {
+                        if (soundVolume == 0 && i == 0) {
+                            DrawTexture(redHearth, soundVolumeRecs[i].x, soundVolumeRecs[i].y, WHITE);
+                        } else DrawTexture(orangeHearth, soundVolumeRecs[i].x, soundVolumeRecs[i].y, WHITE);
+                    } else DrawTexture(emptyHearth, soundVolumeRecs[i].x, soundVolumeRecs[i].y, WHITE);
+                }
 
-            if(isFullScreenActive){ // Fullscreen Rec
-                DrawTexture(redHearth,fullscreenRec.x,fullscreenRec.y,WHITE);
-            }else DrawTexture(emptyHearth,fullscreenRec.x,fullscreenRec.y,WHITE);
+                if (isFullScreenActive) { // Fullscreen Rec
+                    DrawTexture(redHearth, fullscreenRec.x, fullscreenRec.y, WHITE);
+                } else DrawTexture(emptyHearth, fullscreenRec.x, fullscreenRec.y, WHITE);
 
-            DrawTexture(backButton[backButtonIndex], (float)backButtonRec.x, (float)backButtonRec.y, backButtonColor);
+                DrawTexture(backButton[backButtonIndex], (float) backButtonRec.x, (float) backButtonRec.y,
+                            backButtonColor);
 
-            break;
+                break;
 
-        case MenuScreenStates::CreditsScreen: // Drawings Credits
+            case MenuScreenStates::CreditsScreen: // Drawings Credits
 
-            DrawTexture(secondaryBackground,0,0,WHITE);
-            DrawText("Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Programmer - UML-Diagrams \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Animation",200,140,40,WHITE); // I am sorry
-            DrawTexture(backButton[backButtonIndex], (float)backButtonRec.x, (float)backButtonRec.y, backButtonColor);
+                DrawTexture(secondaryBackground, 0, 0, WHITE);
+                DrawText(
+                        "Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Programmer - UML-Diagrams \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Animation",
+                        200, 140, 40, WHITE); // I am sorry
+                DrawTexture(backButton[backButtonIndex], (float) backButtonRec.x, (float) backButtonRec.y,
+                            backButtonColor);
 
-            break;
+                break;
+        }
+        if (!controllerActive) {
+            DrawText("Press Gamepad B to activate Gamepad in Main Menu.", 540, 660, 26, WHITE);
+        } else DrawText("Press Gamepad A to select and Gamepad B to Return.", 520, 660, 26, WHITE);
+    }else{
+        if(introCounter > 215){
+            DrawTexture(introRaylib,0,0,WHITE);
+        }else{DrawTexture(introIgnite,0,0,WHITE);}
     }
-    if(!controllerActive) {
-        DrawText("Press Gamepad B to activate Gamepad in Main Menu.",540,660,26,WHITE);
-    }else DrawText("Press Gamepad A to select and Gamepad B to Return.",520,660,26,WHITE);
+    DrawRectangleRec(introRec,introFade);
 }
 
 MainMenu::~MainMenu()

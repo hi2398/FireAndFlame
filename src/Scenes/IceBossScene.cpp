@@ -14,7 +14,7 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     tilemap->AddCollisionTile(tempVec);
     tempVec = {19*32, 45*32};
     tilemap->AddCollisionTile(tempVec);
-    tempVec = { 41 * 32, 35 * 32 };
+    tempVec = { 48 * 32, 33 * 32 };
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
@@ -23,6 +23,9 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
     textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
     textureBackgroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_02.png");
+
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+    sceneChangerVec = { 46 * 32, 33 * 32 };
 
     foregroundPos = { -32*8, -90 };
     backgroundPos = { -32*8,0 };
@@ -77,6 +80,8 @@ void IceBossScene::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+
+    DrawTextureRec(sceneChanger, {32, 0, 32 * 4, 32 * 4}, sceneChangerVec, WHITE);
 }
 
 bool IceBossScene::BossDeath() {

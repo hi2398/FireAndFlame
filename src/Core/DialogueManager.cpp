@@ -33,10 +33,12 @@ void DialogueManager::DrawDialogue() {
     if(dialogueActive) {
         DrawTexture(dialogueBox,200,490,WHITE);
         if(nextSent.length()>60){
-            fontSizeForDialogue = 22;
-        }else fontSizeForDialogue = 28;
-        DrawText(nextSentenceInQueue, 220, 550, fontSizeForDialogue, WHITE);
-        DrawText("PRESS E OR GAMEPAD Y TO CONTINUE", 700, 610, 15, WHITE);
+            fontSizeForDialogue = 28;
+        }else fontSizeForDialogue = 38;
+        Vector2 tempVec = {220,540};
+        DrawTextEx(font,nextSentenceInQueue, tempVec, fontSizeForDialogue, 0.0f, WHITE);
+        tempVec = {700,610};
+        DrawTextEx(font,"PRESS E OR GAMEPAD Y TO CONTINUE", tempVec, 20,0.0f, WHITE);
     }
 }
 

@@ -10,11 +10,11 @@ SpringHog::SpringHog(Vector2 initialPos, EnemyLevel enemyLevel) : Enemy(EnemyTyp
 	{
 	case EnemyLevel::Low:
 		texture = LoadTexture("assets/graphics/Enemies/Hogbot_Spritesheet.png");
-		health = 3;
+		health = 2;
 		break;
 	case EnemyLevel::Medium:
 		texture = LoadTexture("assets/graphics/Enemies/Hogbot_02_Spritesheet.png");
-		health = 10;
+		health = 5;
 		break;
 	default:
 		break;
@@ -37,7 +37,7 @@ void SpringHog::Update()
 
 	if (invulnerable) {
 		invulnerableCounter++;
-		if (invulnerableCounter >= 60) {
+		if (invulnerableCounter >= 45) {
 			invulnerableCounter = 0;
 			invulnerable = false;
 		}
