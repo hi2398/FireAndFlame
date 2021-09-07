@@ -21,7 +21,7 @@ void FinalBossEnemy::Update() {
     sword->Update();
     if (invulnerable) {
         invulnerableCounter++;
-        if (invulnerableCounter >= 60) {
+        if (invulnerableCounter >= 30) {
             invulnerableCounter = 0;
             invulnerable = false;
         }
@@ -35,7 +35,6 @@ void FinalBossEnemy::Update() {
 }
 
 void FinalBossEnemy::Draw() {
-    //DrawTexture(texture,bossPosition.x,bossPosition.y,WHITE);
     state->Draw(*this);
     sword->Draw();
 }

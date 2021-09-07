@@ -20,9 +20,20 @@ void SceneChangerObject::Interact(Actor& actor) {
 	playerCharacter->BlockPlayerControls(true);
 	sceneIsChanging = true;
 	soundManager->StopCurrentTrack();
+	playerCharacter->HoldInPlace(true, {playerCharacter->GetPosition()});
+	
+}
+
+void SceneChangerObject::Update() {
+	if (sceneIsChanging) {
+		fadeOutCounter += 3;
+		if (fadeOutCounter >= 255) fadeOutCounter = 255, fadeOutcomplete = true;
+		sceneManager->GetActiveScene()->FadeOutOfScene(fadeOutCounter);
+	}
+
 	if (fadeOutcomplete) {
 		playerCharacter->BlockPlayerControls(false);
-
+		playerCharacter->HoldInPlace(false, { 0 });
 		switch (chosenScene) {
 		case SceneEnums::NeutralArea:
 			sceneManager->SetNextScene(std::make_unique<NeutralArea>(comingFromThisScene));
@@ -52,13 +63,6 @@ void SceneChangerObject::Interact(Actor& actor) {
 	}
 }
 
-void SceneChangerObject::Update() {
-	if (sceneIsChanging) {
-		fadeOutCounter += 3;
-		if (fadeOutCounter >= 255) fadeOutCounter = 255, fadeOutcomplete = true;
-		sceneManager->GetActiveScene()->FadeOutOfScene(fadeOutCounter);
-	}
-}
-
 void SceneChangerObject::Draw() {
+	DrawRectangleRec(interactionZone, GREEN);
 }

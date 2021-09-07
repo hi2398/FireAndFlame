@@ -108,6 +108,11 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 				return std::make_shared<StunnedState>(enemy);
 			}
 		}
+		aggroCooldown++;
+
+		if (aggroCooldown >= 240) {
+			return std::make_shared<StunnedState>(enemy);
+		}
 		break;
 	case EnemyTypes::SpringHog:
 		//set springhog direction to player direction
@@ -403,7 +408,7 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 		break;
 	}
 	//enter idle when losing aggro after 5 secs
-	if (aggroCooldown >= 300) {
+	if (aggroCooldown >= 300 && enemy.GetEnemyType() != EnemyTypes::Saugi) {
 		if (enemy.GetEnemyType() == EnemyTypes::Howler) {
 			if (enemy.IsGrounded()) return std::make_shared<RoamingState>(enemy);
 		}

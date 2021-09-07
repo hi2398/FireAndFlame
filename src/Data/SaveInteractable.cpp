@@ -26,6 +26,7 @@ void SaveInteractable::Interact(Actor &actor) {
                 std::cout << "Saving" << std::endl;
             }
             sceneManager->SaveGame("./Saves/", sceneManager->GetSaveSlot());
+            hud->ShowSaveNotification();
             saveCooldown=cooldown;
         }
     }

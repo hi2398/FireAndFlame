@@ -23,7 +23,7 @@ void Saugi::Update()
 
 	if (invulnerable) {
 		invulnerableCounter++;
-		if (invulnerableCounter >= 60) {
+		if (invulnerableCounter >= 45) {
 			invulnerableCounter = 0;
 			invulnerable = false;
 		}

@@ -75,56 +75,57 @@ std::shared_ptr<State> JumpingSubState::Update(Actor& player) {
 	}
 
 
-
-	if (player.GetJumpCommand() && !player.GetIsDashing()) {
-		//check if actor is allowed to perform Double Jump
-		if (player.GetCanDoubleJump()) {
-			switch (player.GetTimesJumped())
-			{
-			case 1:
-				player.SetPosition({ player.GetPosition().x, player.GetPosition().y - player.GetJumpSpeed() });
-				player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
-				if (player.GetJumpSpeed() <= 0) {
-					player.SetJumpSpeed(5.0f);
-					player.SetJumpCommand(false);
-					return std::make_shared<FallingSubState>(player);
-				}
-				break;
-			case 2:
-				player.SetPosition({ player.GetPosition().x, player.GetPosition().y - player.GetJumpSpeed() });
-				player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
-				if (player.GetJumpSpeed() <= 0) {
-					player.SetJumpSpeed(5.0f);
-					player.SetJumpCommand(false);
-					return std::make_shared<FallingSubState>(player);
-				}
-				break;
-			default:
-				break;
-			}
-		}
-		else { //actor can only jump once
-			if (player.GetTimesJumped() == 1) {
-				player.SetPosition({ player.GetPosition().x, player.GetPosition().y - player.GetJumpSpeed() });
-				player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
-				if (player.GetJumpSpeed() <= 0) {
-					player.SetJumpSpeed(5.0f);
-					player.SetJumpCommand(false);
-					return std::make_shared<FallingSubState>(player);
+	if (!playerCharacter->IsHoldInPlace()) {
+		if (player.GetJumpCommand() && !player.GetIsDashing()) {
+			//check if actor is allowed to perform Double Jump
+			if (player.GetCanDoubleJump()) {
+				switch (player.GetTimesJumped())
+				{
+				case 1:
+					player.SetPosition({ player.GetPosition().x, player.GetPosition().y - player.GetJumpSpeed() });
+					player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
+					if (player.GetJumpSpeed() <= 0) {
+						player.SetJumpSpeed(5.0f);
+						player.SetJumpCommand(false);
+						return std::make_shared<FallingSubState>(player);
+					}
+					break;
+				case 2:
+					player.SetPosition({ player.GetPosition().x, player.GetPosition().y - player.GetJumpSpeed() });
+					player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
+					if (player.GetJumpSpeed() <= 0) {
+						player.SetJumpSpeed(5.0f);
+						player.SetJumpCommand(false);
+						return std::make_shared<FallingSubState>(player);
+					}
+					break;
+				default:
+					break;
 				}
 			}
+			else { //actor can only jump once
+				if (player.GetTimesJumped() == 1) {
+					player.SetPosition({ player.GetPosition().x, player.GetPosition().y - player.GetJumpSpeed() });
+					player.SetJumpSpeed(player.GetJumpSpeed() - 0.1f * player.GetGravityMultiplier());
+					if (player.GetJumpSpeed() <= 0) {
+						player.SetJumpSpeed(5.0f);
+						player.SetJumpCommand(false);
+						return std::make_shared<FallingSubState>(player);
+					}
+				}
 
+			}
+			return shared_from_this();
 		}
-		return shared_from_this();
-	}
-	else {
-		if constexpr (DEBUG_PLAYER_STATES) {
-			std::cout << "New State: Falling    " << std::endl;
+		else {
+			if constexpr (DEBUG_PLAYER_STATES) {
+				std::cout << "New State: Falling    " << std::endl;
+			}
+			player.SetJumpSpeed(5.0f);
+			return std::make_shared<FallingSubState>(player);
 		}
-		player.SetJumpSpeed(5.0f);
-		return std::make_shared<FallingSubState>(player);
 	}
-
+	return shared_from_this();
 }
 
 void JumpingSubState::Draw(Actor& player) {

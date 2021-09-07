@@ -1,4 +1,4 @@
-#pragma once
+    #pragma once
 #include "../../Core/Actor.h"
 #include "raylib.h"
 #include "../../Core/Observer/Observer.h"
@@ -53,6 +53,9 @@ public:
 
     bool CanMove() const;
     void SetCanMove(bool canMove);
+
+    void HoldInPlace(bool hold, Vector2 thisPos);
+    bool IsHoldInPlace()const;
 
 	//2Dcam
 	Camera2D camera = { 0 };
@@ -114,6 +117,9 @@ private:
     bool wjUnlocked{false};
 
     bool canMove{true};
+    bool isHoldInPlace{ false };
+
+    Vector2 holdThisPosition{};
 
     //attack
     ACTION nextAction{ACTION::NONE};

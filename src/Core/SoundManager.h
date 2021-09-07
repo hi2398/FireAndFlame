@@ -2,7 +2,7 @@
 #include "raylib.h"
 
 enum class SFX{PLAYER_STEP, FIREBALL, FB_SPEECH1, FB_SPEECH2, FB_SPEECH3, ROBOT_SPEECH1, DOORS, PLAYER_MELEE, PLAYER_LANDING, MELEE_HIT, DEATHSCREEN};
-enum class TRACK{MENU_TRACK, AREA_ONE, AREA_TWO, AREA_THREE, FB_INTRO, FB_LOOP1, FB_FIGHT1, FB_FIGHT2};
+enum class TRACK{MENU_TRACK, AREA_ONE, AREA_TWO, AREA_THREE, FB_INTRO, FB_LOOP1, FB_FIGHT1, FB_FIGHT2, OUTRO};
 class SoundManager {
 public:
 	SoundManager();
@@ -17,7 +17,7 @@ public:
 	~SoundManager();
 private:
 	Sound sound[11];
-	Music music[8];
+	Music music[9];
 	int selectedTrack = 0;
 
 	float soundVolume = 1.0;
