@@ -14,6 +14,8 @@ BossEnergySwordAttack::BossEnergySwordAttack(Vector2 position, bool attackDirect
         attackPoint = position;
         attackPoint.x = attackPoint.x+160;
     }
+
+    soundManager->PlaySfx(SFX::FB_SPEECH3);
 }
 
 void BossEnergySwordAttack::Interact(Actor &actor) {
