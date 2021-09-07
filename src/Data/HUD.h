@@ -15,7 +15,6 @@ public:
 protected:
 
 private:
-    Font font = LoadFont("assets/Fonts/Gothic.TTF");
     bool isInteractable = false; // Sets true if player is in reach of Dialogue Object
     Texture2D textureFire;
     Rectangle healthBar = {0};
