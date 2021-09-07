@@ -35,7 +35,6 @@ void FinalBossEnemy::Update() {
 }
 
 void FinalBossEnemy::Draw() {
-    //DrawTexture(texture,bossPosition.x,bossPosition.y,WHITE);
     state->Draw(*this);
     sword->Draw();
 }
