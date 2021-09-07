@@ -21,6 +21,13 @@ void HUD::UpdateHUD() {
     }
 
     bossHealthBar.width = static_cast<float>(bossHealth * 2);
+
+    if (showNotification){
+        --currentNotificationTimer;
+        if (currentNotificationTimer==0){
+            showNotification=false;
+        }
+    }
 }
 
 void HUD::DrawHUD() {
@@ -40,6 +47,11 @@ void HUD::DrawHUD() {
     if (bossHealth > 0) {
         DrawRectangle(bossHealthBar.x, bossHealthBar.y, bossHealthBar.width, bossHealthBar.height, RED);
     }
+
+    if (showNotification) {
+        DrawTextEx(GetFontDefault(), "Game Saved", {1280.f/2.f-(2.5f*45.f), 200.f}, 45.f, 1.f, BLACK);
+    }
+
 }
 
 void HUD::changeInteractable(bool interactable) {
@@ -53,4 +65,10 @@ void HUD::executeEndscreenSwap() {
 void HUD::SetBossEnemyHealth(int bossHealth)
 {
     this->bossHealth = bossHealth;
+}
+
+void HUD::ShowSaveNotification() {
+    showNotification=true;
+    currentNotificationTimer=notificationTimer;
+
 }
