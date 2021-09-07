@@ -36,8 +36,7 @@ void HUD::DrawHUD() {
 		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
     }
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
-        Vector2 tempVec = {600,500};
-        DrawTextEx(font,"PRESS E",tempVec,38,0.0f,WHITE);
+        DrawText("PRESS E",560,500,30,WHITE);
         isInteractable = false;
     }
     DrawRectangleLines(healthBar.x, healthBar.y, 200, healthBar.height, BLACK);
@@ -49,7 +48,7 @@ void HUD::DrawHUD() {
     }
 
     if (showNotification) {
-        DrawTextEx(GetFontDefault(), "Game Saved", {1280.f/2.f-(2.5f*45.f), 200.f}, 45.f, 1.f, BLACK);
+        DrawTextEx(GetFontDefault(), "Game Saved", {1280.f/2.f-(2.5f*45.f), 200.f}, 45.f, 1.f, WHITE);
     }
 
 }
