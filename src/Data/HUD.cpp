@@ -48,7 +48,7 @@ void HUD::DrawHUD() {
     }
 
     if (showNotification) {
-        DrawTextEx(GetFontDefault(), "Game Saved", {1280.f/2.f-(2.5f*45.f), 200.f}, 45.f, 1.f, BLACK);
+        DrawTextEx(GetFontDefault(), "Game Saved", {1280.f/2.f-(2.5f*45.f), 200.f}, 45.f, 1.f, WHITE);
     }
 
 }
