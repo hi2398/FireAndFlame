@@ -16,17 +16,7 @@ SoundManager::SoundManager()
 	sound[8] = LoadSound("assets/audio/sfx/player_landing.wav");
 	sound[9] = LoadSound("assets/audio/sfx/melee_hit.wav");
 	sound[10] = LoadSound("assets/audio/sfx/dead.wav");
-
-	//music initialization
-	/*music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
-	music[1] = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
-	music[2] = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
-	music[3] = LoadMusicStream("assets/audio/tracks/FinalBossIntro.mp3");
-	music[4] = LoadMusicStream("assets/audio/tracks/FinalBossLoop1.mp3");
-	music[5] = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
-	music[6] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
-	music[7] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
-	music[8] = LoadMusicStream("assets/audio/tracks/Outro.mp3");*/
+	
 }
 
 void SoundManager::PlaySfx(SFX sfx)

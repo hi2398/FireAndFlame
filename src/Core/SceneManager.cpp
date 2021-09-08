@@ -61,7 +61,7 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
                             {"locationX", playerLocation.x},
                             {"locationY", playerLocation.y},
                             {"unlockedAbilities", unlockedAbilities},
-                            {"currentLevel", currentLevel
+                            {"currentLevel", currentLevel}
                     }
             } //END PLAYER
     };
