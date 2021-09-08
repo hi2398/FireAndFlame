@@ -13,7 +13,6 @@ public:
     void DrawDialogue();
 protected:
 private:
-    Font font = LoadFont("assets/Fonts/Gothic.TTF");
     std::queue<std::string> sentences;
     Texture2D dialogueBox;
     int fontSizeForDialogue = 30;

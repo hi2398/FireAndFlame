@@ -24,21 +24,21 @@ void PowerUp::Interact(Actor &actor) {
         case PowerUpType::dash:
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Dash);
-                sceneManager->UpdateDialogInScene("assets/Dialogues/TutorialSign.json");
+                sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgrade.json");
                 dialogueActive = true;
             }
             break;
         case PowerUpType::wallJump:
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Walljump);
-                sceneManager->UpdateDialogInScene("assets/Dialogues/TutorialSign.json");
+                sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgrade.json");
                 dialogueActive = true;
             }
             break;
         case PowerUpType::doubleJump:
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
-                sceneManager->UpdateDialogInScene("assets/Dialogues/TutorialSign.json");
+                sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJump.json");
                 dialogueActive = true;
             }
             break;
