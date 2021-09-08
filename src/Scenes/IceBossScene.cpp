@@ -8,6 +8,7 @@
 
 IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     this->lastScene = lastScene;
+    playerCharacter->active=true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
     playerCharacter->SetHealth(100);
