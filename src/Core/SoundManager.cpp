@@ -159,6 +159,10 @@ void SoundManager::UpdateTrack(TRACK track)
 
 	UpdateMusicStream(music[selectedTrack]);
 	if (selectedTrack == 6) fbTimePlayed = GetMusicTimePlayed(music[selectedTrack]);
+	if (GetMusicTimePlayed(music[selectedTrack]) >= GetMusicTimeLength(music[selectedTrack])) {
+		StopMusicStream(music[selectedTrack]);
+		PlayMusicStream(music[selectedTrack]);
+	}
 	return;
 }
 
