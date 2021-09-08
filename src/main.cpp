@@ -57,7 +57,7 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<AreaOne>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>(SceneEnums::Default));
 
 
 

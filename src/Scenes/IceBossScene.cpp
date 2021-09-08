@@ -48,16 +48,19 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
+    track = LoadMusicStream("assets/audio/tracks/iceboss.mp3");
 }
 
 
 void IceBossScene::Update() {
+    if (bossActivated && !bossDefeated)soundManager->UpdateTrack(track);
     Scene::Update();
     if (!bossActivated) {
         //When player enters boss Arena, close entrance and exit and spawn Boss
         if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {
             bossActivated=true;
             enemies.emplace_back(std::make_unique<IceBoss>(bossSpawnPoint));
+            soundManager->PlayTrack(track);
             for (const auto& loc : blockadeColliders) {
                 tilemap->AddCollisionTile(loc);
             }
@@ -102,7 +105,11 @@ bool IceBossScene::BossDeath() {
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
+    soundManager->StopCurrentTrack(track);
     bossDefeated=true;
     return false;
 }
 
+IceBossScene::~IceBossScene() {
+    UnloadMusicStream(track);
+}

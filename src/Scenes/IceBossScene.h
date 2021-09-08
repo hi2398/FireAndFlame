@@ -16,7 +16,7 @@ public:
     IceBossScene(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~IceBossScene() override = default;
+    ~IceBossScene() override;
 
 protected:
 
@@ -40,6 +40,8 @@ private:
 
 
     const Vector2 checkpointA{41*32, 36*32};
+
+    Music track;
 };
 
 
