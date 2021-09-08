@@ -15,6 +15,9 @@ private:
 
     bool allowedToDamagePlayer = false;
 
+    Rectangle drawZone = {0,0,32,32};
+    int counter = 20;
+
     int magnitude; // speed of energy attack
     int prepareCounter = 120; // how long the energy attack needs until it flies towards the player
 protected:
