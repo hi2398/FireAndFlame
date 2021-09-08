@@ -60,6 +60,7 @@ if  constexpr(DEBUG_BUILD){
 	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
 
 
+
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
