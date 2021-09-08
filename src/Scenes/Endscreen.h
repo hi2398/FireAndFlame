@@ -9,11 +9,12 @@ public:
 
     void Draw() override;
 
-    ~Endscreen() override = default;
+    ~Endscreen() override;
 
 private:
     float endscreenCounter;
     std::string endText[17];
+    Music track;
 protected:
 
 };

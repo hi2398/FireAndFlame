@@ -9,7 +9,6 @@ public:
     ~DeathScreen() override = default;
 
 private:
-
     Texture2D background;
 protected:
     

@@ -14,12 +14,13 @@ public:
     AreaTwo(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~AreaTwo() override= default;
+    ~AreaTwo() override;
 private:
     const Vector2 playerStart = {115*32,114*32};
     std::vector<std::unique_ptr<Spawner>> spawner;
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
+    Music track;
 protected:
 };
 

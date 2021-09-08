@@ -19,7 +19,6 @@ SceneChangerObject::SceneChangerObject(Vector2 location, SceneEnums nextScene, S
 void SceneChangerObject::Interact(Actor& actor) {
 	playerCharacter->BlockPlayerControls(true);
 	sceneIsChanging = true;
-	soundManager->StopCurrentTrack();
 	playerCharacter->HoldInPlace(true, {playerCharacter->GetPosition()});
 	
 }

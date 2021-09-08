@@ -7,21 +7,16 @@ class SoundManager {
 public:
 	SoundManager();
 	void PlaySfx(SFX sfx);
-	void PlayTrack(TRACK track);
-	void UpdateTrack(TRACK track);
-	void StopCurrentTrack();
-	int GetCurrentTrack() const;
-	float GetTrackTimePlayed() const;
+	void PlayTrack(Music music);
+	void UpdateTrack(Music music);
+	void StopCurrentTrack(Music music);
 	void SetSfxVolume(float volume);
 	void SetTrackVolume(float volume);
+	void StopThisTrack(bool stop);
 	~SoundManager();
 private:
 	Sound sound[11];
-	Music music[9];
-	int selectedTrack = 0;
-
+	bool stopTrack = false;
 	float soundVolume = 1.0;
 	float trackVolume = 1.0;
-
-	float fbTimePlayed = 0.0;
 };

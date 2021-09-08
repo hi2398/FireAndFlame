@@ -15,11 +15,12 @@ public:
     AreaOne(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~AreaOne() override = default;
+    ~AreaOne() override;
 private:
     std::vector<std::unique_ptr<Spawner>> spawner;
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
+    Music track;
 protected:
 };
 

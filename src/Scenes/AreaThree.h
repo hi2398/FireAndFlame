@@ -14,9 +14,10 @@ public:
     AreaThree(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~AreaThree() override= default;
+    ~AreaThree() override;
 private:
     const Vector2 playerStart = {23*32,112*32};
     std::vector<std::unique_ptr<Spawner>> spawner;
+    Music track;
 protected:
 };
