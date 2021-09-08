@@ -16,6 +16,7 @@
 
 AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     this->lastScene = lastScene;
+    playerCharacter->active=true;
     playerCharacter->SetPosition({19*32, 107 * 32});
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_One_Tilemap.json");
     Vector2 tempVec= {29 * 32,23 * 32};
