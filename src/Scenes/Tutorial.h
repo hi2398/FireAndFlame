@@ -15,6 +15,9 @@ public:
 private:
     bool preventHealthDecrease = true;
 
+    Texture2D topDoor;
+    Texture2D downDoor;
+
     Texture2D npc1Tex;
     Texture2D npc2Tex;
     Texture2D npc3Tex;
