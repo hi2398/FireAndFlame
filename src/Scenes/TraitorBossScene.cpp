@@ -8,6 +8,7 @@
 #include "../Data/Coal.h"
 #include "../Data/Deathzone.h"
 #include "../Data/PowerUp.h"
+#include "../Data/SaveInteractable.h"
 
 
 TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
@@ -52,6 +53,10 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
 
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 }
 
 void TraitorBossScene::Update() {

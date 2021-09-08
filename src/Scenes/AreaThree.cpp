@@ -9,12 +9,12 @@
 #include "../Data/Enemies/Howler.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     this->lastScene = lastScene;
     playerCharacter->SetHealth(100);
     playerCharacter->SetPosition(playerStart);
-    playerCharacter->SetPosition({ 48 * 32, 53 * 32 });
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Three_Tilemap.json");
     Vector2 tempVec= {80*25,24*26};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::FinalBoss, sceneName));
@@ -85,6 +85,11 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
 
     tempVec = { 48 * 32, 51 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Enemy));
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
 
     soundManager->PlayTrack(TRACK::AREA_THREE);
 }

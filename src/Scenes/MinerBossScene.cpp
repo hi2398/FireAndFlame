@@ -6,6 +6,7 @@
 #include "../Data/MinerBoss/MinerBoss.h"
 #include "../Data/Deathzone.h"
 #include "../Data/PowerUp.h"
+#include "../Data/SaveInteractable.h"
 
 MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBoss) {
     this->lastScene = lastScene;
@@ -51,6 +52,10 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
 
     sceneChangerVec = { 58 * 32 - 64, 43 * 32 - 96 };
     sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 }
 
 void MinerBossScene::Update() {

@@ -11,6 +11,7 @@
 #include "../Data/Enemies/ToastCat.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     this->lastScene = lastScene;
@@ -108,6 +109,11 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Right, SpawnerType::Coal));
     tempVec = { 70 * 32, 33 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    //Checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
 
     soundManager->PlayTrack(TRACK::AREA_ONE);
 }

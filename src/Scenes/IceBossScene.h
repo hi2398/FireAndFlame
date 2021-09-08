@@ -37,6 +37,9 @@ private:
 
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
+
+
+    const Vector2 checkpointA{41*32, 36*32};
 };
 
 
