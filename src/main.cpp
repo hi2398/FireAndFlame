@@ -49,7 +49,7 @@ if  constexpr(DEBUG_BUILD){
     SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
     //Init Audio
     InitAudioDevice();
-
+    SetAudioStreamBufferSizeDefault(8192);
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
@@ -57,7 +57,7 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<AreaOne>(SceneEnums::Default));
 
 
 
