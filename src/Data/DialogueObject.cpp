@@ -25,3 +25,9 @@ void DialogueObject::Draw() {
 void DialogueObject::Update() {
 
 }
+
+DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position) : Interactable(InteractableType::DialogObj){
+    objFilepath = dialogFilepath;
+    objPosition = position;
+    interactionZone={position.x,position.y,32,32};
+}

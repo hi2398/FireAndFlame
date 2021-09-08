@@ -10,6 +10,7 @@
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 
 FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
@@ -94,10 +95,17 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     effectPos1 = effectPos1Start;
     effectPos2 = effectPos2Start;
 
+
     intro = LoadMusicStream("assets/audio/tracks/FinalBossIntro.mp3");
     loop = LoadMusicStream("assets/audio/tracks/FinalBossLoop1.mp3");
     fight = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
     fightLoop = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
+
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
 }
 
 void FinalBoss::Update() {

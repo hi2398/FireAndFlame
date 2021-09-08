@@ -15,6 +15,9 @@ public:
 private:
     bool preventHealthDecrease = true;
 
+    Texture2D topDoor;
+    Texture2D downDoor;
+
     Texture2D npc1Tex;
     Texture2D npc2Tex;
     Texture2D npc3Tex;
@@ -47,6 +50,8 @@ private:
     Rectangle tutorial3Trigger = {48*32,75*32,32,64};
 
     std::vector<std::unique_ptr<Spawner>> spawner;
+
+    const Vector2 checkpointA{83*32, 39*32};
 
 protected:
 };

@@ -1,6 +1,7 @@
 #include "Tutorial.h"
 #include "../Global.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/NPC.h"
 #include "../Data/SceneChangerObject.h"
 #include "../Data/Enemies/Miner.h"
 #include "../Data/Coal.h"
@@ -22,11 +23,11 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     Vector2 tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
-    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText1.json",npc1Pos,npc1Tex));
-    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText2.json",npc2Pos,npc2Tex));
-    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText3.json",npc3Pos,npc3Tex));
-    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText4.json",npc4Pos,npc4Tex));//TODO Change Dialogue
-    interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/tutorialText5.json",npc5Pos,npc5Tex));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText1.json",npc1Pos,NPCType::one));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText2.json",npc2Pos,NPCType::two));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText3.json",npc3Pos,NPCType::three));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText4.json",npc4Pos,NPCType::four));//TODO Change Dialogue
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText5.json",npc5Pos,NPCType::five));
 
     tempVec = {86*32,36*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));
@@ -77,8 +78,11 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     foregroundLoopY = 8;
     foregroundException = 7;
 
-    tempVec={39*32, 48*32};
-    interactables.emplace_back(std::make_unique<SaveInteractable>(tempVec));
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+
+    topDoor = LoadTexture("assets/graphics/TopDoor.png");
+    downDoor = LoadTexture("assets/graphics/DownDoor.png");
 }
 
 void Tutorial::Update() {
@@ -153,12 +157,15 @@ void Tutorial::Update() {
 
 void Tutorial::Draw() {
     if(door1Active){
-        DrawRectangle(door1[0].x,door1[0].y-32,32,64,RED);
+        DrawTexture(topDoor,door1[0].x,door1[0].y-32,WHITE);
+        DrawTexture(downDoor,door1[0].x,door1[0].y,WHITE);
     }if(door2Active){
-        DrawRectangle(door2[0].x,door2[0].y-32,32,64,RED);
+        DrawTexture(topDoor,door2[0].x,door2[0].y-32,WHITE);
+        DrawTexture(downDoor,door2[0].x,door2[0].y,WHITE);
     }
     if(door3Active){
-        DrawRectangle(door3[0].x,door3[0].y-32,32,64,RED);
+        DrawTexture(topDoor,door3[0].x,door3[0].y-32,WHITE);
+        DrawTexture(downDoor,door3[0].x,door3[0].y,WHITE);
     }
 
 

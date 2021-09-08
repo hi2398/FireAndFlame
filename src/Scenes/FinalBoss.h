@@ -23,6 +23,8 @@ public:
 
     ~FinalBoss() override;
 
+protected:
+
 private:
     std::shared_ptr<ChasingBoss> chasingBoss;
     std::shared_ptr<BossSword> sword;
@@ -49,10 +51,12 @@ private:
 
     std::vector<std::unique_ptr<Spawner>> spawner;
 
+
     Music intro;
     Music loop;
     Music fight;
     Music fightLoop;
-protected:
 
+    const Vector2 checkpointA{20*32, 77*32};
+    const Vector2 checkpointB{83*32, 54*32};
 };

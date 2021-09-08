@@ -13,7 +13,7 @@ FinalBossEnemy::FinalBossEnemy(Vector2 location) : Enemy(EnemyTypes::Boss){
     bossPosition = location;
 
     sword = std::make_unique<BossSword>(location);
-    health = 40;
+    health = 70;
 }
 
 void FinalBossEnemy::Update() {
@@ -31,7 +31,7 @@ void FinalBossEnemy::Update() {
     if(swordCounter <= 0) {
         sword->ChangeTarget(position);
     }else --swordCounter;
-    hitbox = {bossPosition.x,bossPosition.y,64,64};
+    hitbox = {bossPosition.x+6,bossPosition.y+6,52,52};
 }
 
 void FinalBossEnemy::Draw() {

@@ -10,6 +10,7 @@
 #include "../Data/Enemies/Howler.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     this->lastScene = lastScene;
@@ -89,6 +90,12 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
     soundManager->PlayTrack(track);
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
+
 }
 
 void AreaThree::Update() {

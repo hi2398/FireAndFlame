@@ -36,6 +36,9 @@ private:
     Rectangle bridgeRec = {0,32 * 4, 32 * 5, 32};
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
+
+    Vector2 checkpointA{33*32, 90*32};
+    Vector2 checkpointB{50*32, 43*32};
 };
 
 

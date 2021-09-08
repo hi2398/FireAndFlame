@@ -75,6 +75,9 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
 	foregroundLoopY = 8;
 	foregroundException = 7;
 
+	//checkpoints
+	interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+
 }
 
 

@@ -12,6 +12,7 @@
 #include "../Data/Enemies/ToastCat.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     this->lastScene = lastScene;
@@ -113,6 +114,12 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
     soundManager->PlayTrack(track);
+
+    //Checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
+
 }
 
 void AreaOne::Update() {

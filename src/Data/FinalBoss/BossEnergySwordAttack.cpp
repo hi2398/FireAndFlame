@@ -5,7 +5,7 @@ BossEnergySwordAttack::BossEnergySwordAttack(Vector2 position, bool attackDirect
     this->position = position;
     direction = attackDirection;
     this->prepareCounter = prepareCounter;
-    texture = LoadTexture("assets/Bosses/FinalBoss/TEMP/Energywall.png");
+    texture = LoadTexture("assets/Bosses/FinalBoss/EnergyWall.png");
 
     if(direction){
         attackPoint = position;
@@ -36,8 +36,22 @@ void BossEnergySwordAttack::Update() {
     if(prepareCounter < -200){
         markedDestroy = true;
     }
+    --counter;
+    if(counter<=0){
+        switch ((int)drawBox.x) {
+            case 0: drawBox.x = 32;
+                break;
+            case 32: drawBox.x = 64;
+                break;
+            case 64: drawBox.x = 0;
+                break;
+            default:
+                break;
+        }
+        counter = 20;
+    }
 }
 
 void BossEnergySwordAttack::Draw() {
-    DrawTexture(texture,position.x,position.y,WHITE);
+    DrawTextureRec(texture,drawBox,position,WHITE);
 }

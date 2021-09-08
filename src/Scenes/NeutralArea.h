@@ -31,4 +31,6 @@ private:
     Rectangle sceneChangerFrame1;
     Rectangle sceneChangerFrame2;
     bool activateShake = false;
+
+    const Vector2 checkpointA{61*32, 102*32};
 };
