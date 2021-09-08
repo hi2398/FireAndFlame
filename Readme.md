@@ -1,4 +1,4 @@
-# raylibstarter
+Fire and Flame
 
 [![CMakeBuilds](https://github.com/chfhhd/raylibstarter/actions/workflows/cmake.yml/badge.svg)](https://github.com/chfhhd/raylibstarter/actions/workflows/cmake.yml)
 
