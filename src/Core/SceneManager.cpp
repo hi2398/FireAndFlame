@@ -61,25 +61,41 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
                             {"locationX", playerLocation.x},
                             {"locationY", playerLocation.y},
                             {"unlockedAbilities", unlockedAbilities},
-                            {"currentLevel", currentLevel}
+                            {"currentLevel", currentLevel
                     }
             } //END PLAYER
     };
 
     std::string saveSlot=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
-    std::string saveScreen=saveFolder + "save" + "_" + std::to_string(slot) + ".json";
+    std::string saveScreen=saveFolder + "save" + "_" + std::to_string(slot) + ".png";
+
+
+    std::ifstream  src;
+    std::ofstream  dst;
     switch (unlockedAbilities) {
         case 0:
-            std::filesystem::copy("./assets/graphics/savegame/zero.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+            src.open("./assets/graphics/savegame/zero.png", std::ios::binary);
+            dst.open(saveScreen, std::ios::binary);
+
+            dst << src.rdbuf();
             break;
         case 1:
-            std::filesystem::copy("./assets/graphics/savegame/one.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+            src.open("./assets/graphics/savegame/one.png", std::ios::binary);
+            dst.open(saveScreen, std::ios::binary);
+
+            dst << src.rdbuf();
             break;
         case 2:
-            std::filesystem::copy("./assets/graphics/savegame/two.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+            src.open("./assets/graphics/savegame/two.png", std::ios::binary);
+            dst.open(saveScreen, std::ios::binary);
+
+            dst << src.rdbuf();
             break;
         case 3:
-            std::filesystem::copy("./assets/graphics/savegame/three.png", saveScreen, std::filesystem::copy_options::overwrite_existing);
+            src.open("./assets/graphics/savegame/three.png", std::ios::binary);
+            dst.open(saveScreen, std::ios::binary);
+
+            dst << src.rdbuf();
             break;
         default:
             break;
