@@ -17,7 +17,11 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json","assets/Tilemaps/Final_Boss_Tilemap.json");
-    Vector2 tempVec = {14*32,78*32};
+    Vector2 tempVec = {7*32,66*32};
+    for (int i = 0; i < 9; i++) {
+        tilemap->AddCollisionTile(tempVec);
+        tempVec.x += 32;
+    }
 
     chasingBossPositions[0] = {19*32,70*32, 16,16};
     chasingBossPositions[1] = {28*32,67*32, 16,16};
