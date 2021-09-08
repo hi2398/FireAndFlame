@@ -78,8 +78,8 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     foregroundLoopY = 8;
     foregroundException = 7;
 
-    tempVec={39*32, 48*32};
-    interactables.emplace_back(std::make_unique<SaveInteractable>(tempVec));
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
     topDoor = LoadTexture("assets/graphics/TopDoor.png");
     downDoor = LoadTexture("assets/graphics/DownDoor.png");

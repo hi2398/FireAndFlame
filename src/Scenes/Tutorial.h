@@ -51,5 +51,7 @@ private:
 
     std::vector<std::unique_ptr<Spawner>> spawner;
 
+    const Vector2 checkpointA{83*32, 39*32};
+
 protected:
 };

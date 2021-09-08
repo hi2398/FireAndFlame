@@ -15,8 +15,13 @@ public:
     void Update() override;
     void Draw() override;
     ~AreaThree() override= default;
+
+protected:
+
 private:
     const Vector2 playerStart = {23*32,112*32};
     std::vector<std::unique_ptr<Spawner>> spawner;
-protected:
+
+    const Vector2 checkpointA{28*32, 112*32};
+    const Vector2 checkpointB{55*32, 55*32};
 };

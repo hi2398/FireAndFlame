@@ -16,10 +16,16 @@ public:
     void Update() override;
     void Draw() override;
     ~AreaOne() override = default;
+
+protected:
+
+
 private:
     std::vector<std::unique_ptr<Spawner>> spawner;
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
-protected:
+    const Vector2 checkpointA{31*32, 107*32};
+    const Vector2 checkpointB{44*32, 69*32};
+    const Vector2 checkpointC{40*32, 26*32};
 };
 

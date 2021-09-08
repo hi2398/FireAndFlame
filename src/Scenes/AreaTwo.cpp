@@ -9,6 +9,7 @@
 #include "../Data/Enemies/Howler.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     this->lastScene = lastScene;
@@ -93,6 +94,12 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
 
     tempVec = { 46 * 32, 62 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up, SpawnerType::Coal));
+
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
 
     soundManager->PlayTrack(TRACK::AREA_TWO);
 }

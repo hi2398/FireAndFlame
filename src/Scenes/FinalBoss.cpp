@@ -9,6 +9,7 @@
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 
 FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
@@ -89,6 +90,10 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     effectPos1 = effectPos1Start;
     effectPos2 = effectPos2Start;
 
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 }
 
 void FinalBoss::Update() {
