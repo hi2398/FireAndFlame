@@ -12,6 +12,7 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
     this->lastScene = lastScene;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Miner_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
+    playerCharacter->active=true;
     playerCharacter->SetHealth(100);
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
 

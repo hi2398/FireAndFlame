@@ -57,7 +57,9 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>(SceneEnums::Default));
+
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
+
 
 
 
@@ -81,6 +83,7 @@ if  constexpr(DEBUG_BUILD){
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
         sceneManager->Update(virtualMouse);
+
         BeginDrawing();
 
         ClearBackground(BLACK); // Letterbox color

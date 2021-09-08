@@ -17,6 +17,7 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Two_Tilemap.json");
     Vector2 tempVec= {96*32,42*32};
+    playerCharacter->active=true;
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::TraitorBoss, sceneName));
 
     sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");

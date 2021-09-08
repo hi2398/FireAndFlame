@@ -16,6 +16,7 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     playerCharacter->SetPosition(playerStart);
 
     playerCharacter->SetHealth(100);
+    playerCharacter->active=true;
     
     door1[0] = { 49 * 32, 87 * 32 };
     door1[1] = { 49 * 32, 88 * 32 };

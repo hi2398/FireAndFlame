@@ -33,6 +33,7 @@ void SceneChangerObject::Update() {
 	if (fadeOutcomplete) {
 		playerCharacter->BlockPlayerControls(false);
 		playerCharacter->HoldInPlace(false, { 0 });
+		playerCharacter->active=true;
 		switch (chosenScene) {
 		case SceneEnums::NeutralArea:
 			sceneManager->SetNextScene(std::make_unique<NeutralArea>(comingFromThisScene));
