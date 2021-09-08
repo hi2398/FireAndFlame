@@ -29,7 +29,7 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     endText[13] = "Art: Robin Günther";
     endText[14] = "Programming: Adrian Pfaff";
     endText[15] = "Programming: Amar Civic";
-    endText[16] = "Programming: Pascal Hirt";
+    endText[16] = "Programming & Sounddesign: Pascal Hirt";
 
     soundManager->PlayTrack(TRACK::OUTRO);
 }
