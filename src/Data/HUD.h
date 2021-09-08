@@ -23,6 +23,10 @@ private:
     Color endscreenColor = {0,0,0,255};
     int bossHealth = 0;
     Rectangle bossHealthBar{};
+    Rectangle fireFrame{0,0,16,16};
+    int frameCounter = 0;
+    int thisFrame = 0;
+    Texture2D playerHealthBar;
 
     //Save Notification
     bool showNotification{false};

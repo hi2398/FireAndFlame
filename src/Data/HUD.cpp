@@ -3,14 +3,22 @@
 #include "../Scenes/Endscreen.h"
 
 HUD::HUD() {
-    textureFire = LoadTexture("assets/graphics/Fire.png");
-    healthBar = {10,10, 100, 20};
+    textureFire = LoadTexture("assets/graphics/HUD/fire_sprites.png");
+    healthBar = {490,20, 100, 20};
     bossHealthBar = { 1000, 10, 100, 20 };
+    playerHealthBar = LoadTexture("assets/graphics/HUD/PlayerHealthbar.png");
 }
 
 void HUD::UpdateHUD() {
-    healthBar.width = static_cast<float>(playerCharacter->GetHealth() * 2);
+    healthBar.width = static_cast<float>(playerCharacter->GetHealth() * 3);
     
+    frameCounter++;
+    if (frameCounter >= 15) {
+        frameCounter = 0;
+        thisFrame++;
+    }
+    fireFrame = { (float)16 * thisFrame, 0, 16, 16 };
+
     if(isEndscreenActive){
         if(endscreenCounter <= 0){
             sceneManager->SetNextScene(std::make_unique<Endscreen>(SceneEnums::Default));
@@ -31,16 +39,17 @@ void HUD::UpdateHUD() {
 }
 
 void HUD::DrawHUD() {
-    DrawRectangle(healthBar.x, healthBar.y, 200, healthBar.height, GRAY);
+    DrawRectangle(healthBar.x, healthBar.y, 300, healthBar.height, DARKBROWN); //Draw player healthbar layers
     if (healthBar.width > 0) {
-		DrawRectangle(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED);
+	 DrawRectangleGradientH(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED, ORANGE);
     }
+    DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
+
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
         DrawText("PRESS E",560,500,30,WHITE);
         isInteractable = false;
     }
-    DrawRectangleLines(healthBar.x, healthBar.y, 200, healthBar.height, BLACK);
-    if (healthBar.width > 0) DrawTextureEx(textureFire, { healthBar.width - textureFire.width/2, healthBar.y - 10 }, 0.0f, 2.0f, WHITE);
+    if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 474, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
     if(isEndscreenActive){ DrawRectangle(0,0,20000,20000,endscreenColor);}
 
     if (bossHealth > 0) {
