@@ -9,6 +9,7 @@ public:
     ~BossEnergySwordAttack() override = default;
 private:
     Texture2D texture;
+    Rectangle drawBox = {0,0,32,128};
 
     bool direction = false; //false = von rechts nach links, true = von links nach rechts
     Vector2 attackPoint;
@@ -18,5 +19,6 @@ private:
 
     int magnitude = 25; // speed of energy attack
     int prepareCounter = 120; // how long the energy attack needs until it flies towards the player
+    int counter = 20;
 protected:
 };
