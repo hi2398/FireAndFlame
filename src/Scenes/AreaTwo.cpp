@@ -1,3 +1,4 @@
+#include "AreaTwo.h"
 
 #include "AreaTwo.h"
 #include "../Data/Enemies/Fly.h"
@@ -96,16 +97,20 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up, SpawnerType::Coal));
 
 
+    //music init
+    track = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
+    soundManager->PlayTrack(track);
+
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
 
-    soundManager->PlayTrack(TRACK::AREA_TWO);
+
 }
 
 void AreaTwo::Update() {
-    soundManager->UpdateTrack(TRACK::AREA_TWO);
+    soundManager->UpdateTrack(track);
     Scene::Update();
 
     for (const auto& spawn : spawner) {
@@ -141,4 +146,9 @@ void AreaTwo::Draw() {
         spawn->Draw();
     }
     DrawTextureRec(sceneChanger, { 32, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
+}
+
+AreaTwo::~AreaTwo()
+{
+    UnloadMusicStream(track);
 }

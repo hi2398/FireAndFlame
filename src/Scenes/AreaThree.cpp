@@ -1,3 +1,4 @@
+#include "AreaThree.h"
 
 #include "AreaThree.h"
 #include "../Data/Enemies/Fly.h"
@@ -86,17 +87,20 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     tempVec = { 48 * 32, 51 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Enemy));
 
+    //music init
+    track = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
+    soundManager->PlayTrack(track);
+
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 
 
-    soundManager->PlayTrack(TRACK::AREA_THREE);
 }
 
 void AreaThree::Update() {
     Scene::Update();
-    soundManager->UpdateTrack(TRACK::AREA_THREE);
+    soundManager->UpdateTrack(track);
 
     for (const auto& spawn : spawner) {
         spawn->Update();
@@ -127,4 +131,9 @@ void AreaThree::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+}
+
+AreaThree::~AreaThree()
+{
+    UnloadMusicStream(track);
 }

@@ -1,3 +1,4 @@
+#include "AreaOne.h"
 //
 // Created by Ashty on 06.07.2021.
 //
@@ -110,16 +111,19 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     tempVec = { 70 * 32, 33 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
 
+    //music init
+    track = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
+    soundManager->PlayTrack(track);
+
     //Checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
 
-    soundManager->PlayTrack(TRACK::AREA_ONE);
 }
 
 void AreaOne::Update() {
-    soundManager->UpdateTrack(TRACK::AREA_ONE);
+    soundManager->UpdateTrack(track);
     Scene::Update();
 
     for (const auto& spawn : spawner) {
@@ -137,4 +141,9 @@ void AreaOne::Draw() {
     }
 
     DrawTextureRec(sceneChanger, {32, 0, -32*4, 32 *4}, sceneChangerVec, WHITE);
+}
+
+AreaOne::~AreaOne()
+{
+    UnloadMusicStream(track);
 }

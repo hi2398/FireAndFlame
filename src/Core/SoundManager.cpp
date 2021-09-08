@@ -18,7 +18,7 @@ SoundManager::SoundManager()
 	sound[10] = LoadSound("assets/audio/sfx/dead.wav");
 
 	//music initialization
-	music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
+	/*music[0] = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
 	music[1] = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
 	music[2] = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
 	music[3] = LoadMusicStream("assets/audio/tracks/FinalBossIntro.mp3");
@@ -26,7 +26,7 @@ SoundManager::SoundManager()
 	music[5] = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
 	music[6] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
 	music[7] = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
-	music[8] = LoadMusicStream("assets/audio/tracks/Outro.mp3");
+	music[8] = LoadMusicStream("assets/audio/tracks/Outro.mp3");*/
 }
 
 void SoundManager::PlaySfx(SFX sfx)
@@ -76,115 +76,28 @@ void SoundManager::PlaySfx(SFX sfx)
 	
 }
 
-void SoundManager::PlayTrack(TRACK track)
+void SoundManager::PlayTrack(Music music)
 {
-	selectedTrack;
-	switch (track)
-	{
-	case TRACK::MENU_TRACK:
-		selectedTrack = 0;
-		break;
-	case TRACK::AREA_ONE:
-		selectedTrack = 1;
-		break;
-	case TRACK::AREA_TWO:
-		selectedTrack = 2;
-		break;
-	case TRACK::FB_INTRO:
-		selectedTrack = 3;
-		break;
-	case TRACK::FB_LOOP1:
-		selectedTrack = 4;
-		break;
-	case TRACK::AREA_THREE:
-		selectedTrack = 5;
-		break;
-	case TRACK::FB_FIGHT1:
-		selectedTrack = 6;
-		break;
-	case TRACK::FB_FIGHT2:
-		selectedTrack = 7;
-		break;
-	case TRACK::OUTRO:
-		selectedTrack = 8;
-		break;
-	default:
-		break;
-	}
-
-	
-	PlayMusicStream(music[selectedTrack]);
+	PlayMusicStream(music);
 }
 
-void SoundManager::UpdateTrack(TRACK track)
+void SoundManager::UpdateTrack(Music music)
 {
+	if (playerCharacter->GetHealth() <= 10 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss) SetMusicPitch(music, 1.1);
+	else SetMusicPitch(music, 1.0);
 
-	switch (track)
-	{
-	case TRACK::MENU_TRACK:
-		selectedTrack = 0;
-		break;
-	case TRACK::AREA_ONE:
-		selectedTrack = 1;
-		break;
-	case TRACK::AREA_TWO:
-		selectedTrack = 2;
-		break;
-	case TRACK::FB_INTRO:
-		selectedTrack = 3;
-		break;
-	case TRACK::FB_LOOP1:
-		selectedTrack = 4;
-		break;
-	case TRACK::AREA_THREE:
-		selectedTrack = 5;
-		break;
-	case TRACK::FB_FIGHT1:
-		selectedTrack = 6;
-		break;
-	case TRACK::FB_FIGHT2:
-		selectedTrack = 7;
-		break;
-	case TRACK::OUTRO:
-		selectedTrack = 8;
-		break;
-	default:
-		return;
-		break;
-	}
-	if (playerCharacter->GetHealth() <= 10 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss) SetMusicPitch(music[selectedTrack], 1.1);
-	else SetMusicPitch(music[selectedTrack], 1.0);
-
-	SetMusicVolume(music[selectedTrack], trackVolume);
-
-	UpdateMusicStream(music[selectedTrack]);
-	if (selectedTrack == 6) fbTimePlayed = GetMusicTimePlayed(music[selectedTrack]);
-	if (GetMusicTimePlayed(music[selectedTrack]) >= GetMusicTimeLength(music[selectedTrack])) {
-		StopMusicStream(music[selectedTrack]);
-		PlayMusicStream(music[selectedTrack]);
-	}
+	SetMusicVolume(music, trackVolume);
+	if (stopTrack) StopMusicStream(music);
+	UpdateMusicStream(music);
 	return;
 }
 
 
-void SoundManager::StopCurrentTrack()
+void SoundManager::StopCurrentTrack(Music music)
 {
-	for (const auto& track : music) {
-		if (IsMusicStreamPlaying(track)) StopMusicStream(track);
-	}
-
-	fbTimePlayed = 0.0;
+	StopMusicStream(music);
 }
 
-int SoundManager::GetCurrentTrack() const
-{
-	return selectedTrack;
-}
-
-float SoundManager::GetTrackTimePlayed() const
-{
-	return fbTimePlayed;
-}
 
 void SoundManager::SetSfxVolume(float volume)
 {
@@ -195,6 +108,11 @@ void SoundManager::SetTrackVolume(float volume)
 {
 	trackVolume = volume;
 	
+}
+
+void SoundManager::StopThisTrack(bool stop)
+{
+	this->stopTrack = stop;
 }
 
 SoundManager::~SoundManager()

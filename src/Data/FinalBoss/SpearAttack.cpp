@@ -11,10 +11,10 @@ SpearAttack::SpearAttack(Vector2 position) : Interactable(InteractableType::Fina
 }
 
 void SpearAttack::Interact(Actor &actor){
-    if(!hasDamagedPlayer && damageActive){
+    if(!playerCharacter->IsInvulnerable() && damageActive){
         if (CheckCollisionLines(spearMiddle, spearTip, { playerCharacter->GetPosition().x + 16, playerCharacter->GetPosition().y }, { playerCharacter->GetPosition().x + 16, playerCharacter->GetPosition().y + 32}, pseudoPointer) 
             || CheckCollisionLines(spearMiddle, spearTip, { playerCharacter->GetPosition().x + 6, playerCharacter->GetPosition().y + 16}, { playerCharacter->GetPosition().x + 26, playerCharacter->GetPosition().y + 16 }, pseudoPointer)) {
-                hasDamagedPlayer = true;
+            playerCharacter->SetInvulnerable(true);
             playerCharacter->SetHealth(playerCharacter->GetHealth()-5);
             }
     }

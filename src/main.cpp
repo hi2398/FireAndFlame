@@ -57,8 +57,7 @@ if  constexpr(DEBUG_BUILD){
     soundManager = std::make_shared<SoundManager>();
 
 
-
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
 
 
 
@@ -104,7 +103,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-    soundManager->StopCurrentTrack();
+
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

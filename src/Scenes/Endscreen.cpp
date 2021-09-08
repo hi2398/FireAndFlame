@@ -8,6 +8,7 @@
 #include <iostream>
 
 Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
+    soundManager->StopThisTrack(false);
     this->lastScene = lastScene;
     endscreenCounter= 0.0f;
     tilemap=std::make_unique<Tilemap>();
@@ -31,15 +32,17 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     endText[15] = "Programming: Amar Civic";
     endText[16] = "Programming & Sounddesign: Pascal Hirt";
 
-    soundManager->PlayTrack(TRACK::OUTRO);
+    //music init
+    track = LoadMusicStream("assets/audio/tracks/Outro.mp3");
+    soundManager->PlayTrack(track);
 }
 
 void Endscreen::Update() {
     Scene::Update();
     endscreenCounter = endscreenCounter + 0.4f;
-    soundManager->UpdateTrack(TRACK::OUTRO);
+    soundManager->UpdateTrack(track);
     if(endscreenCounter >= 1390){
-        soundManager->StopCurrentTrack();
+        soundManager->StopCurrentTrack(track);
         sceneManager->SetNextScene(std::make_unique<MainMenu>(sceneName));
     }
 }
@@ -50,4 +53,8 @@ void Endscreen::Draw() {
         const char * c = endText[i].c_str();
         DrawText(c,150,750+(i*60)-endscreenCounter,38,WHITE);
     }
+}
+
+Endscreen::~Endscreen() {
+    UnloadMusicStream(track);
 }
