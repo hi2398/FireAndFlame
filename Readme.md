@@ -1,5 +1,4 @@
-Fire and Flame
-
+<h1>Fire and Flame</h1>
 [![CMakeBuilds](https://github.com/chfhhd/raylibstarter/actions/workflows/cmake.yml/badge.svg)](https://github.com/chfhhd/raylibstarter/actions/workflows/cmake.yml)
 
 This raylib C++ project template for CMake is based on the window scale letterbox example [1] contributed by 
