@@ -66,12 +66,12 @@ void SoundManager::PlaySfx(SFX sfx)
 	
 }
 
-void SoundManager::PlayTrack(Music music)
+void SoundManager::PlayTrack(Music& music)
 {
 	PlayMusicStream(music);
 }
 
-void SoundManager::UpdateTrack(Music music)
+void SoundManager::UpdateTrack(Music &music)
 {
 	if (playerCharacter->GetHealth() <= 10 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss) SetMusicPitch(music, 1.1);
 	else SetMusicPitch(music, 1.0);
@@ -83,7 +83,7 @@ void SoundManager::UpdateTrack(Music music)
 }
 
 
-void SoundManager::StopCurrentTrack(Music music)
+void SoundManager::StopCurrentTrack(Music& music)
 {
 	StopMusicStream(music);
 }

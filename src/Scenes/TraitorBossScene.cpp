@@ -78,6 +78,7 @@ void TraitorBossScene::Update() {
     }
     if (playerCharacter->GetPosition().x >= 56 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !bossActivated && !bossDefeated) {
         bossActivated = true;
+        hud->IsBossFightActive(true);
         enemies.emplace_back(std::make_unique<TraitorBoss>(bossSpawn));
     }
 
@@ -129,5 +130,6 @@ void TraitorBossScene::CheckBossDeath()
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     bossDefeated = true;
+    hud->IsBossFightActive(false);
     return;
 }

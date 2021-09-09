@@ -8,8 +8,9 @@ public:
     void DrawHUD();
     void changeInteractable(bool interactable);
     void executeEndscreenSwap();
-    void SetBossEnemyHealth(int bossHealth);
+    void SetBossEnemyHealth(int bossHealth, float multiplier);
     void ShowSaveNotification();
+    void IsBossFightActive(bool isActive);
 
     ~HUD() = default;
 protected:
@@ -30,6 +31,8 @@ private:
     int frameCounter = 0;
     int thisFrame = 0;
     Texture2D playerHealthBar;
+    float bossBarMultiplier;
+    bool isBossFightActive{ false };
 
     //Save Notification
     bool showNotification{false};

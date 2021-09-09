@@ -49,7 +49,7 @@ if  constexpr(DEBUG_BUILD){
     SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
     //Init Audio
     InitAudioDevice();
-    SetAudioStreamBufferSizeDefault(16000);
+    SetAudioStreamBufferSizeDefault(4096);
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
@@ -58,7 +58,7 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<IceBossScene>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<MainMenu>(SceneEnums::Default));
 
 
 

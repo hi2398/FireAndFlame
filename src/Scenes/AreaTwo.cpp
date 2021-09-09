@@ -100,7 +100,7 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
-    soundManager->PlayTrack(track);
+    PlayMusicStream(track);
 
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
@@ -111,7 +111,7 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
 }
 
 void AreaTwo::Update() {
-    soundManager->UpdateTrack(track);
+    UpdateMusicStream(track);
     Scene::Update();
 
     for (const auto& spawn : spawner) {
@@ -151,5 +151,6 @@ void AreaTwo::Draw() {
 
 AreaTwo::~AreaTwo()
 {
+    StopMusicStream(track);
     UnloadMusicStream(track);
 }

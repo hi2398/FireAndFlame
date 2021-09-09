@@ -101,7 +101,7 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     fight = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
     fightLoop = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
 
-
+    intro.looping = false;
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
@@ -132,15 +132,16 @@ void FinalBoss::Update() {
     }
     if(CheckCollisionRecs(bossFightSequenceCollider,playerCharacter->playerHitbox)&&!isBossFightSequenceActive){
         isBossFightSequenceActive = true;
+        hud->IsBossFightActive(true);
         sceneManager->ScreenShake(30);
         ActivateBorder();
         if (loopPlaying = true) {
-            soundManager->StopCurrentTrack(loop);
+            StopMusicStream(loop);
         }
         else {
-            soundManager->StopCurrentTrack(intro);
+            StopMusicStream(intro);
         }
-        soundManager->PlayTrack(fight);
+        PlayMusicStream(fight);
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[0],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[1].x,chasingBossPositions[1].y});
@@ -168,32 +169,33 @@ void FinalBoss::Update() {
     }
     if(isPlatformSequenceActive) {
         UpdatePlatformSequence();
-		if (!introPlaying)soundManager->PlayTrack(intro), introPlaying = true;
+		if (!introPlaying)PlayMusicStream(intro), introPlaying = true;
         
     }
 	if (introPlaying && !loopPlaying && !isBossFightSequenceActive) {
-		soundManager->UpdateTrack(intro);
+		UpdateMusicStream(intro);
 		introCounter++;
 	}
-	if ((introCounter >= 1690 && !loopPlaying) || (playerCharacter->GetHealth() <= 20 && introCounter >= 1680 && !loopPlaying)) {
-		soundManager->StopCurrentTrack(intro);
-		soundManager->PlayTrack(loop);
+	if ((introCounter >= 1690 && !loopPlaying)) {
+		StopMusicStream(intro);
+		PlayMusicStream(loop);
 		loopPlaying = true;
 	}
     if (loopPlaying && !secondLoopPlaying && !isBossFightSequenceActive) {
-        soundManager->UpdateTrack(loop);
+        UpdateMusicStream(loop);
+        
     }
     if (isBossFightSequenceActive) {
-        if (GetMusicTimePlayed(fight) > 53.11 && !secondLoopPlaying) {
+        if (GetMusicTimePlayed(fight)>= 53.1 && !secondLoopPlaying) {
             skipFrame++;
         }
-        if (skipFrame == 3 && !secondLoopPlaying) {
-            secondLoopPlaying = true;
-            soundManager->StopCurrentTrack(fight);
-            soundManager->PlayTrack(fightLoop);
+        if (skipFrame == 5) {
+			StopMusicStream(fight);
+			secondLoopPlaying = true;
+			PlayMusicStream(fightLoop);
         }
-        if (!secondLoopPlaying)soundManager->UpdateTrack(fight);
-        else soundManager->UpdateTrack(fightLoop);
+        if (!secondLoopPlaying) UpdateMusicStream(fight);
+        else if (secondLoopPlaying)UpdateMusicStream(fightLoop);
     }
 }
 

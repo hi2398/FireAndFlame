@@ -114,7 +114,7 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
-    soundManager->PlayTrack(track);
+    PlayMusicStream(track);
 
     //Checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
@@ -124,7 +124,7 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
 }
 
 void AreaOne::Update() {
-    soundManager->UpdateTrack(track);
+    UpdateMusicStream(track);
     Scene::Update();
 
     for (const auto& spawn : spawner) {
@@ -146,5 +146,6 @@ void AreaOne::Draw() {
 
 AreaOne::~AreaOne()
 {
+    StopMusicStream(track);
     UnloadMusicStream(track);
 }

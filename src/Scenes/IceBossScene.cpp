@@ -64,14 +64,15 @@ void IceBossScene::Update() {
             boulderPlaced = true;
         }
     }
-    if (bossActivated && !bossDefeated)soundManager->UpdateTrack(track);
+    if (bossActivated && !bossDefeated)UpdateMusicStream(track);
     Scene::Update();
     if (!bossActivated) {
         //When player enters boss Arena, close entrance and exit and spawn Boss
         if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {
             bossActivated=true;
+            hud->IsBossFightActive(true);
             enemies.emplace_back(std::make_unique<IceBoss>(bossSpawnPoint));
-            soundManager->PlayTrack(track);
+            PlayMusicStream(track);
             for (const auto& loc : blockadeColliders) {
                 tilemap->AddCollisionTile(loc);
             }
@@ -118,6 +119,7 @@ bool IceBossScene::BossDeath() {
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     soundManager->StopCurrentTrack(track);
+    hud->IsBossFightActive(false);
     bossDefeated=true;
     return false;
 }

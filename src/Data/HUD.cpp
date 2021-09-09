@@ -31,7 +31,7 @@ void HUD::UpdateHUD() {
         ++endscreenColor.a;
     }
 
-    bossHealthBar.width = static_cast<float>(bossHealth * 3);
+    bossHealthBar.width = static_cast<float>(bossHealth * bossBarMultiplier);
 	bossHealthPos = bossHealthBar.x + 300 - bossHealthBar.width;
 
     if (showNotification){
@@ -48,7 +48,7 @@ void HUD::DrawHUD() {
 	 DrawRectangleGradientH(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED, ORANGE);
     }
     DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
-
+    if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 14, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
         DrawText("PRESS E",560,500,30,WHITE);
         isInteractable = false;
@@ -56,7 +56,7 @@ void HUD::DrawHUD() {
     
     if(isEndscreenActive){ DrawRectangle(0,0,20000,20000,endscreenColor);}
 
-    if (bossHealth > 0) {
+    if (bossHealth > 0 && isBossFightActive) {
         DrawRectangle(bossHealthBar.x, bossHealthBar.y, 300, bossHealthBar.height, DARKBROWN);
         DrawRectangle(bossHealthPos, bossHealthBar.y, bossHealthBar.width, bossHealthBar.height, DARKPURPLE);
         DrawTextureRec(playerHealthBar, {0,0, -323, 22}, { bossHealthBar.x - 11, bossHealthBar.y - 1 }, WHITE);
@@ -77,13 +77,19 @@ void HUD::executeEndscreenSwap() {
     isEndscreenActive = true;
 }
 
-void HUD::SetBossEnemyHealth(int bossHealth)
+void HUD::SetBossEnemyHealth(int bossHealth, float multiplier)
 {
     this->bossHealth = bossHealth;
+    this->bossBarMultiplier = multiplier;
 }
 
 void HUD::ShowSaveNotification() {
     showNotification=true;
     currentNotificationTimer=notificationTimer;
 
+}
+
+void HUD::IsBossFightActive(bool isActive)
+{
+    isBossFightActive = isActive;
 }
