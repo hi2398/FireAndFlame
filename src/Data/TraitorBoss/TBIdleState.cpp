@@ -23,7 +23,7 @@ std::shared_ptr<EState> TBIdleState::Update(Enemy& enemy)
 	if (decisionCounter >= 30  && enemy.IsGrounded()) {
 		CheckForCoal(enemy);
 		//seek coal when on low health
-		if (enemy.GetHealth() <= 30 && !noCoalFound) return std::make_shared<TBSeekCoal>(enemy);
+		if (enemy.GetHealth() <= 50 && !noCoalFound) return std::make_shared<TBSeekCoal>(enemy);
 
 		if (!CheckCollisionPointCircle(playerCharacter->GetPosition(), enemy.GetPosition(), 4 * 32) && enemy.GetHealth() >= 40 && enemy.GetActionCounter() < 2) return std::make_shared<TBRangedState>(enemy); //check if player is far enough away
 		else if (CheckCollisionPointCircle(playerCharacter->GetPosition(), enemy.GetPosition(), 1 * 32)) { // in melee range

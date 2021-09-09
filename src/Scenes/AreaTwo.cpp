@@ -1,3 +1,4 @@
+#include "AreaTwo.h"
 
 #include "AreaTwo.h"
 #include "../Data/Enemies/Fly.h"
@@ -9,16 +10,18 @@
 #include "../Data/Enemies/Howler.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     this->lastScene = lastScene;
     playerCharacter->SetPosition(playerStart);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Two_Tilemap.json");
-    Vector2 tempVec= {96*32,42*32};
+    Vector2 tempVec= {96*32,41*32};
+    playerCharacter->active=true;
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::TraitorBoss, sceneName));
 
     sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
-    sceneChangerVec = { 96 * 32,44 * 32 };
+    sceneChangerVec = { 97 * 32,43 * 32 };
 
     tempVec = {66*32,102*32};
     enemies.emplace_back(std::make_unique<Fly>(tempVec,EnemyLevel::Medium));
@@ -94,11 +97,21 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     tempVec = { 46 * 32, 62 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up, SpawnerType::Coal));
 
-    soundManager->PlayTrack(TRACK::AREA_TWO);
+
+    //music init
+    track = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
+    PlayMusicStream(track);
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
+
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
 }
 
 void AreaTwo::Update() {
-    soundManager->UpdateTrack(TRACK::AREA_TWO);
+    UpdateMusicStream(track);
     Scene::Update();
 
     for (const auto& spawn : spawner) {
@@ -133,5 +146,11 @@ void AreaTwo::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
-    DrawTextureRec(sceneChanger, { 32, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
+    DrawTextureRec(sceneChanger, { 32 * 5, 32 * 4, 32 * 3, 32 * 2 }, sceneChangerVec, WHITE);
+}
+
+AreaTwo::~AreaTwo()
+{
+    StopMusicStream(track);
+    UnloadMusicStream(track);
 }

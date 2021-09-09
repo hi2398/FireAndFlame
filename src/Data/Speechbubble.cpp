@@ -1,4 +1,5 @@
 #include "Speechbubble.h"
+#include "../Global.h"
 
 Speechbubble::Speechbubble(Vector2 initialPos) : Object(ObjectTypes::other)
 {
@@ -11,8 +12,8 @@ Speechbubble::Speechbubble(Vector2 initialPos) : Object(ObjectTypes::other)
 void Speechbubble::Update()
 {
 	frameCounter++;
-	if (frameCounter >= 15) {
-		if (yOffset == 0) yOffset = 3;
+	if (frameCounter >= 45) {
+		if (yOffset == 0) yOffset = 2;
 		else yOffset = 0;
 		frameCounter = 0;
 	}
@@ -20,5 +21,5 @@ void Speechbubble::Update()
 
 void Speechbubble::Draw()
 {
-	DrawTexture(texture, position.x, position.y + yOffset, WHITE);
+	if (!playerCharacter->InputDisabled()) DrawTexture(texture, position.x, position.y + yOffset, WHITE);
 }

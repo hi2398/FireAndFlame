@@ -14,12 +14,23 @@ public:
     AreaTwo(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~AreaTwo() override= default;
+
+    ~AreaTwo() override;
+
+protected:
+
+
 private:
     const Vector2 playerStart = {115*32,114*32};
     std::vector<std::unique_ptr<Spawner>> spawner;
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
-protected:
+
+    Music track;
+
+    const Vector2 checkpointA{106*32, 114*32};
+    const Vector2 checkpointB{95*32, 88*32};
+    const Vector2 checkpointC{96*32, 56*32};
+
 };
 

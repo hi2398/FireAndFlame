@@ -8,7 +8,8 @@
 #include <vector>
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"
-
+#include "../Data/Spawner.h"
+#include "../Data/Speechbubble.h"
 
 
 class NeutralArea : public Scene {
@@ -31,4 +32,20 @@ private:
     Rectangle sceneChangerFrame1;
     Rectangle sceneChangerFrame2;
     bool activateShake = false;
+
+    const Vector2 checkpointA{61*32, 102*32};
+    std::vector<std::unique_ptr<Spawner>> spawner;
+
+    Texture2D npc1Tex;
+    Texture2D npc2Tex;
+    Texture2D npc3Tex;
+    Texture2D npc4Tex;
+    Texture2D npc5Tex;
+
+    Vector2 npc1Pos = { 28 * 32,96 * 32 };
+    Vector2 npc2Pos = { 54 * 32,95 * 32 };
+    Vector2 npc3Pos = { 57.5 * 32 ,102 * 32 };
+    Vector2 npc4Pos = { 87.5 * 32,102 * 32 };
+    Vector2 npc5Pos = { 65 * 32,111 * 32 };
+    std::vector<std::unique_ptr<Speechbubble>> speech;
 };

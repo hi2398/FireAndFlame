@@ -8,6 +8,7 @@
 #include "../Data/Coal.h"
 #include "../Data/Deathzone.h"
 #include "../Data/PowerUp.h"
+#include "../Data/SaveInteractable.h"
 
 
 TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::TraitorBoss) {
@@ -15,6 +16,7 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     playerCharacter->SetPosition(playerStart);
 
     playerCharacter->SetHealth(100);
+    playerCharacter->active=true;
     
     door1[0] = { 49 * 32, 87 * 32 };
     door1[1] = { 49 * 32, 88 * 32 };
@@ -52,6 +54,13 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
 
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
+    topDoor = LoadTexture("assets/graphics/TopDoor.png");
+    downDoor = LoadTexture("assets/graphics/DownDoor.png");
 }
 
 void TraitorBossScene::Update() {
@@ -69,6 +78,7 @@ void TraitorBossScene::Update() {
     }
     if (playerCharacter->GetPosition().x >= 56 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !bossActivated && !bossDefeated) {
         bossActivated = true;
+        hud->IsBossFightActive(true);
         enemies.emplace_back(std::make_unique<TraitorBoss>(bossSpawn));
     }
 
@@ -87,6 +97,11 @@ void TraitorBossScene::Draw() {
     if (doorActive && !bossDefeated) {
 		DrawRectangle(door1[0].x, door1[0].y, 32, 64, RED);
         DrawRectangle(door2[0].x, door2[0].y, 32, 64, RED);
+
+		DrawTextureV(topDoor, door1[0], WHITE);
+		DrawTextureV(downDoor, door1[1], WHITE);
+		DrawTextureV(topDoor, door2[0], WHITE);
+		DrawTextureV(downDoor, door2[1], WHITE);
     }
     
     for (const auto& spawn : spawner) {
@@ -94,6 +109,8 @@ void TraitorBossScene::Draw() {
     }
 
     DrawTextureRec(sceneChanger, { 32 * 1, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
+
+   
 }
 
 void TraitorBossScene::CheckBossDeath()
@@ -113,5 +130,6 @@ void TraitorBossScene::CheckBossDeath()
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     bossDefeated = true;
+    hud->IsBossFightActive(false);
     return;
 }

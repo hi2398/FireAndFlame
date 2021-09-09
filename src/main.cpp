@@ -49,7 +49,7 @@ if  constexpr(DEBUG_BUILD){
     SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
     //Init Audio
     InitAudioDevice();
-
+    SetAudioStreamBufferSizeDefault(4096);
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();
@@ -58,7 +58,8 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<Tutorial>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<NeutralArea>(SceneEnums::Default));
+
 
 
 
@@ -82,6 +83,7 @@ if  constexpr(DEBUG_BUILD){
         virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
                                                          static_cast<float>(Game::ScreenHeight)});
         sceneManager->Update(virtualMouse);
+
         BeginDrawing();
 
         ClearBackground(BLACK); // Letterbox color
@@ -104,7 +106,7 @@ if  constexpr(DEBUG_BUILD){
 
         EndDrawing();
     } // Main game loop end
-    soundManager->StopCurrentTrack();
+
     // De-Initialization here...
     CloseAudioDevice();
     // Unload render texture

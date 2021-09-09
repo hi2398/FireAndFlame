@@ -130,4 +130,7 @@ private:
     int backButtonIndex = 0;
     Color backButtonColor = {255,255,255,255};
     Rectangle backButtonRec;
+
+    //music
+    Music track;
 };

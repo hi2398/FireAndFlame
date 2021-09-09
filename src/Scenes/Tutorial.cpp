@@ -33,6 +33,12 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));
 
 
+    speech.emplace_back(std::make_unique<Speechbubble>(npc1Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc2Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc3Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc4Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc5Pos));
+
     tempVec = {87*32,39*32};
     tilemap->AddCollisionTile(tempVec);
 
@@ -78,8 +84,8 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     foregroundLoopY = 8;
     foregroundException = 7;
 
-    tempVec={39*32, 48*32};
-    interactables.emplace_back(std::make_unique<SaveInteractable>(tempVec));
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
     topDoor = LoadTexture("assets/graphics/TopDoor.png");
     downDoor = LoadTexture("assets/graphics/DownDoor.png");
@@ -87,7 +93,10 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
 
 void Tutorial::Update() {
     Scene::Update();
-
+    for (const auto& bubble : speech) {
+		bubble->Update();
+    }
+    
     if(preventHealthDecrease){ // Manages if player loses health in Tutorial
         playerCharacter->SetPlayerDecreasingHealth(false);
     }else playerCharacter->SetPlayerDecreasingHealth(true);
@@ -171,5 +180,9 @@ void Tutorial::Draw() {
 
     for (const auto& spawn : spawner) {
         spawn->Draw();
+    }
+
+    for (const auto& bubble : speech) {
+        bubble->Draw();
     }
 }

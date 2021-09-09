@@ -1,3 +1,4 @@
+#include "AreaThree.h"
 
 #include "AreaThree.h"
 #include "../Data/Enemies/Fly.h"
@@ -9,15 +10,19 @@
 #include "../Data/Enemies/Howler.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     this->lastScene = lastScene;
     playerCharacter->SetHealth(100);
     playerCharacter->SetPosition(playerStart);
-    playerCharacter->SetPosition({ 48 * 32, 53 * 32 });
+    playerCharacter->active=true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Three_Tilemap.json");
-    Vector2 tempVec= {80*25,24*26};
+    Vector2 tempVec= {80*25,17*26};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::FinalBoss, sceneName));
+
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+    sceneChangerVec = { 80 * 25,20 * 26 };
 
     tempVec = {50*32,96*32};
     enemies.emplace_back(std::make_unique<Fly>(tempVec,EnemyLevel::High));
@@ -86,12 +91,20 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     tempVec = { 48 * 32, 51 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Enemy));
 
-    soundManager->PlayTrack(TRACK::AREA_THREE);
+    //music init
+    track = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
+    PlayMusicStream(track);
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
+
 }
 
 void AreaThree::Update() {
     Scene::Update();
-    soundManager->UpdateTrack(TRACK::AREA_THREE);
+    UpdateMusicStream(track);
 
     for (const auto& spawn : spawner) {
         spawn->Update();
@@ -122,4 +135,11 @@ void AreaThree::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+    DrawTexturePro(sceneChanger, { 32 * 5, 32 * 4, 32 * 3, 32 * 2 }, { sceneChangerVec.x - 16, sceneChangerVec.y, 32 * 5, 32 * 2 }, {}, 0.0, WHITE);
+}
+
+AreaThree::~AreaThree()
+{
+    StopMusicStream(track);
+    UnloadMusicStream(track);
 }

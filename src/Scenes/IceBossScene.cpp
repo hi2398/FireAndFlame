@@ -4,15 +4,17 @@
 #include "../Data/IceBoss/IceZone.h"
 #include "../Data/Deathzone.h"
 #include "../Data/PowerUp.h"
+#include "../Data/SaveInteractable.h"
 
 IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     this->lastScene = lastScene;
+    playerCharacter->active=true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Ice_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
     playerCharacter->SetHealth(100);
     Vector2 tempVec = {19*32, 48*32};
     tilemap->AddCollisionTile(tempVec);
-    tempVec = {19*32, 45*32};
+    tempVec = {19*32, 47*32};
     tilemap->AddCollisionTile(tempVec);
     tempVec = { 48 * 32, 33 * 32 };
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
@@ -43,16 +45,34 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
     tempVec = { 31 * 32, 27 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+
+    track = LoadMusicStream("assets/audio/tracks/iceboss.mp3");
+
+
 }
 
 
 void IceBossScene::Update() {
+    if (blockedPath.y <= 47*32) blockedPath.y += 10;
+    if (blockedPath.y >= 47 * 32) {
+        if (!boulderPlaced) {
+            sceneManager->ScreenShake(45);
+            soundManager->PlaySfx(SFX::DOORS);
+            boulderPlaced = true;
+        }
+    }
+    if (bossActivated && !bossDefeated)UpdateMusicStream(track);
     Scene::Update();
     if (!bossActivated) {
         //When player enters boss Arena, close entrance and exit and spawn Boss
         if (CheckCollisionRecs(bossSpawnTrigger, playerCharacter->playerHitbox)) {
             bossActivated=true;
+            hud->IsBossFightActive(true);
             enemies.emplace_back(std::make_unique<IceBoss>(bossSpawnPoint));
+            PlayMusicStream(track);
             for (const auto& loc : blockadeColliders) {
                 tilemap->AddCollisionTile(loc);
             }
@@ -73,6 +93,7 @@ void IceBossScene::Update() {
 }
 
 void IceBossScene::Draw() {
+    DrawTexturePro(sceneChanger, { 0,0,32,32 }, { blockedPath.x, blockedPath.y, 64, 64 }, {0}, 0.0, WHITE);
     if (bossActivated && !bossDefeated) {
         DrawTextureEx(entrance.texture, entrance.location, entrance.rotation, 1, WHITE);
         DrawTextureEx(exit.texture, exit.location, exit.rotation, 1, WHITE);
@@ -97,7 +118,12 @@ bool IceBossScene::BossDeath() {
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
+    soundManager->StopCurrentTrack(track);
+    hud->IsBossFightActive(false);
     bossDefeated=true;
     return false;
 }
 
+IceBossScene::~IceBossScene() {
+    UnloadMusicStream(track);
+}

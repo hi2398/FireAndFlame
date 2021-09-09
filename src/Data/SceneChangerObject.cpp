@@ -19,7 +19,6 @@ SceneChangerObject::SceneChangerObject(Vector2 location, SceneEnums nextScene, S
 void SceneChangerObject::Interact(Actor& actor) {
 	playerCharacter->BlockPlayerControls(true);
 	sceneIsChanging = true;
-	soundManager->StopCurrentTrack();
 	playerCharacter->HoldInPlace(true, {playerCharacter->GetPosition()});
 	
 }
@@ -34,6 +33,7 @@ void SceneChangerObject::Update() {
 	if (fadeOutcomplete) {
 		playerCharacter->BlockPlayerControls(false);
 		playerCharacter->HoldInPlace(false, { 0 });
+		playerCharacter->active=true;
 		switch (chosenScene) {
 		case SceneEnums::NeutralArea:
 			sceneManager->SetNextScene(std::make_unique<NeutralArea>(comingFromThisScene));
@@ -64,5 +64,4 @@ void SceneChangerObject::Update() {
 }
 
 void SceneChangerObject::Draw() {
-	DrawRectangleRec(interactionZone, GREEN);
 }

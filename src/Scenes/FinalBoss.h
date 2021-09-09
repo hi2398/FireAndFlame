@@ -21,7 +21,9 @@ public:
 
     void ActivateBorder();
 
-    ~FinalBoss() override = default;
+    ~FinalBoss() override;
+
+protected:
 
 private:
     std::shared_ptr<ChasingBoss> chasingBoss;
@@ -48,6 +50,13 @@ private:
     int skipFrame = 0;
 
     std::vector<std::unique_ptr<Spawner>> spawner;
-protected:
 
+
+    Music intro;
+    Music loop;
+    Music fight;
+    Music fightLoop;
+
+    const Vector2 checkpointA{20*32, 77*32};
+    const Vector2 checkpointB{83*32, 54*32};
 };

@@ -1,3 +1,4 @@
+#include "FinalBoss.h"
 //
 // Created by Ashty on 22.07.2021.
 //
@@ -9,6 +10,7 @@
 #include "../Data/FinalBoss/BossEnergySwordAttack.h"
 #include "../Data/Deathzone.h"
 #include "../Data/DialogueObject.h"
+#include "../Data/SaveInteractable.h"
 
 
 FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
@@ -17,7 +19,11 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     playerCharacter->active = true;
     playerCharacter->SetHealth(100);
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json","assets/Tilemaps/Final_Boss_Tilemap.json");
-    Vector2 tempVec = {14*32,78*32};
+    Vector2 tempVec = {7*32,66*32};
+    for (int i = 0; i < 9; i++) {
+        tilemap->AddCollisionTile(tempVec);
+        tempVec.x += 32;
+    }
 
     chasingBossPositions[0] = {19*32,70*32, 16,16};
     chasingBossPositions[1] = {28*32,67*32, 16,16};
@@ -89,6 +95,17 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     effectPos1 = effectPos1Start;
     effectPos2 = effectPos2Start;
 
+
+    intro = LoadMusicStream("assets/audio/tracks/FinalBossIntro.mp3");
+    loop = LoadMusicStream("assets/audio/tracks/FinalBossLoop1.mp3");
+    fight = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
+    fightLoop = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
+
+    intro.looping = false;
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
 }
 
 void FinalBoss::Update() {
@@ -114,11 +131,17 @@ void FinalBoss::Update() {
         playerCharacter->SetHealth(100);
     }
     if(CheckCollisionRecs(bossFightSequenceCollider,playerCharacter->playerHitbox)&&!isBossFightSequenceActive){
-        soundManager->StopCurrentTrack();
         isBossFightSequenceActive = true;
+        hud->IsBossFightActive(true);
         sceneManager->ScreenShake(30);
         ActivateBorder();
-        soundManager->PlayTrack(TRACK::FB_FIGHT1);
+        if (loopPlaying = true) {
+            StopMusicStream(loop);
+        }
+        else {
+            StopMusicStream(intro);
+        }
+        PlayMusicStream(fight);
     }
     if(CheckCollisionRecs(playerCollidersForBossMovement[0],playerCharacter->playerHitbox)){
         chasingBoss->MovePosition({chasingBossPositions[1].x,chasingBossPositions[1].y});
@@ -146,32 +169,33 @@ void FinalBoss::Update() {
     }
     if(isPlatformSequenceActive) {
         UpdatePlatformSequence();
-		if (!introPlaying)soundManager->PlayTrack(TRACK::FB_INTRO), introPlaying = true;
+		if (!introPlaying)PlayMusicStream(intro), introPlaying = true;
         
     }
 	if (introPlaying && !loopPlaying && !isBossFightSequenceActive) {
-		soundManager->UpdateTrack(TRACK::FB_INTRO);
+		UpdateMusicStream(intro);
 		introCounter++;
 	}
-	if ((introCounter >= 1690 && !loopPlaying) || (playerCharacter->GetHealth() <= 20 && introCounter >= 1680 && !loopPlaying)) {
-		soundManager->StopCurrentTrack();
-		soundManager->PlayTrack(TRACK::FB_LOOP1);
+	if ((introCounter >= 1690 && !loopPlaying)) {
+		StopMusicStream(intro);
+		PlayMusicStream(loop);
 		loopPlaying = true;
 	}
-    if (loopPlaying && !secondLoopPlaying) {
-        soundManager->UpdateTrack(TRACK::FB_LOOP1);
+    if (loopPlaying && !secondLoopPlaying && !isBossFightSequenceActive) {
+        UpdateMusicStream(loop);
+        
     }
     if (isBossFightSequenceActive) {
-        if (soundManager->GetTrackTimePlayed() > 53.11 && !secondLoopPlaying) {
+        if (GetMusicTimePlayed(fight)>= 53.1 && !secondLoopPlaying) {
             skipFrame++;
         }
-        if (skipFrame == 3 && !secondLoopPlaying) {
-            secondLoopPlaying = true;
-            soundManager->StopCurrentTrack();
-            soundManager->PlayTrack(TRACK::FB_FIGHT2);
+        if (skipFrame == 5) {
+			StopMusicStream(fight);
+			secondLoopPlaying = true;
+			PlayMusicStream(fightLoop);
         }
-        if (!secondLoopPlaying)soundManager->UpdateTrack(TRACK::FB_FIGHT1);
-        else soundManager->UpdateTrack(TRACK::FB_FIGHT2);
+        if (!secondLoopPlaying) UpdateMusicStream(fight);
+        else if (secondLoopPlaying)UpdateMusicStream(fightLoop);
     }
 }
 
@@ -208,4 +232,12 @@ void FinalBoss::ActivateBorder() {
     }
     Vector2 tempVec = {94*32,46*32};
     enemies.emplace_back(std::make_unique<FinalBossEnemy>(tempVec));
+}
+
+FinalBoss::~FinalBoss()
+{
+    UnloadMusicStream(intro);
+    UnloadMusicStream(loop);
+    UnloadMusicStream(fight);
+    UnloadMusicStream(fightLoop);
 }

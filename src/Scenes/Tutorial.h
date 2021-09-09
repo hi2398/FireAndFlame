@@ -1,6 +1,7 @@
 #pragma once
 #include "../Core/Scene.h"
 #include "../Data/Spawner.h"
+#include "../Data/Speechbubble.h"
 
 class Tutorial : public Scene {
 public:
@@ -51,5 +52,7 @@ private:
 
     std::vector<std::unique_ptr<Spawner>> spawner;
 
+    const Vector2 checkpointA{83*32, 39*32};
+    std::vector<std::unique_ptr<Speechbubble>> speech;
 protected:
 };

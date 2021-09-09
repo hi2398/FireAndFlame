@@ -6,11 +6,13 @@
 #include "../Data/MinerBoss/MinerBoss.h"
 #include "../Data/Deathzone.h"
 #include "../Data/PowerUp.h"
+#include "../Data/SaveInteractable.h"
 
 MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBoss) {
     this->lastScene = lastScene;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json", "assets/Tilemaps/Miner_Boss_Tilemap.json");
     playerCharacter->SetPosition(playerStart);
+    playerCharacter->active=true;
     playerCharacter->SetHealth(100);
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
 
@@ -51,6 +53,10 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
 
     sceneChangerVec = { 58 * 32 - 64, 43 * 32 - 96 };
     sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+
+    //checkpoints
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 }
 
 void MinerBossScene::Update() {
@@ -59,6 +65,7 @@ void MinerBossScene::Update() {
         if (Vector2Distance(playerCharacter->GetPosition(), {47*32, 90*32})<32) {
             enemies.emplace_back(std::make_unique<MinerBoss>(bossStart));
             bossActivated= true;
+            hud->IsBossFightActive(true);
         }
     }
 
@@ -113,6 +120,7 @@ void MinerBossScene::OnBossDeath()
     playerCharacter->SetHealth(100);
     interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::wallJump));
     bossDefeated = true;
+    hud->IsBossFightActive(false);
     return;
 }
 
