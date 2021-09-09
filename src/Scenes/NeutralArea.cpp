@@ -1,6 +1,7 @@
 #include "NeutralArea.h"
 #include "raylib.h"
 #include "../Core/EnemyList.h"
+#include "../Data/NPC.h"
 #include "raymath.h"
 #include "../Data/Deathzone.h"
 #include "../Data/SaveInteractable.h"
@@ -46,6 +47,24 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     textureForegroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/Upper_Foreground.png");
     textureBackgroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
     textureBackgroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/background.png");
+
+    npc1Tex = LoadTexture("assets/graphics/NPCs/Npc1.png");
+    npc2Tex = LoadTexture("assets/graphics/NPCs/Npc2.png");
+    npc3Tex = LoadTexture("assets/graphics/NPCs/Npc3.png");
+    npc4Tex = LoadTexture("assets/graphics/NPCs/Npc4.png");
+    npc5Tex = LoadTexture("assets/graphics/NPCs/Npc5.png");
+
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC1.json", npc1Pos, NPCType::one));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC2.json", npc2Pos, NPCType::two));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC3.json", npc3Pos, NPCType::three));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC4.json", npc4Pos, NPCType::four));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC5.json", npc5Pos, NPCType::five));
+
+    speech.emplace_back(std::make_unique<Speechbubble>(npc1Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc2Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc3Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc4Pos));
+    speech.emplace_back(std::make_unique<Speechbubble>(npc5Pos));
 
     switch (lastScene)
     {
