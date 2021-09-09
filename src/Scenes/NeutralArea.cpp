@@ -19,7 +19,7 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     if (playerCharacter->GetUnlockedAbilities() == AbilitiesUnlocked::Dash)interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaOne, sceneName));
     tempVec= {7*32,77*32};
     if (playerCharacter->GetUnlockedAbilities() == AbilitiesUnlocked::Walljump)interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaTwo, sceneName));
-    tempVec= {69*32,65*32};
+    tempVec= {79*32,65*32};
     if (playerCharacter->GetUnlockedAbilities() == AbilitiesUnlocked::Doublejump)interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::AreaThree, sceneName));
 
     tempVec = {-200, 130*32};
@@ -33,7 +33,14 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Neutrale_Ebene_Level_12.json",tempVec,statueTex));
 
-    
+    tempVec = {55* 32, 103 * 32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up, SpawnerType::Coal, 600));
+    tempVec = {104* 32, 102 * 32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Left, SpawnerType::Coal, 600));
+    tempVec = {26 * 32, 92 * 32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal, 600));
+    tempVec = {58* 32, 76*32};
+    spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal, 600));
 
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/NeutralArea/Lower_Foreground.png");
     textureForegroundMain = LoadTexture("assets/graphics/backgrounds/NeutralArea/Upper_Foreground.png");
@@ -90,14 +97,20 @@ void NeutralArea::Update() {
             activateShake = true;
 		}
     }
+
+    for (const auto& spawn : spawner) {
+        spawn->Update();
+        spawn->SpawnCoal();
+    }
 }
 
 void NeutralArea::Draw() {
     Scene::Draw();
     DrawTextureRec(sceneChanger, sceneChangerFrame1, sceneChangerVec1, WHITE);
     DrawTextureRec(sceneChanger, sceneChangerFrame2, sceneChangerVec2, WHITE);
-    DrawTextureRec(sceneChanger, {32 * 5, 0, -32 * 4, 32 * 4}, { 80 * 32, 87 * 32 }, WHITE);
+    DrawTextureRec(sceneChanger, { 32 * 5, 0, -32 * 4, 32 * 4 }, { 80 * 32, 87 * 32 }, WHITE);
     DrawTextureRec(sceneChanger, { 32 * 5, 0, -32 * 4, 32 * 4 }, { 33 * 32, 70 * 32 }, WHITE);
+    DrawTextureRec(sceneChanger, sceneChangerFrame1, { 77 * 32, 65 * 32 }, WHITE);
     if constexpr (DEBUG_BUILD) {
         if (playerCharacter->GetCanDoubleJump()) {
 			DrawText(TextFormat("DoubleJump ENABLED", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);
@@ -105,7 +118,8 @@ void NeutralArea::Draw() {
         else {
             DrawText(TextFormat("DoubleJump DISABLED", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);
         }
-        
     }
-
+    for (const auto& spawn : spawner) {
+        spawn->Draw();
+    }
 }

@@ -56,6 +56,14 @@ void NPC::Update() {
                 return;
         }
     }
+    float playerReference = position.x - playerCharacter->GetPosition().x;
+    if (playerReference >= 0) {
+        drawBox.width = (float)-32;
+    }
+    else {
+        drawBox.width = (float)32;
+    }
+    
 }
 
 void NPC::Draw() {

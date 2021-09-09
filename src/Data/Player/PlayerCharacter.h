@@ -35,7 +35,7 @@ public:
     void SetPlayerDecreasingHealth(bool isDecreasing){
         isHealthDecreasing = isDecreasing;
     }
-
+    
     bool InputDisabled() const;
 
     void ChangeCameraControl();
