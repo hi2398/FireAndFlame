@@ -34,15 +34,15 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/Outro.mp3");
-    soundManager->PlayTrack(track);
+    PlayMusicStream(track);
 }
 
 void Endscreen::Update() {
     Scene::Update();
     endscreenCounter = endscreenCounter + 0.4f;
-    soundManager->UpdateTrack(track);
+    UpdateMusicStream(track);
     if(endscreenCounter >= 1390){
-        soundManager->StopCurrentTrack(track);
+        StopMusicStream(track);
         sceneManager->SetNextScene(std::make_unique<MainMenu>(sceneName));
     }
 }

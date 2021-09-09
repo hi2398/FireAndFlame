@@ -10,6 +10,7 @@
 FBBossDying::FBBossDying() {
     sceneManager->RemoveAllInteractables();
     soundManager->StopThisTrack(true);
+    hud->IsBossFightActive(false);
     hud->executeEndscreenSwap();
     activeFrame = {320,192,64,64};
     bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");

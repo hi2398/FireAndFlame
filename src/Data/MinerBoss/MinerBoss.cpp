@@ -29,7 +29,7 @@ void MinerBoss::Update() {
         invulnerableCounter=15;
     }
 
-
+    hud->SetBossEnemyHealth(health, 7.5);
     if (enableDebris){
         if (debrisTimer>0){
             --debrisTimer;

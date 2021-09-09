@@ -15,7 +15,7 @@ std::shared_ptr<EState> TBSeekCoal::Update(Enemy& enemy)
 	if constexpr (DEBUG_ENEMY_STATES) std::cout << "TBSeekCoal\n";
 	if (enemy.GetHealth() <= 0 && enemy.IsGrounded()) return std::make_shared<TBAfterFightState>(enemy);
 	CheckForCoal(enemy);
-	if (noCoalFound || enemy.GetHealth() >= 35) return std::make_shared<TBIdleState>(enemy);
+	if (noCoalFound || enemy.GetHealth() >= 50) return std::make_shared<TBIdleState>(enemy);
 
 	stateFrameCounter++;
 	if (stateFrameCounter >= 15) {

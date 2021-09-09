@@ -13,12 +13,13 @@ FinalBossEnemy::FinalBossEnemy(Vector2 location) : Enemy(EnemyTypes::Boss){
     bossPosition = location;
 
     sword = std::make_unique<BossSword>(location);
-    health = 70;
+    health = 75;
 }
 
 void FinalBossEnemy::Update() {
     state=state->Update(*this);
     sword->Update();
+    hud->SetBossEnemyHealth(health, 4);
     if (invulnerable) {
         invulnerableCounter++;
         if (invulnerableCounter >= 30) {

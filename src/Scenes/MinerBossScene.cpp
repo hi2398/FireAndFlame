@@ -65,6 +65,7 @@ void MinerBossScene::Update() {
         if (Vector2Distance(playerCharacter->GetPosition(), {47*32, 90*32})<32) {
             enemies.emplace_back(std::make_unique<MinerBoss>(bossStart));
             bossActivated= true;
+            hud->IsBossFightActive(true);
         }
     }
 
@@ -119,6 +120,7 @@ void MinerBossScene::OnBossDeath()
     playerCharacter->SetHealth(100);
     interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::wallJump));
     bossDefeated = true;
+    hud->IsBossFightActive(false);
     return;
 }
 

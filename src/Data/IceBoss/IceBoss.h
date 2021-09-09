@@ -29,7 +29,7 @@ protected:
 
 
 private:
-    const int maxHealth=28;
+    const int maxHealth=30;
     static float constexpr normalMultiplier{1.f};
     static float constexpr aggressionMultiplier{1.2f};
     static const float* multiplier; //Don't change declaration order->initialization order matters

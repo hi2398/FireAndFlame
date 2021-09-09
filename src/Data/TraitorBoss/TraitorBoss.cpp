@@ -32,7 +32,7 @@ void TraitorBoss::Update()
 		cooldown = 240;
 	}
 
-	hud->SetBossEnemyHealth(health);
+	hud->SetBossEnemyHealth(health, 3);
 	if (health < MAX_HEALTH && !isFighting) fightStarted = true;
 	if (fightStarted || isFighting) {
 		isFighting = true;

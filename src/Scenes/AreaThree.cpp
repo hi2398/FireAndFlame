@@ -93,7 +93,7 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
-    soundManager->PlayTrack(track);
+    PlayMusicStream(track);
 
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
@@ -104,7 +104,7 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
 
 void AreaThree::Update() {
     Scene::Update();
-    soundManager->UpdateTrack(track);
+    UpdateMusicStream(track);
 
     for (const auto& spawn : spawner) {
         spawn->Update();
@@ -140,5 +140,6 @@ void AreaThree::Draw() {
 
 AreaThree::~AreaThree()
 {
+    StopMusicStream(track);
     UnloadMusicStream(track);
 }

@@ -11,9 +11,9 @@ class SoundManager {
 public:
 	SoundManager();
 	void PlaySfx(SFX sfx);
-	void PlayTrack(Music music);
-	void UpdateTrack(Music music);
-	void StopCurrentTrack(Music music);
+	void PlayTrack(Music& music);
+	void UpdateTrack(Music& music);
+	void StopCurrentTrack(Music& music);
 	void SetSfxVolume(float volume);
 	void SetTrackVolume(float volume);
 	void StopThisTrack(bool stop);
