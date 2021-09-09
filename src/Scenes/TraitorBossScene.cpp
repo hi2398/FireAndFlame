@@ -58,6 +58,9 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+
+    topDoor = LoadTexture("assets/graphics/TopDoor.png");
+    downDoor = LoadTexture("assets/graphics/DownDoor.png");
 }
 
 void TraitorBossScene::Update() {
@@ -93,6 +96,11 @@ void TraitorBossScene::Draw() {
     if (doorActive && !bossDefeated) {
 		DrawRectangle(door1[0].x, door1[0].y, 32, 64, RED);
         DrawRectangle(door2[0].x, door2[0].y, 32, 64, RED);
+
+		DrawTextureV(topDoor, door1[0], WHITE);
+		DrawTextureV(downDoor, door1[1], WHITE);
+		DrawTextureV(topDoor, door2[0], WHITE);
+		DrawTextureV(downDoor, door2[1], WHITE);
     }
     
     for (const auto& spawn : spawner) {
@@ -100,6 +108,8 @@ void TraitorBossScene::Draw() {
     }
 
     DrawTextureRec(sceneChanger, { 32 * 1, 0, 32 * 4, 32 * 4 }, sceneChangerVec, WHITE);
+
+   
 }
 
 void TraitorBossScene::CheckBossDeath()

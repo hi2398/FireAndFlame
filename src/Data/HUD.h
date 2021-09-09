@@ -22,7 +22,10 @@ private:
     bool isEndscreenActive = false;
     Color endscreenColor = {0,0,0,255};
     int bossHealth = 0;
+    float bossHealthPos;
     Rectangle bossHealthBar{};
+    Texture2D skull;
+    Rectangle skullFrame{ 0,0,16,16 };
     Rectangle fireFrame{0,0,16,16};
     int frameCounter = 0;
     int thisFrame = 0;

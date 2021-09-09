@@ -4,9 +4,11 @@
 
 HUD::HUD() {
     textureFire = LoadTexture("assets/graphics/HUD/fire_sprites.png");
-    healthBar = {490,20, 100, 20};
-    bossHealthBar = { 1000, 10, 100, 20 };
+    healthBar = {30,20, 100, 20};
+    bossHealthBar = { 930, 20, 300, 20 };
+    bossHealthPos = bossHealthBar.x;
     playerHealthBar = LoadTexture("assets/graphics/HUD/PlayerHealthbar.png");
+    skull = LoadTexture("assets/graphics/HUD/skull.png");
 }
 
 void HUD::UpdateHUD() {
@@ -18,6 +20,7 @@ void HUD::UpdateHUD() {
         thisFrame++;
     }
     fireFrame = { (float)16 * thisFrame, 0, 16, 16 };
+    skullFrame = { (float)16 * thisFrame, 0, 16, 16 };
 
     if(isEndscreenActive){
         if(endscreenCounter <= 0){
@@ -28,7 +31,8 @@ void HUD::UpdateHUD() {
         ++endscreenColor.a;
     }
 
-    bossHealthBar.width = static_cast<float>(bossHealth * 2);
+    bossHealthBar.width = static_cast<float>(bossHealth * 3);
+	bossHealthPos = bossHealthBar.x + 300 - bossHealthBar.width;
 
     if (showNotification){
         --currentNotificationTimer;
@@ -44,16 +48,20 @@ void HUD::DrawHUD() {
 	 DrawRectangleGradientH(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED, ORANGE);
     }
     DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
+	if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 14, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
 
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
         DrawText("PRESS E",560,500,30,WHITE);
         isInteractable = false;
     }
-    if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 474, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
+    
     if(isEndscreenActive){ DrawRectangle(0,0,20000,20000,endscreenColor);}
 
     if (bossHealth > 0) {
-        DrawRectangle(bossHealthBar.x, bossHealthBar.y, bossHealthBar.width, bossHealthBar.height, RED);
+        DrawRectangle(bossHealthBar.x, bossHealthBar.y, 300, bossHealthBar.height, DARKBROWN);
+        DrawRectangle(bossHealthPos, bossHealthBar.y, bossHealthBar.width, bossHealthBar.height, DARKPURPLE);
+        DrawTextureRec(playerHealthBar, {0,0, -323, 22}, { bossHealthBar.x - 11, bossHealthBar.y - 1 }, WHITE);
+        DrawTexturePro(skull, skullFrame, { bossHealthPos - 16, healthBar.y - 7, 32, 32 }, {}, 0.0f, WHITE);
     }
 
     if (showNotification) {

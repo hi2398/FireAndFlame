@@ -19,6 +19,7 @@ FinalBossEnemy::FinalBossEnemy(Vector2 location) : Enemy(EnemyTypes::Boss){
 void FinalBossEnemy::Update() {
     state=state->Update(*this);
     sword->Update();
+    hud->SetBossEnemyHealth(health);
     if (invulnerable) {
         invulnerableCounter++;
         if (invulnerableCounter >= 30) {

@@ -24,7 +24,7 @@ void IceBoss::Update() {
     meleeRange.y=position.y;
 
     UpdateCollider(0,0, 32, 32);
-
+    hud->SetBossEnemyHealth(health);
     if (invulnerable) {
         invulnerableCounter++;
         if (invulnerableCounter >= 30) {
