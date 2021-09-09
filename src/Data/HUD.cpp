@@ -4,7 +4,7 @@
 
 HUD::HUD() {
     textureFire = LoadTexture("assets/graphics/HUD/fire_sprites.png");
-    healthBar = {490,20, 100, 20};
+    healthBar = {30,20, 100, 20};
     bossHealthBar = { 1000, 10, 100, 20 };
     playerHealthBar = LoadTexture("assets/graphics/HUD/PlayerHealthbar.png");
 }
@@ -39,17 +39,18 @@ void HUD::UpdateHUD() {
 }
 
 void HUD::DrawHUD() {
-    DrawRectangle(healthBar.x, healthBar.y, 300, healthBar.height, DARKBROWN); //Draw player healthbar layers
-    if (healthBar.width > 0) {
-	 DrawRectangleGradientH(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED, ORANGE);
-    }
-    DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
+	DrawRectangle(healthBar.x, healthBar.y, 300, healthBar.height, DARKBROWN); //Draw player healthbar layers
+	if (healthBar.width > 0) {
+		DrawRectangleGradientH(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED, ORANGE);
+	}
+	DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
+	if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 14, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
 
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
         DrawText("PRESS E",560,500,30,WHITE);
         isInteractable = false;
     }
-    if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 474, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
+    
     if(isEndscreenActive){ DrawRectangle(0,0,20000,20000,endscreenColor);}
 
     if (bossHealth > 0) {

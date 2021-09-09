@@ -8,7 +8,7 @@
 #include <vector>
 #include "../Core/Tilemap.h"
 #include "../Core/Actor.h"
-
+#include "../Data/Spawner.h"
 
 
 class NeutralArea : public Scene {
@@ -33,4 +33,5 @@ private:
     bool activateShake = false;
 
     const Vector2 checkpointA{61*32, 102*32};
+    std::vector<std::unique_ptr<Spawner>> spawner;
 };
