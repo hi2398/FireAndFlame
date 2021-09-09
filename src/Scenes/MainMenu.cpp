@@ -515,7 +515,7 @@ void MainMenu::Draw() {
 
                 DrawTexture(secondaryBackground, 0, 0, WHITE);
                 DrawText(
-                        "Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Programmer - UML-Diagrams \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Animation",
+                        "Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Artist - Animations \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Concept Art",
                         200, 140, 40, WHITE); // I am sorry
                 DrawTexture(backButton[backButtonIndex], (float) backButtonRec.x, (float) backButtonRec.y,
                             backButtonColor);
