@@ -49,7 +49,7 @@ if  constexpr(DEBUG_BUILD){
     SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
     //Init Audio
     InitAudioDevice();
-    SetAudioStreamBufferSizeDefault(8192);
+    SetAudioStreamBufferSizeDefault(16000);
 
 	playerCharacter = std::make_shared<PlayerCharacter>();
 	playerController = std::make_shared<PlayerController>();

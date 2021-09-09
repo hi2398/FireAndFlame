@@ -14,7 +14,7 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     playerCharacter->SetHealth(100);
     Vector2 tempVec = {19*32, 48*32};
     tilemap->AddCollisionTile(tempVec);
-    tempVec = {19*32, 45*32};
+    tempVec = {19*32, 47*32};
     tilemap->AddCollisionTile(tempVec);
     tempVec = { 48 * 32, 33 * 32 };
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
@@ -50,10 +50,20 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
     track = LoadMusicStream("assets/audio/tracks/iceboss.mp3");
+
+
 }
 
 
 void IceBossScene::Update() {
+    if (blockedPath.y <= 47*32) blockedPath.y += 10;
+    if (blockedPath.y >= 47 * 32) {
+        if (!boulderPlaced) {
+            sceneManager->ScreenShake(45);
+            soundManager->PlaySfx(SFX::DOORS);
+            boulderPlaced = true;
+        }
+    }
     if (bossActivated && !bossDefeated)soundManager->UpdateTrack(track);
     Scene::Update();
     if (!bossActivated) {
@@ -82,6 +92,7 @@ void IceBossScene::Update() {
 }
 
 void IceBossScene::Draw() {
+    DrawTexturePro(sceneChanger, { 0,0,32,32 }, { blockedPath.x, blockedPath.y, 64, 64 }, {0}, 0.0, WHITE);
     if (bossActivated && !bossDefeated) {
         DrawTextureEx(entrance.texture, entrance.location, entrance.rotation, 1, WHITE);
         DrawTextureEx(exit.texture, exit.location, exit.rotation, 1, WHITE);

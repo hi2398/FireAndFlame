@@ -37,7 +37,9 @@ private:
 
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
+    Vector2 blockedPath{ 18 * 32, 30 * 32 };
 
+    bool boulderPlaced{ false };
 
     const Vector2 checkpointA{41*32, 36*32};
 

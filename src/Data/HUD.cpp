@@ -48,7 +48,6 @@ void HUD::DrawHUD() {
 	 DrawRectangleGradientH(healthBar.x, healthBar.y, healthBar.width, healthBar.height, RED, ORANGE);
     }
     DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
-	if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 14, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
 
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
         DrawText("PRESS E",560,500,30,WHITE);

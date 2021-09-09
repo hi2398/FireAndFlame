@@ -18,8 +18,11 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active=true;
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/Tilemap_1.json","assets/Tilemaps/Area_Three_Tilemap.json");
-    Vector2 tempVec= {80*25,24*26};
+    Vector2 tempVec= {80*25,17*26};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::FinalBoss, sceneName));
+
+    sceneChanger = LoadTexture("assets/graphics/OtherObjects/environment.png");
+    sceneChangerVec = { 80 * 25,20 * 26 };
 
     tempVec = {50*32,96*32};
     enemies.emplace_back(std::make_unique<Fly>(tempVec,EnemyLevel::High));
@@ -132,6 +135,7 @@ void AreaThree::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+    DrawTexturePro(sceneChanger, { 32 * 5, 32 * 4, 32 * 3, 32 * 2 }, { sceneChangerVec.x - 16, sceneChangerVec.y, 32 * 5, 32 * 2 }, {}, 0.0, WHITE);
 }
 
 AreaThree::~AreaThree()
