@@ -388,10 +388,9 @@ void MainMenu::Update() {
                 break;
         }
 
-        if (IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT) &&
-            !controllerActive) { // Activate Controller by pressing A
+        if (IsGamepadAvailable(0)){ // Activates Controller
             controllerActive = true;
-        }
+        }else{controllerActive = false;}
 
         if (controllerActive) { // Navigating with Controller in Main Menu
             if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_UP)) {
@@ -522,9 +521,6 @@ void MainMenu::Draw() {
 
                 break;
         }
-        if (!controllerActive) {
-            DrawText("Press Gamepad B to activate Gamepad in Main Menu.", 540, 660, 26, WHITE);
-        } else DrawText("Press Gamepad A to select and Gamepad B to Return.", 520, 660, 26, WHITE);
     }else{
         if(introCounter > 215){
             DrawTexture(introRaylib,0,0,WHITE);

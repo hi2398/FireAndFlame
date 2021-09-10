@@ -16,5 +16,6 @@ private:
     PowerUpType powerUpType;
     Texture2D texture;
     bool dialogueActive = false;
+    bool isGamepadActive = false;
 protected:
 };

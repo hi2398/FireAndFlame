@@ -23,11 +23,11 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     Vector2 tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText1.json",npc1Pos,NPCType::one));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText2.json",npc2Pos,NPCType::two));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText3.json",npc3Pos,NPCType::three));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText4.json",npc4Pos,NPCType::four));//TODO Change Dialogue
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText5.json",npc5Pos,NPCType::five));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText1.json",npc1Pos,NPCType::one, "assets/Dialogues/tutorialText1Gamepad.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText2.json",npc2Pos,NPCType::two, "assets/Dialogues/tutorialText2.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText3.json",npc3Pos,NPCType::three, "assets/Dialogues/tutorialText3Gamepad.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText4.json",npc4Pos,NPCType::four, "assets/Dialogues/tutorialText4.json"));//TODO Change Dialogue
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/tutorialText5.json",npc5Pos,NPCType::five, "assets/Dialogues/tutorialText5Gamepad.json"));
 
     tempVec = {86*32,36*32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec,SceneEnums::IceBoss, sceneName));

@@ -54,11 +54,11 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     npc4Tex = LoadTexture("assets/graphics/NPCs/Npc4.png");
     npc5Tex = LoadTexture("assets/graphics/NPCs/Npc5.png");
 
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC1.json", npc1Pos, NPCType::one));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC2.json", npc2Pos, NPCType::two));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC3.json", npc3Pos, NPCType::three));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC4.json", npc4Pos, NPCType::four));
-    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC5.json", npc5Pos, NPCType::five));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC1.json", npc1Pos, NPCType::one, "assets/Dialogues/neutralAreaNPC1.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC2.json", npc2Pos, NPCType::two, "assets/Dialogues/neutralAreaNPC2.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC3.json", npc3Pos, NPCType::three, "assets/Dialogues/neutralAreaNPC3.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC4.json", npc4Pos, NPCType::four, "assets/Dialogues/neutralAreaNPC4.json"));
+    interactables.emplace_back(std::make_unique<NPC>("assets/Dialogues/neutralAreaNPC5.json", npc5Pos, NPCType::five, "assets/Dialogues/neutralAreaNPC5.json"));
 
     speech.emplace_back(std::make_unique<Speechbubble>(npc1Pos));
     speech.emplace_back(std::make_unique<Speechbubble>(npc2Pos));
