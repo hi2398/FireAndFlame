@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-NPC::NPC(std::string dialogFilepath, Vector2 position, NPCType npcType) : DialogueObject(dialogFilepath, position) {
+NPC::NPC(std::string dialogFilepath, Vector2 position, NPCType npcType,std::string gamepadDialogue) : DialogueObject(dialogFilepath, position) {
     type = npcType;
     switch (type) {
         case NPCType::one:
@@ -28,10 +28,18 @@ NPC::NPC(std::string dialogFilepath, Vector2 position, NPCType npcType) : Dialog
     counter = GetRandomValue(10,20);
     this->position = position;
     objTexture = LoadTexture("assets/graphics/NPCs/NPCs.png");
+    objFilepath = dialogFilepath;
+    gamepadObjFilepath = gamepadDialogue;
 }
 
 void NPC::Update() {
     DialogueObject::Update();
+    if(IsGamepadAvailable(0)){
+        DialogueObject::SetDialoguePath(gamepadObjFilepath);
+    }else {
+        DialogueObject::SetDialoguePath(objFilepath);
+    }
+
     --counter;
     if(counter <= 0){
         counter = 15;

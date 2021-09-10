@@ -7,12 +7,13 @@ enum class NPCType{one,two,three,four,five};
 
 class NPC : public DialogueObject{
 public:
-    NPC(std::string dialogFilepath, Vector2 position, NPCType npcType);
+    NPC(std::string dialogFilepath, Vector2 position, NPCType npcType,std::string gamepadDialogue);
     void Update() override;
     void Draw() override;
     ~NPC() = default;
 private:
     std::string objFilepath;
+    std::string gamepadObjFilepath;
     Vector2 objPosition;
     Texture2D objTexture;
     int counter = 15;

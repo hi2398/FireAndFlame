@@ -388,10 +388,9 @@ void MainMenu::Update() {
                 break;
         }
 
-        if (IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT) &&
-            !controllerActive) { // Activate Controller by pressing A
+        if (IsGamepadAvailable(0)){ // Activates Controller
             controllerActive = true;
-        }
+        }else{controllerActive = false;}
 
         if (controllerActive) { // Navigating with Controller in Main Menu
             if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_UP)) {
@@ -515,16 +514,13 @@ void MainMenu::Draw() {
 
                 DrawTexture(secondaryBackground, 0, 0, WHITE);
                 DrawText(
-                        "Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Programmer - UML-Diagrams \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Animation",
+                        "Adrian Pfaff - Lead Programmer - Workflows \nAmar Civic - Programmer - Marketing \nRobin Günther - Artist - Animations \nPascal Hirt - Programmer - Sound and Music \nAykan Akgül - Lead Designer - World Design \nAndrea Preussner - Lead Artist - Concept Art",
                         200, 140, 40, WHITE); // I am sorry
                 DrawTexture(backButton[backButtonIndex], (float) backButtonRec.x, (float) backButtonRec.y,
                             backButtonColor);
 
                 break;
         }
-        if (!controllerActive) {
-            DrawText("Press Gamepad B to activate Gamepad in Main Menu.", 540, 660, 26, WHITE);
-        } else DrawText("Press Gamepad A to select and Gamepad B to Return.", 520, 660, 26, WHITE);
     }else{
         if(introCounter > 215){
             DrawTexture(introRaylib,0,0,WHITE);

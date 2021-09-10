@@ -16,6 +16,7 @@ public:
 protected:
 
 private:
+    bool isGameadActive = false;
     bool isInteractable = false; // Sets true if player is in reach of Dialogue Object
     Texture2D textureFire;
     Rectangle healthBar = {0};
