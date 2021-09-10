@@ -2,6 +2,9 @@
 #include "../Global.h"
 
 void DialogueManager::UpdateDialogue(std::string filePath) {
+    if(IsGamepadAvailable(0)){
+        isGamepadActive = true;
+    }else{isGamepadActive =false;}
     if(sentences.empty()&&nextSent!="-") {
         nextSent="-";
         dialogueActive=false;
@@ -36,7 +39,9 @@ void DialogueManager::DrawDialogue() {
             fontSizeForDialogue = 20;
         }else fontSizeForDialogue = 26;
         DrawText(nextSentenceInQueue, 260,550, fontSizeForDialogue, WHITE);
-        DrawText("PRESS E OR GAMEPAD Y TO CONTINUE", 700,610, 16, WHITE);
+        if(isGamepadActive){
+            DrawText("GAMEPAD Y TO CONTINUE", 750,610, 16, WHITE);
+        }else{DrawText("PRESS E TO CONTINUE", 750,610, 16, WHITE);}
     }
 }
 

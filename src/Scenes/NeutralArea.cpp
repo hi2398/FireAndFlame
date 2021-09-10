@@ -129,7 +129,7 @@ void NeutralArea::Draw() {
     DrawTextureRec(sceneChanger, sceneChangerFrame2, sceneChangerVec2, WHITE);
     DrawTextureRec(sceneChanger, { 32 * 5, 0, -32 * 4, 32 * 4 }, { 80 * 32, 87 * 32 }, WHITE);
     DrawTextureRec(sceneChanger, { 32 * 5, 0, -32 * 4, 32 * 4 }, { 33 * 32, 70 * 32 }, WHITE);
-    DrawTextureRec(sceneChanger, sceneChangerFrame1, { 77 * 32, 65 * 32 }, WHITE);
+    DrawTextureRec(sceneChanger, {32, 0, 32 * 4, 32 * 4}, { 77 * 32, 65 * 32 }, WHITE);
     if constexpr (DEBUG_BUILD) {
         if (playerCharacter->GetCanDoubleJump()) {
 			DrawText(TextFormat("DoubleJump ENABLED", playerCharacter->GetCanDash()), playerCharacter->GetPosition().x, playerCharacter->GetPosition().y - 100, 10, WHITE);
