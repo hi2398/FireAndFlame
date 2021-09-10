@@ -79,6 +79,13 @@ std::shared_ptr<EState> StunnedState::Update(Enemy& enemy) {
 			if (stunnedOffset == 0) stunnedOffset = 2;
 			else if (stunnedOffset == 2) stunnedOffset = 0;
 		}
+		enemySight = { enemy.GetPosition().x + 16 - 16 * 32, enemy.GetPosition().y + 16, 32 * 32, 5 };
+		for (const auto& coal : sceneManager->GetInteractables()) {
+			if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
+				//enter approaching state on player sight right
+				return std::make_shared<ApproachingState>(enemy);
+			}
+		}
 		if (stunnedFrameCounter >= 120) {
 			stunnedOffset = 0;
 			return std::make_shared<RoamingState>(enemy);

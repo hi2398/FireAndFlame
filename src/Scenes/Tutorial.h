@@ -11,7 +11,7 @@ public:
 
     void Draw() override;
 
-    ~Tutorial() override = default;
+    ~Tutorial() override;
 
 private:
     bool preventHealthDecrease = true;
@@ -54,5 +54,7 @@ private:
 
     const Vector2 checkpointA{83*32, 39*32};
     std::vector<std::unique_ptr<Speechbubble>> speech;
+
+    Music track;
 protected:
 };

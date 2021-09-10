@@ -89,9 +89,17 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
 
     topDoor = LoadTexture("assets/graphics/TopDoor.png");
     downDoor = LoadTexture("assets/graphics/DownDoor.png");
+
+    track = LoadMusicStream("assets/audio/tracks/Tutorial1.mp3");
+    PlayMusicStream(track);
+
 }
 
 void Tutorial::Update() {
+    if (preventHealthDecrease)UpdateMusicStream(track);
+    else {
+        if (static_cast<int>(GetMusicTimePlayed(track)) % 3 == 0) StopMusicStream(track);
+    }
     Scene::Update();
     for (const auto& bubble : speech) {
 		bubble->Update();
@@ -185,4 +193,8 @@ void Tutorial::Draw() {
     for (const auto& bubble : speech) {
         bubble->Draw();
     }
+}
+
+Tutorial::~Tutorial() {
+    UnloadMusicStream(track);
 }

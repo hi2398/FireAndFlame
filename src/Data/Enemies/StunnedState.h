@@ -17,7 +17,7 @@ protected:
 private:
     int stunnedFrameCounter = 0;
     int stunnedOffset = 0;
-
+    Rectangle enemySight{ 0 };
     int spiderBotRotation = 0;
 
     std::unique_ptr<HeartObject> heart;
