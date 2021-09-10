@@ -27,6 +27,7 @@ void SaveInteractable::Interact(Actor &actor) {
             }
             sceneManager->SaveGame("./Saves/", sceneManager->GetSaveSlot());
             hud->ShowSaveNotification();
+            playerCharacter->SetHealth(playerCharacter->GetHealth()+50);
             saveCooldown=cooldown;
         }
     }

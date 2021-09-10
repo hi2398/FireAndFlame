@@ -18,4 +18,5 @@ private:
     int fontSizeForDialogue = 30;
     std::string nextSent = "-";
     bool dialogueActive = {false};
+    bool isGamepadActive = false;
 };
