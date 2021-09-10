@@ -114,6 +114,7 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaOne.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 
     //Checkpoints

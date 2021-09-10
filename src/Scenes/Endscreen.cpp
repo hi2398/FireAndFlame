@@ -8,7 +8,6 @@
 #include <iostream>
 
 Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
-    soundManager->StopThisTrack(false);
     this->lastScene = lastScene;
     endscreenCounter= 0.0f;
     tilemap=std::make_unique<Tilemap>();
@@ -34,6 +33,7 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/Outro.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 }
 

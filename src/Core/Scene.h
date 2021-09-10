@@ -35,6 +35,7 @@ public:
     void ActivateScreenShake(int durationInSeconds);
 
     void FadeOutOfScene(unsigned int alpha);
+    void ToggleMusic();
 
     [[nodiscard]] SceneEnums GetSceneName() const;
 
@@ -86,6 +87,7 @@ protected:
     int shakeFrameCounter = 0;
     float xOffset = 0.0;
 	Color FADEOUT = { 0,0,0,255 };
+    bool musicActivated{ false };
 private:
     
 };

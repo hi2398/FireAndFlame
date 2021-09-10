@@ -17,7 +17,7 @@ public:
     int GetMusicVolume();
     int GetSoundVolume();
     bool GetFullscreenActive();
-    void SetMusicVolume(int volume);
+    void SetGameMusicVolume(int volume);
     void SetSoundVolume(int volume);
     void SetFullscreenActive(bool active);
 

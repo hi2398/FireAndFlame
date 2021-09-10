@@ -105,6 +105,7 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
 	interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
     track = LoadMusicStream("assets/audio/tracks/NeutralArea.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 }
 

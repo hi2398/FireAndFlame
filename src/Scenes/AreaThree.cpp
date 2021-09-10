@@ -93,6 +93,7 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 
     //checkpoints
