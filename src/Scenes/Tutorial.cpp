@@ -91,6 +91,7 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     downDoor = LoadTexture("assets/graphics/DownDoor.png");
 
     track = LoadMusicStream("assets/audio/tracks/Tutorial1.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 
 }

@@ -3,6 +3,7 @@
 #include "../../Global.h"
 #include "../../Data/TmpDialogueObject.h"
 
+
 TBBeforeFightState::TBBeforeFightState(Enemy& enemy) : EState(enemy)
 {
 	pseudoTexture.width = 20 * 32;
@@ -21,6 +22,7 @@ std::shared_ptr<EState> TBBeforeFightState::Update(Enemy& enemy)
 		for (const auto& dialogue : sceneManager->GetInteractables()) {
 			if (dialogue->GetInteractableType() == InteractableType::TmpDialogObj) dialogue->MarkToDestroy();
 		}
+		sceneManager->GetActiveScene()->ToggleMusic();
 		return std::make_shared<TBIdleState>(enemy);
 	}
 

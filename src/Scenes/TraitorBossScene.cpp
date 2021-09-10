@@ -61,6 +61,9 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
 
     topDoor = LoadTexture("assets/graphics/TopDoor.png");
     downDoor = LoadTexture("assets/graphics/DownDoor.png");
+
+    track = LoadMusicStream("assets/audio/tracks/Traitor_Track.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
 }
 
 void TraitorBossScene::Update() {
@@ -79,7 +82,15 @@ void TraitorBossScene::Update() {
     if (playerCharacter->GetPosition().x >= 56 * 32 && playerCharacter->GetPosition().y <= 88 * 32 && !bossActivated && !bossDefeated) {
         bossActivated = true;
         hud->IsBossFightActive(true);
+       
         enemies.emplace_back(std::make_unique<TraitorBoss>(bossSpawn));
+    }
+    if (musicActivated && !musicStarted) {
+         PlayMusicStream(track);
+         musicStarted = true;
+    }
+    if (musicActivated && musicStarted && !bossDefeated) {
+        UpdateMusicStream(track);
     }
 
     for (const auto& spawn : spawner) {
@@ -131,5 +142,10 @@ void TraitorBossScene::CheckBossDeath()
     tilemap->RemoveCollisionTile();
     bossDefeated = true;
     hud->IsBossFightActive(false);
+    StopMusicStream(track);
     return;
+}
+
+TraitorBossScene::~TraitorBossScene() {
+    UnloadMusicStream(track);
 }

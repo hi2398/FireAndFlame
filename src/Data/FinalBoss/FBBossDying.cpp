@@ -9,7 +9,7 @@
 
 FBBossDying::FBBossDying() {
     sceneManager->RemoveAllInteractables();
-    soundManager->StopThisTrack(true);
+    sceneManager->GetActiveScene()->ToggleMusic();
     hud->IsBossFightActive(false);
     hud->executeEndscreenSwap();
     activeFrame = {320,192,64,64};

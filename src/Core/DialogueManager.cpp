@@ -8,6 +8,7 @@ void DialogueManager::UpdateDialogue(std::string filePath) {
         playerCharacter->SetPlayerDecreasingHealth(true);
         playerCharacter->BlockPlayerControls(false);
     }else{
+        soundManager->PlaySfx(SFX::DIALOGUE);
         playerCharacter->BlockPlayerControls(true);
         playerCharacter->SetIsDashing(false); //so player cant open dialogue and dash away
         playerCharacter->SetPlayerDecreasingHealth(false);

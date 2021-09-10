@@ -50,7 +50,7 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
     track = LoadMusicStream("assets/audio/tracks/iceboss.mp3");
-
+    SetMusicVolume(track, soundManager->GetTrackVolume());
 
 }
 
@@ -118,7 +118,7 @@ bool IceBossScene::BossDeath() {
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
-    soundManager->StopCurrentTrack(track);
+    StopMusicStream(track);
     hud->IsBossFightActive(false);
     bossDefeated=true;
     return false;
