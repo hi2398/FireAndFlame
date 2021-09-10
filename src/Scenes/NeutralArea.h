@@ -18,7 +18,7 @@ public:
  
     void Update() override;
     void Draw() override;
-    ~NeutralArea() override = default;
+    ~NeutralArea() override;
 
 
 protected:
@@ -48,4 +48,5 @@ private:
     Vector2 npc4Pos = { 87.5 * 32,102 * 32 };
     Vector2 npc5Pos = { 65 * 32,111 * 32 };
     std::vector<std::unique_ptr<Speechbubble>> speech;
+    Music track;
 };

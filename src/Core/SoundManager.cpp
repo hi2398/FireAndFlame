@@ -14,9 +14,7 @@ SoundManager::SoundManager()
 	sound[6] = LoadSound("assets/audio/sfx/Shutting_Doors.wav");
 	sound[7] = LoadSound("assets/audio/sfx/player_melee.wav");
 	sound[8] = LoadSound("assets/audio/sfx/player_landing.wav");
-	sound[9] = LoadSound("assets/audio/sfx/melee_hit.wav");
 	sound[10] = LoadSound("assets/audio/sfx/dead.wav");
-	
 }
 
 void SoundManager::PlaySfx(SFX sfx)

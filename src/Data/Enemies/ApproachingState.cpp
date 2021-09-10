@@ -91,7 +91,6 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
 				enemy.SetDirection(LEFT);
 			}
-
 			enemySight = { enemy.GetPosition().x + 16, enemy.GetPosition().y + 16, 16 * 32, 5 };;
 			if (CheckCollisionRecs(coal->GetInteractionZone(), enemySight) && coal->GetInteractableType() == InteractableType::Coal) {
 				enemy.SetDirection(RIGHT);
@@ -107,6 +106,10 @@ std::shared_ptr<EState> ApproachingState::Update(Enemy& enemy)
 			if (CheckCollisionRecs(coal->GetInteractionZone(), playerCharacter->playerHitbox) && coal->GetInteractableType() == InteractableType::Coal) {
 				return std::make_shared<StunnedState>(enemy);
 			}
+
+			/*if (CheckCollisionRecs(coal->GetInteractionZone(), enemy.GetCollider()) && coal->GetInteractableType() == InteractableType::Coal) {
+				return std::make_shared<StunnedState>(enemy);
+			}*/
 		}
 		aggroCooldown++;
 
