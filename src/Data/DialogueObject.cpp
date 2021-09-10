@@ -31,3 +31,7 @@ DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position) : I
     objPosition = position;
     interactionZone={position.x,position.y,32,32};
 }
+
+void DialogueObject::SetDialoguePath(std::string path) {
+    objFilepath = path;
+}

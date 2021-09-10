@@ -24,21 +24,27 @@ void PowerUp::Interact(Actor &actor) {
         case PowerUpType::dash:
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Dash);
-                sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgrade.json");
+                if(!isGamepadActive){
+                    sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgrade.json");
+                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgradeGamepad.json");}
                 dialogueActive = true;
             }
             break;
         case PowerUpType::wallJump:
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Walljump);
-                sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgrade.json");
+                if(!isGamepadActive){
+                    sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgrade.json");
+                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgradeGamepad.json");}
                 dialogueActive = true;
             }
             break;
         case PowerUpType::doubleJump:
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
-                sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJump.json");
+                if(!isGamepadActive){
+                    sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJump.json");
+                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJumpGamepad.json");}
                 dialogueActive = true;
             }
             break;
@@ -48,6 +54,11 @@ void PowerUp::Interact(Actor &actor) {
 }
 
 void PowerUp::Update() {
+    if(IsGamepadAvailable(0)){
+        isGamepadActive = true;
+    }else{
+        isGamepadActive = false;
+    }
     if(dialogueActive){
         if(!sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
             markedDestroy = true;

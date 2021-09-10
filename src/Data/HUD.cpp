@@ -12,6 +12,11 @@ HUD::HUD() {
 }
 
 void HUD::UpdateHUD() {
+    if(IsGamepadAvailable(0)){
+        isGameadActive = true;
+    }else{
+        isGameadActive = false;
+    }
     healthBar.width = static_cast<float>(playerCharacter->GetHealth() * 3);
     
     frameCounter++;
@@ -50,7 +55,9 @@ void HUD::DrawHUD() {
     DrawTexture(playerHealthBar, healthBar.x - 11, healthBar.y - 1, WHITE);
     if (healthBar.width > 0) DrawTexturePro(textureFire, fireFrame, { healthBar.width + 14, healthBar.y - 10, 32, 32 }, {}, 0.0f, WHITE);
     if(isInteractable && !sceneManager->GetActiveScene()->GetDialogueManager().GetDialogueActive()){
-        DrawText("PRESS E",560,500,30,WHITE);
+        if(!isGameadActive){
+            DrawText("PRESS E",560,500,30,WHITE);
+        } else DrawText("PRESS GAMEPAD Y",520,500,30,WHITE);
         isInteractable = false;
     }
     

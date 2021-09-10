@@ -10,6 +10,7 @@ public:
     void Interact(Actor& actor)override;
     void Draw() override;
     void Update() override;
+    void SetDialoguePath(std::string path);
     ~DialogueObject() override = default;;
 private:
     std::string objFilepath;
