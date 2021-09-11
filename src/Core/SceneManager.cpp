@@ -139,7 +139,7 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
         playerPosToSet=location;
         setPlayerPos= true;
         playerCharacter->SetUnlockedAbilityLevel(static_cast<AbilitiesUnlocked>(category["unlockedAbilities"]));
-        bool hasKilledSaugi=category["cheese"];
+        bool hasKilledSaugi=static_cast<bool>(category["cheese"]);
         if (hasKilledSaugi) playerCharacter->PlayerHasKilledSaugi();
 
         SceneEnums sceneToLoad=category["currentLevel"];
