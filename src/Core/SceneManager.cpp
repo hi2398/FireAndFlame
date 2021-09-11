@@ -52,7 +52,7 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
     Vector2 playerLocation = playerCharacter->GetPosition();
     int unlockedAbilities = static_cast<int>(playerCharacter->GetUnlockedAbilities());
     int currentLevel = static_cast<int>(activeScene->GetSceneName());
-
+    int hasPlayerKilledSaugi=playerCharacter->HasKilledSaugi();
 
     json saveDataStruct = {
             {"player", //START PLAYER
@@ -61,7 +61,8 @@ void SceneManager::SaveGame(std::string saveFolder, int slot) {
                             {"locationX", playerLocation.x},
                             {"locationY", playerLocation.y},
                             {"unlockedAbilities", unlockedAbilities},
-                            {"currentLevel", currentLevel}
+                            {"currentLevel", currentLevel},
+                            {"cheese", hasPlayerKilledSaugi}
                     }
             } //END PLAYER
     };
@@ -138,6 +139,8 @@ void SceneManager::LoadGame(std::string saveFolder, int slot) {
         playerPosToSet=location;
         setPlayerPos= true;
         playerCharacter->SetUnlockedAbilityLevel(static_cast<AbilitiesUnlocked>(category["unlockedAbilities"]));
+        bool hasKilledSaugi=category["cheese"];
+        if (hasKilledSaugi) playerCharacter->PlayerHasKilledSaugi();
 
         SceneEnums sceneToLoad=category["currentLevel"];
         switch (sceneToLoad) {
