@@ -235,6 +235,16 @@ bool PlayerCharacter::IsHoldInPlace() const
 	return isHoldInPlace;
 }
 
+void PlayerCharacter::PlayerHasKilledSaugi()
+{
+	hasKilledSaugi = true;
+}
+
+bool PlayerCharacter::HasKilledSaugi() const
+{
+	return hasKilledSaugi;
+}
+
 int PlayerCharacter::GetFrame() const {
 	return playerFrameCounter;
 }

@@ -57,6 +57,9 @@ public:
     void HoldInPlace(bool hold, Vector2 thisPos);
     bool IsHoldInPlace()const;
 
+    void PlayerHasKilledSaugi();
+    bool HasKilledSaugi() const;
+
 	//2Dcam
 	Camera2D camera = { 0 };
     bool followCam{ true };
@@ -118,6 +121,7 @@ private:
 
     bool canMove{true};
     bool isHoldInPlace{ false };
+    bool hasKilledSaugi{false};
 
     Vector2 holdThisPosition{};
 

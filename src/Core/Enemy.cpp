@@ -36,6 +36,7 @@ void Enemy::ReceiveDamage(int damage)
     health -= damage;
 	if (health <= 0)
 	{
+		if (enemyType == EnemyTypes::Saugi) playerCharacter->PlayerHasKilledSaugi();
 		sceneManager->AddInteractable(std::make_unique<Coal>(GetPosition()));
 		markedDestroy= true;
 	}

@@ -13,7 +13,7 @@ public:
 
 private:
     float endscreenCounter;
-    std::string endText[17];
+    std::string endText[19];
     Music track;
 protected:
 
