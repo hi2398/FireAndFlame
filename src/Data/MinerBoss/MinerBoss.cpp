@@ -3,7 +3,7 @@
 #include "../../Global.h"
 #include "../SceneChangerObject.h"
 #include "../../Scenes/MinerBossScene.h"
-#include "MBDecisionState.h"
+#include "MBBeforeFight.h"
 #include "raymath.h"
 
 MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
@@ -11,7 +11,7 @@ MinerBoss::MinerBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     health = maxHealth;
     debrisTexture = LoadTexture("assets/Bosses/MinerBoss/debris.png");
     texture = LoadTexture("assets/Bosses/MinerBoss/Miner_Boss_Spritesheet.png");
-    state = std::make_unique<MBDecisionState>(*this);
+    state = std::make_unique<MBBeforeFight>(*this);
     hitbox = {0, 0, 32, 32};
     hitbox.x = position.x;
     hitbox.y = position.y;
@@ -44,10 +44,9 @@ void MinerBoss::Update() {
         }
     }
 
-    if (bossPhase==MinerBossPhase::Second && !phase2debrisEnabled) {
+    if (!phase2debrisEnabled) {
         if (playerCharacter->GetPosition().y<=(59*32)){
             std::shared_ptr <MinerBossScene> scene= std::dynamic_pointer_cast<MinerBossScene>(sceneManager->GetActiveScene());
-            std::cout << "Enable Debris Upper";
             scene->EnableDebrisUpper();
             phase2debrisEnabled= true;
         }

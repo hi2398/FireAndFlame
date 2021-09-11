@@ -22,9 +22,6 @@ void TmpDialogueObject::Interact(Actor& actor) {
     }
 }
 
-void TmpDialogueObject::Draw() {
-    DrawTexture(objTexture, objPosition.x, objPosition.y, WHITE);
-}
 
 void TmpDialogueObject::Update() {
 

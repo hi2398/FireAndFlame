@@ -1,7 +1,7 @@
 #include "IceBoss.h"
 #include "raymath.h"
 #include "../../Global.h"
-#include "IBSeek.h"
+#include "IBBeforeFight.h"
 
 const float* IceBoss::multiplier;
 
@@ -9,7 +9,7 @@ IceBoss::IceBoss(Vector2 location) : Enemy(EnemyTypes::Boss) {
     health=maxHealth;
     SetPosition(location);
     texture=LoadTexture("assets/Bosses/IceBoss/Ice_Boss_Spritesheet.png");
-    state = std::make_unique<IBSeek>(*this);
+    state = std::make_unique<IBBeforeFight>(*this);
     IceBoss::multiplier=&normalMultiplier; //set multiplier to point to the normal multiplier until boss goes into aggressive mode
     meleeRange.x=position.x-16;
     meleeRange.y=position.y;
