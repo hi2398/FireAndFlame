@@ -18,7 +18,7 @@ TBBeforeFightState::TBBeforeFightState(Enemy& enemy) : EState(enemy)
 std::shared_ptr<EState> TBBeforeFightState::Update(Enemy& enemy)
 {
 	if (IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)) textCounter++;
-	if (textCounter >= 10) {
+	if (textCounter >= 14) {
 		for (const auto& dialogue : sceneManager->GetInteractables()) {
 			if (dialogue->GetInteractableType() == InteractableType::TmpDialogObj) dialogue->MarkToDestroy();
 		}
