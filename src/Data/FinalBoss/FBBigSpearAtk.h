@@ -7,7 +7,7 @@ public:
     FBBigSpearAtk();
     std::shared_ptr <State> Update(Actor &actor) override;
     void Draw(Actor &actor) override;
-    ~FBBigSpearAtk() override = default;
+    ~FBBigSpearAtk() override;
 
 protected:
 

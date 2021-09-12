@@ -8,6 +8,7 @@ public:
 	Speechbubble(Vector2 initialPos);
 	void Update() override;
 	void Draw() override;
+	~Speechbubble() override;
 protected:
 
 private:

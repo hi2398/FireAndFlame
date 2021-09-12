@@ -9,7 +9,7 @@ public:
     void Draw() override;
     void Update() override;
     void ReceiveDamage(int damage) override;
-    ~TraitorBoss() override = default;
+    ~TraitorBoss() override;
 
 protected:
 

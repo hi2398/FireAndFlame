@@ -6,7 +6,7 @@ public:
     void Interact(Actor &actor) override;
     void Update() override;
     void Draw() override;
-    ~BossEnergySwordAttack() override = default;
+    ~BossEnergySwordAttack() override;
 private:
     Texture2D texture;
     Rectangle drawBox = {0,0,32,128};

@@ -13,7 +13,7 @@ public:
 
     void Interact(Actor &actor) override;
 
-    ~SaveInteractable() override = default;
+    ~SaveInteractable() override;
 
 protected:
 

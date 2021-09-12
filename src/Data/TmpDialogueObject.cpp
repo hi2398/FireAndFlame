@@ -26,3 +26,7 @@ void TmpDialogueObject::Interact(Actor& actor) {
 void TmpDialogueObject::Update() {
 
 }
+
+TmpDialogueObject::~TmpDialogueObject() {
+    UnloadTexture(objTexture);
+}

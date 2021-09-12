@@ -33,6 +33,12 @@ void SaveInteractable::Interact(Actor &actor) {
     }
 }
 
+SaveInteractable::~SaveInteractable()
+{
+    UnloadTexture(lampOff);
+    UnloadTexture(lampOn);
+}
+
 SaveInteractable::SaveInteractable(Vector2 pos) : Interactable(InteractableType::Save){
     position=pos;
     interactionZone={position.x-32, position.y-32, 96, 96};

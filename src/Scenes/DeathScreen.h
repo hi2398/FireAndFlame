@@ -6,7 +6,7 @@ public:
     DeathScreen(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~DeathScreen() override = default;
+    ~DeathScreen() override;
 
 private:
     Texture2D background;

@@ -9,7 +9,7 @@ public:
     void Update() override;
     void Draw() override;
     void ChangeTarget(Vector2 targetedPosition);
-    ~BossSword() override = default;
+    ~BossSword() override;
 
 private:
     Texture2D texture;

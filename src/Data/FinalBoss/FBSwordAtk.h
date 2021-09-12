@@ -7,7 +7,7 @@ public:
     FBSwordAtk();
     std::shared_ptr <State> Update(Actor &actor) override;
     void Draw(Actor &actor) override;
-    ~FBSwordAtk() override = default;
+    ~FBSwordAtk() override;
 
 protected:
 

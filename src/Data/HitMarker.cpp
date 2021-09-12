@@ -24,3 +24,8 @@ void HitMarker::Draw()
 {
 	DrawTexturePro(texture, activeFrame, {position.x, position.y, 32, 32}, {0,0}, 0.0, WHITE);
 }
+
+HitMarker::~HitMarker()
+{
+	UnloadTexture(texture);
+}

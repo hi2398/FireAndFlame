@@ -6,7 +6,7 @@ public:
     void Interact(Actor &actor) override;
     void Update() override;
     void Draw() override;
-    ~BossRangedAttack() override = default;
+    ~BossRangedAttack() override;
 
 private:
     Texture2D texture;

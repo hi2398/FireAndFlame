@@ -36,3 +36,8 @@ void BossSword::Draw() {
 void BossSword::ChangeTarget(Vector2 targetedPosition) {
     targetPosition = targetedPosition;
 }
+
+BossSword::~BossSword()
+{
+    UnloadTexture(texture);
+}

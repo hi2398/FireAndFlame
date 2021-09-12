@@ -46,6 +46,11 @@ void FBSpearAtk::Draw(Actor &actor) {
     DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }
 
+FBSpearAtk::~FBSpearAtk()
+{
+    UnloadTexture(bossMap);
+}
+
 FBSpearAtk::FBSpearAtk() {
     activeFrame = {0,0,64,64};
     bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");

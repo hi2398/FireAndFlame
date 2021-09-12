@@ -55,3 +55,8 @@ void BossEnergySwordAttack::Update() {
 void BossEnergySwordAttack::Draw() {
     DrawTextureRec(texture,drawBox,position,WHITE);
 }
+
+BossEnergySwordAttack::~BossEnergySwordAttack()
+{
+    UnloadTexture(texture);
+}

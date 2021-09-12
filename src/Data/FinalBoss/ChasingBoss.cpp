@@ -35,3 +35,8 @@ void ChasingBoss::Draw() {
 void ChasingBoss::MovePosition(Vector2 newPosition) {
     targetPosition = newPosition;
 }
+
+ChasingBoss::~ChasingBoss()
+{
+    UnloadTexture(texture);
+}

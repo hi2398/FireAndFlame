@@ -14,7 +14,7 @@ public:
     void ReceiveDamage(int damage) override;
     Vector2 GetPositionFix();
     int GetHealth();
-    ~FinalBossEnemy() override = default;
+    ~FinalBossEnemy() override;
 protected:
 
 

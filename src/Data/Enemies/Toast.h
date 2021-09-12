@@ -7,7 +7,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Interact(Actor& actor) override;
-	~Toast() {};
+	~Toast();
 protected:
 
 private:

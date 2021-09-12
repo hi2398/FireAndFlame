@@ -140,6 +140,14 @@ void MinerBossScene::OnBossDeath()
 }
 
 MinerBossScene::~MinerBossScene() {
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(sceneChanger);
+    UnloadTexture(debrisTexture);
+    UnloadTexture(bridge);
+
     UnloadMusicStream(track);
     UnloadMusicStream(track2);
 }

@@ -78,5 +78,5 @@ void Coal::Draw()
 
 Coal::~Coal()
 {
-
+    UnloadTexture(texture);
 }

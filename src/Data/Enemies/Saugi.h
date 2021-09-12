@@ -11,7 +11,7 @@ public:
 	explicit Saugi(Vector2 initialPos);
 	void Update() override;
 	void Draw() override;
-	~Saugi() = default;
+	~Saugi();
 private:
 
 

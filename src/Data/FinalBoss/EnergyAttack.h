@@ -5,7 +5,7 @@ public:
     void Interact(Actor &actor) override;
     void Update() override;
     void Draw() override;
-    ~EnergyAttack() override = default;
+    ~EnergyAttack() override;
 private:
     Texture2D texture;
 

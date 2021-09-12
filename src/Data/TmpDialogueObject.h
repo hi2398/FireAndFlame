@@ -9,7 +9,7 @@ public:
     void Interact(Actor& actor)override;
     void Draw() override {};
     void Update() override ;
-    ~TmpDialogueObject() override = default;;
+    ~TmpDialogueObject() override;
 private:
     std::string objFilepath;
     Vector2 objPosition;

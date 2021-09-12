@@ -12,7 +12,7 @@ public:
     void ShowSaveNotification();
     void IsBossFightActive(bool isActive);
 
-    ~HUD() = default;
+    ~HUD();
 protected:
 
 private:

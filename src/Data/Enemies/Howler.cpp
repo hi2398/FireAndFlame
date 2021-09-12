@@ -61,3 +61,8 @@ void Howler::Draw()
 {
 	activeState->Draw(*this);
 }
+
+Howler::~Howler()
+{
+	UnloadTexture(texture);
+}

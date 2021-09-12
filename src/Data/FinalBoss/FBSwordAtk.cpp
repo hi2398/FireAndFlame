@@ -43,3 +43,8 @@ void FBSwordAtk::Draw(Actor &actor) {
     FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
     DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }
+
+FBSwordAtk::~FBSwordAtk()
+{
+    UnloadTexture(bossMap);
+}

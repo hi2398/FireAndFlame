@@ -49,4 +49,5 @@ private:
     Vector2 npc5Pos = { 65 * 32,111 * 32 };
     std::vector<std::unique_ptr<Speechbubble>> speech;
     Music track;
+    Texture2D statueTex;
 };

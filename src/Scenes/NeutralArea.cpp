@@ -27,7 +27,7 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     tempVec = {59*32,101*32+6};
-    Texture2D statueTex = LoadTexture("assets/graphics/statue.png");
+    statueTex = LoadTexture("assets/graphics/statue.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Neutrale_Ebene_Statue.json",tempVec,statueTex));
 
     tempVec = {69*32,102*32+3};
@@ -156,6 +156,18 @@ void NeutralArea::Draw() {
 }
 
 NeutralArea::~NeutralArea() {
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(sceneChanger);
+    UnloadTexture(npc1Tex);
+    UnloadTexture(npc2Tex);
+    UnloadTexture(npc3Tex);
+    UnloadTexture(npc4Tex);
+    UnloadTexture(npc5Tex);
+    UnloadTexture(statueTex);
+
     StopMusicStream(track);
     UnloadMusicStream(track);
 }

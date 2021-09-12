@@ -55,7 +55,7 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Up ,SpawnerType::Coal));
 
     tempVec = {80*32,99*32+3};
-    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/TutorialSign.json",tempVec,statueTex));
 
     door1[0] = {58*32,76*32};
@@ -203,7 +203,18 @@ void Tutorial::Draw() {
 }
 
 Tutorial::~Tutorial() {
-    PlayMusicStream(track2);
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(npc1Tex);
+    UnloadTexture(npc2Tex);
+    UnloadTexture(npc3Tex);
+    UnloadTexture(npc4Tex);
+    UnloadTexture(npc5Tex);
+    UnloadTexture(statueTex);
+
+
     UnloadMusicStream(track2);
     UnloadMusicStream(track);
 }
