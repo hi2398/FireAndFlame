@@ -18,7 +18,7 @@ public:
     void Update(Vector2 virtualMousePosition);
     void Draw();
     void SetNextScene(std::unique_ptr<Scene> nextScene);
-    void UpdateDialogInScene(std::string filepath);
+    void UpdateDialogInScene(std::string filepath, bool personDialogue);
     Vector2 GetVirtualMousePosition();
 
     [[nodiscard]] const std::list<std::unique_ptr<Interactable>> &GetInteractables() const;

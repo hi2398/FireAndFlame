@@ -4,7 +4,8 @@
 
 #include "DialogueObject.h"
 
-DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Texture2D texture) : Interactable(InteractableType::DialogObj){
+DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Texture2D texture, bool personDialogue) : Interactable(InteractableType::DialogObj){
+    this->personDialogue = personDialogue;
     objFilepath = dialogFilepath;
     objPosition = position;
     objTexture = texture;
@@ -14,7 +15,7 @@ DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, Tex
 void DialogueObject::Interact(Actor &actor) {
     hud->changeInteractable(true);
     if(IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)){
-        sceneManager->UpdateDialogInScene(objFilepath);
+        sceneManager->UpdateDialogInScene(objFilepath, personDialogue);
     }
 }
 
@@ -26,7 +27,8 @@ void DialogueObject::Update() {
 
 }
 
-DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position) : Interactable(InteractableType::DialogObj){
+DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, bool personDialogue) : Interactable(InteractableType::DialogObj){
+    this->personDialogue = personDialogue;
     objFilepath = dialogFilepath;
     objPosition = position;
     interactionZone={position.x,position.y,32,32};

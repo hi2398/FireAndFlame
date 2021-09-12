@@ -25,7 +25,7 @@ std::shared_ptr<EState> IBBeforeFight::Update(Enemy& enemy)
 	activeFrame = { (float)32 * thisFrame,0,-(float)32 * enemy.GetDirection(), 32 };
 
 	if (IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)) textCounter++;
-	if (textCounter >= 11) {
+	if (textCounter >= 12) {
 		for (const auto& dialogue : sceneManager->GetInteractables()) {
 			if (dialogue->GetInteractableType() == InteractableType::TmpDialogObj) dialogue->MarkToDestroy();
 		}

@@ -8,7 +8,7 @@ public:
     MinerBossScene(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~MinerBossScene() override = default;
+    ~MinerBossScene() override;
 
     void EnableDebrisLower();
     void EnableDebrisUpper();
@@ -39,6 +39,11 @@ private:
 
     Vector2 checkpointA{33*32, 90*32};
     Vector2 checkpointB{50*32, 43*32};
+
+    Music track;
+    Music track2;
+
+    bool secondTrackPlaying{ false };
 };
 
 

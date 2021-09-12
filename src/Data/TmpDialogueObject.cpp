@@ -12,12 +12,12 @@ void TmpDialogueObject::Interact(Actor& actor) {
     hud->changeInteractable(true);
 
     if (!textActivated) {
-        sceneManager->UpdateDialogInScene(objFilepath);
+        sceneManager->UpdateDialogInScene(objFilepath, true);
         textActivated = true;
     }
     else {
 		if (IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)) {
-			sceneManager->UpdateDialogInScene(objFilepath);
+			sceneManager->UpdateDialogInScene(objFilepath, true);
 		}
     }
 }

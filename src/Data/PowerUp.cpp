@@ -25,8 +25,8 @@ void PowerUp::Interact(Actor &actor) {
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Dash);
                 if(!isGamepadActive){
-                    sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgrade.json");
-                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgradeGamepad.json");}
+                    sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgrade.json", false);
+                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/dashUpgradeGamepad.json", false);}
                 dialogueActive = true;
             }
             break;
@@ -34,8 +34,8 @@ void PowerUp::Interact(Actor &actor) {
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Walljump);
                 if(!isGamepadActive){
-                    sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgrade.json");
-                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgradeGamepad.json");}
+                    sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgrade.json", false);
+                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/wallJumpUpgradeGamepad.json", false);}
                 dialogueActive = true;
             }
             break;
@@ -43,8 +43,8 @@ void PowerUp::Interact(Actor &actor) {
             if(!dialogueActive) {
                 playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
                 if(!isGamepadActive){
-                    sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJump.json");
-                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJumpGamepad.json");}
+                    sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJump.json", false);
+                }else {sceneManager->UpdateDialogInScene("assets/Dialogues/doubleJumpGamepad.json", false);}
                 dialogueActive = true;
             }
             break;
@@ -65,7 +65,7 @@ void PowerUp::Update() {
         }
     }
     if((IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP))&& CheckCollisionRecs(playerCharacter->playerHitbox,interactionZone)){
-        sceneManager->UpdateDialogInScene("assets/Dialogues/TutorialSign.json");
+        sceneManager->UpdateDialogInScene("assets/Dialogues/TutorialSign.json", false);
     }
 }
 

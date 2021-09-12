@@ -56,5 +56,7 @@ private:
     std::vector<std::unique_ptr<Speechbubble>> speech;
 
     Music track;
+    Music track2;
+    bool secondTrackPlaying{ false };
 protected:
 };
