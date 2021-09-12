@@ -11,6 +11,7 @@ public:
     void Draw() override;
     void Update() override;
     void ReceiveDamage(int damage) override;
+    void UnloadUsedTextures();
     ~MinerBoss() override;
 
     [[nodiscard]] int GetMaxHealth() const;

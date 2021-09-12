@@ -74,14 +74,20 @@ void MinerBoss::ReceiveDamage(int damage) {
     }
 }
 
-MinerBoss::~MinerBoss()
+void MinerBoss::UnloadUsedTextures()
 {
     UnloadTexture(texture);
     UnloadTexture(debrisTexture);
 }
 
+MinerBoss::~MinerBoss()
+{
+
+}
+
 void MinerBoss::OnDeath() {
     sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit, SceneEnums::NeutralArea ,SceneEnums::MinerBoss));
+    UnloadUsedTextures();
 }
 
 int MinerBoss::GetMaxHealth() const {
