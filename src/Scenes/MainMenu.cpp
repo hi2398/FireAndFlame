@@ -533,6 +533,43 @@ void MainMenu::Draw() {
 
 MainMenu::~MainMenu()
 {
+    UnloadTexture(introIgnite);
+    UnloadTexture(introRaylib);
+    UnloadTexture(mainMenuBackground);
+    UnloadTexture(secondaryBackground);
+    UnloadTexture(playButton[0]);
+    UnloadTexture(playButton[1]);
+    UnloadTexture(settingsButton[0]);
+    UnloadTexture(settingsButton[1]);
+    UnloadTexture(creditsButton[0]);
+    UnloadTexture(creditsButton[1]);
+    UnloadTexture(quitButton[0]);
+    UnloadTexture(quitButton[1]);
+    UnloadTexture(gameTitlePicture);
+    UnloadTexture(savegameTex1);
+    UnloadTexture(savegameTex2);
+    UnloadTexture(savegameTex3);
+    UnloadTexture(loadSave1Button[0]);
+    UnloadTexture(loadSave1Button[1]);
+    UnloadTexture(loadSave2Button[0]);
+    UnloadTexture(loadSave2Button[1]);
+    UnloadTexture(loadSave3Button[0]);
+    UnloadTexture(loadSave3Button[1]);
+    UnloadTexture(deleteSave1Button[0]);
+    UnloadTexture(deleteSave1Button[1]);
+    UnloadTexture(deleteSave2Button[0]);
+    UnloadTexture(deleteSave2Button[1]);
+    UnloadTexture(deleteSave3Button[0]);
+    UnloadTexture(deleteSave3Button[1]);
+    UnloadTexture(emptyHearth);
+    UnloadTexture(redHearth);
+    UnloadTexture(orangeHearth);
+    UnloadTexture(musicText);
+    UnloadTexture(soundText);
+    UnloadTexture(displayText);
+    UnloadTexture(backButton[0]);
+    UnloadTexture(backButton[1]);
+
     StopMusicStream(track);
     UnloadMusicStream(track);
 }

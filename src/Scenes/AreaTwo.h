@@ -32,5 +32,6 @@ private:
     const Vector2 checkpointB{95*32, 88*32};
     const Vector2 checkpointC{96*32, 56*32};
 
+    Texture2D statueTex;
 };
 

@@ -11,7 +11,7 @@ public:
     void Draw() override;
     void Update() override;
     void SetDialoguePath(std::string path);
-    ~DialogueObject() override = default;;
+    ~DialogueObject() override;
 private:
     std::string objFilepath;
     Vector2 objPosition;

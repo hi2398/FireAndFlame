@@ -12,7 +12,7 @@ public:
 	explicit Howler(Vector2 initialPos, EnemyLevel enemyLevel);
 	void Update() override;
 	void Draw() override;
-	~Howler() = default;
+	~Howler();
 private:
 
 

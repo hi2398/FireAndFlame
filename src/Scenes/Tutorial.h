@@ -58,5 +58,7 @@ private:
     Music track;
     Music track2;
     bool secondTrackPlaying{ false };
+
+    Texture2D statueTex;
 protected:
 };

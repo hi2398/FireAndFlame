@@ -9,7 +9,7 @@ public:
     FBIdleFly();
     std::shared_ptr <State> Update(Actor &actor) override;
     void Draw(Actor &actor) override;
-    ~FBIdleFly() override = default;
+    ~FBIdleFly() override;
 
 protected:
 

@@ -125,5 +125,11 @@ bool IceBossScene::BossDeath() {
 }
 
 IceBossScene::~IceBossScene() {
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(sceneChanger);
+
     UnloadMusicStream(track);
 }

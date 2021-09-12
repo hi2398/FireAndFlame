@@ -56,3 +56,7 @@ void Fireball::Draw()
 {
     DrawTextureRec(fireball, fireballRec, position, WHITE);
 }
+
+Fireball::~Fireball() {
+    UnloadTexture(fireball);
+}

@@ -44,3 +44,8 @@ void FBChangeStates::Draw(Actor &actor) {
     FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
     DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }
+
+FBChangeStates::~FBChangeStates()
+{
+    UnloadTexture(bossMap);
+}

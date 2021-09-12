@@ -59,6 +59,11 @@ void SpiderBot::Draw()
 	if constexpr (DEBUG_BUILD) DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
 
+SpiderBot::~SpiderBot()
+{
+	UnloadTexture(texture);
+}
+
 void SpiderBot::CheckEdgeColl() {
 	//check for ledges
 	Rectangle edgeSeekerLeft = { position.x - 2, position.y + 32, 1, 1 };

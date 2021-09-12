@@ -147,5 +147,13 @@ void TraitorBossScene::CheckBossDeath()
 }
 
 TraitorBossScene::~TraitorBossScene() {
+    UnloadTexture(sceneChanger);
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(downDoor);
+    UnloadTexture(topDoor);
+
     UnloadMusicStream(track);
 }

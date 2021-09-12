@@ -61,7 +61,7 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     tempVec = {28*32,112*32};
-    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Area_3Sign.json",tempVec,statueTex));
 
     //background initialization
@@ -141,6 +141,14 @@ void AreaThree::Draw() {
 
 AreaThree::~AreaThree()
 {
+    UnloadTexture(sceneChanger);
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(statueTex);
+
+    UnloadTexture(sceneChanger);
     StopMusicStream(track);
     UnloadMusicStream(track);
 }

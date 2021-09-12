@@ -9,7 +9,7 @@ public:
 	void Update() override;
 	void Interact(Actor& actor) override {};
 	void Draw() override;
-	~HitMarker() = default;
+	~HitMarker();
 protected:
 
 private:

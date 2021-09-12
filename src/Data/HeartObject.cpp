@@ -44,3 +44,8 @@ void HeartObject::Draw()
 {
 	DrawTexture(texture, position.x, position.y + yOffset, WHITE);
 }
+
+HeartObject::~HeartObject()
+{
+	UnloadTexture(texture);
+}

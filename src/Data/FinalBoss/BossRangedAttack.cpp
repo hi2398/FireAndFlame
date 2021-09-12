@@ -31,3 +31,8 @@ void BossRangedAttack::Update() {
 void BossRangedAttack::Draw() {
     DrawTexture(texture,position.x,position.y,WHITE);
 }
+
+BossRangedAttack::~BossRangedAttack()
+{
+    UnloadTexture(texture);
+}

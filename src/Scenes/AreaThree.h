@@ -31,4 +31,5 @@ private:
 
     Texture2D sceneChanger;
     Vector2 sceneChangerVec;
+    Texture2D statueTex;
 };

@@ -74,6 +74,12 @@ void MinerBoss::ReceiveDamage(int damage) {
     }
 }
 
+MinerBoss::~MinerBoss()
+{
+    UnloadTexture(texture);
+    UnloadTexture(debrisTexture);
+}
+
 void MinerBoss::OnDeath() {
     sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit, SceneEnums::NeutralArea ,SceneEnums::MinerBoss));
 }

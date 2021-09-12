@@ -38,3 +38,8 @@ void FBFlyDown::Draw(Actor &actor) {
     FinalBossEnemy& boss = dynamic_cast<FinalBossEnemy&>(actor);
     DrawTextureRec(bossMap,activeFrame,boss.GetPositionFix(),WHITE);
 }
+
+FBFlyDown::~FBFlyDown()
+{
+    UnloadTexture(bossMap);
+}

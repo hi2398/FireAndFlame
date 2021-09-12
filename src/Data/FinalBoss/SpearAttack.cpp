@@ -48,3 +48,8 @@ void SpearAttack::Update() {
 void SpearAttack::Draw() {
     DrawTexturePro(texture, { 0,0,(float)texture.width, (float)texture.height }, {spearPosition.x+ (float)texture.width/2, spearPosition.y + (float)texture.height / 2 ,(float)texture.width, (float)texture.height }, rotationPoint, spearRotation, WHITE);
 }
+
+SpearAttack::~SpearAttack()
+{
+    UnloadTexture(texture);
+}

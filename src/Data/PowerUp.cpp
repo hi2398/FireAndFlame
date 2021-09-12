@@ -74,5 +74,5 @@ void PowerUp::Draw() {
 }
 
 PowerUp::~PowerUp() {
-
+    UnloadTexture(texture);
 }

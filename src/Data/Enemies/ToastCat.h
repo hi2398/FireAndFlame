@@ -8,11 +8,9 @@ public:
 	explicit ToastCat(Vector2 initalLoc);
 	void Update() override;
 	void Draw() override;
-	~ToastCat() = default;
+	~ToastCat();
 
 private:
-	Texture2D toastTexture;
-	
 	std::shared_ptr<EState> activeState;
 };
 

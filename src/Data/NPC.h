@@ -10,7 +10,7 @@ public:
     NPC(std::string dialogFilepath, Vector2 position, NPCType npcType,std::string gamepadDialogue);
     void Update() override;
     void Draw() override;
-    ~NPC() = default;
+    ~NPC();
 private:
     std::string objFilepath;
     std::string gamepadObjFilepath;
