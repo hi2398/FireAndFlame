@@ -9,7 +9,8 @@ class DialogueManager {
 public:
     DialogueManager();
     bool GetDialogueActive();
-    void UpdateDialogue(std::string filePath);
+    void UpdateDialogue(std::string filePath, bool personIsSpeaking);
+    void AddDialogueSound(bool personIsSpeaking);
     void DrawDialogue();
 protected:
 private:

@@ -7,10 +7,10 @@ Name          |Rolle     |Spezialisierungen und Nebenrollen|
 :-------------|:---------|:--------------------------------|
 Adrian Pfaff  |Lead Programmer |Workflows
 Amar Civic    |Programmer |Marketing and PR
-Robin Günther |Programmer|UML-Diagrams
+Robin Günther |Programmer|Animation
 Pascal Hirt   |Programmer|Sound and Musik
 Aykan Akgül   |Lead Designer|World Design
-Andrea Preussner|Lead Artist|Animation
+Andrea Preussner|Lead Artist|Concept Art
 
 [![CMakeBuilds](https://github.com/chfhhd/raylibstarter/actions/workflows/cmake.yml/badge.svg)](https://github.com/chfhhd/raylibstarter/actions/workflows/cmake.yml)
 

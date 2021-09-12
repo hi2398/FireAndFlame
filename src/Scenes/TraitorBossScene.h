@@ -8,7 +8,7 @@ public:
     TraitorBossScene(SceneEnums lastScene);
     void Update() override;
     void Draw() override;
-    ~TraitorBossScene() override = default;
+    ~TraitorBossScene() override;
 
 protected:
 
@@ -34,4 +34,7 @@ private:
 
     Texture2D topDoor;
     Texture2D downDoor;
+
+    Music track;
+    bool musicStarted{ false };
 };

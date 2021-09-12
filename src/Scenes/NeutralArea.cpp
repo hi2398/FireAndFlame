@@ -104,10 +104,14 @@ NeutralArea::NeutralArea(SceneEnums lastScene) : Scene(SceneEnums::NeutralArea){
 	//checkpoints
 	interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
+    track = LoadMusicStream("assets/audio/tracks/NeutralArea.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
+    PlayMusicStream(track);
 }
 
 
 void NeutralArea::Update() {
+    UpdateMusicStream(track);
     Scene::Update();
     if (!activateShake) {
 		if (lastScene == SceneEnums::MinerBoss || lastScene == SceneEnums::TraitorBoss) {
@@ -121,6 +125,11 @@ void NeutralArea::Update() {
         spawn->Update();
         spawn->SpawnCoal();
     }
+
+	for (const auto& bubble : speech) {
+		bubble->Update();
+	}
+
 }
 
 void NeutralArea::Draw() {
@@ -141,4 +150,12 @@ void NeutralArea::Draw() {
     for (const auto& spawn : spawner) {
         spawn->Draw();
     }
+    for (const auto& bubble : speech) {
+        bubble->Draw();
+    }
+}
+
+NeutralArea::~NeutralArea() {
+    StopMusicStream(track);
+    UnloadMusicStream(track);
 }

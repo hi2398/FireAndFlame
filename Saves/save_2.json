@@ -4,6 +4,7 @@
         "health": 90,
         "locationX": 1024.0,
         "locationY": 3168.0,
-        "unlockedAbilities": 0
+        "unlockedAbilities": 0,
+        "cheese": 0
     }
 }

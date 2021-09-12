@@ -42,9 +42,9 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     enemies.emplace_back(std::make_unique<Miner>(tempVec,EnemyLevel::High));
     tempVec = {88*32,77*32};
     enemies.emplace_back(std::make_unique<Miner>(tempVec,EnemyLevel::High));
-    tempVec = {81*32,89*32};
+    tempVec = {81*32,94*32};
     enemies.emplace_back(std::make_unique<Saugi>(tempVec));
-    tempVec = {81*32,89*32};
+    tempVec = {81*32,94*32};
     enemies.emplace_back(std::make_unique<Saugi>(tempVec));
     tempVec = {73*32,90*32};
     enemies.emplace_back(std::make_unique<SpiderBot>(tempVec,EnemyLevel::Medium));
@@ -93,6 +93,7 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaThree.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 
     //checkpoints

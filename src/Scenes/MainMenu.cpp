@@ -94,13 +94,14 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 
     //load soundtrack
     track = LoadMusicStream("assets/audio/tracks/title_screen.mp3");
-    soundManager->PlayTrack(track);
+    PlayMusicStream(track);
 }
 
 void MainMenu::Update() {
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     Scene::Update();
     if(isIntroDone) {
-        soundManager->UpdateTrack(track);
+        UpdateMusicStream(track);
         vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
 
         if(introFade.a != 0){
@@ -322,6 +323,7 @@ void MainMenu::Update() {
                         if (IsMouseButtonReleased(0)) {
                             soundVolume = i;
                             UpdateMusicAndSoundVolume();
+                            soundManager->PlaySfx(SFX::TEST);
                             break;
                         }
                     }
@@ -531,6 +533,7 @@ void MainMenu::Draw() {
 
 MainMenu::~MainMenu()
 {
+    StopMusicStream(track);
     UnloadMusicStream(track);
 }
 
@@ -542,7 +545,7 @@ int MainMenu::GetSoundVolume() {
     return soundVolume;
 }
 
-void MainMenu::SetMusicVolume(int volume) {
+void MainMenu::SetGameMusicVolume(int volume) {
     musicVolume = volume;
     for(int e = 0; e < 10; e++){
         if(e <= musicVolume){

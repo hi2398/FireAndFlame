@@ -8,7 +8,6 @@
 #include <iostream>
 
 Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
-    soundManager->StopThisTrack(false);
     this->lastScene = lastScene;
     endscreenCounter= 0.0f;
     tilemap=std::make_unique<Tilemap>();
@@ -31,9 +30,12 @@ Endscreen::Endscreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
     endText[14] = "Programming: Adrian Pfaff";
     endText[15] = "Programming: Amar Civic";
     endText[16] = "Programming & Sounddesign: Pascal Hirt";
+    endText[17] = "";
+    endText[18] = "No Roombro was harmed in this playthrough °u°";
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/Outro.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 }
 
@@ -49,10 +51,19 @@ void Endscreen::Update() {
 
 void Endscreen::Draw() {
     Scene::Draw();
-    for(int i = 0; i <17;i++){
-        const char * c = endText[i].c_str();
-        DrawText(c,150,750+(i*60)-endscreenCounter,38,WHITE);
+    if (playerCharacter->HasKilledSaugi()) {
+        for (int i = 0; i < 17; i++) {
+            const char* c = endText[i].c_str();
+            DrawText(c, 150, 750 + (i * 60) - endscreenCounter, 38, WHITE);
+        }
     }
+    else {
+		for (int i = 0; i < 19; i++) {
+			const char* c = endText[i].c_str();
+			DrawText(c, 150, 750 + (i * 60) - endscreenCounter, 38, WHITE);
+		}
+    }
+    
 }
 
 Endscreen::~Endscreen() {

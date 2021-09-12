@@ -184,6 +184,12 @@ void Scene::FadeOutOfScene(unsigned int alpha)
     FADEOUT.a = static_cast<unsigned char>(alpha);
 }
 
+void Scene::ToggleMusic()
+{
+    if (musicActivated) musicActivated = false;
+    else musicActivated = true;
+}
+
 SceneEnums Scene::GetSceneName() const
 {
     return sceneName;

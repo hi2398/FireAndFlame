@@ -100,6 +100,7 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
 
     //music init
     track = LoadMusicStream("assets/audio/tracks/AreaTwo.mp3");
+    SetMusicVolume(track, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 
     //checkpoints

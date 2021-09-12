@@ -39,7 +39,7 @@ std::shared_ptr<EState> TBAfterFightState::Update(Enemy& enemy)
 
 	if (endingText) {
 		if (IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)) textCounter++;
-		if (textCounter >= 14) {
+		if (textCounter >= 6) {
 			for (const auto& dialogue : sceneManager->GetInteractables()) {
 				if (dialogue->GetInteractableType() == InteractableType::TmpDialogObj) dialogue->MarkToDestroy();
 			}

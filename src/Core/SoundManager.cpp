@@ -14,14 +14,16 @@ SoundManager::SoundManager()
 	sound[6] = LoadSound("assets/audio/sfx/Shutting_Doors.wav");
 	sound[7] = LoadSound("assets/audio/sfx/player_melee.wav");
 	sound[8] = LoadSound("assets/audio/sfx/player_landing.wav");
-	sound[9] = LoadSound("assets/audio/sfx/melee_hit.wav");
+	sound[9] = LoadSound("assets/audio/sfx/dialogue1.wav");
 	sound[10] = LoadSound("assets/audio/sfx/dead.wav");
-	
+	sound[11] = LoadSound("assets/audio/sfx/testsound.wav");
+	sound[12] = LoadSound("assets/audio/sfx/dialogue2.wav");
+	sound[13] = LoadSound("assets/audio/sfx/dialogue3.wav");
 }
 
 void SoundManager::PlaySfx(SFX sfx)
 {
-	int selectedSound = 0;
+	
 	switch (sfx)
 	{
 	case SFX::PLAYER_STEP:
@@ -51,11 +53,20 @@ void SoundManager::PlaySfx(SFX sfx)
 	case SFX::PLAYER_LANDING:
 		selectedSound = 8;
 		break;
-	case SFX::MELEE_HIT:
+	case SFX::DIALOGUE1:
 		selectedSound = 9;
 		break;
 	case SFX::DEATHSCREEN:
 		selectedSound = 10;
+		break;
+	case SFX::TEST:
+		selectedSound = 11;
+		break;
+	case SFX::DIALOGUE2:
+		selectedSound = 12;
+		break;
+	case SFX::DIALOGUE3:
+		selectedSound = 13;
 		break;
 	default:
 		break;
@@ -63,30 +74,14 @@ void SoundManager::PlaySfx(SFX sfx)
 
 	SetSoundVolume(sound[selectedSound], soundVolume);
 	PlaySound(sound[selectedSound]);
-	
 }
 
-void SoundManager::PlayTrack(Music& music)
+bool SoundManager::IsSfxPlaying()
 {
-	PlayMusicStream(music);
+	if (IsSoundPlaying(sound[selectedSound])) return true;
+	else return false;
 }
 
-void SoundManager::UpdateTrack(Music &music)
-{
-	if (playerCharacter->GetHealth() <= 10 && sceneManager->GetActiveScene()->GetSceneName() != SceneEnums::FinalBoss) SetMusicPitch(music, 1.1);
-	else SetMusicPitch(music, 1.0);
-
-	SetMusicVolume(music, trackVolume);
-	if (stopTrack) StopMusicStream(music);
-	UpdateMusicStream(music);
-	return;
-}
-
-
-void SoundManager::StopCurrentTrack(Music& music)
-{
-	StopMusicStream(music);
-}
 
 
 void SoundManager::SetSfxVolume(float volume)
@@ -100,10 +95,11 @@ void SoundManager::SetTrackVolume(float volume)
 	
 }
 
-void SoundManager::StopThisTrack(bool stop)
+float SoundManager::GetTrackVolume() const
 {
-	this->stopTrack = stop;
+	return trackVolume;
 }
+
 
 SoundManager::~SoundManager()
 {

@@ -101,6 +101,11 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     fight = LoadMusicStream("assets/audio/tracks/FinalBoss_FightIntro.mp3");
     fightLoop = LoadMusicStream("assets/audio/tracks/FinalBoss_FightLoop.mp3");
 
+    SetMusicVolume(intro, soundManager->GetTrackVolume());
+    SetMusicVolume(loop, soundManager->GetTrackVolume());
+    SetMusicVolume(fight, soundManager->GetTrackVolume());
+    SetMusicVolume(fightLoop, soundManager->GetTrackVolume());
+
     intro.looping = false;
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
@@ -194,8 +199,10 @@ void FinalBoss::Update() {
 			secondLoopPlaying = true;
 			PlayMusicStream(fightLoop);
         }
-        if (!secondLoopPlaying) UpdateMusicStream(fight);
-        else if (secondLoopPlaying)UpdateMusicStream(fightLoop);
+        if (!musicActivated) {
+			if (!secondLoopPlaying) UpdateMusicStream(fight);
+			else if (secondLoopPlaying)UpdateMusicStream(fightLoop);
+        }
     }
 }
 
