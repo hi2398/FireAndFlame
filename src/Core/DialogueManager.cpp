@@ -1,7 +1,7 @@
 #include "DialogueManager.h"
 #include "../Global.h"
 
-void DialogueManager::UpdateDialogue(std::string filePath) {
+void DialogueManager::UpdateDialogue(std::string filePath, bool personIsSpeaking) {
     if(IsGamepadAvailable(0)){
         isGamepadActive = true;
     }else{isGamepadActive =false;}
@@ -11,10 +11,11 @@ void DialogueManager::UpdateDialogue(std::string filePath) {
         playerCharacter->SetPlayerDecreasingHealth(true);
         playerCharacter->BlockPlayerControls(false);
     }else{
+        AddDialogueSound(personIsSpeaking);
         playerCharacter->BlockPlayerControls(true);
         playerCharacter->SetIsDashing(false); //so player cant open dialogue and dash away
         playerCharacter->SetPlayerDecreasingHealth(false);
-        if (sentences.empty()) {
+        if (sentences.empty()) {       
             std::ifstream dialogueFileTemp(filePath);
             nlohmann::json dialogueFile = nlohmann::json::parse(dialogueFileTemp);
             dialogueFileTemp.close();
@@ -29,6 +30,30 @@ void DialogueManager::UpdateDialogue(std::string filePath) {
             sentences.pop();
         }
     }
+}
+
+void DialogueManager::AddDialogueSound(bool personIsSpeaking)
+{
+    if (personIsSpeaking) {
+		if (!soundManager->IsSfxPlaying()) {
+			switch (GetRandomValue(0, 2))
+			{
+			case 0:
+				soundManager->PlaySfx(SFX::DIALOGUE1);
+				break;
+			case 1:
+				soundManager->PlaySfx(SFX::DIALOGUE2);
+				break;
+			case 2:
+				soundManager->PlaySfx(SFX::DIALOGUE3);
+				break;
+			};
+		}
+    }
+   
+   
+
+    return;
 }
 
 void DialogueManager::DrawDialogue() {

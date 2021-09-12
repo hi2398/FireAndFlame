@@ -40,8 +40,8 @@ const std::list<std::unique_ptr<Enemy>> &SceneManager::GetEnemies() const {
     return activeScene->GetEnemies();
 }
 
-void SceneManager::UpdateDialogInScene(std::string filepath) {
-    activeScene->GetDialogueManager().UpdateDialogue(std::move(filepath));
+void SceneManager::UpdateDialogInScene(std::string filepath, bool personDialogue) {
+    activeScene->GetDialogueManager().UpdateDialogue(std::move(filepath), personDialogue);
 }
 
 void SceneManager::SaveGame(std::string saveFolder, int slot) {

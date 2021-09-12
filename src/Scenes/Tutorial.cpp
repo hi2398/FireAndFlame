@@ -92,14 +92,20 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
 
     track = LoadMusicStream("assets/audio/tracks/Tutorial1.mp3");
     SetMusicVolume(track, soundManager->GetTrackVolume());
+	track2 = LoadMusicStream("assets/audio/tracks/Tutorial2.mp3");
+	SetMusicVolume(track2, soundManager->GetTrackVolume());
     PlayMusicStream(track);
 
+    
 }
 
 void Tutorial::Update() {
     if (preventHealthDecrease)UpdateMusicStream(track);
     else {
-        if (static_cast<int>(GetMusicTimePlayed(track)) % 3 == 0) StopMusicStream(track);
+        if (!secondTrackPlaying) StopMusicStream(track), PlayMusicStream(track2), secondTrackPlaying = true;
+    }
+    if (secondTrackPlaying) {
+        UpdateMusicStream(track2);
     }
     Scene::Update();
     for (const auto& bubble : speech) {
@@ -197,5 +203,7 @@ void Tutorial::Draw() {
 }
 
 Tutorial::~Tutorial() {
+    PlayMusicStream(track2);
+    UnloadMusicStream(track2);
     UnloadMusicStream(track);
 }

@@ -25,7 +25,7 @@ std::shared_ptr<EState> MBBeforeFight::Update(Enemy& actor)
 	activeFrame = { (float)32 * thisFrame,0,-(float)32 * minerBoss->GetDirection(), 32 };
 
 	if (IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP)) textCounter++;
-	if (textCounter >= 9) {
+	if (textCounter >= 10) {
 		for (const auto& dialogue : sceneManager->GetInteractables()) {
 			if (dialogue->GetInteractableType() == InteractableType::TmpDialogObj) dialogue->MarkToDestroy();
 		}

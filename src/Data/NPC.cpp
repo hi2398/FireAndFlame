@@ -4,7 +4,7 @@
 
 #include "NPC.h"
 
-NPC::NPC(std::string dialogFilepath, Vector2 position, NPCType npcType,std::string gamepadDialogue) : DialogueObject(dialogFilepath, position) {
+NPC::NPC(std::string dialogFilepath, Vector2 position, NPCType npcType,std::string gamepadDialogue) : DialogueObject(dialogFilepath, position, true) {
     type = npcType;
     switch (type) {
         case NPCType::one:
