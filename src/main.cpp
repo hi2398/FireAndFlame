@@ -58,7 +58,7 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<MinerBossScene>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<TraitorBossScene>(SceneEnums::Default));
 
 
 
