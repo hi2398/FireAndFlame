@@ -6,6 +6,7 @@
 #include "Tilemap.h"
 #include "Enemy.h"
 #include "Interactable.h"
+#include "../Data/Door.h"
 
 
 class Scene {
@@ -18,6 +19,7 @@ public:
     virtual void Draw();
     void DrawBackground() const;
     void DrawForeground() const;
+    void DrawDoors() const;
     virtual ~Scene() = default;
 
     [[nodiscard]] DialogueManager &GetDialogueManager();
@@ -79,7 +81,8 @@ protected:
     Vector2 effectPos2Start{};
     Vector2 effectDirection{-5.0f, 3.0f};
     bool sceneEffectActivated{ false };
-
+    bool sceneHasDoors{ false };
+    std::vector<std::unique_ptr<Door>> doorCont;
 
     //screen shake variables
     bool screenShakeActivated{ false };

@@ -158,6 +158,16 @@ void Scene::DrawForeground() const
     DrawRectangle(-100, -100, 10000, 10000, FADEOUT);
 }
 
+void Scene::DrawDoors() const
+{
+    if (sceneHasDoors) {
+		for (const auto& door : doorCont) {
+			door->Draw();
+		}
+    }
+    
+}
+
 void Scene::AddEnemy(std::unique_ptr<Enemy> enemy) {
     enemies.emplace_back(std::move(enemy));
 }

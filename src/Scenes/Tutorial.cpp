@@ -8,8 +8,10 @@
 #include "../Data/Deathzone.h"
 #include "../Data/SaveInteractable.h"
 
+
 Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     this->lastScene = lastScene;
+    sceneHasDoors = true;
     playerCharacter->SetPosition(playerStart);
     playerCharacter->active = true;
     playerCharacter->SetHealth(90);
@@ -58,14 +60,17 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/TutorialSign.json",tempVec,statueTex));
 
-    door1[0] = {58*32,76*32};
+    door0 = {67*32, 75*32};
+    doorCont.emplace_back(std::make_unique<Door>(door0));
+    door1[0] = { 58 * 32,76 * 32 };
     door1[1] = {58*32,75*32};
-
-    door2[0] = {49*32,76*32};
+    doorCont.emplace_back(std::make_unique<Door>(door1[1], false));
+    door2[0] = { 49 * 32,76 * 32 };
     door2[1] = {49*32,75*32};
-
-    door3[0] = {40*32,76*32};
+    doorCont.emplace_back(std::make_unique<Door>(door2[1], false));
+    door3[0] = { 40 * 32,76 * 32 };
     door3[1] = {40*32,75*32};
+    doorCont.emplace_back(std::make_unique<Door>(door3[1], false));
 
     textureForegroundException = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_bottom.png");
     textureForegroundMain = LoadTexture("assets/graphics/backgrounds/Tutorial/crematorium_layer_01_sides.png");
@@ -87,8 +92,6 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
 
-    topDoor = LoadTexture("assets/graphics/TopDoor.png");
-    downDoor = LoadTexture("assets/graphics/DownDoor.png");
 
     track = LoadMusicStream("assets/audio/tracks/Tutorial1.mp3");
     SetMusicVolume(track, soundManager->GetTrackVolume());
@@ -100,6 +103,9 @@ Tutorial::Tutorial(SceneEnums lastScene) : Scene(SceneEnums::Tutorial) {
 }
 
 void Tutorial::Update() {
+    for (const auto& door : doorCont) {
+        door->Update();
+    }
     if (preventHealthDecrease)UpdateMusicStream(track);
     else {
         if (!secondTrackPlaying) StopMusicStream(track), PlayMusicStream(track2), secondTrackPlaying = true;
@@ -141,6 +147,7 @@ void Tutorial::Update() {
             --attackTicker;
             if(attackCounter >= 3){
                 door1Active = false;
+                doorCont[1]->SetIsOpen(true);
                 tutorial1 = false;
                 tilemap->RemoveCollisionTile();
                 tilemap->RemoveCollisionTile();
@@ -157,6 +164,7 @@ void Tutorial::Update() {
     if(tutorial2){
         if(playerCharacter->GetHealth() >= 99){
             door2Active = false;
+            doorCont[2]->SetIsOpen(true);
             tutorial2 = false;
             tilemap->RemoveCollisionTile();
             tilemap->RemoveCollisionTile();
@@ -165,6 +173,7 @@ void Tutorial::Update() {
     if(tutorial3){
         if (IsKeyPressed(KEY_F) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)){
             door3Active = false;
+            doorCont[3]->SetIsOpen(true);
             tutorial3 = false;
             tilemap->RemoveCollisionTile();
             tilemap->RemoveCollisionTile();
@@ -180,17 +189,7 @@ void Tutorial::Update() {
 }
 
 void Tutorial::Draw() {
-    if(door1Active){
-        DrawTexture(topDoor,door1[0].x,door1[0].y-32,WHITE);
-        DrawTexture(downDoor,door1[0].x,door1[0].y,WHITE);
-    }if(door2Active){
-        DrawTexture(topDoor,door2[0].x,door2[0].y-32,WHITE);
-        DrawTexture(downDoor,door2[0].x,door2[0].y,WHITE);
-    }
-    if(door3Active){
-        DrawTexture(topDoor,door3[0].x,door3[0].y-32,WHITE);
-        DrawTexture(downDoor,door3[0].x,door3[0].y,WHITE);
-    }
+    
 
 
     for (const auto& spawn : spawner) {

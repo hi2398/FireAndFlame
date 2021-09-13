@@ -32,9 +32,6 @@ private:
     const Vector2 checkpointA{42*32, 88*32};
     const Vector2 checkpointB{75*32, 88*32};
 
-    Texture2D topDoor;
-    Texture2D downDoor;
-
     Music track;
     bool musicStarted{ false };
 };

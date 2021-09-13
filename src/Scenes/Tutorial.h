@@ -2,6 +2,7 @@
 #include "../Core/Scene.h"
 #include "../Data/Spawner.h"
 #include "../Data/Speechbubble.h"
+#include "../Data/Door.h"
 
 class Tutorial : public Scene {
 public:
@@ -16,8 +17,6 @@ public:
 private:
     bool preventHealthDecrease = true;
 
-    Texture2D topDoor;
-    Texture2D downDoor;
 
     Texture2D npc1Tex;
     Texture2D npc2Tex;
@@ -33,6 +32,8 @@ private:
 
     static constexpr Rectangle healthDecreasingCollider = {40*32,45*32,128,128}; // If player collides he will start losing health
 
+
+    Vector2 door0;
     Vector2 door1[2];
     bool door1Active = true;
     bool tutorial1 = false;

@@ -15,14 +15,17 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     tilemap=std::make_unique<Tilemap>("assets/Tilemaps/Testmap/overworldTileset.json", "assets/Tilemaps/Verrater_Boss.json");
     playerCharacter->SetPosition(playerStart);
 
+    sceneHasDoors = true;
     playerCharacter->SetHealth(100);
     playerCharacter->active=true;
     
     door1[0] = { 49 * 32, 87 * 32 };
     door1[1] = { 49 * 32, 88 * 32 };
+    doorCont.emplace_back(std::make_unique<Door>(door1[0]));
 
     door2[0] = { 68 * 32, 87 * 32 };
     door2[1] = { 68 * 32, 88 * 32 };
+    doorCont.emplace_back(std::make_unique<Door>(door2[0]));
 
     Vector2 tempVec = {93 * 32, 64 * 32};
     interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
@@ -59,14 +62,15 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 
-    topDoor = LoadTexture("assets/graphics/TopDoor.png");
-    downDoor = LoadTexture("assets/graphics/DownDoor.png");
 
     track = LoadMusicStream("assets/audio/tracks/Traitor_Track.mp3");
     SetMusicVolume(track, soundManager->GetTrackVolume());
 }
 
 void TraitorBossScene::Update() {
+    for (const auto& door : doorCont) {
+        door->Update();
+    }
     Scene::Update();
     if (bossActivated && !bossDefeated)CheckBossDeath();
 
@@ -74,6 +78,8 @@ void TraitorBossScene::Update() {
         sceneManager->ScreenShake(20);
         soundManager->PlaySfx(SFX::DOORS);
         doorActive = true;
+        doorCont[0]->SetIsOpen(false);
+        doorCont[1]->SetIsOpen(false);
 		tilemap->AddCollisionTile({ door1[0] });
 		tilemap->AddCollisionTile({ door1[1] });
 		tilemap->AddCollisionTile({ door2[0] });
@@ -105,15 +111,6 @@ void TraitorBossScene::Update() {
 void TraitorBossScene::Draw() {
     Scene::Draw();
 
-    if (doorActive && !bossDefeated) {
-		DrawRectangle(door1[0].x, door1[0].y, 32, 64, RED);
-        DrawRectangle(door2[0].x, door2[0].y, 32, 64, RED);
-
-		DrawTextureV(topDoor, door1[0], WHITE);
-		DrawTextureV(downDoor, door1[1], WHITE);
-		DrawTextureV(topDoor, door2[0], WHITE);
-		DrawTextureV(downDoor, door2[1], WHITE);
-    }
     
     for (const auto& spawn : spawner) {
         spawn->Draw();
@@ -140,6 +137,8 @@ void TraitorBossScene::CheckBossDeath()
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();
+    doorCont[0]->SetIsOpen(true);
+    doorCont[1]->SetIsOpen(true);
     bossDefeated = true;
     hud->IsBossFightActive(false);
     StopMusicStream(track);
@@ -152,8 +151,6 @@ TraitorBossScene::~TraitorBossScene() {
     UnloadTexture(textureBackgroundMain);
     UnloadTexture(textureForegroundException);
     UnloadTexture(textureForegroundMain);
-    UnloadTexture(downDoor);
-    UnloadTexture(topDoor);
 
     UnloadMusicStream(track);
 }
