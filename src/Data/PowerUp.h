@@ -15,6 +15,10 @@ public:
 private:
     PowerUpType powerUpType;
     Texture2D texture;
+    Rectangle thisFrame = {0,0,16,16};
+    Rectangle destinationRec = { 0,0,16,16 };
+    int difference = 1;
+    int frameCounter = 0;
     bool dialogueActive = false;
     bool isGamepadActive = false;
 protected:

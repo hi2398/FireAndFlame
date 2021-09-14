@@ -34,4 +34,5 @@ private:
 
     Music track;
     bool musicStarted{ false };
+    bool sceneChangerPlaced{ false };
 };

@@ -44,6 +44,7 @@ private:
     const Vector2 checkpointA{41*32, 36*32};
 
     Music track;
+    bool sceneChangerPlaced{ false };
 };
 
 

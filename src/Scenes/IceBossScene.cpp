@@ -16,8 +16,6 @@ IceBossScene::IceBossScene(SceneEnums lastScene) : Scene(SceneEnums::IceBoss) {
     tilemap->AddCollisionTile(tempVec);
     tempVec = {19*32, 47*32};
     tilemap->AddCollisionTile(tempVec);
-    tempVec = { 48 * 32, 33 * 32 };
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
     tempVec = {-200, 130*32};
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
@@ -90,6 +88,11 @@ void IceBossScene::Update() {
         }
     }
 
+    if (playerCharacter->GetUnlockedAbilities() == AbilitiesUnlocked::Dash && !sceneChangerPlaced) {
+        Vector2 tempVec = { 48 * 32, 33 * 32 };
+        interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
+        sceneChangerPlaced = true;
+    }
 }
 
 void IceBossScene::Draw() {
@@ -112,7 +115,7 @@ bool IceBossScene::BossDeath() {
         if (enemy->GetEnemyType() == EnemyTypes::Boss) return true;
     }
     //if not found, he is not alive, remove the blockades and set bool to true
-    Vector2 tempVec = { 39 * 32, (37 * 32)-16 };
+    Vector2 tempVec = { 39 * 32, (37 * 32)-20 };
     interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::dash));
     tilemap->RemoveCollisionTile();
     tilemap->RemoveCollisionTile();

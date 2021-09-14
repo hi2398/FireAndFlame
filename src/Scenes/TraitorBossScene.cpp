@@ -27,9 +27,8 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
     door2[1] = { 68 * 32, 88 * 32 };
     doorCont.emplace_back(std::make_unique<Door>(door2[0]));
 
-    Vector2 tempVec = {93 * 32, 64 * 32};
-    interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
-    tempVec = {51 * 32, 74 * 32};
+    
+    Vector2 tempVec = {51 * 32, 74 * 32};
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
     tempVec = { 65 * 32, 74 * 32 };
     spawner.emplace_back(std::make_unique<Spawner>(tempVec, SpawnerDirection::Down, SpawnerType::Coal));
@@ -106,6 +105,12 @@ void TraitorBossScene::Update() {
         }
     }
 
+    if (playerCharacter->GetUnlockedAbilities() == AbilitiesUnlocked::Doublejump && !sceneChangerPlaced) {
+        Vector2 tempVec = { 93 * 32, 64 * 32 };
+        interactables.emplace_back(std::make_unique<SceneChangerObject>(tempVec, SceneEnums::NeutralArea, sceneName));
+        sceneChangerPlaced = true;
+    }
+
 }
 
 void TraitorBossScene::Draw() {
@@ -129,7 +134,7 @@ void TraitorBossScene::CheckBossDeath()
             return;
         }
     }
-    Vector2 tempVec = { 70 * 32, 89 * 32-16 };
+    Vector2 tempVec = { 70 * 32, 89 * 32-20 };
     interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::doubleJump));
     soundManager->PlaySfx(SFX::DOORS);
     sceneManager->ScreenShake(20);
