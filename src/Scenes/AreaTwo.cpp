@@ -108,7 +108,7 @@ AreaTwo::AreaTwo(SceneEnums lastScene) : Scene(SceneEnums::AreaTwo) {
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointC));
 
-    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
+
 }
 
 void AreaTwo::Update() {
