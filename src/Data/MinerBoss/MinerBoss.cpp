@@ -86,7 +86,6 @@ MinerBoss::~MinerBoss()
 }
 
 void MinerBoss::OnDeath() {
-    sceneManager->AddInteractable(std::make_unique<SceneChangerObject>(levelExit, SceneEnums::NeutralArea ,SceneEnums::MinerBoss));
     UnloadUsedTextures();
 }
 
