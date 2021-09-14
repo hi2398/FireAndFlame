@@ -57,6 +57,7 @@ MinerBossScene::MinerBossScene(SceneEnums lastScene) : Scene(SceneEnums::MinerBo
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
+    interactables.emplace_back(std::make_unique<SceneChangerObject>(sceneChangerVec, SceneEnums::NeutralArea ,SceneEnums::MinerBoss));
 
     track = LoadMusicStream("assets/audio/tracks/miner_track_1.mp3");
     SetMusicVolume(track, soundManager->GetTrackVolume());

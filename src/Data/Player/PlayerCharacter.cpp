@@ -139,7 +139,7 @@ int PlayerCharacter::GetHealth() const {
 void PlayerCharacter::SetHealth(int health) {
 	this->health = health;
 	if (health <= 0) {
-	/*	sceneManager->SetNextScene(std::make_unique<DeathScreen>(SceneEnums::Default));*/ //TODO enable me when save and load is finished
+	sceneManager->SetNextScene(std::make_unique<DeathScreen>(SceneEnums::Default));
 	}
 }
 
