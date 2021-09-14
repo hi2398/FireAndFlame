@@ -65,7 +65,7 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     }
 
     tempVec = {18*32,84*32+3};
-    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Final_BossSign.json",tempVec,statueTex));
 
     //background initialization
@@ -243,6 +243,13 @@ void FinalBoss::ActivateBorder() {
 
 FinalBoss::~FinalBoss()
 {
+    UnloadTexture(sceneEffect);
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(statueTex);
+
     UnloadMusicStream(intro);
     UnloadMusicStream(loop);
     UnloadMusicStream(fight);

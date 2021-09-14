@@ -60,3 +60,8 @@ void Toast::Interact(Actor& actor)
 	}
 	
 }
+
+Toast::~Toast()
+{
+	UnloadTexture(toastTexture);
+}

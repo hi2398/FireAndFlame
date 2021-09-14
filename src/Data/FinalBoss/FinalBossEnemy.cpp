@@ -56,6 +56,11 @@ int FinalBossEnemy::GetHealth() {
     return health;
 }
 
+FinalBossEnemy::~FinalBossEnemy()
+{
+    UnloadTexture(texture);
+}
+
 void FinalBossEnemy::ChangeSwordPosition(Vector2 newPos) {
     swordCounter = 90;
     sword->ChangeTarget(newPos);

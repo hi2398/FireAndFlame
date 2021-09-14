@@ -6,7 +6,6 @@
 ToastCat::ToastCat(Vector2 initialPos) : Enemy(EnemyTypes::ToastCat)
 {
 	texture = LoadTexture("assets/graphics/Enemies/ToastCat_Spritesheet.png");
-    toastTexture = LoadTexture("assets/graphics/Enemies/Toast.png");
 	position.x = initialPos.x;
 	position.y = initialPos.y;
 
@@ -39,5 +38,10 @@ void ToastCat::Draw()
 {
 	activeState->Draw(*this);
 	if constexpr (DEBUG_BUILD) DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
+}
+
+ToastCat::~ToastCat()
+{
+	UnloadTexture(texture);
 }
 

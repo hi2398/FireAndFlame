@@ -37,3 +37,8 @@ DialogueObject::DialogueObject(std::string dialogFilepath, Vector2 position, boo
 void DialogueObject::SetDialoguePath(std::string path) {
     objFilepath = path;
 }
+
+DialogueObject::~DialogueObject()
+{
+    UnloadTexture(objTexture);
+}

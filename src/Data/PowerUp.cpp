@@ -4,19 +4,22 @@ PowerUp::PowerUp(Vector2 location,PowerUpType type) : Interactable(InteractableT
     position = location;
     powerUpType = type;
     interactionZone = {position.x,position.y,16,16};
+    texture = LoadTexture("assets/graphics/powerup_hearts.png");
     switch (powerUpType) {
         case PowerUpType::dash:
-            texture = LoadTexture("assets/graphics/dashUpgrade.png");
+            thisFrame = {16, 0, 16, 16};
             break;
         case PowerUpType::wallJump:
-            texture = LoadTexture("assets/graphics/wallJumpUpgrade.png");
+            thisFrame = { 0, 16, 16, 16 };
             break;
         case PowerUpType::doubleJump:
-            texture = LoadTexture("assets/graphics/doubleJumpUpgrade.png");
+            thisFrame = { 0, 0, 16, 16 };
             break;
         default:
             break;
     }
+    destinationRec.x = position.x;
+    destinationRec.y = position.y;
 }
 
 void PowerUp::Interact(Actor &actor) {
@@ -67,12 +70,27 @@ void PowerUp::Update() {
     if((IsKeyPressed(KEY_E) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_UP))&& CheckCollisionRecs(playerCharacter->playerHitbox,interactionZone)){
         sceneManager->UpdateDialogInScene("assets/Dialogues/TutorialSign.json", false);
     }
+
+    //animation handling
+    frameCounter++;
+    
+    if (frameCounter >= 10) {
+        frameCounter = 0;
+        destinationRec.width += difference;
+        destinationRec.height += difference;
+        destinationRec.x -= difference;
+        destinationRec.y -= difference;
+    }
+    if (destinationRec.width >= 19) difference = -1;
+    if (destinationRec.width <= 16) difference = 1;
+
+    std::cout << destinationRec.width << "\n";
 }
 
 void PowerUp::Draw() {
-    DrawTexture(texture,position.x,position.y,WHITE);
+    DrawTexturePro(texture, thisFrame, destinationRec, { 0 }, 0, WHITE);
 }
 
 PowerUp::~PowerUp() {
-
+    UnloadTexture(texture);
 }

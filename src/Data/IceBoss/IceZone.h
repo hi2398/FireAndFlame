@@ -9,7 +9,7 @@ public:
     void Update() override;
     void Draw() override;
     void Interact(Actor &actor) override;
-    ~IceZone() override = default;
+    ~IceZone() override;
 
 protected:
 

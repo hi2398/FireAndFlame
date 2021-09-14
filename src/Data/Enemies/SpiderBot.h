@@ -11,7 +11,7 @@ public:
 	explicit SpiderBot(Vector2 initialPos, EnemyLevel enemyLevel);
 	void Update() override;
 	void Draw() override;
-	~SpiderBot() = default;
+	~SpiderBot();
 
 	
 

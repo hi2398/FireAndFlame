@@ -8,7 +8,7 @@ public:
     void Interact(Actor &actor) override;
     void Update() override;
     void Draw() override;
-    ~SpearAttack() override = default;
+    ~SpearAttack() override;
 
 private:
     Texture2D texture;

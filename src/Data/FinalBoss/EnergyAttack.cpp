@@ -43,3 +43,8 @@ void EnergyAttack::Update() {
 void EnergyAttack::Draw() {
     DrawTextureRec(texture,drawZone,energyAttackPosition,WHITE);
 }
+
+EnergyAttack::~EnergyAttack()
+{
+    UnloadTexture(texture);
+}

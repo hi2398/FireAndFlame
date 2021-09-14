@@ -55,6 +55,11 @@ void IceBoss::ReceiveDamage(int damage) {
     if (health<=0) markedDestroy=true;
 }
 
+IceBoss::~IceBoss()
+{
+    UnloadTexture(texture);
+}
+
 bool IceBoss::Decide() {
         static const int shift = static_cast<int>(std::log2(RAND_MAX));
         return (rand() >> shift) & 1;

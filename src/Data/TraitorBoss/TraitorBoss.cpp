@@ -97,6 +97,13 @@ void TraitorBoss::ReceiveDamage(int damage)
 	this->health -= damage;
 }
 
+TraitorBoss::~TraitorBoss()
+{
+	UnloadTexture(texture);
+	UnloadTexture(texture2);
+	UnloadTexture(texture3);
+}
+
 void TraitorBoss::OnDeath()
 {
 	playerCharacter->SetHealth(100);

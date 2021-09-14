@@ -117,6 +117,13 @@ void PlayerCharacter::Update() {
 	if constexpr (DEBUG_PLAYER_POSITION) 	std::cout << position.x / 32 << "\t" << position.y / 32 << "\n";
 }
 
+PlayerCharacter::~PlayerCharacter()
+{
+	UnloadTexture(upperBody);
+	UnloadTexture(lowerBody);
+	UnloadTexture(attackSprite);
+}
+
 void PlayerCharacter::Draw() {
 	if (!invulnerableVisualized) {
 		movementState->Draw(*this);

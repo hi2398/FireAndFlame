@@ -100,3 +100,10 @@ void HUD::IsBossFightActive(bool isActive)
 {
     isBossFightActive = isActive;
 }
+
+HUD::~HUD()
+{
+    UnloadTexture(textureFire);
+    UnloadTexture(skull);
+    UnloadTexture(playerHealthBar);
+}

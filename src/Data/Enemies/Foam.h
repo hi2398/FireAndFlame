@@ -9,7 +9,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Interact(Actor& actor) override;
-	~Foam() {};
+	~Foam();
 protected:
 
 private:

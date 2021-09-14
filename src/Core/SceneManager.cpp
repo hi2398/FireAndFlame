@@ -229,6 +229,7 @@ void SceneManager::Draw() {
     for (const auto& interactable : activeScene->GetInteractables()) {
         interactable->Draw();
     }
+    activeScene->DrawDoors();
     activeScene->DrawForeground();
     EndMode2D();
 

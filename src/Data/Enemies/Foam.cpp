@@ -31,3 +31,8 @@ void Foam::Interact(Actor& actor)
 	if(CheckCollisionRecs(playerCharacter->playerHitbox, interactionZone)) markedDestroy = true;
 	if (!playerCharacter->IsInvulnerable()) playerCharacter->SetInvulnerable(true), playerCharacter->SetHealth(playerCharacter->GetHealth() - 5);
 }
+
+Foam::~Foam()
+{
+	UnloadTexture(foamTexture);
+}

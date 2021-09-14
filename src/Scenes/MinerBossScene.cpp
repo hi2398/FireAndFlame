@@ -131,7 +131,7 @@ void MinerBossScene::OnBossDeath()
 
     //functions on boss death
     StopMusicStream(track2);
-    Vector2 tempVec = { 45*32, 60*32-16 };
+    Vector2 tempVec = { 45*32, 60*32-20 };
     playerCharacter->SetHealth(100);
     interactables.emplace_back(std::make_unique<PowerUp>(tempVec, PowerUpType::wallJump));
     bossDefeated = true;
@@ -140,6 +140,14 @@ void MinerBossScene::OnBossDeath()
 }
 
 MinerBossScene::~MinerBossScene() {
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(sceneChanger);
+    UnloadTexture(debrisTexture);
+    UnloadTexture(bridge);
+
     UnloadMusicStream(track);
     UnloadMusicStream(track2);
 }

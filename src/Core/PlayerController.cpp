@@ -6,9 +6,8 @@
 void PlayerController::HandleInput() {
     if (!playerCharacter->InputDisabled()) {
         //player walking
-        if (IsKeyDown(KEY_D) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0) Notify(EVENT::MOVE_RIGHT);
-        if (IsKeyDown(KEY_A) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < 0) Notify(EVENT::MOVE_LEFT);
-
+        if (IsKeyDown(KEY_D) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) > 0.2) Notify(EVENT::MOVE_RIGHT);
+        if (IsKeyDown(KEY_A) || (float)GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X) < -0.2) Notify(EVENT::MOVE_LEFT);
 
         //player dashing
         if (playerCharacter->CanMove()) {

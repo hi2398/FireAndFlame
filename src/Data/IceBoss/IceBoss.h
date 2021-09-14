@@ -18,7 +18,7 @@ public:
     void Update() override;
     void Draw() override;
     void ReceiveDamage(int damage) override;
-    ~IceBoss() override = default;
+    ~IceBoss() override;
 
     int GetPhase();
     static bool Decide();

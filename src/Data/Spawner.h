@@ -15,6 +15,7 @@ public:
 	void SpawnCoal();
 	void Draw() override;
 	SpawnerType GetType() const;
+	~Spawner() override;
 private:
 	SpawnerType type;
 	SpawnerDirection direction;

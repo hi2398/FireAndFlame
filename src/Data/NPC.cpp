@@ -77,3 +77,8 @@ void NPC::Update() {
 void NPC::Draw() {
     DrawTextureRec(objTexture,drawBox,position,WHITE);
 }
+
+NPC::~NPC()
+{
+    UnloadTexture(objTexture);
+}

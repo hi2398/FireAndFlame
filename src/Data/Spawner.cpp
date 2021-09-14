@@ -195,3 +195,8 @@ SpawnerType Spawner::GetType() const
 {
 	return type;
 }
+
+Spawner::~Spawner()
+{
+	UnloadTexture(texture);
+}

@@ -6,7 +6,7 @@ public:
     void Update() override;
     void Draw() override;
     void MovePosition(Vector2 newPosition);
-
+    ~ChasingBoss() override;
 private:
     int magnitude = 25;
     Vector2 currentPosition;

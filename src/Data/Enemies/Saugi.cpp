@@ -42,3 +42,7 @@ void Saugi::Draw()
 	activeState->Draw(*this);
 	if constexpr (DEBUG_BUILD)  DrawText(TextFormat("%i", health), position.x, position.y - 50, 30, WHITE);
 }
+
+Saugi::~Saugi() {
+	UnloadTexture(texture);
+}

@@ -23,3 +23,8 @@ void Speechbubble::Draw()
 {
 	if (!playerCharacter->InputDisabled()) DrawTexture(texture, position.x, position.y + yOffset, WHITE);
 }
+
+Speechbubble::~Speechbubble()
+{
+	UnloadTexture(texture);
+}

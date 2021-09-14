@@ -9,6 +9,7 @@ public:
 	void Update() override;
 	void UpdatePos(Vector2 updatedPos);
 	void Draw() override;
+	~HeartObject() override;
 protected:
 
 private:

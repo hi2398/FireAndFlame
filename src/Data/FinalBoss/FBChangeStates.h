@@ -6,7 +6,7 @@ public:
     FBChangeStates();
     std::shared_ptr <State> Update(Actor &actor) override;
     void Draw(Actor &actor) override;
-    ~FBChangeStates() override = default;
+    ~FBChangeStates() override;
 
 protected:
 

@@ -10,7 +10,7 @@ public:
 	void Update() override;
 	void Interact(Actor& actor) {};
 	void Draw() override;
-	~Fireball() {};
+	~Fireball();
 protected:
 
 private:

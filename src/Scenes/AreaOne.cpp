@@ -84,7 +84,7 @@ AreaOne::AreaOne(SceneEnums lastScene) : Scene(SceneEnums::AreaOne) {
     interactables.emplace_back(std::make_unique<Deathzone>(tempVec));
 
     tempVec = {25*32,107*32 + 3};
-    Texture2D statueTex = LoadTexture("assets/graphics/Sign.png");
+    statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Neutrale_Ebene_Level_12.json",tempVec,statueTex));
 
     //background initialization
@@ -147,6 +147,13 @@ void AreaOne::Draw() {
 
 AreaOne::~AreaOne()
 {
+    UnloadTexture(sceneChanger);
+    UnloadTexture(textureBackgroundException);
+    UnloadTexture(textureBackgroundMain);
+    UnloadTexture(textureForegroundException);
+    UnloadTexture(textureForegroundMain);
+    UnloadTexture(statueTex);
+
     StopMusicStream(track);
     UnloadMusicStream(track);
 }

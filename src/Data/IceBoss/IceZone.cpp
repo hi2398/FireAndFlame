@@ -33,3 +33,8 @@ void IceZone::Interact(Actor &actor) {
         }
     }
 }
+
+IceZone::~IceZone()
+{
+    UnloadTexture(iceZone);
+}

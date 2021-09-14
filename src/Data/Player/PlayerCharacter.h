@@ -15,7 +15,7 @@ public:
     PlayerCharacter();
     void Draw() override;
     void Update() override;
-    ~PlayerCharacter() override = default;
+    ~PlayerCharacter() override;
 
     Observer& GetObserver() const;
 
@@ -87,7 +87,7 @@ public:
     Texture2D upperBody;
     Texture2D lowerBody;
     Texture2D attackSprite;
-    Texture2D spriteSheetMagmos;
+   
 
     AbilitiesUnlocked GetUnlockedAbilities() const;
     void SetUnlockedAbilityLevel(AbilitiesUnlocked abilitiesUnlocked);

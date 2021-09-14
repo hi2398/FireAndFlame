@@ -25,3 +25,7 @@ void DeathScreen::Draw() {
     DrawText("You Died",485,100,60,WHITE);
     DrawText("Press E or Gamepad A to continue", 410,250,25,WHITE);
 }
+
+DeathScreen::~DeathScreen() {
+    UnloadTexture(background);
+}
