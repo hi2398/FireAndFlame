@@ -64,6 +64,11 @@ TraitorBossScene::TraitorBossScene(SceneEnums lastScene) : Scene(SceneEnums::Tra
 
     track = LoadMusicStream("assets/audio/tracks/Traitor_Track.mp3");
     SetMusicVolume(track, soundManager->GetTrackVolume());
+
+    if (playerCharacter->GetUnlockedAbilities() == AbilitiesUnlocked::Doublejump) {
+        bossDefeated = true;
+        bossActivated = true;
+    }
 }
 
 void TraitorBossScene::Update() {
