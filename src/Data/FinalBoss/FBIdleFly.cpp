@@ -34,7 +34,7 @@ std::shared_ptr<State> FBIdleFly::Update(Actor &actor) {
 
         }
     }else {counter--;}
-    if(boss.GetHealth()<= 20){
+    if(boss.GetHealth()<= 40){
         return std::make_shared<FBChangeStates>();
     }
     if(decideCounter <= 0){

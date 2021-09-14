@@ -13,7 +13,7 @@ DeathScreen::DeathScreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 void DeathScreen::Update() {
     Scene::Update();
     if(IsKeyPressed(KEY_E) || IsGamepadButtonDown(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)){
-        sceneManager->SetNextScene(std::make_unique<NeutralArea>(sceneName)); // TODO Load Save :Adrian:
+        sceneManager->LoadGame("./Saves/", sceneManager->GetSaveSlot());
     }
     
     if (FADEOUT.a == 105) soundManager->PlaySfx(SFX::DEATHSCREEN);
