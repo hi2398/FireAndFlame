@@ -27,7 +27,7 @@ void BossEnergySwordAttack::Interact(Actor &actor) {
 
 void BossEnergySwordAttack::Update() {
     --prepareCounter;
-    interactionZone = {position.x,position.y,(float)texture.width,(float)texture.height};
+    interactionZone = {position.x,position.y,(float)32,(float)texture.height};
     if(prepareCounter <= 0){
         moveTowardsPosition = {position.x - attackPoint.x,position.y - attackPoint.y};
         position = {position.x-(moveTowardsPosition.x/magnitude),position.y-(moveTowardsPosition.y/magnitude)};

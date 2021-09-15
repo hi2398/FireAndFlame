@@ -109,6 +109,8 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     intro.looping = false;
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
+
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
 }
 
 void FinalBoss::Update() {
