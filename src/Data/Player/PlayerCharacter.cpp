@@ -27,11 +27,6 @@ PlayerCharacter::PlayerCharacter() : Actor(ObjectTypes::Player) {
 	observer = std::make_shared<PlayerObserver>(*this);
 	movementState = std::make_shared<MovementState>(*this);
 	actionState = std::make_shared<IdleActionState>(*this);
-
-    //if constexpr (DEBUG_BUILD){
-    //    abilitiesUnlocked=AbilitiesUnlocked::Doublejump; //unlock all abilites if in debug mode
-    //}
-
 }
 
 

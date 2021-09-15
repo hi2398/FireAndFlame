@@ -99,8 +99,6 @@ AreaThree::AreaThree(SceneEnums lastScene) : Scene(SceneEnums::AreaThree) {
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
-
-
 }
 
 void AreaThree::Update() {

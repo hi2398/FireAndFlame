@@ -57,7 +57,7 @@ private:
     Music fight;
     Music fightLoop;
 
-    const Vector2 checkpointA{20*32, 77*32};
+    const Vector2 checkpointA{ 17 * 32,84 * 32 };
     const Vector2 checkpointB{83*32, 54*32};
 
     Texture2D statueTex;

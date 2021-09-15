@@ -14,7 +14,7 @@ FBBossDying::FBBossDying() {
     hud->executeEndscreenSwap();
     activeFrame = {320,192,64,64};
     bossMap = LoadTexture("assets/Bosses/FinalBoss/MaraapSprites.png");
-    sceneManager->ScreenShake(600);
+    sceneManager->ScreenShake(254);
 }
 
 std::shared_ptr<State> FBBossDying::Update(Actor &actor) {
