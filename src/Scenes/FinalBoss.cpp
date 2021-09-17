@@ -64,7 +64,7 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
         bossFightBorder[i] = {(float)(86*32)+(32*i),57*32, 32, 32};
     }
 
-    tempVec = {18*32,84*32+3};
+    tempVec = {14*32,82*32+3};
     statueTex = LoadTexture("assets/graphics/Sign.png");
     interactables.emplace_back(std::make_unique<DialogueObject>("assets/Dialogues/Final_BossSign.json",tempVec,statueTex));
 
@@ -109,8 +109,8 @@ FinalBoss::FinalBoss(SceneEnums lastScene) : Scene(SceneEnums::FinalBoss) {
     intro.looping = false;
     //checkpoints
     interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointA));
-    interactables.emplace_back(std::make_unique<SaveInteractable>(checkpointB));
 
+    playerCharacter->SetUnlockedAbilityLevel(AbilitiesUnlocked::Doublejump);
 }
 
 void FinalBoss::Update() {

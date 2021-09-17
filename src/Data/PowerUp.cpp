@@ -84,7 +84,6 @@ void PowerUp::Update() {
     if (destinationRec.width >= 19) difference = -1;
     if (destinationRec.width <= 16) difference = 1;
 
-    std::cout << destinationRec.width << "\n";
 }
 
 void PowerUp::Draw() {
