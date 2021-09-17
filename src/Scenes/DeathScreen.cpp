@@ -12,6 +12,9 @@ DeathScreen::DeathScreen(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 
 void DeathScreen::Update() {
     Scene::Update();
+    if(IsGamepadAvailable(0)){
+        isControllerActive = true;
+    }else {isControllerActive = false;}
     if(IsKeyPressed(KEY_E) || IsGamepadButtonDown(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)){
         sceneManager->LoadGame("./Saves/", sceneManager->GetSaveSlot());
     }
@@ -23,7 +26,9 @@ void DeathScreen::Draw() {
     Scene::Draw();
     DrawTexture(background,0,0,WHITE);
     DrawText("You Died",485,100,60,WHITE);
-    DrawText("Press E or Gamepad A to continue", 410,250,25,WHITE);
+    if(isControllerActive){
+        DrawText("Press Gamepad A to continue", 440,250,25,WHITE);
+    }else{DrawText("Press E to continue", 490,250,25,WHITE);}
 }
 
 DeathScreen::~DeathScreen() {
