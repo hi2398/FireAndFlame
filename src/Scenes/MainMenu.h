@@ -52,22 +52,22 @@ private:
     Texture2D playButton[2];
     int playButtonIndex = 0;
     Rectangle playButtonRec;
-    Color playButtonColor;
+    Color playButtonColor = { 255,255,255,255 };
 
     Texture2D settingsButton[2];
     int settingsIndex = 0;
     Rectangle settingsButtonRec;
-    Color settingsColor;
+    Color settingsColor = { 255,255,255,255 };
 
     Texture2D creditsButton[2];
     int creditsIndex = 0;
     Rectangle creditsButtonRec;
-    Color creditsColor;
+    Color creditsColor = { 255,255,255,255 };
 
     Texture2D quitButton[2];
     int quitIndex = 0;
     Rectangle quitButtonRec;
-    Color quitColor;
+    Color quitColor = { 255,255,255,255 };
 
     Texture2D gameTitlePicture;
 
@@ -79,32 +79,32 @@ private:
     Texture2D loadSave1Button[2];
     int loadSave1Index = 0;
     Rectangle loadSave1ButtonRec;
-    Color loadSave1Color;
+    Color loadSave1Color = { 255,255,255,255 };
 
     Texture2D loadSave2Button[2];
     int loadSave2Index = 0;
     Rectangle loadSave2ButtonRec;
-    Color loadSave2Color;
+    Color loadSave2Color = { 255,255,255,255 };
 
     Texture2D loadSave3Button[2];
     int loadSave3Index = 0;
     Rectangle loadSave3ButtonRec;
-    Color loadSave3Color;
+    Color loadSave3Color = { 255,255,255,255 };
 
     Texture2D deleteSave1Button[2];
     int deleteSave1Index = 0;
     Rectangle deleteSave1ButtonRec;
-    Color deleteSave1Color;
+    Color deleteSave1Color = { 255,255,255,255 };
 
     Texture2D deleteSave2Button[2];
     int deleteSave2Index = 0;
     Rectangle deleteSave2ButtonRec;
-    Color deleteSave2Color;
+    Color deleteSave2Color = { 255,255,255,255 };
 
     Texture2D deleteSave3Button[2];
     int deleteSave3Index = 0;
     Rectangle deleteSave3ButtonRec;
-    Color deleteSave3Color;
+    Color deleteSave3Color = { 255,255,255,255 };
 
 
     //Settings Screen

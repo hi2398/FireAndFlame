@@ -11,6 +11,7 @@ public:
 private:
     Texture2D background;
     bool isControllerActive = false;
+    int counter = 0;
 protected:
     
 };

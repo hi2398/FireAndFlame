@@ -100,6 +100,10 @@ MainMenu::MainMenu(SceneEnums lastScene) : Scene(SceneEnums::Default) {
 void MainMenu::Update() {
     SetMusicVolume(track, soundManager->GetTrackVolume());
     Scene::Update();
+    if (IsGamepadAvailable(0)) { // Activates Controller
+        controllerActive = true;
+    }
+    else { controllerActive = false; }
     if(isIntroDone) {
         UpdateMusicStream(track);
         vMousePosition = sceneManager->GetVirtualMousePosition(); // Gets the virtual mouse position
@@ -192,11 +196,11 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec) ||
                     controllerStates == ControllerMainMenuStates::DeleteGame1) {
                     deleteSave1Index = 1;
-                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec))|| (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                  controllerStates == ControllerMainMenuStates::DeleteGame1)) {
                         deleteSave1Color = {100, 100, 100, 255};
                     }
-                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonReleased(0) && CheckCollisionPointRec(vMousePosition, deleteSave1ButtonRec)) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                      controllerStates == ControllerMainMenuStates::DeleteGame1)) {
                         // delete save 1
                         ResetSave(1);
@@ -209,11 +213,11 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec) ||
                     controllerStates == ControllerMainMenuStates::DeleteGame2) {
                     deleteSave2Index = 1;
-                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec))|| (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                  controllerStates == ControllerMainMenuStates::DeleteGame2)) {
                         deleteSave2Color = {100, 100, 100, 255};
                     }
-                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, deleteSave2ButtonRec)) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                      controllerStates == ControllerMainMenuStates::DeleteGame2)) {
                         // delete save 2
                         ResetSave(2);
@@ -226,11 +230,11 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec) ||
                     controllerStates == ControllerMainMenuStates::DeleteGame3) {
                     deleteSave3Index = 1;
-                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec)) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                  controllerStates == ControllerMainMenuStates::DeleteGame3)) {
                         deleteSave3Color = {100, 100, 100, 255};
                     }
-                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, deleteSave3ButtonRec)) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                      controllerStates == ControllerMainMenuStates::DeleteGame3)) {
                         // delete save 3
                         ResetSave(3);
@@ -243,11 +247,11 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec) ||
                     (controllerStates == ControllerMainMenuStates::LoadGame1 && controllerActive)) {
                     loadSave1Index = 1;
-                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec)) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                  controllerStates == ControllerMainMenuStates::LoadGame1)) {
                         loadSave1Color = {100, 100, 100, 255};
                     }
-                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, loadSave1ButtonRec)) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                      controllerStates == ControllerMainMenuStates::LoadGame1)) {
                         sceneManager->SetActiveSaveSlot(1);
                         sceneManager->LoadGame("./Saves/", 1);
@@ -260,11 +264,11 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec) ||
                     controllerStates == ControllerMainMenuStates::LoadGame2) {
                     loadSave2Index = 1;
-                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec)) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                  controllerStates == ControllerMainMenuStates::LoadGame2)) {
                         loadSave2Color = {100, 100, 100, 255};
                     }
-                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, loadSave2ButtonRec)) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                      controllerStates == ControllerMainMenuStates::LoadGame2)) {
                         sceneManager->SetActiveSaveSlot(2);
                         sceneManager->LoadGame("./Saves/", 2);
@@ -277,11 +281,11 @@ void MainMenu::Update() {
                 if (CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec) ||
                     controllerStates == ControllerMainMenuStates::LoadGame3) {
                     loadSave3Index = 1;
-                    if (IsMouseButtonDown(0) || (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec))|| (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                  controllerStates == ControllerMainMenuStates::LoadGame3)) {
                         loadSave3Color = {100, 100, 100, 255};
                     }
-                    if (IsMouseButtonReleased(0) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
+                    if ((IsMouseButtonDown(0) && CheckCollisionPointRec(vMousePosition, loadSave3ButtonRec)) || (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) &&
                                                      controllerStates == ControllerMainMenuStates::LoadGame3)) {
                         sceneManager->SetActiveSaveSlot(3);
                         sceneManager->LoadGame("./Saves/", 3);
@@ -297,6 +301,10 @@ void MainMenu::Update() {
                         backButtonColor = {100, 100, 100, 255};
                     }
                     if (IsMouseButtonReleased(0)) {
+                        playButtonColor = { 255, 255, 255, 255 };
+                        quitColor = { 255, 255, 255, 255 };
+                        creditsColor = { 255, 255, 255, 255 };
+                        settingsColor = { 255, 255, 255, 255 };
                         controllerStates = ControllerMainMenuStates::PlayGameButton;
                         menuScreenStates = MenuScreenStates::TitleScreen;
                     }
@@ -305,6 +313,10 @@ void MainMenu::Update() {
                     backButtonIndex = 0;
                 }
                 if (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
+                    playButtonColor = { 255, 255, 255, 255 };
+                    quitColor = { 255, 255, 255, 255 };
+                    creditsColor = { 255, 255, 255, 255 };
+                    settingsColor = { 255, 255, 255, 255 };
                     controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
@@ -352,6 +364,10 @@ void MainMenu::Update() {
                         backButtonColor = {100, 100, 100, 255};
                     }
                     if (IsMouseButtonReleased(0)) {
+                        playButtonColor = { 255, 255, 255, 255 };
+                        quitColor = { 255, 255, 255, 255 };
+                        creditsColor = { 255, 255, 255, 255 };
+                        settingsColor = { 255, 255, 255, 255 };
                         controllerStates = ControllerMainMenuStates::PlayGameButton;
                         menuScreenStates = MenuScreenStates::TitleScreen;
                     }
@@ -361,6 +377,10 @@ void MainMenu::Update() {
                 }
 
                 if (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
+                    playButtonColor = { 255, 255, 255, 255 };
+                    quitColor = { 255, 255, 255, 255 };
+                    creditsColor = { 255, 255, 255, 255 };
+                    settingsColor = { 255, 255, 255, 255 };
                     controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
@@ -374,6 +394,10 @@ void MainMenu::Update() {
                         backButtonColor = {100, 100, 100, 255};
                     }
                     if (IsMouseButtonReleased(0)) {
+                        quitColor = { 255, 255, 255, 255 };
+                        creditsColor = { 255, 255, 255, 255 };
+                        settingsColor = { 255, 255, 255, 255 };
+                        playButtonColor = { 255, 255, 255, 255 };
                         controllerStates = ControllerMainMenuStates::PlayGameButton;
                         menuScreenStates = MenuScreenStates::TitleScreen;
                     }
@@ -383,6 +407,10 @@ void MainMenu::Update() {
                 }
 
                 if (IsGamepadButtonReleased(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
+                    playButtonColor = { 255, 255, 255, 255 };
+                    quitColor = { 255, 255, 255, 255 };
+                    creditsColor = { 255, 255, 255, 255 };
+                    settingsColor = { 255, 255, 255, 255 };
                     controllerStates = ControllerMainMenuStates::PlayGameButton;
                     menuScreenStates = MenuScreenStates::TitleScreen;
                 }
@@ -390,9 +418,7 @@ void MainMenu::Update() {
                 break;
         }
 
-        if (IsGamepadAvailable(0)){ // Activates Controller
-            controllerActive = true;
-        }else{controllerActive = false;}
+        
 
         if (controllerActive) { // Navigating with Controller in Main Menu
             if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_UP)) {
@@ -656,6 +682,7 @@ void MainMenu::UpdateByController(ControllerCommands controllerCommmand) {
                     if(soundVolume<9){
                         ++soundVolume;
                         UpdateMusicAndSoundVolume();
+                        soundManager->PlaySfx(SFX::TEST);
                     }
                     break;
             }
@@ -700,6 +727,7 @@ void MainMenu::UpdateByController(ControllerCommands controllerCommmand) {
                     if(soundVolume>0){
                         --soundVolume;
                         UpdateMusicAndSoundVolume();
+                        soundManager->PlaySfx(SFX::TEST);
                     }
                     break;
             }
