@@ -16,7 +16,7 @@
 #include "Scenes/TraitorBossScene.h"
 #include "Scenes/IceBossScene.h"
 #include "Scenes/AreaOne.h"
-#include "Scenes/AreaTwo.h"
+#include "Scenes/DeathScreen.h"
 #include "Scenes/MinerBossScene.h"
 
 
@@ -58,7 +58,7 @@ if  constexpr(DEBUG_BUILD){
 
 
 
-	sceneManager = std::make_shared<SceneManager>(std::make_unique<FinalBoss>(SceneEnums::Default));
+	sceneManager = std::make_shared<SceneManager>(std::make_unique<DeathScreen>(SceneEnums::Default));
 
 
 
