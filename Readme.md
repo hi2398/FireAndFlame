@@ -18,6 +18,7 @@ This raylib C++ project template for CMake is based on the window scale letterbo
 Anata (@anatagawa) and reviewed by Ramon Santamaria (@raysan5) and the CMakeLists.txt 
 example provided in the Raylib source code [2].
 
+
 [1] https://github.com/raysan5/raylib/blob/master/examples/core/core_window_letterbox.c
 
 [2] https://github.com/raysan5/raylib/blob/master/projects/CMake/CMakeLists.txt
